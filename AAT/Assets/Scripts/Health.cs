@@ -7,7 +7,10 @@ public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] private float maxHealth;
 
+    public event Action<float> OnHealthChanged;
+    
     protected float currentHealth;
+    private float currentHealthPercent;
 
     protected virtual void Start()
     {
@@ -25,6 +28,8 @@ public class Health : MonoBehaviour, IHealth
         {
             TakeDamage(Mathf.Abs(amount));
         }
+        currentHealthPercent = currentHealth / maxHealth;
+        OnHealthChanged.Invoke(currentHealthPercent);
         Debug.Log($"health after modify: {currentHealth}");
     }
 
