@@ -40,9 +40,13 @@ public class AIPathfinder : MonoBehaviour
                 Chase(chaseTarget);
             }
         }
-        else
+        else if (patrol)
         {
             Patrol();
+        }
+        else
+        {
+            agent.speed = movementSpeed;
         }
     }
     

@@ -30,7 +30,7 @@ public class HealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.LookAt(Camera.main.transform);
-        transform.Rotate(0, 180, 0);
+        healthBar.transform.LookAt(Camera.main.transform);
+        healthBar.transform.Rotate(0, 180, 0);
     }
 }
