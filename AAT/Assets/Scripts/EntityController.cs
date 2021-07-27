@@ -15,14 +15,14 @@ public class EntityController : MonoBehaviour
     private void OnMouseEnter()
     {
         Outline();
-        InputController.OnLeftCLick += Select;
+        InputManager.OnLeftCLick += Select;
     }
 
     private void OnMouseExit()
     {
         RemoveOutline();
-        InputController.OnLeftCLick -= Select;
-        InputController.OnLeftCLick += Deselect;
+        InputManager.OnLeftCLick -= Select;
+        InputManager.OnLeftCLick += Deselect;
     }
 
     private void Select()
@@ -37,7 +37,7 @@ public class EntityController : MonoBehaviour
         OnDeselect.Invoke();
         selected = false;
         RemoveOutline();
-        InputController.OnLeftCLick -= Deselect;
+        InputManager.OnLeftCLick -= Deselect;
     }
     
     private void Outline()

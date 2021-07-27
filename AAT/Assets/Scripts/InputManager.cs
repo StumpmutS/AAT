@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     public static event Action OnLeftCLick = delegate { };
     public static event Action<Vector3> OnRightClick = delegate { };
