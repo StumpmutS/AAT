@@ -1423,7 +1423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90ff1be2dd5d244fbd40205e8cfaf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1154327069}
   chaseSpeedPercentMultiplier: 200
 --- !u!114 &1154327074
 MonoBehaviour:
@@ -1437,11 +1436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88098fadd73fa469af4e925e9781b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1154327069}
   damage: 5
   attackTimerSeconds: 0.7
-  acorn: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1161953346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,11 +1898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88098fadd73fa469af4e925e9781b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1739899850}
   damage: 5
   attackTimerSeconds: 1.5
-  acorn: {fileID: 2924461475351850691, guid: ee7e457aa48ad434288ba7fd7fe11cc3, type: 3}
-  offset: {x: 0, y: 1, z: 0}
 --- !u!114 &1739899848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,7 +1912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90ff1be2dd5d244fbd40205e8cfaf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1739899850}
   chaseSpeedPercentMultiplier: 200
 --- !u!65 &1739899849
 BoxCollider:
@@ -1953,7 +1945,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.6
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1739899851
