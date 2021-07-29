@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder))]
+[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BaseAttackController : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float damage;
     [SerializeField] private float attackTimerSeconds;
-    [SerializeField] GameObject acorn;
-    [SerializeField] Vector3 offset;
 
+    private NavMeshAgent agent;
     private AIPathfinder AI;
     private bool canAttack;
     
@@ -20,6 +18,7 @@ public class BaseAttackController : MonoBehaviour
     {
         canAttack = true;
         AI = GetComponent<AIPathfinder>();
+        agent = GetComponent<NavMeshAgent>();
         AI.OnAttack += CallAttack;
         damage = -(Mathf.Abs(damage));
     }
@@ -42,9 +41,7 @@ public class BaseAttackController : MonoBehaviour
 
     protected virtual void Attack(GameObject target)
     {
-        Instantiate(acorn, transform.position - offset, Quaternion.identity);
         transform.LookAt(target.transform);
         agent.SetDestination(transform.position);
-        GetComponent<Animator>().SetBool("Attack", true);
     }
 }
