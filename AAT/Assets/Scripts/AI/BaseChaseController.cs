@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder))]
+[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BaseChaseController : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float chaseSpeedPercentMultiplier;
 
     private float baseSpeed;
     private AIPathfinder AI;
+    private NavMeshAgent agent;
 
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         AI = GetComponent<AIPathfinder>();
         AI.OnChase += Chase;
         baseSpeed = AI.MovementSpeed;
