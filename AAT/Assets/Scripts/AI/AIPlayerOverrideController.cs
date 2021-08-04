@@ -24,8 +24,13 @@ public class AIPlayerOverrideController : AIPathfinder
         InputManager.OnRightClick -= SetTargetDestination;
     }
 
-    private void SetTargetDestination(Vector3 destination)
+    private void SetTargetDestination()
     {
-        agent.SetDestination(destination);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hit))
+        {
+            Vector3 destination = hit.point;
+            agent.SetDestination(destination);
+        }
     }
 }

@@ -64,17 +64,17 @@ public class AIPathfinder : MonoBehaviour
     private GameObject FindTarget(float range)
     {
         GameObject target = null;
-        float targetDistance = Mathf.Infinity;
+        float targetDistanceSquared = Mathf.Infinity;
         Collider[] hits = new Collider[50];
         Physics.OverlapSphereNonAlloc(transform.position, range, hits, enemyTeamLayer);
         foreach(Collider collider in hits)
         {
             if (collider != null)
             {
-                float newDistance = Vector3.Distance(transform.position, collider.transform.position);
-                if (newDistance < targetDistance)
+                float newDistanceSquared = (transform.position - collider.transform.position).sqrMagnitude;
+                if (newDistanceSquared < targetDistanceSquared)
                 {
-                    targetDistance = newDistance;
+                    targetDistanceSquared = newDistanceSquared;
                     target = collider.gameObject;
                 }
             }
