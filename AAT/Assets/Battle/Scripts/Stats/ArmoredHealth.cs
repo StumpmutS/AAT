@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ArmoredHealth : Health, IArmor
 {
-    [Tooltip("100% blocks all damage")]
-    [SerializeField] private float baseArmorPercent;
-    [SerializeField] private float maxArmorPercent;
+    private float baseArmorPercent => unitData.BaseArmorPercent;
+    private float maxArmorPercent => unitData.MaxArmorPercent;
+
 
     private float currentArmorPercent;
 

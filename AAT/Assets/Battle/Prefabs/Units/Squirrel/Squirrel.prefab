@@ -1040,9 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224acc55b1311784f9c4f30b353fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  baseArmorPercent: 20
-  maxArmorPercent: 20
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &5759228335420568726
 MonoBehaviour:
   m_ObjectHideFlags: 0
