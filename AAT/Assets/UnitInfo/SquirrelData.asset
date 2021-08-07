@@ -12,3 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
   m_Name: SquirrelData
   m_EditorClassIdentifier: 
+  MaxHealth: 200
+  BaseArmorPercent: 20
+  MaxArmorPercent: 20
+  Damage: 10
+  AttackSpeedPercent: 200
+  MovementSpeed: 3.5
+  SightRange: 5
+  AttackRange: 10
+  ChaseSpeedPercentMultiplier: 200
+  TransportState: 1
+  AttackState: 2
+  MoveState: 1

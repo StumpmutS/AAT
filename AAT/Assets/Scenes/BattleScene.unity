@@ -1352,9 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224acc55b1311784f9c4f30b353fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  baseArmorPercent: 50
-  maxArmorPercent: 50
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!135 &1154327064
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1484,15 +1482,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1154327069}
-  movementSpeed: 3.5
-  sightRange: 10
-  attackRange: 5
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 128
   chase: 1
   patrol: 0
   patrolPoints: []
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &1154327071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1537,7 +1533,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90ff1be2dd5d244fbd40205e8cfaf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeedPercentMultiplier: 200
+  agent: {fileID: 1154327069}
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &1154327074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,8 +1547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88098fadd73fa469af4e925e9781b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  attackTimerSeconds: 0.7
+  agent: {fileID: 1154327069}
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!1 &1161953346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,9 +1864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224acc55b1311784f9c4f30b353fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  baseArmorPercent: 20
-  maxArmorPercent: 20
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!1 &1373183524
 GameObject:
   m_ObjectHideFlags: 0
@@ -2370,6 +2365,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95bca428ecc35cb40a3cfe72e8761e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &2040985509 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 5759228335420568731, guid: db35d4426829de84295bcc20188331c6, type: 3}
+  m_PrefabInstance: {fileID: 5759228334977300305}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5759228334977300305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2425,5 +2425,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5759228335420568726, guid: db35d4426829de84295bcc20188331c6, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 2040985509}
+    - target: {fileID: 5759228335420568726, guid: db35d4426829de84295bcc20188331c6, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
+    - target: {fileID: 5759228335420568729, guid: db35d4426829de84295bcc20188331c6, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 2040985509}
+    - target: {fileID: 5759228335420568729, guid: db35d4426829de84295bcc20188331c6, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
+    - target: {fileID: 5759228335420568733, guid: db35d4426829de84295bcc20188331c6, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db35d4426829de84295bcc20188331c6, type: 3}
