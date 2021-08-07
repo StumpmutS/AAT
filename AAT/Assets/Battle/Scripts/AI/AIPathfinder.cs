@@ -7,19 +7,19 @@ using UnityEngine.AI;
 public class AIPathfinder : MonoBehaviour
 {
     [SerializeField] protected NavMeshAgent agent;
-    [SerializeField] private float movementSpeed;
-    public float MovementSpeed => movementSpeed;
-    [SerializeField] private float sightRange;
-    [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyTeamLayer;
+    [SerializeField] private bool chase;
+    [SerializeField] private bool patrol;
+    [SerializeField] private List<Vector3> patrolPoints;
+    [SerializeField] private UnitData unitData;
 
+    private float movementSpeed => unitData.MovementSpeed;
+    private float sightRange => unitData.SightRange;
+    private float attackRange => unitData.AttackRange;
+    
     public event Action<GameObject> OnChase = delegate { };
     public event Action<GameObject> OnAttack = delegate { };
     public event Action<List<Vector3>> OnPatrol = delegate { };
-
-    public bool chase;
-    public bool patrol;
-    public List<Vector3> patrolPoints;
 
     private void Start()
     {
