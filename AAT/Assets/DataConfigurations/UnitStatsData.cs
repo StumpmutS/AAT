@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Data")]
-public class UnitData : ScriptableObject
+[CreateAssetMenu(menuName = "Unit Stats Data")]
+public class UnitStatsData : ScriptableObject
 {
     public float MaxHealth;
     public float BaseArmorPercent;

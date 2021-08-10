@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf701125b0bb7b4cac56b2c01584623, type: 3}
+  m_Name: SquirrelSpawnData
+  m_EditorClassIdentifier: 
+  SpawnGroupsAmount: 9
+  UnitsPerGroupAmount: 2
+  SpawnTime: 1
+  RespawnTime: 10
+  MaxSpawnLocationUse: 3
+  SpawnerOffset: {x: 0, y: 0, z: 0}
+  SpawnerVisuals: {fileID: 5786109076718938141, guid: 4ab723db798d8bb4bab3c890c2ffa7bc, type: 3}
+  UnitPrefab: {fileID: 5759228335420568732, guid: db35d4426829de84295bcc20188331c6, type: 3}

@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class BaseAttackController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] protected UnitData unitData;
+    [SerializeField] protected UnitStatsData unitData;
     
     private float Damage => unitData.Damage;
     private float damage;

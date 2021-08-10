@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IHealth
 {
-    [SerializeField] protected UnitData unitData;
+    [SerializeField] protected UnitStatsData unitData;
     private float maxHealth => unitData.MaxHealth;
 
     public event Action<float> OnHealthChanged;

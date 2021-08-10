@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class BaseChaseController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private UnitData unitData;
+    [SerializeField] private UnitStatsData unitData;
 
     private float baseSpeed => unitData.MovementSpeed;
     private float chaseSpeedPercentMultiplier => unitData.ChaseSpeedPercentMultiplier;

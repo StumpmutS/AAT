@@ -7,7 +7,7 @@ public class AIPlayerOverrideController : AIPathfinder
 {
     private EntityController entity;
 
-    private void Start()
+    private void Awake()
     {
         entity = GetComponent<EntityController>();
         entity.OnSelect += SubscribeToInputManager;

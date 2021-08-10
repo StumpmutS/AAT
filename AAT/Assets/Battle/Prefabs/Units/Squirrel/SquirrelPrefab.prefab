@@ -957,8 +957,9 @@ GameObject:
   - component: {fileID: 5759228335420568730}
   - component: {fileID: 5759228335420568733}
   - component: {fileID: 5759228335420568732}
+  - component: {fileID: -2680104130768556178}
   m_Layer: 6
-  m_Name: Squirrel
+  m_Name: SquirrelPrefab
   m_TagString: Good
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -972,7 +973,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4840677430842725870}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -4.85, y: 1, z: -23.58}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3807388347617910730}
@@ -1053,8 +1054,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88098fadd73fa469af4e925e9781b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  attackTimerSeconds: 1.5
+  agent: {fileID: 5759228335420568731}
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &5759228335420568729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,7 +1068,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90ff1be2dd5d244fbd40205e8cfaf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeedPercentMultiplier: 200
+  agent: {fileID: 5759228335420568731}
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!195 &5759228335420568731
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1121,15 +1123,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 5759228335420568731}
-  movementSpeed: 3.5
-  sightRange: 10
-  attackRange: 5
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 128
   chase: 1
   patrol: 0
   patrolPoints: []
+  unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &5759228335420568732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1143,6 +1143,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 5759228335420568730}
+--- !u!114 &-2680104130768556178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840677430842725870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2ef1ab59f949741bb85fd8946b77f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4922851530394433235
 GameObject:
   m_ObjectHideFlags: 0

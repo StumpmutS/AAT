@@ -34,12 +34,10 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("left click");
             OnLeftCLick.Invoke();
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("right click");
             OnRightClick.Invoke();
         }
     }
@@ -49,13 +47,11 @@ public class InputManager : MonoBehaviour
         float verticalMouseAxis = Input.GetAxis("Mouse Y");
         if (verticalMouseAxis != 0)
         {
-            Debug.Log("mouse y change");
             OnMouseYChange.Invoke(verticalMouseAxis);
         }
         float horizontalMouseAxis = Input.GetAxis("Mouse X");
         if (horizontalMouseAxis != 0)
         {
-            Debug.Log("mouse x change");
             OnMouseXChange.Invoke(horizontalMouseAxis);
         }
     }
@@ -65,19 +61,16 @@ public class InputManager : MonoBehaviour
         float verticalAxis = Input.GetAxis("Vertical");
         if (verticalAxis != 0)
         {
-            Debug.Log("vertical pressed");
             OnVerticalAxis.Invoke(verticalAxis);
         }
         float horizontalAxis = Input.GetAxis("Horizontal");
         if (horizontalAxis != 0)
         {
-            Debug.Log("horizontal pressed");
             OnHorizontalAxis.Invoke(horizontalAxis);
         }
         float jumpAxis = Input.GetAxis("Jump");
         if (jumpAxis != 0)
         {
-            Debug.Log("jump axis pressed");
             OnJump.Invoke(jumpAxis);
         }
     }
@@ -86,12 +79,10 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            Debug.Log("left shift pressed");
             OnLeftShiftPressed.Invoke();
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            Debug.Log("left shift up");
             OnLeftShiftEnd.Invoke();
         }
     }
