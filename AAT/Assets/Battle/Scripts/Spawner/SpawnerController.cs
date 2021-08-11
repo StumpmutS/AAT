@@ -7,100 +7,146 @@ using UnityEngine;
 public class SpawnerController : MonoBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints;
-    private Dictionary<Transform, bool> spawnPointActiveStates = new Dictionary<Transform, bool>();
+    private Dictionary<Transform, int> spawnPointActiveGroups = new Dictionary<Transform, int>();
 
-    private int spawnGroupsAmount;
-    private int unitsPerGroupAmount;
-    private float spawnTime;
-    private float respawnTime;
-    private int maxSpawnLocationUse;
-    private Vector3 spawnerOffset;
-    private GameObject spawnerVisuals;
-    private EntityController unitPrefab;
+    private int _spawnGroupsAmount;
+    private int _unitsPerGroupAmount;
+    private float _spawnTime;
+    private float _respawnTime;
+    private int _maxSpawnLocationUse;
+    private Vector3 _spawnerOffset;
+    private GameObject _spawnerVisuals;
+    private UnitController _unitPrefab;
 
     private int queuedSpawnCount;
     private int currentSpawningCount;
-    private List<EntityController> activeEntities = new List<EntityController>();
+    private List<List<UnitController>> activeUnitGroups = new List<List<UnitController>>();
+    private int takenUnitGroupCount;
 
     private void Awake()
     {
         foreach (var spawnPoint in spawnPoints)
         {
-            spawnPointActiveStates.Add(spawnPoint, false);
+            spawnPointActiveGroups.Add(spawnPoint, -1);
         }
     }
 
     public void Setup(UnitSpawnData unitSpawnData)
     {
-        spawnGroupsAmount = unitSpawnData.SpawnGroupsAmount;
-        unitsPerGroupAmount = unitSpawnData.UnitsPerGroupAmount;
-        spawnTime = unitSpawnData.SpawnTime;
-        respawnTime = unitSpawnData.RespawnTime;
-        maxSpawnLocationUse = unitSpawnData.MaxSpawnLocationUse;
-        spawnerVisuals = unitSpawnData.SpawnerVisuals;
-        spawnerOffset = unitSpawnData.SpawnerOffset;
-        unitPrefab = unitSpawnData.UnitPrefab;
+        _spawnGroupsAmount = unitSpawnData.SpawnGroupsAmount;
+        _unitsPerGroupAmount = unitSpawnData.UnitsPerGroupAmount;
+        _spawnTime = unitSpawnData.SpawnTime;
+        _respawnTime = unitSpawnData.RespawnTime;
+        _maxSpawnLocationUse = unitSpawnData.MaxSpawnLocationUse;
+        _spawnerVisuals = unitSpawnData.SpawnerVisuals;
+        _spawnerOffset = unitSpawnData.SpawnerOffset;
+        _unitPrefab = unitSpawnData.UnitPrefab;
+
+        for (int i = 0; i < _spawnGroupsAmount; i++)
+        {
+            AddEmptyUnitGroup();
+        }
         InititializeVisuals();
         InitiliazeSpawning();
     }
 
     private void InititializeVisuals()
     {
-        GameObject instantiatedSpawnerVisuals = Instantiate(spawnerVisuals, gameObject.transform);
-        instantiatedSpawnerVisuals.transform.position += spawnerOffset;
+        GameObject instantiatedSpawnerVisuals = Instantiate(_spawnerVisuals, gameObject.transform);
+        instantiatedSpawnerVisuals.transform.position += _spawnerOffset;
     }
 
     private void InitiliazeSpawning()
     {
-        for (int i = 0; i < spawnGroupsAmount; i++)
+        for (int i = 0; i < _spawnGroupsAmount; i++)
         {
-            CheckSpawnUnitGroup(i % maxSpawnLocationUse);
+            QueueUnitGroup(_spawnTime);
         }
     }
 
-    private void CheckSpawnUnitGroup(int spawnPointIndex)
+    private void QueueUnitGroup(float spawnTime)
     {
-        if (currentSpawningCount < maxSpawnLocationUse)
+        print("queue being called");
+        if (currentSpawningCount < _maxSpawnLocationUse)
         {
             currentSpawningCount++;
-            StartCoroutine(SpawnUnitGroup(spawnPointIndex));
+            SpawnUnitGroup(spawnTime);
+            return;
         }
-        else
+        queuedSpawnCount++;
+    }
+
+    private void SpawnUnitGroup(float spawnTime)
+    {
+        print("group being called");
+        int spawnPointIndex = GetFirstInactiveSpawnerIndex();
+        int groupIndex = GetEmptyGroup();
+        spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = groupIndex;
+        for (int i = 0; i < _unitsPerGroupAmount; i++) 
         {
-            queuedSpawnCount++;
+            StartCoroutine(SpawnUnit(spawnPointIndex, groupIndex, i, spawnTime));
         }
     }
 
-    private IEnumerator SpawnUnitGroup(int spawnPointIndex)
+    private IEnumerator SpawnUnit(int spawnPointIndex, int groupIndex, int unitIndex, float spawnTime)
     {
-        spawnPointActiveStates[spawnPoints[spawnPointIndex]] = true;
+        print("unit being called");
         yield return new WaitForSeconds(spawnTime);
-        SpawnUnits(spawnPointIndex);
-        spawnPointActiveStates[spawnPoints[spawnPointIndex]] = false;
+
+        spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;//////////////////////////
         currentSpawningCount--;
 
         //if there is a unit group in queue use the first inactive spawn point to spawn the queued unit group
         if (queuedSpawnCount > 0)
         {
-            for (int i = 0; i < spawnPoints.Count; i++)
+            int inactiveSpawnerIndex = GetFirstInactiveSpawnerIndex();
+            if (inactiveSpawnerIndex > -1)
             {
-                if (!spawnPointActiveStates[spawnPoints[i]])
-                {
-                    queuedSpawnCount--;
-                    currentSpawningCount++;
-                    StartCoroutine(SpawnUnitGroup(i));
-                    break;
-                }
+                queuedSpawnCount--;
+                currentSpawningCount++;
+                SpawnUnitGroup(spawnTime);
             }
         }
+        UnitController instantiatedUnit = Instantiate(_unitPrefab, spawnPoints[spawnPointIndex].position, Quaternion.identity);
+        activeUnitGroups[groupIndex].Add(instantiatedUnit);
+        instantiatedUnit.SetupDeath(ActiveUnitDeathHandler, groupIndex, unitIndex);
     }
 
-    private void SpawnUnits(int spawnPointIndex)
+    private void ActiveUnitDeathHandler(int groupIndex, int unitIndex)
     {
-        for (int i = 0; i < unitsPerGroupAmount; i++)
-        {
-            EntityController instantiatedUnit = Instantiate(unitPrefab, spawnPointActiveStates.Keys.ToList()[spawnPointIndex].position, Quaternion.identity);
-            activeEntities.Add(instantiatedUnit);
-        }
+        print("respawn " + groupIndex + ", " + unitIndex);
+        //check for respawn unit or group
     }
+
+    #region Helper Methods
+    private int GetFirstInactiveSpawnerIndex()
+    {
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            if (spawnPointActiveGroups[spawnPoints[i]] < 0)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void AddEmptyUnitGroup()
+    {
+        activeUnitGroups.Add(new List<UnitController>());
+    }
+
+    private int GetEmptyGroup()
+    {
+        for (int i = 0; i < activeUnitGroups.Count; i++)
+        {
+            if (activeUnitGroups[i].Count == 0 && i >= takenUnitGroupCount)
+            {
+                takenUnitGroupCount++;
+                return i;
+            }
+        }
+        return -1;
+    }
+    #endregion
 }

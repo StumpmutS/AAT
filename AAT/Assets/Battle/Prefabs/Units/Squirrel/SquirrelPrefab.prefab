@@ -956,7 +956,8 @@ GameObject:
   - component: {fileID: 5759228335420568731}
   - component: {fileID: 5759228335420568730}
   - component: {fileID: 5759228335420568733}
-  - component: {fileID: 5759228335420568732}
+  - component: {fileID: -8213272441465151675}
+  - component: {fileID: -3991292208228322283}
   - component: {fileID: -2680104130768556178}
   m_Layer: 6
   m_Name: SquirrelPrefab
@@ -1130,7 +1131,7 @@ MonoBehaviour:
   patrol: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
---- !u!114 &5759228335420568732
+--- !u!114 &-8213272441465151675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1139,10 +1140,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 4840677430842725870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f76ba87b8eed7e94f96cc79d14d6fd3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 5759228335420568730}
+  unitDeathController: {fileID: -3991292208228322283}
+--- !u!114 &-3991292208228322283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840677430842725870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0616b5d409331d948877c2675794efc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-2680104130768556178
 MonoBehaviour:
   m_ObjectHideFlags: 0

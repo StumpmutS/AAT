@@ -8,7 +8,8 @@ public class Health : MonoBehaviour, IHealth
     [SerializeField] protected UnitStatsData unitData;
     private float maxHealth => unitData.MaxHealth;
 
-    public event Action<float> OnHealthChanged;
+    public event Action<float> OnHealthChanged = delegate { };
+    public event Action OnDie = delegate { };
     
     protected float currentHealth;
     private float currentHealthPercent;
@@ -51,6 +52,6 @@ public class Health : MonoBehaviour, IHealth
     
     protected virtual void Die()
     {
-        gameObject.SetActive(false);
+        OnDie.Invoke();
     }
 }

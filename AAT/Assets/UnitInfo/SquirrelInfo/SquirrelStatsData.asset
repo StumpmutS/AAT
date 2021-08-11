@@ -18,8 +18,8 @@ MonoBehaviour:
   Damage: 10
   AttackSpeedPercent: 200
   MovementSpeed: 3.5
-  SightRange: 5
-  AttackRange: 10
+  SightRange: 10
+  AttackRange: 5
   ChaseSpeedPercentMultiplier: 200
   TransportState: 1
   AttackState: 2

@@ -25,14 +25,14 @@ public class EntityController : MonoBehaviour
         InputManager.OnLeftCLick += Deselect;
     }
 
-    private void Select()
+    protected virtual void Select()
     {
         OnSelect.Invoke();
         selected = true;
         Outline();
     }
 
-    private void Deselect()
+    protected virtual void Deselect()
     {
         OnDeselect.Invoke();
         selected = false;

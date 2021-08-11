@@ -12,5 +12,5 @@ public class UnitSpawnData : ScriptableObject
     public int MaxSpawnLocationUse;
     public Vector3 SpawnerOffset;
     public GameObject SpawnerVisuals;
-    public EntityController UnitPrefab;
+    public UnitController UnitPrefab;
 }
