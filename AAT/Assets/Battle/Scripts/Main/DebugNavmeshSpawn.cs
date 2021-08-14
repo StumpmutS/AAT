@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class DebugNavmeshSpawn : MonoBehaviour
 {
-    // Start is called before the first frame update
+    NavMeshAgent agent;
     void Start()
     {
-        GetComponent<NavMeshAgent>().SetDestination(transform.position + (Vector3.forward * .01f));
+        agent = GetComponent<NavMeshAgent>();
+        agent.Warp(transform.position);
+        agent.SetDestination(transform.position + (Vector3.forward * .01f));
     }
 }

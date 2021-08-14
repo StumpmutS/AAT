@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class UnitController : EntityController
 {
-    [SerializeField] UnitDeathController unitDeathController;
+    [SerializeField] private UnitDeathController unitDeathController;
 
-    public void SetupDeath(Action<int, int> deathCallback, int groupIndex, int unitIndex)
+    public event Action<UnitController> OnDeath = delegate { };
+
+    private void Start()
     {
-        unitDeathController.Setup(deathCallback, groupIndex, unitIndex);
+        unitDeathController.OnUnitDeath += UnitDeath;
+    }
+
+    private void UnitDeath()
+    {
+        OnDeath.Invoke(this);
     }
 }

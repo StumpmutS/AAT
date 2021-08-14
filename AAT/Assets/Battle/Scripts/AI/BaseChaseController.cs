@@ -18,11 +18,17 @@ public class BaseChaseController : MonoBehaviour
     {
         AI = GetComponent<AIPathfinder>();
         AI.OnChase += Chase;
+        AI.OnPatrolStart += StopChase;
     }
 
     protected virtual void Chase(GameObject target)
     {
         agent.speed = baseSpeed * (chaseSpeedPercentMultiplier / 100);
         agent.SetDestination(target.transform.position);
+    }
+
+    private void StopChase()
+    {
+        agent.speed = baseSpeed;
     }
 }

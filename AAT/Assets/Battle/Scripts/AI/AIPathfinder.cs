@@ -20,6 +20,7 @@ public class AIPathfinder : MonoBehaviour
     public event Action<GameObject> OnChase = delegate { };
     public event Action<GameObject> OnAttack = delegate { };
     public event Action<List<Vector3>> OnPatrol = delegate { };
+    public event Action OnPatrolStart = delegate { };
 
     private void Start()
     {
@@ -30,7 +31,6 @@ public class AIPathfinder : MonoBehaviour
     {
         if (CheckRange(attackRange, out GameObject attackTarget))
         {
-            Debug.Log("attack");
             Attack(attackTarget);
         }
         else if (chase)
@@ -96,5 +96,6 @@ public class AIPathfinder : MonoBehaviour
     {
         if (!patrol) return;
         OnPatrol.Invoke(patrolPoints);
+        OnPatrolStart.Invoke();
     }
 }

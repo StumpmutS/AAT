@@ -50,7 +50,7 @@ public class SpawnerPlotController : MonoBehaviour
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        GameObject instantiatedSpawner = Instantiate(spawnerPrefab, gameObject.transform.position, Quaternion.identity);
+        GameObject instantiatedSpawner = Instantiate(spawnerPrefab, transform.position, transform.rotation);
         instantiatedSpawner.GetComponent<SpawnerController>().Setup(spawnData);
     }
 }

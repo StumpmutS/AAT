@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf701125b0bb7b4cac56b2c01584623, type: 3}
   m_Name: SquirrelSpawnData
   m_EditorClassIdentifier: 
-  SpawnGroupsAmount: 7
-  UnitsPerGroupAmount: 1
+  SpawnGroupsAmount: 4
+  UnitsPerGroupAmount: 3
   SpawnTime: 1
-  RespawnTime: 10
+  RespawnTime: 5
   MaxSpawnLocationUse: 3
   SpawnerOffset: {x: 0, y: 0, z: 0}
   SpawnerVisuals: {fileID: 5786109076718938141, guid: 4ab723db798d8bb4bab3c890c2ffa7bc, type: 3}
   UnitPrefab: {fileID: -8213272441465151675, guid: db35d4426829de84295bcc20188331c6, type: 3}
+  UnitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}

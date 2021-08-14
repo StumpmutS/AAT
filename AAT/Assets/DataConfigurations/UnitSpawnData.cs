@@ -13,4 +13,5 @@ public class UnitSpawnData : ScriptableObject
     public Vector3 SpawnerOffset;
     public GameObject SpawnerVisuals;
     public UnitController UnitPrefab;
+    public UnitGroupController UnitGroupPrefab;
 }
