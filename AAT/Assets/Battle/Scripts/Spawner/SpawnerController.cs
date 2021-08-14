@@ -102,8 +102,6 @@ public class SpawnerController : MonoBehaviour
             unitsPerGroup = _unitsPerGroupAmount;
         }
 
-        print(groupIndex);
-
         unitGroupNumbers[groupIndex] = unitsPerGroup;
 
         spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = groupIndex;

@@ -329,8 +329,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &47748766
@@ -1321,8 +1321,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &463784792
@@ -2280,8 +2280,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &931201167
@@ -2925,8 +2925,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 128
-  chase: 1
-  patrol: 0
+  chaseEnabled: 0
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &1154327071
@@ -3585,6 +3585,7 @@ GameObject:
   - component: {fileID: 1324192425}
   - component: {fileID: 1324192428}
   - component: {fileID: 1324192427}
+  - component: {fileID: 1324192429}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Bad
@@ -3757,9 +3758,12 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
-  patrolPoints: []
+  chaseEnabled: 1
+  patrolEnabled: 1
+  patrolPoints:
+  - {x: -1.809435, y: 0.92, z: -62.96}
+  - {x: -1.809435, y: 0.92, z: -60.96}
+  - {x: 0, y: 0.92, z: -63.96}
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!195 &1324192426
 NavMeshAgent:
@@ -3811,6 +3815,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1324192426}
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
+--- !u!114 &1324192429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324192415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce86b203ce019b47b4367692bec2769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 1324192426}
 --- !u!1 &1340341351
 GameObject:
   m_ObjectHideFlags: 0
@@ -4257,8 +4274,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &1476413071
@@ -5268,8 +5285,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &1823447358
@@ -5706,8 +5723,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &1929732362

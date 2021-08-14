@@ -12,7 +12,6 @@ public class BaseChaseController : MonoBehaviour
     private float baseSpeed => unitData.MovementSpeed;
     private float chaseSpeedPercentMultiplier => unitData.ChaseSpeedPercentMultiplier;
     private AIPathfinder AI;
-    
 
     private void Start()
     {

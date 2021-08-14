@@ -1127,8 +1127,8 @@ MonoBehaviour:
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 128
-  chase: 1
-  patrol: 0
+  chaseEnabled: 1
+  patrolEnabled: 0
   patrolPoints: []
   unitData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
 --- !u!114 &-8213272441465151675

@@ -8,8 +8,8 @@ public class AIPathfinder : MonoBehaviour
 {
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private LayerMask enemyTeamLayer;
-    [SerializeField] private bool chase;
-    [SerializeField] private bool patrol;
+    [SerializeField] private bool chaseEnabled;
+    [SerializeField] private bool patrolEnabled;
     [SerializeField] private List<Vector3> patrolPoints;
     [SerializeField] private UnitStatsData unitData;
 
@@ -18,9 +18,13 @@ public class AIPathfinder : MonoBehaviour
     private float attackRange => unitData.AttackRange;
     
     public event Action<GameObject> OnChase = delegate { };
+    public event Action OnChaseStart = delegate { };
     public event Action<GameObject> OnAttack = delegate { };
+    public event Action OnAttackStart = delegate { };
     public event Action<List<Vector3>> OnPatrol = delegate { };
     public event Action OnPatrolStart = delegate { };
+
+    private bool patrolling = false;
 
     private void Start()
     {
@@ -33,20 +37,20 @@ public class AIPathfinder : MonoBehaviour
         {
             Attack(attackTarget);
         }
-        else if (chase)
+        else if (chaseEnabled)
         {
             if (CheckRange(sightRange, out GameObject chaseTarget))
             {
                 Chase(chaseTarget);
             }
+            else if (patrolEnabled && !patrolling)
+            {
+                Patrol();
+            }
         }
-        else if (patrol)
+        else if (patrolEnabled && !patrolling)
         {
             Patrol();
-        }
-        else
-        {
-            agent.speed = movementSpeed;
         }
     }
     
@@ -84,18 +88,22 @@ public class AIPathfinder : MonoBehaviour
 
     private void Attack(GameObject target)
     {
+        patrolling = false;
+        OnAttackStart.Invoke();
         OnAttack.Invoke(target);
     }
 
     private void Chase(GameObject target)
     {
+        patrolling = false;
+        OnChaseStart.Invoke();
         OnChase.Invoke(target);
     }
 
     private void Patrol()
     {
-        if (!patrol) return;
-        OnPatrol.Invoke(patrolPoints);
+        patrolling = true;
         OnPatrolStart.Invoke();
+        OnPatrol.Invoke(patrolPoints);
     }
 }
