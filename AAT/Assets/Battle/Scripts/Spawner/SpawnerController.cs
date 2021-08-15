@@ -21,8 +21,8 @@ public class SpawnerController : MonoBehaviour
     private int currentSpawningCount;
     private Dictionary<Transform, int> spawnPointActiveGroups = new Dictionary<Transform, int>();
 
-    private Queue<int> queuedGroupIndex = new Queue<int>();
-    private Queue<int> queuedUnitsperGroup = new Queue<int>();
+    private List<int> queuedGroupIndex = new List<int>();
+    private List<int> queuedUnitsperGroup = new List<int>();
 
     private List<UnitGroupController> activeUnitGroups = new List<UnitGroupController>();
     private Dictionary<int, int> unitGroupNumbers = new Dictionary<int, int>();
@@ -56,11 +56,32 @@ public class SpawnerController : MonoBehaviour
         InitiliazeSpawning();
     }
 
+    #region Visuals
     private void InititializeVisuals()
     {
         GameObject instantiatedSpawnerVisuals = Instantiate(_spawnerVisuals, gameObject.transform);
         instantiatedSpawnerVisuals.transform.position += _spawnerOffset;
+        EntityController spawnerVisualsEntity = instantiatedSpawnerVisuals.GetComponent<EntityController>();
+        spawnerVisualsEntity.OnSelect += SelectUnitGroups;
+        spawnerVisualsEntity.OnDeselect += DeselectUnitGroups;
     }
+
+    private void SelectUnitGroups()
+    {
+        foreach (var unitGroup in activeUnitGroups)
+        {
+            unitGroup.SelectGroup();
+        }
+    }
+
+    private void DeselectUnitGroups()
+    {
+        foreach (var unitGroup in activeUnitGroups)
+        {
+            unitGroup.DeselectGroup();
+        }
+    }
+    #endregion
 
     #region Spawning
     private void InitiliazeSpawning()
@@ -80,8 +101,8 @@ public class SpawnerController : MonoBehaviour
         }
         else
         {
-        queuedGroupIndex.Enqueue(groupIndex);
-        queuedUnitsperGroup.Enqueue(unitsPerGroup);
+        queuedGroupIndex.Add(groupIndex);
+        queuedUnitsperGroup.Add(unitsPerGroup);
         }
     }
 
@@ -114,8 +135,8 @@ public class SpawnerController : MonoBehaviour
         unitGroup.transform.position = spawnPoints[spawnPointIndex].position;
 
         yield return new WaitForSeconds(spawnTime);
-        
-        if (unitGroupNumbers[groupIndex] != -1)
+
+        if (unitGroupNumbers[groupIndex] == unitsPerGroup)
         {
             unitGroup.Setup(ActiveUnitDeathHandler, groupIndex);
 
@@ -128,10 +149,10 @@ public class SpawnerController : MonoBehaviour
                 int inactiveSpawnerIndex = GetFirstInactiveSpawnerIndex();
                 if (inactiveSpawnerIndex > -1)
                 {
-                    int queuedIndex = queuedGroupIndex.Peek();
-                    int queuedUnitsCount = queuedUnitsperGroup.Peek();
-                    queuedGroupIndex.Dequeue();
-                    queuedUnitsperGroup.Dequeue();
+                    int queuedIndex = queuedGroupIndex[queuedGroupIndex.Count-1];
+                    int queuedUnitsCount = queuedUnitsperGroup[queuedUnitsperGroup.Count-1];
+                    queuedGroupIndex.RemoveAt(queuedGroupIndex.Count-1);
+                    queuedUnitsperGroup.RemoveAt(queuedUnitsperGroup.Count-1);
                     currentSpawningCount++;
                     SpawnUnitGroup(spawnTime, queuedIndex, queuedUnitsCount);
                 }
@@ -165,12 +186,17 @@ public class SpawnerController : MonoBehaviour
 
     private void RespawnUnitGroup(int groupIndex)
     {
+        if (CheckQueue(groupIndex, out int index))
+        {
+            queuedUnitsperGroup[index]++;
+            return;
+        }
+
         int spawnPointIndex = CheckSpawning(groupIndex);
 
         if (spawnPointIndex > -1)
         {
             StopCoroutine(unitGroupCoroutines[groupIndex]);
-            unitGroupNumbers[groupIndex] = -1;
             spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
             currentSpawningCount--;
         }
@@ -179,25 +205,19 @@ public class SpawnerController : MonoBehaviour
 
     private void RespawnUnit(int groupIndex)
     {
+        if (CheckQueue(groupIndex, out int index))
+        {
+            queuedUnitsperGroup[index]++;
+            return;
+        }
+
         if (CheckSpawning(groupIndex) > -1) {
             unitGroupNumbers[groupIndex]++;
         }
         else
         {
-        QueueUnitGroup(_respawnTime, groupIndex, 1);
+            QueueUnitGroup(_respawnTime, groupIndex, 1);
         }
-    }
-
-    private int CheckSpawning(int groupIndex)
-    {
-        for (int i = 0; i < spawnPoints.Count; i++)
-        {
-            if (spawnPointActiveGroups[spawnPoints[i]] == groupIndex)
-            {
-                return i;
-            }
-        }
-        return -1;
     }
     #endregion
 
@@ -225,6 +245,32 @@ public class SpawnerController : MonoBehaviour
         for (int i = 0; i < activeUnitGroups.Count; i++)
         {
             if (activeUnitGroups[i].Units.Count == 0 && i >= unitGroupCoroutines.Count)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private bool CheckQueue(int groupIndex, out int index)
+    {
+        for (int i = 0; i < queuedGroupIndex.Count; i++)
+        {
+            if (queuedGroupIndex[i] == groupIndex)
+            {
+                index = i;
+                return true;
+            }
+        }
+        index = -1;
+        return false;
+    }
+
+    private int CheckSpawning(int groupIndex)
+    {
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            if (spawnPointActiveGroups[spawnPoints[i]] == groupIndex)
             {
                 return i;
             }

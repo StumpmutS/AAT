@@ -21,7 +21,6 @@ public class Health : MonoBehaviour, IHealth
 
     public void ModifyHealth(float amount)
     {
-        Debug.Log($"health before modify: {currentHealth}");
         if (amount > 0)
         {
             Heal(amount);
@@ -32,7 +31,6 @@ public class Health : MonoBehaviour, IHealth
         }
         currentHealthPercent = currentHealth / maxHealth;
         OnHealthChanged.Invoke(currentHealthPercent);
-        Debug.Log($"health after modify: {currentHealth}");
     }
 
     protected virtual void Heal(float amount)

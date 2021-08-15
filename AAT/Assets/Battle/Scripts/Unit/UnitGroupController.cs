@@ -51,7 +51,7 @@ public class UnitGroupController : MonoBehaviour
         UnSetupUnit(unit);
     }
 
-    private void SelectGroup()
+    public void SelectGroup()
     {
         if (selected) return;
         selected = true;
@@ -61,7 +61,7 @@ public class UnitGroupController : MonoBehaviour
         }
     }
 
-    private void DeselectGroup()
+    public void DeselectGroup()
     {
         if (!selected) return;
         selected = false;
@@ -71,7 +71,7 @@ public class UnitGroupController : MonoBehaviour
         }
     }
 
-    private void OutlineGroup()
+    public void OutlineGroup()
     {
         if (outlined) return;
         outlined = true;
@@ -81,7 +81,7 @@ public class UnitGroupController : MonoBehaviour
         }
     }
 
-    private void RemoveGroupOutline()
+    public void RemoveGroupOutline()
     {
         if (!outlined) return;
         outlined = false;
