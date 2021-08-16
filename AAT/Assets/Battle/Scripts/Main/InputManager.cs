@@ -18,6 +18,14 @@ public class InputManager : MonoBehaviour
     public static event Action OnLeftShiftPressed = delegate { };
     public static event Action OnLeftShiftEnd = delegate { };
 
+    public static event Action<int> OnNumberKey0 = delegate { };
+    public static event Action<int> OnNumberKey1 = delegate { };
+    public static event Action<int> OnNumberKey2 = delegate { };
+    public static event Action<int> OnNumberKey3 = delegate { };
+    public static event Action<int> OnNumberKey4 = delegate { };
+    public static event Action<int> OnNumberKey5 = delegate { };
+    public static event Action<int> OnNumberKey6 = delegate { };
+
     private void Update()
     {
         CheckMouseButtons();
@@ -27,12 +35,14 @@ public class InputManager : MonoBehaviour
         CheckAxes();
 
         CheckLeftShift();
+
+        CheckNumbers();
     }
 
     #region Check Methods
     private void CheckMouseButtons()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             OnLeftCLick.Invoke();
         }
@@ -84,6 +94,38 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             OnLeftShiftEnd.Invoke();
+        }
+    }
+
+    private void CheckNumbers()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            OnNumberKey0.Invoke(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            OnNumberKey1.Invoke(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            OnNumberKey2.Invoke(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            OnNumberKey3.Invoke(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            OnNumberKey4.Invoke(4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            OnNumberKey5.Invoke(5);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            OnNumberKey6.Invoke(6);
         }
     }
     #endregion

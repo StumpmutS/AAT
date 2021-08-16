@@ -4,53 +4,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(EntityController))]
-public class SpawnerPlotController : MonoBehaviour
+public class SpawnerPlotController : EntityController
 {
     [SerializeField] private RectTransform UnitsUIContainer;
-    [SerializeField] private GameObject spawnerPrefab;
+    [SerializeField] private SpawnerController spawnerPrefab;
 
-    public event Action<SpawnerPlotController> OnSpawnerSelect = delegate { };
-    
-    private EntityController entity;
-
-    private void Awake()
-    {
-        entity = GetComponent<EntityController>();
-        entity.OnSelect += Select;
-        entity.OnDeselect += Deselect;
-    }
+    public event Action<SpawnerPlotController> OnSpawnerPlotSelect = delegate { };
 
     private void Start()
     {
-        HideUnitSpawners();
+        HideUnitSpawnerButtons();
     }
 
-    private void Select()
+    public override void Select()
     {
-        DisplayUnitSpawners();
-        OnSpawnerSelect.Invoke(this);
+        base.Select();
+        DisplayUnitSpawnerButtons();
+        OnSpawnerPlotSelect.Invoke(this);
         Cursor.lockState = CursorLockMode.None;
     }
 
-    private void Deselect()
+    public override void Deselect()
     {
-        HideUnitSpawners();
+        base.Deselect();
+        HideUnitSpawnerButtons();
     }
 
-    private void DisplayUnitSpawners()
+    private void DisplayUnitSpawnerButtons()
     {
         UnitsUIContainer.gameObject.SetActive(true);
     }
 
-    private void HideUnitSpawners()
+    private void HideUnitSpawnerButtons()
     {
         UnitsUIContainer.gameObject.SetActive(false);
     }
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        GameObject instantiatedSpawner = Instantiate(spawnerPrefab, transform.position, transform.rotation);
-        instantiatedSpawner.GetComponent<SpawnerController>().Setup(spawnData);
+        SpawnerController instantiatedSpawner = Instantiate(spawnerPrefab, transform.position, transform.rotation);
+        SpawnerManager.AddSpawnerPlot(instantiatedSpawner);
+        instantiatedSpawner.Setup(spawnData);
     }
 }

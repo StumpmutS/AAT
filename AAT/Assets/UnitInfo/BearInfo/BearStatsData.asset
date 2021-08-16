@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
+  m_Name: BearStatsData
+  m_EditorClassIdentifier: 
+  MaxHealth: 5000
+  BaseArmorPercent: 50
+  MaxArmorPercent: 99
+  Damage: 200
+  AttackSpeedPercent: 20
+  MovementSpeed: 2
+  SightRange: 10
+  AttackRange: 5
+  ChaseSpeedPercentMultiplier: 500
+  TransportState: 2
+  AttackState: 1
+  MoveState: 1

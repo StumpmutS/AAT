@@ -18,6 +18,9 @@ public class SpawnerController : MonoBehaviour
     private UnitController _unitPrefab;
     private UnitGroupController _unitGroupPrefab;
 
+    private EntityController _currentSpawnerVisualsEntity;
+    public EntityController CurrentSpawnerVisualsEntity => _currentSpawnerVisualsEntity;
+
     private int currentSpawningCount;
     private Dictionary<Transform, int> spawnPointActiveGroups = new Dictionary<Transform, int>();
 
@@ -62,6 +65,7 @@ public class SpawnerController : MonoBehaviour
         GameObject instantiatedSpawnerVisuals = Instantiate(_spawnerVisuals, gameObject.transform);
         instantiatedSpawnerVisuals.transform.position += _spawnerOffset;
         EntityController spawnerVisualsEntity = instantiatedSpawnerVisuals.GetComponent<EntityController>();
+        _currentSpawnerVisualsEntity = spawnerVisualsEntity;
         spawnerVisualsEntity.OnSelect += SelectUnitGroups;
         spawnerVisualsEntity.OnDeselect += DeselectUnitGroups;
     }
