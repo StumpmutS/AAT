@@ -18,3 +18,17 @@ public class UnitStatsData : ScriptableObject
     public EAttackType AttackState;
     public EMovementType MoveState;
 }
+
+public enum Stat
+{
+    None,
+    MaxHealth,
+    BaseArmorPercent,
+    MaxArmorPercent,
+    Damage,
+    AttackSpeedPercent,
+    MovementSpeed,
+    SightRange,
+    AttackRange,
+    ChaseSpeedPercentMultiplier
+};

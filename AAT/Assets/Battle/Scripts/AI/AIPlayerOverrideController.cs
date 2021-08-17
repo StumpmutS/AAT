@@ -27,7 +27,6 @@ public class AIPlayerOverrideController : AIPathfinder
 
     private void SetTargetDestination()
     {
-        print(agent);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit))
         {
