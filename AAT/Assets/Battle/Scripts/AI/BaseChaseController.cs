@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BaseChaseController : MonoBehaviour
 {
-    [SerializeField] private UnitStatsUpgradeManager unitDataManager;
+    [SerializeField] private UnitStatsModifierManager unitDataManager;
 
     private float baseSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
     private float chaseSpeedPercentMultiplier => unitDataManager.CurrentUnitStatsData.ChaseSpeedPercentMultiplier;

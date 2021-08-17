@@ -14,8 +14,9 @@ public class UnitGroupController : MonoBehaviour
     private bool selected = false; 
     private bool outlined = false;
 
-    public void Setup(Action<int> deathCallback, int groupIndex)
+    public void Setup(Action<int> deathCallback, Action<List<Stat>, List<float>, ETransportationType, EAttackType, EMovementType> modifyStatEvent, int groupIndex)
     {
+        modifyStatEvent += ModifyUnitStats;
         _unitDeathCallback = deathCallback;
         _groupIndex = groupIndex;
     }
@@ -108,4 +109,14 @@ public class UnitGroupController : MonoBehaviour
         unit.OnRemoveOutline -= RemoveGroupOutline;
         unit.OnDeath -= UnitDeathHandler;
     }
+
+    #region StatModifierMethods
+    private void ModifyUnitStats(List<Stat> stats, List<float> amounts, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    {
+        foreach (var unit in units)
+        {
+            unit.ModifyStats(stats, amounts, transportationType, attackType, movementType);
+        }
+    }
+    #endregion
 }

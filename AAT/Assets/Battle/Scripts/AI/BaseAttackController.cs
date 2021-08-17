@@ -7,7 +7,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BaseAttackController : MonoBehaviour
 {
-    [SerializeField] protected UnitStatsUpgradeManager unitDataManager;
+    [SerializeField] protected UnitStatsModifierManager unitDataManager;
 
     private float damage => unitDataManager.CurrentUnitStatsData.Damage;
     private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData.AttackSpeedPercent;
@@ -25,6 +25,8 @@ public class BaseAttackController : MonoBehaviour
 
     protected virtual void CallAttack(GameObject target)
     {
+        transform.LookAt(target.transform);
+        agent.SetDestination(transform.position);
         if (canAttack)
         {
             Attack(target);
@@ -41,8 +43,6 @@ public class BaseAttackController : MonoBehaviour
 
     protected virtual void Attack(GameObject target)
     {
-        transform.LookAt(target.transform);
-        agent.SetDestination(transform.position);
         target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(damage));
     }
 }

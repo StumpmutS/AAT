@@ -11,7 +11,7 @@ public class AIPathfinder : MonoBehaviour
     [SerializeField] private bool chaseEnabled;
     [SerializeField] private bool patrolEnabled;
     [SerializeField] private List<Vector3> patrolPoints;
-    [SerializeField] private UnitStatsUpgradeManager unitDataManager;
+    [SerializeField] private UnitStatsModifierManager unitDataManager;
 
     private float movementSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
     private float sightRange => unitDataManager.CurrentUnitStatsData.SightRange;

@@ -7,6 +7,7 @@ using UnityEngine;
 public class SpawnerController : MonoBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
 
     private int _spawnGroupsAmount;
     private int _unitsPerGroupAmount;
@@ -142,7 +143,7 @@ public class SpawnerController : MonoBehaviour
 
         if (unitGroupNumbers[groupIndex] == unitsPerGroup)
         {
-            unitGroup.Setup(ActiveUnitDeathHandler, groupIndex);
+            unitGroup.Setup(ActiveUnitDeathHandler, OnModifyStats, groupIndex);
 
             spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
             currentSpawningCount--;
@@ -222,6 +223,16 @@ public class SpawnerController : MonoBehaviour
         {
             QueueUnitGroup(_respawnTime, groupIndex, 1);
         }
+    }
+    #endregion
+
+    #region StatsModification
+    public event Action<List<Stat>, List<float>, ETransportationType, EAttackType, EMovementType> OnModifyStats = delegate { };
+
+    private void ModifyUnitGroupStats(List<Stat> stats = null, List<float> amounts = null, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    {
+        unitStatsModifierManager.ModifyStats(stats, amounts);
+        OnModifyStats.Invoke(stats, amounts, transportationType, attackType, movementType);
     }
     #endregion
 
