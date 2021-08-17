@@ -34,6 +34,12 @@ public class CameraTargetMovementController : MonoBehaviour
         InputManager.OnLeftShiftEnd += DeactivateBoost;
     }
 
+    public void SetCurrentRotation(Quaternion rotation)
+    {
+        transform.rotation = rotation;
+        currentVerticalRotation = -transform.eulerAngles.x;
+        currentHorizontalRotation = transform.eulerAngles.y;
+    }
 
     private void MoveTargetVertical(float inputAmount)
     {

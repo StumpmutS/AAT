@@ -64,7 +64,6 @@ public class UnitGroupController : MonoBehaviour
     public void DeselectGroup()
     {
         if (!selected) return;
-        print("deselect group");
         selected = false;
         foreach (var unit in units)
         {

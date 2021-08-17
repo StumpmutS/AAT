@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ArmoredHealth : Health, IArmor
 {
-    private float baseArmorPercent => unitData.BaseArmorPercent;
-    private float maxArmorPercent => unitData.MaxArmorPercent;
+    private float baseArmorPercent => unitDataManager.CurrentUnitStatsData.BaseArmorPercent;
+    private float maxArmorPercent => unitDataManager.CurrentUnitStatsData.MaxArmorPercent;
 
 
     private float currentArmorPercent;

@@ -4,29 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder))]
+[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BaseAttackController : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] protected UnitStatsData unitData;
-    
-    private float Damage => unitData.Damage;
-    private float damage;
-    private float attackSpeedPercent => unitData.AttackSpeedPercent;
+    [SerializeField] protected UnitStatsUpgradeManager unitDataManager;
+
+    private float damage => unitDataManager.CurrentUnitStatsData.Damage;
+    private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData.AttackSpeedPercent;
     private AIPathfinder AI;
+    private NavMeshAgent agent;
     private bool canAttack;
 
     private void Awake()
     {
-        damage = Damage;
-    }
-
-    private void Start()
-    {
         canAttack = true;
         AI = GetComponent<AIPathfinder>();
         AI.OnAttack += CallAttack;
-        damage = -(Mathf.Abs(damage));
+        agent = GetComponent<NavMeshAgent>();
     }
 
     protected virtual void CallAttack(GameObject target)
@@ -49,6 +43,6 @@ public class BaseAttackController : MonoBehaviour
     {
         transform.LookAt(target.transform);
         agent.SetDestination(transform.position);
-        target.GetComponent<IHealth>().ModifyHealth(damage);
+        target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(damage));
     }
 }

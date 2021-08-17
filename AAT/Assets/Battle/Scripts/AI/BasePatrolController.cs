@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder))]
+[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BasePatrolController : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent agent;
-
+    private NavMeshAgent agent;
     private AIPathfinder AI;
     private bool patrolling = false;
     private List<Vector3> _patrolPoints;
     private int currentPatrolPointIndex;
 
-    private void Start()
+    private void Awake()
     {
         AI = GetComponent<AIPathfinder>();
+        agent = GetComponent<NavMeshAgent>();
         AI.OnPatrol += Patrol;
         AI.OnChaseStart += StopPatrol;
         AI.OnAttackStart += StopPatrol;

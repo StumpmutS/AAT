@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class AIPathfinder : MonoBehaviour
 {
-    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private LayerMask enemyTeamLayer;
     [SerializeField] private bool chaseEnabled;
     [SerializeField] private bool patrolEnabled;
     [SerializeField] private List<Vector3> patrolPoints;
-    [SerializeField] private UnitStatsData unitData;
+    [SerializeField] private UnitStatsUpgradeManager unitDataManager;
 
-    private float movementSpeed => unitData.MovementSpeed;
-    private float sightRange => unitData.SightRange;
-    private float attackRange => unitData.AttackRange;
+    private float movementSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
+    private float sightRange => unitDataManager.CurrentUnitStatsData.SightRange;
+    private float attackRange => unitDataManager.CurrentUnitStatsData.AttackRange;
     
     public event Action<GameObject> OnChase = delegate { };
     public event Action OnChaseStart = delegate { };
@@ -23,8 +23,16 @@ public class AIPathfinder : MonoBehaviour
     public event Action OnAttackStart = delegate { };
     public event Action<List<Vector3>> OnPatrol = delegate { };
     public event Action OnPatrolStart = delegate { };
+    public event Action OnNoAIState = delegate { };
 
+    protected NavMeshAgent agent;
     private bool patrolling = false;
+    
+
+    protected virtual void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     private void Start()
     {
@@ -51,6 +59,10 @@ public class AIPathfinder : MonoBehaviour
         else if (patrolEnabled && !patrolling)
         {
             Patrol();
+        }
+        else
+        {
+            OnNoAIState.Invoke();
         }
     }
     

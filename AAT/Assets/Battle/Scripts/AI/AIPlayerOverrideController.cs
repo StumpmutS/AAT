@@ -7,8 +7,9 @@ public class AIPlayerOverrideController : AIPathfinder
 {
     private EntityController entity;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         entity = GetComponent<EntityController>();
         entity.OnSelect += SubscribeToInputManager;
         entity.OnDeselect += UnsubscribeFromInputManager;
@@ -26,6 +27,7 @@ public class AIPlayerOverrideController : AIPathfinder
 
     private void SetTargetDestination()
     {
+        print(agent);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit))
         {
