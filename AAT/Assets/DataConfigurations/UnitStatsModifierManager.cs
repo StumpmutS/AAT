@@ -7,51 +7,75 @@ public class UnitStatsModifierManager : MonoBehaviour
 {
     [SerializeField] private UnitStatsData baseUnitStatsData;
 
-    private UnitStatsData currentUnitStatsData;
-    public UnitStatsData CurrentUnitStatsData => currentUnitStatsData;
+    private UnitStatsDataStruct currentUnitStatsData;
+    public UnitStatsDataStruct CurrentUnitStatsData => currentUnitStatsData;
 
     public event Action OnRefreshStats = delegate{ };
 
     private void Awake()
     {
-        currentUnitStatsData = baseUnitStatsData;
+        if (baseUnitStatsData != null)
+        {
+            SetupCurrentUnitStatsData(baseUnitStatsData);
+        }
     }
 
-    public void ModifyStats(List<Stat> stats = null, List<float> amounts = null, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    public void Setup(UnitStatsData unitStatsData)
     {
-        if (stats != null && amounts != null)
+        SetupCurrentUnitStatsData(unitStatsData);
+    }
+    
+    private void SetupCurrentUnitStatsData(UnitStatsData unitStatsData)
+    {
+        currentUnitStatsData.MaxHealth = unitStatsData.MaxHealth;
+        currentUnitStatsData.BaseArmorPercent = unitStatsData.BaseArmorPercent;
+        currentUnitStatsData.MaxArmorPercent = unitStatsData.MaxArmorPercent;
+        currentUnitStatsData.Damage = unitStatsData.Damage;
+        currentUnitStatsData.AttackSpeedPercent = unitStatsData.AttackSpeedPercent;
+        currentUnitStatsData.MovementSpeed = unitStatsData.MovementSpeed;
+        currentUnitStatsData.SightRange = unitStatsData.SightRange;
+        currentUnitStatsData.AttackRange = unitStatsData.AttackRange;
+        currentUnitStatsData.ChaseSpeedPercentMultiplier = unitStatsData.ChaseSpeedPercentMultiplier;
+        currentUnitStatsData.TransportState = unitStatsData.TransportState;
+        currentUnitStatsData.AttackState = unitStatsData.AttackState;
+        currentUnitStatsData.MoveState = unitStatsData.MoveState;
+    }
+
+    public void ModifyStats(List<EStat> stats = null, List<float> amounts = null, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    {
+        if (stats != null && stats.Count > 0 && amounts != null && amounts.Count > 0)
         {
             for (int i = 0; i < stats.Count; i++)
             {
                 switch (stats[i])
                 {
-                    case Stat.None:
+                    case EStat.None:
                         break;
-                    case Stat.MaxHealth:
+                    case EStat.MaxHealth:
                         currentUnitStatsData.MaxHealth += amounts[i];
                         break;
-                    case Stat.BaseArmorPercent:
+                    case EStat.BaseArmorPercent:
                         currentUnitStatsData.BaseArmorPercent += amounts[i];
                         break;
-                    case Stat.MaxArmorPercent:
+                    case EStat.MaxArmorPercent:
                         currentUnitStatsData.MaxArmorPercent += amounts[i];
                         break;
-                    case Stat.Damage:
+                    case EStat.Damage:
                         currentUnitStatsData.Damage += amounts[i];
                         break;
-                    case Stat.AttackSpeedPercent:
+                    case EStat.AttackSpeedPercent:
                         currentUnitStatsData.AttackSpeedPercent += amounts[i];
                         break;
-                    case Stat.MovementSpeed:
+                    case EStat.MovementSpeed:
                         currentUnitStatsData.MovementSpeed += amounts[i];
                         break;
-                    case Stat.SightRange:
+                    case EStat.SightRange:
                         currentUnitStatsData.SightRange += amounts[i];
                         break;
-                    case Stat.AttackRange:
+                    case EStat.AttackRange:
                         currentUnitStatsData.AttackRange += amounts[i];
                         break;
-                    case Stat.ChaseSpeedPercentMultiplier:
+                    case EStat.ChaseSpeedPercentMultiplier:
                         currentUnitStatsData.ChaseSpeedPercentMultiplier += amounts[i];
                         break;
                 }

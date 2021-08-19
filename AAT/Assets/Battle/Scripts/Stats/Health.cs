@@ -14,9 +14,15 @@ public class Health : MonoBehaviour, IHealth
     protected float currentHealth;
     private float currentHealthPercent;
 
+    protected virtual void Awake()
+    {
+        unitDataManager.OnRefreshStats += RefreshHealth;
+    }
+
     protected virtual void Start()
     {
         currentHealth = maxHealth;
+        currentHealthPercent = currentHealth / maxHealth;
     }
 
     public void ModifyHealth(float amount)
@@ -51,5 +57,11 @@ public class Health : MonoBehaviour, IHealth
     protected virtual void Die()
     {
         OnDie.Invoke();
+    }
+
+    private void RefreshHealth()
+    {
+        currentHealth = maxHealth * currentHealthPercent;
+        OnHealthChanged.Invoke(currentHealthPercent);
     }
 }

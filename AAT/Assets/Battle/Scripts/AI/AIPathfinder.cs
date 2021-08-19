@@ -32,6 +32,7 @@ public class AIPathfinder : MonoBehaviour
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        unitDataManager.OnRefreshStats += RefreshMovementSpeed;
     }
 
     private void Start()
@@ -117,5 +118,10 @@ public class AIPathfinder : MonoBehaviour
         patrolling = true;
         OnPatrolStart.Invoke();
         OnPatrol.Invoke(patrolPoints);
+    }
+
+    private void RefreshMovementSpeed()
+    {
+        agent.speed = movementSpeed;
     }
 }

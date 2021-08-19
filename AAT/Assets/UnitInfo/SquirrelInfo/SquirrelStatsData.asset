@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxHealth: 200
   BaseArmorPercent: 20
   MaxArmorPercent: 20
-  Damage: 10
+  Damage: 5
   AttackSpeedPercent: 200
   MovementSpeed: 3.5
   SightRange: 10

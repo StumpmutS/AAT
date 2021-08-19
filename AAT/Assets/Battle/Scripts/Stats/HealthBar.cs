@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(IHealth))]
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
@@ -20,7 +21,7 @@ public class HealthBar : MonoBehaviour
     private void UpdateHealthBar(float percent)
     {
         healthBar.fillAmount = percent;
-        healthBarPercentText.text = percent + "%";
+        healthBarPercentText.text = percent * 100 + "%";
     }
 
     private void OnDestroy()

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SpawnerPlotController : EntityController
 {
     [SerializeField] private RectTransform UnitsUIContainer;
+    [SerializeField] private RectTransform UpgradesUIContainer;
     [SerializeField] private SpawnerController spawnerPrefab;
 
     public event Action<SpawnerPlotController> OnSpawnerPlotSelect = delegate { };
@@ -44,6 +45,6 @@ public class SpawnerPlotController : EntityController
     {
         SpawnerController instantiatedSpawner = Instantiate(spawnerPrefab, transform.position, transform.rotation);
         SpawnerManager.AddSpawnerPlot(instantiatedSpawner);
-        instantiatedSpawner.Setup(spawnData);
+        instantiatedSpawner.Setup(spawnData, UpgradesUIContainer);
     }
 }

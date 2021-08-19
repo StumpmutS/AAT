@@ -14,9 +14,9 @@ public class UnitGroupController : MonoBehaviour
     private bool selected = false; 
     private bool outlined = false;
 
-    public void Setup(Action<int> deathCallback, Action<List<Stat>, List<float>, ETransportationType, EAttackType, EMovementType> modifyStatEvent, int groupIndex)
+    public void Setup(Action<int> deathCallback, SpawnerController spawner, int groupIndex)
     {
-        modifyStatEvent += ModifyUnitStats;
+        spawner.OnModifyStats += ModifyUnitStats;
         _unitDeathCallback = deathCallback;
         _groupIndex = groupIndex;
     }
@@ -111,7 +111,7 @@ public class UnitGroupController : MonoBehaviour
     }
 
     #region StatModifierMethods
-    private void ModifyUnitStats(List<Stat> stats, List<float> amounts, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    private void ModifyUnitStats(List<EStat> stats, List<float> amounts, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
     {
         foreach (var unit in units)
         {

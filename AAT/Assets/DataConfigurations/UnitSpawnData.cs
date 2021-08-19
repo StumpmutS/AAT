@@ -14,4 +14,6 @@ public class UnitSpawnData : ScriptableObject
     public GameObject SpawnerVisuals;
     public UnitController UnitPrefab;
     public UnitGroupController UnitGroupPrefab;
+    public UnitStatsData UnitStatsData;
+    public List<UnitStatsUpgradeData> UnitStatsUpgradeData;
 }

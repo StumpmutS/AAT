@@ -7,8 +7,9 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] private SpawnPlotManager spawnPlotManager;
 
     private static List<SpawnerController> spawners = new List<SpawnerController>();
-
     private static int _nextIndex;
+
+    private static SpawnerController activeSpawner;
 
     private void Awake()
     {
@@ -30,7 +31,19 @@ public class SpawnerManager : MonoBehaviour
 
     public static void AddSpawnerPlot(SpawnerController spawner)
     {
-        spawners[+_nextIndex] = spawner;
+        spawners[_nextIndex] = spawner;
+        spawner.OnSpawnerSelect += SetActiveSpawner;
+    }
+
+    private static void SetActiveSpawner(SpawnerController spawnerToSet)
+    {
+        foreach (var spawner in spawners)
+        {
+            if (spawnerToSet == spawner)
+            {
+                activeSpawner = spawnerToSet;
+            }
+        }
     }
 
     public static void SetNextSpawnerPlotIndex(int index)
@@ -50,6 +63,12 @@ public class SpawnerManager : MonoBehaviour
         if (spawners[keyPressed - 1] != null)
         {
             spawners[keyPressed - 1].CurrentSpawnerVisualsEntity.Select();
+
         }
+    }
+
+    public void UpgradeActiveSpawnerStats()
+    {
+        activeSpawner.ModifyUnitGroupStats();
     }
 }

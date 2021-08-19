@@ -18,6 +18,9 @@ public class SpawnerController : MonoBehaviour
     private GameObject _spawnerVisuals;
     private UnitController _unitPrefab;
     private UnitGroupController _unitGroupPrefab;
+    private RectTransform _upgradesUIContainer;
+    private List<UnitStatsUpgradeData> _upgrades;
+    private int _currentUpgradeIndex;
 
     private EntityController _currentSpawnerVisualsEntity;
     public EntityController CurrentSpawnerVisualsEntity => _currentSpawnerVisualsEntity;
@@ -32,6 +35,8 @@ public class SpawnerController : MonoBehaviour
     private Dictionary<int, int> unitGroupNumbers = new Dictionary<int, int>();
     private Dictionary<int, IEnumerator> unitGroupCoroutines = new Dictionary<int, IEnumerator>();
 
+    public event Action<SpawnerController> OnSpawnerSelect = delegate { };
+
     private void Awake()
     {
         foreach (var spawnPoint in spawnPoints)
@@ -40,7 +45,7 @@ public class SpawnerController : MonoBehaviour
         }
     }
 
-    public void Setup(UnitSpawnData unitSpawnData)
+    public void Setup(UnitSpawnData unitSpawnData, RectTransform upgradesUIContainer)
     {
         _spawnGroupsAmount = unitSpawnData.SpawnGroupsAmount;
         _unitsPerGroupAmount = unitSpawnData.UnitsPerGroupAmount;
@@ -51,6 +56,10 @@ public class SpawnerController : MonoBehaviour
         _spawnerOffset = unitSpawnData.SpawnerOffset;
         _unitPrefab = unitSpawnData.UnitPrefab;
         _unitGroupPrefab = unitSpawnData.UnitGroupPrefab;
+        _upgradesUIContainer = upgradesUIContainer;
+        _upgrades = unitSpawnData.UnitStatsUpgradeData;
+
+        unitStatsModifierManager.Setup(unitSpawnData.UnitStatsData);
 
         for (int i = 0; i < _spawnGroupsAmount; i++)
         {
@@ -68,7 +77,10 @@ public class SpawnerController : MonoBehaviour
         EntityController spawnerVisualsEntity = instantiatedSpawnerVisuals.GetComponent<EntityController>();
         _currentSpawnerVisualsEntity = spawnerVisualsEntity;
         spawnerVisualsEntity.OnSelect += SelectUnitGroups;
+        spawnerVisualsEntity.OnSelect += SetActiveSpawner;
+        spawnerVisualsEntity.OnSelect += DisplayUpgradeUI;
         spawnerVisualsEntity.OnDeselect += DeselectUnitGroups;
+        spawnerVisualsEntity.OnDeselect += HideUpgradeUI;
     }
 
     private void SelectUnitGroups()
@@ -85,6 +97,21 @@ public class SpawnerController : MonoBehaviour
         {
             unitGroup.DeselectGroup();
         }
+    }
+
+    private void SetActiveSpawner()
+    {
+        OnSpawnerSelect.Invoke(this);
+    }
+
+    private void DisplayUpgradeUI()
+    {
+        _upgradesUIContainer.gameObject.SetActive(true);
+    }
+
+    private void HideUpgradeUI()
+    {
+        _upgradesUIContainer.gameObject.SetActive(false);
     }
     #endregion
 
@@ -143,7 +170,7 @@ public class SpawnerController : MonoBehaviour
 
         if (unitGroupNumbers[groupIndex] == unitsPerGroup)
         {
-            unitGroup.Setup(ActiveUnitDeathHandler, OnModifyStats, groupIndex);
+            unitGroup.Setup(ActiveUnitDeathHandler, this, groupIndex);
 
             spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
             currentSpawningCount--;
@@ -227,12 +254,21 @@ public class SpawnerController : MonoBehaviour
     #endregion
 
     #region StatsModification
-    public event Action<List<Stat>, List<float>, ETransportationType, EAttackType, EMovementType> OnModifyStats = delegate { };
+    public event Action<List<EStat>, List<float>, ETransportationType, EAttackType, EMovementType> OnModifyStats = delegate { };
 
-    private void ModifyUnitGroupStats(List<Stat> stats = null, List<float> amounts = null, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    public void ModifyUnitGroupStats()
     {
-        unitStatsModifierManager.ModifyStats(stats, amounts);
+        if (_currentUpgradeIndex >= _upgrades.Count) return;
+
+        List<EStat> stats = _upgrades[_currentUpgradeIndex].StatsToModify; 
+        List<float> amounts = _upgrades[_currentUpgradeIndex].AmountsToModifyBy; 
+        ETransportationType transportationType = _upgrades[_currentUpgradeIndex].TransportationTypeToModify;
+        EAttackType attackType = _upgrades[_currentUpgradeIndex].AttackTypeToModify;
+        EMovementType movementType = _upgrades[_currentUpgradeIndex].MovementTypeToModify;
+
+        unitStatsModifierManager.ModifyStats(stats, amounts, transportationType, attackType, movementType);
         OnModifyStats.Invoke(stats, amounts, transportationType, attackType, movementType);
+        _currentUpgradeIndex++;
     }
     #endregion
 

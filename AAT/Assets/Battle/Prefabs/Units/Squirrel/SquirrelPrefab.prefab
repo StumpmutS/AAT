@@ -1142,6 +1142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 5759228335420568730}
+  unitStatsModifierManager: {fileID: 430060796365761778}
   unitDeathController: {fileID: -3991292208228322283}
 --- !u!114 &-3991292208228322283
 MonoBehaviour:

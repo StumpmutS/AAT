@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
   m_Name: BearStatsData
   m_EditorClassIdentifier: 
-  MaxHealth: 5000
+  MaxHealth: 3000
   BaseArmorPercent: 50
-  MaxArmorPercent: 99
-  Damage: 200
-  AttackSpeedPercent: 20
+  MaxArmorPercent: 80
+  Damage: 400
+  AttackSpeedPercent: 35
   MovementSpeed: 2
   SightRange: 10
   AttackRange: 5

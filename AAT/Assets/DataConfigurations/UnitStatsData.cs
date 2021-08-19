@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,23 @@ public class UnitStatsData : ScriptableObject
     public EMovementType MoveState;
 }
 
-public enum Stat
+public struct UnitStatsDataStruct
+{
+    public float MaxHealth;
+    public float BaseArmorPercent;
+    public float MaxArmorPercent;
+    public float Damage;
+    public float AttackSpeedPercent;
+    public float MovementSpeed;
+    public float SightRange;
+    public float AttackRange;
+    public float ChaseSpeedPercentMultiplier;
+    public ETransportationType TransportState;
+    public EAttackType AttackState;
+    public EMovementType MoveState;
+}
+
+public enum EStat
 {
     None,
     MaxHealth,
