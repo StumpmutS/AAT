@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b81eb9366d85b640b57e722eb2d33ce, type: 3}
   m_Name: SquirrelFirstUpgradeData
   m_EditorClassIdentifier: 
-  StatsToModify: 06000000
-  AmountsToModifyBy:
-  - 15
-  TransportationTypeToModify: 0
-  AttackTypeToModify: 0
-  MovementTypeToModify: 0
+  UnitStatsDataInfo:
+    MaxHealth: 0
+    BaseArmorPercent: 0
+    MaxArmorPercent: 0
+    Damage: 0
+    AttackSpeedPercent: 0
+    MovementSpeed: 10
+    SightRange: 0
+    AttackRange: 0
+    ChaseSpeedPercentMultiplier: 0
+    TransportState: 0
+    AttackState: 0
+    MoveState: 0
