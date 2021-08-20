@@ -6,21 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Unit Stats Data")]
 public class UnitStatsData : ScriptableObject
 {
-    public float MaxHealth;
-    public float BaseArmorPercent;
-    public float MaxArmorPercent;
-    public float Damage;
-    public float AttackSpeedPercent;
-    public float MovementSpeed;
-    public float SightRange;
-    public float AttackRange;
-    public float ChaseSpeedPercentMultiplier;
-    public ETransportationType TransportState;
-    public EAttackType AttackState;
-    public EMovementType MoveState;
+    public UnitStatsDataInfo UnitStatsDataInfo;
 }
 
-public struct UnitStatsDataStruct
+[Serializable]
+public class UnitStatsDataInfo
 {
     public float MaxHealth;
     public float BaseArmorPercent;
@@ -35,17 +25,3 @@ public struct UnitStatsDataStruct
     public EAttackType AttackState;
     public EMovementType MoveState;
 }
-
-public enum EStat
-{
-    None,
-    MaxHealth,
-    BaseArmorPercent,
-    MaxArmorPercent,
-    Damage,
-    AttackSpeedPercent,
-    MovementSpeed,
-    SightRange,
-    AttackRange,
-    ChaseSpeedPercentMultiplier
-};

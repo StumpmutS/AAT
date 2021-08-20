@@ -111,11 +111,11 @@ public class UnitGroupController : MonoBehaviour
     }
 
     #region StatModifierMethods
-    private void ModifyUnitStats(List<EStat> stats, List<float> amounts, ETransportationType transportationType = ETransportationType.None, EAttackType attackType = EAttackType.None, EMovementType movementType = EMovementType.None)
+    private void ModifyUnitStats(UnitStatsDataInfo unitStatsDataInfo)
     {
         foreach (var unit in units)
         {
-            unit.ModifyStats(stats, amounts, transportationType, attackType, movementType);
+            unit.ModifyStats(unitStatsDataInfo);
         }
     }
     #endregion

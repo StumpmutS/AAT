@@ -254,20 +254,16 @@ public class SpawnerController : MonoBehaviour
     #endregion
 
     #region StatsModification
-    public event Action<List<EStat>, List<float>, ETransportationType, EAttackType, EMovementType> OnModifyStats = delegate { };
+    public event Action<UnitStatsDataInfo> OnModifyStats = delegate { };
 
     public void ModifyUnitGroupStats()
     {
         if (_currentUpgradeIndex >= _upgrades.Count) return;
 
-        List<EStat> stats = _upgrades[_currentUpgradeIndex].StatsToModify; 
-        List<float> amounts = _upgrades[_currentUpgradeIndex].AmountsToModifyBy; 
-        ETransportationType transportationType = _upgrades[_currentUpgradeIndex].TransportationTypeToModify;
-        EAttackType attackType = _upgrades[_currentUpgradeIndex].AttackTypeToModify;
-        EMovementType movementType = _upgrades[_currentUpgradeIndex].MovementTypeToModify;
+        UnitStatsDataInfo unitStatsDataInfo = _upgrades[_currentUpgradeIndex].UnitStatsDataInfo;
 
-        unitStatsModifierManager.ModifyStats(stats, amounts, transportationType, attackType, movementType);
-        OnModifyStats.Invoke(stats, amounts, transportationType, attackType, movementType);
+        unitStatsModifierManager.ModifyStats(unitStatsDataInfo);
+        OnModifyStats.Invoke(unitStatsDataInfo);
         _currentUpgradeIndex++;
     }
     #endregion
