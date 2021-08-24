@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    private bool shiftDown;
+
+    public static event Action OnUpdate = delegate{ };
+
     public static event Action OnLeftCLick = delegate { };
     public static event Action OnRightClick = delegate { };
 
     public static event Action<float> OnMouseYChange = delegate { };
     public static event Action<float> OnMouseXChange = delegate { };
+
+    public static event Action<float> OnMouseWheelScroll = delegate { };
 
     public static event Action<float> OnVerticalAxis = delegate { };
     public static event Action<float> OnHorizontalAxis = delegate { };
@@ -26,17 +32,30 @@ public class InputManager : MonoBehaviour
     public static event Action<int> OnNumberKey5 = delegate { };
     public static event Action<int> OnNumberKey6 = delegate { };
 
+    public static event Action OnTPressed = delegate { };
+
+    public static event Action OnPlus = delegate { };
+    public static event Action OnMinus = delegate { };
+
     private void Update()
     {
+        OnUpdate.Invoke();
+
         CheckMouseButtons();
 
         CheckMouseMovement();
+
+        CheckMouseScroll();
 
         CheckAxes();
 
         CheckLeftShift();
 
         CheckNumbers();
+
+        CheckAlphabetKeys();
+
+        CheckSymbols();
     }
 
     #region Check Methods
@@ -65,6 +84,15 @@ public class InputManager : MonoBehaviour
             OnMouseXChange.Invoke(horizontalMouseAxis);
         }
     }
+
+    private void CheckMouseScroll()
+    {
+        float mouseScrollAmount = Input.mouseScrollDelta.y;
+        if (mouseScrollAmount != 0)
+        {
+            OnMouseWheelScroll.Invoke(mouseScrollAmount);
+        }
+    }
     
     private void CheckAxes()
     {
@@ -89,10 +117,12 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            shiftDown = true;
             OnLeftShiftPressed.Invoke();
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            shiftDown = false;
             OnLeftShiftEnd.Invoke();
         }
     }
@@ -126,6 +156,26 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
         {
             OnNumberKey6.Invoke(6);
+        }
+    }
+
+    private void CheckAlphabetKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            OnTPressed.Invoke();
+        }
+    }
+
+    private void CheckSymbols()
+    {
+        if (shiftDown && Input.GetKeyDown(KeyCode.Equals))
+        {
+            OnPlus.Invoke();
+        }
+        if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            OnMinus.Invoke();
         }
     }
     #endregion
