@@ -29,6 +29,7 @@ public class UnitStatsModifierManager : MonoBehaviour
     {
         var instantiatedUnitStatsData = Instantiate(unitStatsData);
         currentUnitStatsData = instantiatedUnitStatsData.UnitStatsDataInfo;
+        print(instantiatedUnitStatsData);
     }
 
     public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo)

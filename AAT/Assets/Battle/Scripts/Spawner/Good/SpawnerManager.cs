@@ -6,10 +6,10 @@ public class SpawnerManager : MonoBehaviour
 {
     [SerializeField] private SpawnPlotManager spawnPlotManager;
 
-    private static List<SpawnerController> spawners = new List<SpawnerController>();
+    private static List<BaseSpawnerController> spawners = new List<BaseSpawnerController>();
     private static int _nextIndex;
 
-    private static SpawnerController activeSpawner;
+    private static BaseSpawnerController activeSpawner;
 
     private void Awake()
     {
@@ -29,13 +29,13 @@ public class SpawnerManager : MonoBehaviour
         InputManager.OnNumberKey6 += SelectSpawnerByIndex;
     }
 
-    public static void AddSpawnerPlot(SpawnerController spawner)
+    public static void AddSpawnerPlot(BaseSpawnerController spawner)
     {
         spawners[_nextIndex] = spawner;
         spawner.OnSpawnerSelect += SetActiveSpawner;
     }
 
-    private static void SetActiveSpawner(SpawnerController spawnerToSet)
+    private static void SetActiveSpawner(BaseSpawnerController spawnerToSet)
     {
         foreach (var spawner in spawners)
         {

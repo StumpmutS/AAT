@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private bool shiftDown;
+    private bool leftShiftDown;
 
     public static event Action OnUpdate = delegate{ };
 
@@ -117,12 +117,12 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            shiftDown = true;
+            leftShiftDown = true;
             OnLeftShiftPressed.Invoke();
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            shiftDown = false;
+            leftShiftDown = false;
             OnLeftShiftEnd.Invoke();
         }
     }
@@ -169,7 +169,7 @@ public class InputManager : MonoBehaviour
 
     private void CheckSymbols()
     {
-        if (shiftDown && Input.GetKeyDown(KeyCode.Equals))
+        if (leftShiftDown && Input.GetKeyDown(KeyCode.Equals))
         {
             OnPlus.Invoke();
         }

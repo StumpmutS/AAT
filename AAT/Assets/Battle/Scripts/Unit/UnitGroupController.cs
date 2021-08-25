@@ -14,7 +14,7 @@ public class UnitGroupController : MonoBehaviour
     private bool selected = false; 
     private bool outlined = false;
 
-    public void Setup(Action<int> deathCallback, SpawnerController spawner, int groupIndex)
+    public void Setup(Action<int> deathCallback, BaseSpawnerController spawner, int groupIndex)
     {
         spawner.OnModifyStats += ModifyUnitStats;
         _unitDeathCallback = deathCallback;

@@ -1,0 +1,60 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySpawnPlotManager : MonoBehaviour
+{
+    [SerializeField] private float waveSetupTime;
+    [SerializeField] private List<EnemySpawnerPlotController> spawnerPlots;
+    [Tooltip("Each wave must correspond with spawner")]
+    [SerializeField] private List<UnitSpawnDataListList> wavesUnitSpawnData;
+    public static List<EnemySpawnerPlotController> SpawnerPlots => instance.spawnerPlots;
+
+    private static List<EnemySpawnerPlotController> activeSpawnerPlots = new List<EnemySpawnerPlotController>();
+
+    public static event Action OnNextWave = delegate { };
+
+    private static EnemySpawnPlotManager instance;
+    private static int currentWave = 0;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Start()
+    {
+        SetupWave(currentWave);
+    }
+
+    public static void NextWave()
+    {
+        currentWave++;
+        SetupWave(currentWave);
+        OnNextWave.Invoke();
+    }
+
+    private static void SetupWave(int waveIndex)
+    {
+        instance.StartCoroutine(SetupWaveCoroutine(waveIndex));
+    }
+
+    private static IEnumerator SetupWaveCoroutine(int waveIndex)
+    {
+        yield return new WaitForSeconds(instance.waveSetupTime);
+
+        foreach (var spawnerPlot in activeSpawnerPlots)
+        {
+            spawnerPlot.gameObject.SetActive(false);
+        }
+
+        activeSpawnerPlots.Clear();
+
+        for (int i = 0; i < instance.spawnerPlots.Count; i++)
+        {
+            instance.spawnerPlots[i].SetupSpawner(instance.wavesUnitSpawnData[waveIndex].UnitSpawnDataList[i]);
+            activeSpawnerPlots.Add(instance.spawnerPlots[i]);
+        }
+    }
+}

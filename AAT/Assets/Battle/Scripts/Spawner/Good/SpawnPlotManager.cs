@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpawnPlotManager : MonoBehaviour
 {
-    [SerializeField] private List<SpawnerPlotController> spawnerPlots;
+    [SerializeField] protected List<SpawnerPlotController> spawnerPlots;
 
     public List<SpawnerPlotController> SpawnerPlots => spawnerPlots;
 
@@ -43,7 +43,7 @@ public class SpawnPlotManager : MonoBehaviour
                 break;
             }
         }
-        
+
         activeSpawnerPlot.SetupSpawner(unitSpawnData);
     }
 

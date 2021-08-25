@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,4 +17,10 @@ public class UnitSpawnData : ScriptableObject
     public UnitGroupController UnitGroupPrefab;
     public UnitStatsData UnitStatsData;
     public List<UnitStatsUpgradeData> UnitStatsUpgradeData;
+}
+
+[Serializable]
+public class UnitSpawnDataListList
+{
+    public List<UnitSpawnData> UnitSpawnDataList;
 }
