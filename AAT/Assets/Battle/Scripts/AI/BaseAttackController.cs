@@ -10,12 +10,15 @@ public class BaseAttackController : MonoBehaviour
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
 
     private float damage => unitDataManager.CurrentUnitStatsData.Damage;
+    private float critChancePercent => unitDataManager.CurrentUnitStatsData.CritChancePercent;
+    private float critMultiplierPercent => unitDataManager.CurrentUnitStatsData.CritMultiplierPercent;
     private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData.AttackSpeedPercent;
+
     private AIPathfinder AI;
     private NavMeshAgent agent;
     private bool canAttack;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         canAttack = true;
         AI = GetComponent<AIPathfinder>();
@@ -23,13 +26,13 @@ public class BaseAttackController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    protected virtual void CallAttack(GameObject target)
+    private void CallAttack(GameObject target)
     {
         transform.LookAt(target.transform);
         agent.SetDestination(transform.position);
         if (canAttack)
         {
-            Attack(target);
+            CheckCrit(target);
             StartCoroutine(StartAttackTimer());
         }
     }
@@ -41,8 +44,25 @@ public class BaseAttackController : MonoBehaviour
         canAttack = true;
     }
 
-    protected virtual void Attack(GameObject target)
+    private void CheckCrit(GameObject target)
+    {
+        if (UnityEngine.Random.Range(0f, 100f) <= critChancePercent)
+        {
+            CritAttack(target);
+        }
+        else
+        {
+            BaseAttack(target);
+        }
+    }
+
+    protected virtual void BaseAttack(GameObject target)
     {
         target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(damage));
+    }
+
+    protected virtual void CritAttack(GameObject target)
+    {
+        target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(damage) * (critMultiplierPercent / 100));
     }
 }

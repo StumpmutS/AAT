@@ -27,6 +27,7 @@ public class AIPlayerOverrideController : AIPathfinder
 
     private void SetTargetDestination()
     {
+        unitAnimationController.SetMovement(movementSpeed);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit))
         {

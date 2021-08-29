@@ -16,6 +16,8 @@ public class UnitStatsDataInfo
     public float BaseArmorPercent;
     public float MaxArmorPercent;
     public float Damage;
+    public float CritMultiplierPercent;
+    public float CritChancePercent;
     public float AttackSpeedPercent;
     public float MovementSpeed;
     public float SightRange;

@@ -10,7 +10,7 @@ public class UnitStatsModifierManager : MonoBehaviour
     private UnitStatsDataInfo currentUnitStatsData;
     public UnitStatsDataInfo CurrentUnitStatsData => currentUnitStatsData;
 
-    public event Action OnRefreshStats = delegate{ };
+    public event Action OnRefreshStats = delegate { };
 
     private void Awake()
     {
@@ -29,7 +29,6 @@ public class UnitStatsModifierManager : MonoBehaviour
     {
         var instantiatedUnitStatsData = Instantiate(unitStatsData);
         currentUnitStatsData = instantiatedUnitStatsData.UnitStatsDataInfo;
-        print(instantiatedUnitStatsData);
     }
 
     public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo)
@@ -38,6 +37,8 @@ public class UnitStatsModifierManager : MonoBehaviour
         currentUnitStatsData.BaseArmorPercent += unitStatsDataInfo.BaseArmorPercent;
         currentUnitStatsData.MaxArmorPercent += unitStatsDataInfo.MaxArmorPercent;
         currentUnitStatsData.Damage += unitStatsDataInfo.Damage;
+        currentUnitStatsData.CritMultiplierPercent += unitStatsDataInfo.CritMultiplierPercent;
+        currentUnitStatsData.CritChancePercent += unitStatsDataInfo.CritChancePercent;
         currentUnitStatsData.AttackSpeedPercent += unitStatsDataInfo.AttackSpeedPercent;
         currentUnitStatsData.MovementSpeed += unitStatsDataInfo.MovementSpeed;
         currentUnitStatsData.SightRange += unitStatsDataInfo.SightRange;

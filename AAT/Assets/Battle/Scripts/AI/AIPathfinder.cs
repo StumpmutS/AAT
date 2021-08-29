@@ -12,8 +12,9 @@ public class AIPathfinder : MonoBehaviour
     [SerializeField] private bool patrolEnabled;
     [SerializeField] private List<Vector3> patrolPoints;
     [SerializeField] private UnitStatsModifierManager unitDataManager;
+    [SerializeField] protected UnitAnimationController unitAnimationController;
 
-    private float movementSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
+    protected float movementSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
     private float sightRange => unitDataManager.CurrentUnitStatsData.SightRange;
     private float attackRange => unitDataManager.CurrentUnitStatsData.AttackRange;
     
@@ -27,6 +28,7 @@ public class AIPathfinder : MonoBehaviour
 
     protected NavMeshAgent agent;
     private bool patrolling = false;
+    private GameObject _currentAttackTarget = null;
     
 
     protected virtual void Awake()
@@ -44,6 +46,7 @@ public class AIPathfinder : MonoBehaviour
     {
         if (CheckRange(attackRange, out GameObject attackTarget))
         {
+            _currentAttackTarget = attackTarget;
             Attack(attackTarget);
         }
         else if (chaseEnabled)
@@ -56,6 +59,10 @@ public class AIPathfinder : MonoBehaviour
             {
                 Patrol();
             }
+            else
+            {
+                NoAIState();
+            }
         }
         else if (patrolEnabled && !patrolling)
         {
@@ -63,7 +70,7 @@ public class AIPathfinder : MonoBehaviour
         }
         else
         {
-            OnNoAIState.Invoke();
+            NoAIState();
         }
     }
     
@@ -88,19 +95,25 @@ public class AIPathfinder : MonoBehaviour
         {
             if (collider != null)
             {
-                float newDistanceSquared = (transform.position - collider.transform.position).sqrMagnitude;
+                GameObject potentialTarget = collider.gameObject;
+                if (potentialTarget == _currentAttackTarget) return _currentAttackTarget;
+
+                float newDistanceSquared = (transform.position - potentialTarget.transform.position).sqrMagnitude;
                 if (newDistanceSquared < targetDistanceSquared)
                 {
                     targetDistanceSquared = newDistanceSquared;
-                    target = collider.gameObject;
+                    target = potentialTarget;
                 }
             }
         }
+        _currentAttackTarget = null;
         return target;
     }
 
     private void Attack(GameObject target)
     {
+        if (unitAnimationController != null)
+            unitAnimationController.SetMovement(0);
         patrolling = false;
         OnAttackStart.Invoke();
         OnAttack.Invoke(target);
@@ -108,6 +121,8 @@ public class AIPathfinder : MonoBehaviour
 
     private void Chase(GameObject target)
     {
+        if (unitAnimationController != null)
+            unitAnimationController.SetMovement(movementSpeed);
         patrolling = false;
         OnChaseStart.Invoke();
         OnChase.Invoke(target);
@@ -115,9 +130,18 @@ public class AIPathfinder : MonoBehaviour
 
     private void Patrol()
     {
+        if (unitAnimationController != null)
+            unitAnimationController.SetMovement(movementSpeed);
         patrolling = true;
         OnPatrolStart.Invoke();
         OnPatrol.Invoke(patrolPoints);
+    }
+
+    private void NoAIState()
+    {
+        if (unitAnimationController != null)
+            unitAnimationController.SetMovement(0);
+        OnNoAIState.Invoke();
     }
 
     private void RefreshMovementSpeed()

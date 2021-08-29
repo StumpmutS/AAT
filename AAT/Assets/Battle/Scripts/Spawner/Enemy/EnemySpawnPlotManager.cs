@@ -16,7 +16,7 @@ public class EnemySpawnPlotManager : MonoBehaviour
     public static event Action OnNextWave = delegate { };
 
     private static EnemySpawnPlotManager instance;
-    private static int currentWave = 0;
+    private static int currentWaveIndex = 0;
 
     private void Awake()
     {
@@ -25,13 +25,14 @@ public class EnemySpawnPlotManager : MonoBehaviour
 
     private void Start()
     {
-        SetupWave(currentWave);
+        SetupWave(currentWaveIndex);
     }
 
     public static void NextWave()
     {
-        currentWave++;
-        SetupWave(currentWave);
+        currentWaveIndex++;
+        if (currentWaveIndex >= instance.wavesUnitSpawnData.Count)
+        SetupWave(currentWaveIndex);
         OnNextWave.Invoke();
     }
 

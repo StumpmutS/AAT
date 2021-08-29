@@ -16,11 +16,13 @@ MonoBehaviour:
     MaxHealth: 3000
     BaseArmorPercent: 50
     MaxArmorPercent: 80
-    Damage: 300
+    Damage: 200
+    CritMultiplierPercent: 400
+    CritChancePercent: 50
     AttackSpeedPercent: 35
     MovementSpeed: 2
-    SightRange: 15
-    AttackRange: 5
+    SightRange: 25
+    AttackRange: 10
     ChaseSpeedPercentMultiplier: 600
     TransportState: 2
     AttackState: 1

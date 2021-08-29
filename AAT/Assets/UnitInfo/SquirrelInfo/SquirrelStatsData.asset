@@ -17,6 +17,8 @@ MonoBehaviour:
     BaseArmorPercent: 20
     MaxArmorPercent: 50
     Damage: 5
+    CritMultiplierPercent: 0
+    CritChancePercent: 10
     AttackSpeedPercent: 200
     MovementSpeed: 3.5
     SightRange: 10
