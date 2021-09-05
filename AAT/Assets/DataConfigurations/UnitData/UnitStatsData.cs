@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Stats Data")]
+[CreateAssetMenu(menuName = "Unit Data/Base/Unit Stats Data")]
 public class UnitStatsData : ScriptableObject
 {
     public UnitStatsDataInfo UnitStatsDataInfo;

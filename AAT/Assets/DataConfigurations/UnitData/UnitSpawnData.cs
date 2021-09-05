@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Spawn Data")]
+[CreateAssetMenu(menuName = "Unit Data/Base/Unit Spawn Data")]
 public class UnitSpawnData : ScriptableObject
 {
     public int SpawnGroupsAmount;

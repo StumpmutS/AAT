@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 5195817743977918581}
   - component: {fileID: 6756883040493834048}
   - component: {fileID: 3385312414236435768}
+  - component: {fileID: 248841225070311842}
   m_Layer: 6
   m_Name: BearPrefab
   m_TagString: Good
@@ -75,7 +76,7 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 3
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 1000
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -190,6 +191,7 @@ MonoBehaviour:
   patrolPoints: []
   unitDataManager: {fileID: 5301970439137932500}
   unitAnimationController: {fileID: 3385312414236435768}
+  abilityHandler: {fileID: 248841225070311842}
 --- !u!114 &7511641642898748425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +268,20 @@ MonoBehaviour:
   idleSuperRandomChancePercent: 10
   idleRandomNumber: 1
   idleSuperRandomNumber: 1
+--- !u!114 &248841225070311842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003117018386545755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4cf1322a7c0b74ba4b8246fa5189e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitAbilityData:
+  - {fileID: 11400000, guid: ed204fdd1d1a78441998b754c02b59bb, type: 2}
 --- !u!1001 &768303595039902395
 PrefabInstance:
   m_ObjectHideFlags: 0

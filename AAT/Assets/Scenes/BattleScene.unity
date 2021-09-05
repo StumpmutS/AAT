@@ -1086,6 +1086,7 @@ RectTransform:
   - {fileID: 1355349637}
   - {fileID: 1667684826}
   - {fileID: 705998640}
+  - {fileID: 1420435947}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3408,6 +3409,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381201651}
   m_CullTransparentMesh: 1
+--- !u!1 &1420435946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420435947}
+  - component: {fileID: 1420435948}
+  m_Layer: 5
+  m_Name: AbilityButtonContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1420435947
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420435946}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 403028685}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 120}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &1420435948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420435946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 2
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &1512168082 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 90829029774520661, guid: 36f5cae20e0953c4dbeb76ed0b324647, type: 3}
@@ -3745,7 +3808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BAHHAHAHAHAHAHAHAHHAHAHAHA
+  m_text: Place Wall
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3772,7 +3835,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52.9
+  m_fontSize: 67.6
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4117,6 +4180,8 @@ GameObject:
   - component: {fileID: 2007025104}
   - component: {fileID: 2007025102}
   - component: {fileID: 2007025103}
+  - component: {fileID: 2007025106}
+  - component: {fileID: 2007025107}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -4291,6 +4356,32 @@ MonoBehaviour:
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
+--- !u!114 &2007025106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007025096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8a6f85a5a6e4d44a0f1b8bd63310a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityButtonsContainer: {fileID: 1420435947}
+  abilityButtonPrefab: {fileID: -2957079443569140848, guid: 2a53af9bfe75f9b45a5b2419ec2f315c, type: 3}
+--- !u!114 &2007025107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007025096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df6bef7e0056ad4ab85f3b9b7f4750b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2018665701
 GameObject:
   m_ObjectHideFlags: 0
