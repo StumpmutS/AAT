@@ -7,6 +7,8 @@ public class UnitController : EntityController
 {
     [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
     [SerializeField] private UnitDeathController unitDeathController;
+    [SerializeField] private GameObject unitVisuals;
+    public GameObject UnitVisuals => unitVisuals;
 
     public event Action<UnitController> OnDeath = delegate { };
 

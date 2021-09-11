@@ -26,10 +26,11 @@ public class BaseAttackController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void CallAttack(GameObject target)
+    public void CallAttack(GameObject target)
     {
         transform.LookAt(target.transform);
-        agent.SetDestination(transform.position);
+        if (agent.enabled)//ai deactivation
+            agent.SetDestination(transform.position);
         if (canAttack)
         {
             CheckCrit(target);

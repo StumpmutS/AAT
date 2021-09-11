@@ -960,6 +960,7 @@ GameObject:
   - component: {fileID: -3991292208228322283}
   - component: {fileID: -2680104130768556178}
   - component: {fileID: 430060796365761778}
+  - component: {fileID: 6019638265588333270}
   m_Layer: 6
   m_Name: SquirrelPrefab
   m_TagString: Good
@@ -1129,6 +1130,8 @@ MonoBehaviour:
   patrolEnabled: 0
   patrolPoints: []
   unitDataManager: {fileID: 430060796365761778}
+  unitAnimationController: {fileID: 0}
+  abilityHandler: {fileID: 0}
 --- !u!114 &-8213272441465151675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,6 +1147,7 @@ MonoBehaviour:
   outline: {fileID: 5759228335420568730}
   unitStatsModifierManager: {fileID: 430060796365761778}
   unitDeathController: {fileID: -3991292208228322283}
+  unitVisuals: {fileID: 919132149155446097, guid: b024d73f61b7aac409cacc17ce48c325, type: 3}
 --- !u!114 &-3991292208228322283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,6 +1185,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseUnitStatsData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
+--- !u!114 &6019638265588333270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840677430842725870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c801011149489744b139f29c67add3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AI: {fileID: 5759228335420568733}
+  agent: {fileID: 5759228335420568731}
+  statsMod: {fileID: 430060796365761778}
+  attackController: {fileID: 5759228335420568726}
 --- !u!1 &4922851530394433235
 GameObject:
   m_ObjectHideFlags: 0

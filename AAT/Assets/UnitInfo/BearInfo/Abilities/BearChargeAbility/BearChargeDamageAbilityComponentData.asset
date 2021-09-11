@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82240684790ba94fa806e2d9cda4415, type: 3}
   m_Name: BearChargeDamageAbilityComponentData
   m_EditorClassIdentifier: 
-  Repeat: 0
-  ComponentDelay: 0
-  ComponentDuration: 0
+  Repeat: 1
+  ComponentDelay: 0.25
+  ComponentDuration: 0.5
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  damageRadius: 0
-  damage: 0
+    m_Bits: 128
+  damageRadius: 10
+  damage: -5

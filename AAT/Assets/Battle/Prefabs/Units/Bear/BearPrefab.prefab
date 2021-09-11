@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &889819947453353572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1579436383476820431}
+  m_Layer: 6
+  m_Name: MountPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1579436383476820431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889819947453353572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.66, z: 0.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6224185356987716639}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2726597930031236155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8906511356206202706}
+  m_Layer: 6
+  m_Name: MountPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8906511356206202706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2726597930031236155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.66, z: 1.89}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6224185356987716639}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1851161816634727054
 Animator:
   serializedVersion: 3
@@ -19,6 +79,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &4771424468122755701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8651631501932055214}
+  m_Layer: 6
+  m_Name: MountPoint3
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8651631501932055214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4771424468122755701}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.66, z: -0.976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6224185356987716639}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9003117018386545755
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,6 +132,7 @@ GameObject:
   - component: {fileID: 6756883040493834048}
   - component: {fileID: 3385312414236435768}
   - component: {fileID: 248841225070311842}
+  - component: {fileID: -9025695178234748016}
   m_Layer: 6
   m_Name: BearPrefab
   m_TagString: Good
@@ -62,6 +153,9 @@ Transform:
   m_Children:
   - {fileID: 2373158702114237409}
   - {fileID: 6223886827419769614}
+  - {fileID: 8906511356206202706}
+  - {fileID: 1579436383476820431}
+  - {fileID: 8651631501932055214}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,6 +209,7 @@ MonoBehaviour:
   outline: {fileID: 636180067387719803}
   unitStatsModifierManager: {fileID: 5301970439137932500}
   unitDeathController: {fileID: 4425282573941339854}
+  unitVisuals: {fileID: 0}
 --- !u!114 &636180067387719803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +377,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitAbilityData:
   - {fileID: 11400000, guid: ed204fdd1d1a78441998b754c02b59bb, type: 2}
+--- !u!114 &-9025695178234748016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003117018386545755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a77622bfce62f74f99ac3e702472be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mountData: {fileID: 11400000, guid: 01ff9b67a9013ae43a58c9ea04e1d6b5, type: 2}
+  mountablePoints:
+  - {fileID: 8906511356206202706}
+  - {fileID: 1579436383476820431}
+  - {fileID: 8651631501932055214}
+  mountableVisualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
+  visualsOffset: {x: 0, y: 5, z: 0}
 --- !u!1001 &768303595039902395
 PrefabInstance:
   m_ObjectHideFlags: 0

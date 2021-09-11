@@ -10,8 +10,7 @@ public class PlaceableWallController : MonoBehaviour
     [SerializeField] private Vector3 wallJointOffset;
     [SerializeField] private WallVisualsController wallVisuals;
     public WallVisualsController WallVisuals => wallVisuals;
-
-
+        
     private NavMeshLink[] meshLinks;
 
     private void Awake()

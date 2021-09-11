@@ -15,5 +15,6 @@ public class UnitAbilityDataInfo
     public string AbilityName;
     public float CooldownTime;
     public float ActiveTime;
+    public bool TransportUsage;
     public List<AbilityComponent> AbilityComponents;
 }

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BearChargeKnockbackAbilityComponentData
   m_EditorClassIdentifier: 
   Repeat: 0
-  ComponentDelay: 0.5
-  ComponentDuration: 0
+  ComponentDelay: 0.25
+  ComponentDuration: 0.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  knockbackRadius: 20
-  knockbackDistance: 3
-  knockbackSpeed: 2
-  knockbackLerpEndPercent: 50
+  knockbackRadius: 10
+  knockbackDistance: 10
+  knockbackSpeed: 5
+  knockbackLerpEndPercent: 80

@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class AIPathfinder : MonoBehaviour
 {
     [SerializeField] private LayerMask enemyTeamLayer;
+    public LayerMask EnemyTeamLayer => enemyTeamLayer;
     [SerializeField] private bool chaseEnabled;
     [SerializeField] private bool patrolEnabled;
     [SerializeField] private List<Vector3> patrolPoints;
@@ -18,6 +19,9 @@ public class AIPathfinder : MonoBehaviour
     protected float movementSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
     private float sightRange => unitDataManager.CurrentUnitStatsData.SightRange;
     private float attackRange => unitDataManager.CurrentUnitStatsData.AttackRange;
+
+    public event Action OnActivation = delegate { };
+    public event Action OnDeactivation = delegate { };
     
     public event Action<GameObject> OnChase = delegate { };
     public event Action OnChaseStart = delegate { };
@@ -31,7 +35,6 @@ public class AIPathfinder : MonoBehaviour
     private bool patrolling = false;
     private GameObject _currentAttackTarget = null;
     private bool _usingAbility = false;
-    
 
     protected virtual void Awake()
     {
@@ -46,7 +49,7 @@ public class AIPathfinder : MonoBehaviour
         agent.speed = movementSpeed;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_usingAbility)
         {
@@ -85,7 +88,7 @@ public class AIPathfinder : MonoBehaviour
         }
     }
     
-    private bool CheckRange(float range, out GameObject target)
+    public bool CheckRange(float range, out GameObject target)
     {
         if (Physics.CheckSphere(transform.position, range, enemyTeamLayer))
         {
@@ -163,5 +166,17 @@ public class AIPathfinder : MonoBehaviour
     public void SetAbilityUsage(bool value)
     {
         _usingAbility = value;
+    }
+
+    public void Activate()
+    {
+        OnActivation.Invoke();
+        enabled = true;
+    }
+
+    public virtual void Deactivate()
+    {
+        OnDeactivation.Invoke();
+        enabled = false;
     }
 }

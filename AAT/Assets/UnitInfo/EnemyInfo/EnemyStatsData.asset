@@ -20,7 +20,7 @@ MonoBehaviour:
     CritMultiplierPercent: 0
     CritChancePercent: 10
     AttackSpeedPercent: 60
-    MovementSpeed: 1
+    MovementSpeed: 5
     SightRange: 10
     AttackRange: 3
     ChaseSpeedPercentMultiplier: 2000

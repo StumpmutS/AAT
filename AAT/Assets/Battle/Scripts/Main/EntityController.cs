@@ -11,6 +11,8 @@ public class EntityController : MonoBehaviour
     public event Action OnDeselect = delegate { };
     public event Action OnOutline = delegate { };
     public event Action OnRemoveOutline = delegate { };
+    public event Action OnHover = delegate { };
+    public event Action OnHoverStop = delegate { };
     
     private bool selected = false;
     private bool outlined = false;
@@ -20,12 +22,13 @@ public class EntityController : MonoBehaviour
     {
         mouseOver = true;
         Outline();
+        OnHover.Invoke();
         InputManager.OnLeftCLick += Select;
         InputManager.OnLeftCLick -= Deselect;
-        InputManager.OnJump += TestDamage;
+        InputManager.OnMinus += TestDamage;
     }
 
-    private void TestDamage(float hehe)
+    private void TestDamage()
     {
         GetComponent<IHealth>().ModifyHealth(-100f);
     }
@@ -34,9 +37,10 @@ public class EntityController : MonoBehaviour
     {
         mouseOver = false;
         RemoveOutline();
+        OnHoverStop.Invoke();
         InputManager.OnLeftCLick -= Select;
         InputManager.OnLeftCLick += Deselect;
-        InputManager.OnJump -= TestDamage;
+        InputManager.OnMinus -= TestDamage;
     }
 
     public virtual void Select()

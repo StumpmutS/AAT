@@ -14,9 +14,9 @@ public class AIPlayerOverrideController : AIPathfinder
         get { return movementOverride; }
         set
         {
-            if (value == MovementOverride) return;
+            if (value == movementOverride) return;
             movementOverride = value;
-            if (!MovementOverride) InputManager.OnUpdate -= CheckTargetDistance;
+            if (!value) InputManager.OnUpdate -= CheckTargetDistance;
             else InputManager.OnUpdate += CheckTargetDistance;
         }
     }
@@ -42,7 +42,8 @@ public class AIPlayerOverrideController : AIPathfinder
     private void SetTargetDestination()
     {
         MovementOverride = true;
-        unitAnimationController.SetMovement(movementSpeed);
+        if (unitAnimationController != null)
+            unitAnimationController.SetMovement(movementSpeed);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit))
         {
@@ -81,5 +82,11 @@ public class AIPlayerOverrideController : AIPathfinder
         {
             MovementOverride = false;
         }
+    }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+        MovementOverride = false;
     }
 }
