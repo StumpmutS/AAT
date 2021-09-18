@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Unit Data/Base/Mountable Unit Data")]
-public class MountableUnitData : ScriptableObject
+public class MountableUnitData : MountableData<MountableUnitDataInfo>
 {
-    public float MountRange;
-    public UnitStatsDataInfo MountedUnitModifier;
+}
+
+[Serializable]
+public class MountableUnitDataInfo : BaseMountableDataInfo
+{
     public UnitStatsDataInfo TransportingModifier;
 }

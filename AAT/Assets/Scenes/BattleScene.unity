@@ -4295,9 +4295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallRotationAmount: 15
   wallScaleAmount: {x: 1, y: 0, z: 0}
-  ground: {fileID: 63087522}
   wallPlacementUI: {fileID: 705998640}
-  placeableWallPrefab: {fileID: 7235150862306890434, guid: cba3ff0e5bad20841a9a77141158fd46, type: 3}
+  placeableWallPrefab: {fileID: 4384116657929121814, guid: cba3ff0e5bad20841a9a77141158fd46, type: 3}
   wallOffset: {x: 0, y: 1.25, z: 0}
   wallJointLayer:
     serializedVersion: 2
@@ -4327,7 +4326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479f3e560a61fd4a9bdd77333a425a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSetupTime: 8
+  waveSetupTime: 20
   spawnerPlots:
   - {fileID: 1681625066415372506}
   - {fileID: 124459870}
@@ -4392,7 +4391,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2007025096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed650e2376496f4ca734e4eb6a1c57c, type: 3}
+  m_Script: {fileID: 11500000, guid: cbdb1d42a81af224497f2cf7654de18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2018665701

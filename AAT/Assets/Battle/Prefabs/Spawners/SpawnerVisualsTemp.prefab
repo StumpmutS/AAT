@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1978553126615586534}
   - component: {fileID: 242015673763400759}
   - component: {fileID: 3037032701145778338}
-  - component: {fileID: 3263921275462976776}
   - component: {fileID: 4116970915174135843}
+  - component: {fileID: -5862317012690568444}
   m_Layer: 0
   m_Name: SpawnerVisualsTemp
   m_TagString: Untagged
@@ -98,19 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3263921275462976776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5786109076718938141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f76ba87b8eed7e94f96cc79d14d6fd3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outline: {fileID: 4116970915174135843}
 --- !u!114 &4116970915174135843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,3 +116,16 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &-5862317012690568444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5786109076718938141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 4116970915174135843}

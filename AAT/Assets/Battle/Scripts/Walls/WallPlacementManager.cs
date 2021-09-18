@@ -9,7 +9,6 @@ public class WallPlacementManager : MonoBehaviour
 {
     [SerializeField] private float wallRotationAmount;
     [SerializeField] private Vector3 wallScaleAmount;
-    [SerializeField] private NavMeshSurface ground;
     [SerializeField] private RectTransform wallPlacementUI;
     [SerializeField] private PlaceableWallController placeableWallPrefab;
     [SerializeField] private Vector3 wallOffset;
@@ -25,7 +24,8 @@ public class WallPlacementManager : MonoBehaviour
     private WallVisualsController wallPreview;
     private Vector3 baseWallPreviewScale;
 
-    private int connectedWallEndIndex = -1;
+    private int _connectedWallEndIndex = -1;
+    List<WallJointController> _joints = new List<WallJointController>();
 
     private void Awake()
     {
@@ -126,41 +126,41 @@ public class WallPlacementManager : MonoBehaviour
     private void CheckSnap()
     {
         int singleWallEndIndex = -1;
-        List<WallJointController> joints = new List<WallJointController>();
+        _joints.Clear();
         for (int i = 0; i < wallPreview.WallEnds.Count; i++)
         {
             if (CheckWallJoints(wallPreview.WallEnds[i], out var joint))
             {
                 singleWallEndIndex = i;
-                joints.Add(joint);
+                _joints.Add(joint);
             }
         }
-        if (joints.Count > 1)
+        if (_joints.Count > 1)
         {
-            connectedWallEndIndex = 2;
-            Vector3 targetVector = joints[0].transform.position - joints[1].transform.position;
+            _connectedWallEndIndex = 2;
+            Vector3 targetVector = _joints[0].transform.position - _joints[1].transform.position;
 
             wallPreview.transform.rotation = Quaternion.FromToRotation(Vector3.right, targetVector);
 
             wallPreview.transform.position = new Vector3(
-                joints[1].transform.position.x + targetVector.x / 2, 
-                joints[1].transform.position.y + targetVector.y / 2, 
-                joints[1].transform.position.z + targetVector.z / 2);
+                _joints[1].transform.position.x + targetVector.x / 2, 
+                _joints[1].transform.position.y + targetVector.y / 2, 
+                _joints[1].transform.position.z + targetVector.z / 2);
 
             wallPreview.transform.localScale = new Vector3(
                 targetVector.magnitude - (1 + Mathf.Abs(wallPreview.WallEnds[0].localPosition.x)),
                 wallPreview.transform.localScale.y,
                 wallPreview.transform.localScale.z);
         }
-        else if (joints.Count > 0)
+        else if (_joints.Count > 0)
         {
-            connectedWallEndIndex = singleWallEndIndex;
+            _connectedWallEndIndex = singleWallEndIndex;
             Vector3 endOffset = wallPreview.transform.position - wallPreview.WallEnds[singleWallEndIndex].position;
-            wallPreview.transform.position = joints[0].transform.position + endOffset;
+            wallPreview.transform.position = _joints[0].transform.position + endOffset;
         }
         else
         {
-            connectedWallEndIndex = -1;
+            _connectedWallEndIndex = -1;
         }
     }
 
@@ -196,17 +196,17 @@ public class WallPlacementManager : MonoBehaviour
                 var instantiatedWall = Instantiate(placeableWallPrefab, wallPreview.transform.position, wallPreview.transform.rotation);
                 instantiatedWall.transform.localScale = wallPreview.transform.localScale;
                 wallPreview.transform.localScale = baseWallPreviewScale;
-                if (connectedWallEndIndex == 1)
+                if (_connectedWallEndIndex == 1)
                 {
-                    instantiatedWall.Setup(0);
+                    instantiatedWall.Setup(0, _joints);
                 }
-                else if (connectedWallEndIndex == 0)
+                else if (_connectedWallEndIndex == 0)
                 {
-                    instantiatedWall.Setup(1);
+                    instantiatedWall.Setup(1, _joints);
                 }
                 else
                 {
-                    instantiatedWall.Setup(connectedWallEndIndex);
+                    instantiatedWall.Setup(_connectedWallEndIndex, _joints);
                 }
             }
         }

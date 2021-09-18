@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitController : EntityController
+public class UnitController : OutlineEntityController
 {
     [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
     [SerializeField] private UnitDeathController unitDeathController;
@@ -19,6 +19,7 @@ public class UnitController : EntityController
 
     private void UnitDeath()
     {
+        Deselect();
         OnDeath.Invoke(this);
     }
 

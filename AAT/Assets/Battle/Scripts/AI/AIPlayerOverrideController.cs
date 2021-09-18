@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,7 @@ using UnityEngine;
 public class AIPlayerOverrideController : AIPathfinder
 {
     private EntityController entity;
-
     private bool movementOverride;
-
     private bool MovementOverride
     {
         get { return movementOverride; }
@@ -20,6 +19,8 @@ public class AIPlayerOverrideController : AIPathfinder
             else InputManager.OnUpdate += CheckTargetDistance;
         }
     }
+
+    public event Action OnReroute = delegate { };
 
     protected override void Awake()
     {
@@ -34,13 +35,15 @@ public class AIPlayerOverrideController : AIPathfinder
         InputManager.OnRightClick += SetTargetDestination;
     }
 
-    private void UnsubscribeFromInputManager()
+    public void UnsubscribeFromInputManager()
     {
         InputManager.OnRightClick -= SetTargetDestination;
     }
 
     private void SetTargetDestination()
     {
+        if (!_active) return;
+        Reroute();
         MovementOverride = true;
         if (unitAnimationController != null)
             unitAnimationController.SetMovement(movementSpeed);
@@ -82,6 +85,11 @@ public class AIPlayerOverrideController : AIPathfinder
         {
             MovementOverride = false;
         }
+    }
+
+    private void Reroute()
+    {
+        OnReroute.Invoke();
     }
 
     public override void Deactivate()

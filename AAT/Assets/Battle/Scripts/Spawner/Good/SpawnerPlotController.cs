@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnerPlotController : EntityController
+public class SpawnerPlotController : OutlineEntityController
 {
     [SerializeField] private RectTransform UnitsUIContainer;
     [SerializeField] private RectTransform UpgradesUIContainer;

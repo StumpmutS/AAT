@@ -35,6 +35,7 @@ public class AIPathfinder : MonoBehaviour
     private bool patrolling = false;
     private GameObject _currentAttackTarget = null;
     private bool _usingAbility = false;
+    protected bool _active = true;
 
     protected virtual void Awake()
     {
@@ -49,8 +50,10 @@ public class AIPathfinder : MonoBehaviour
         agent.speed = movementSpeed;
     }
 
-    protected virtual void Update()
+    private void Update()
     {
+        if (!_active) return;
+
         if (_usingAbility)
         {
             agent.SetDestination(transform.position);
@@ -168,15 +171,15 @@ public class AIPathfinder : MonoBehaviour
         _usingAbility = value;
     }
 
-    public void Activate()
+    public virtual void Activate()
     {
         OnActivation.Invoke();
-        enabled = true;
+        _active = true;
     }
 
     public virtual void Deactivate()
     {
         OnDeactivation.Invoke();
-        enabled = false;
+        _active = false;
     }
 }

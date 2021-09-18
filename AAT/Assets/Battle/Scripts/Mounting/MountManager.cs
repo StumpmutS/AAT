@@ -8,21 +8,26 @@ public class MountManager : MonoBehaviour
     private static MountManager instance;
     public static MountManager Instance => instance;
 
-    private HashSet<MountableController> _mountableControllers = new HashSet<MountableController>();
+    private HashSet<BaseMountableController> _mountableControllers = new HashSet<BaseMountableController>();
     private HashSet<TransportableController> _transportableControllers = new HashSet<TransportableController>();
     private List<TransportableController> _selectedTransportables = new List<TransportableController>();
     private UnitController _selectedUnitType;
 
-    private MountableController _hoveredMountable;
+    private List<BaseMountableController> _hoveredMountables = new List<BaseMountableController>();
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void AddMountable(MountableController mountableController)
+    public void AddMountable(BaseMountableController mountable)
     {
-        _mountableControllers.Add(mountableController);
+        _mountableControllers.Add(mountable);
+    }
+
+    public void AddHoveredMountable(BaseMountableController mountable)
+    {
+        _hoveredMountables.Add(mountable);
     }
 
     public void AddTransportable(TransportableController transportableController)
@@ -51,7 +56,7 @@ public class MountManager : MonoBehaviour
         {
             mountable.DisplayVisuals();
             mountable.OnMountableHover += DisplayMountablePreview;
-            mountable.OnMountableHoverStop += RemoveMountablePreview;
+            mountable.OnMountableHoverStop += RemoveMountablePreviews;
         }
     }
 
@@ -61,32 +66,41 @@ public class MountManager : MonoBehaviour
         {
             mountable.RemoveVisuals();
             mountable.OnMountableHover -= DisplayMountablePreview;
-            mountable.OnMountableHoverStop -= RemoveMountablePreview;
+            mountable.OnMountableHoverStop -= RemoveMountablePreviews;
         }
     }
 
-    private void DisplayMountablePreview(MountableController mountableController)
+    private void DisplayMountablePreview(BaseMountableController mountable)
     {
-        foreach (var mountable in _mountableControllers)
+        foreach (var mountableController in _mountableControllers)
         {
-            mountable.RemoveVisuals();                
+            mountableController.RemoveVisuals();                
         }
-        mountableController.DisplayPreview(_selectedUnitType.UnitVisuals, _selectedTransportables.Count);
-        _hoveredMountable = mountableController;
+        mountable.CallDisplayPreview(_selectedUnitType.UnitVisuals, _selectedTransportables.Count);
         InputManager.OnRightClick += TransportablePerformMount;
     }
 
     private void TransportablePerformMount()
     {
-        for (int i = 0; i < _selectedTransportables.Count; i++)
+        for (int i = 0; i < _hoveredMountables.Count; i++)
         {
-            _selectedTransportables[i].BeginMountProcess(_hoveredMountable, i);
+            _selectedTransportables[i].BeginMountProcess(_hoveredMountables[i]);
         }
     }
 
-    private void RemoveMountablePreview(MountableController mountableController)
+    private void RemoveMountablePreviews()
     {
-        mountableController.RemovePreview();
+        foreach (var mountable in _hoveredMountables)
+        {
+            mountable.RemovePreview();
+        }
+        _hoveredMountables.Clear();
+        foreach (var mountable in _mountableControllers)
+        {
+            mountable.DisplayVisuals();
+            mountable.OnMountableHover += DisplayMountablePreview;
+            mountable.OnMountableHoverStop += RemoveMountablePreviews;
+        }
         InputManager.OnRightClick -= TransportablePerformMount;
     }
 }

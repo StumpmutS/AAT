@@ -19,11 +19,12 @@ public class TransportableController : MonoBehaviour
     public event Action<TransportableController> OnTransportableDeselect = delegate { };
 
     private float attackRange => statsMod.CurrentUnitStatsData.AttackRange;
-    private MountableController _mount = null;
-    private Transform _mountPoint = null;
+    private BaseMountableController _mount = null;
+    private bool _movingToMount;
 
     private void Awake()
     {
+        if (AI is AIPlayerOverrideController) GetComponent<AIPlayerOverrideController>().OnReroute += RerouteHandler;
         unitController = GetComponent<UnitController>();
         unitController.OnSelect += Select;
         unitController.OnDeselect += Deselect;
@@ -44,35 +45,37 @@ public class TransportableController : MonoBehaviour
         OnTransportableDeselect.Invoke(this);
     }
 
-    public void BeginMountProcess(MountableController mount, int index)
+    public void BeginMountProcess(BaseMountableController mount)
     {
-        var newMountPoint = mount.MountablePoints[index];
-        if (mount == _mount && newMountPoint == _mountPoint) return;
-        if (AI != null) AI.Deactivate();
-        _mount = mount;
-        _mountPoint = mount.MountablePoints[index];
-        InputManager.OnUpdate += CheckMountRange;
+        if (mount != _mount)
+        {
+            if (AI != null) AI.Deactivate();
+            _mount = mount;
+            _movingToMount = true;
+            InputManager.OnUpdate += CheckMountRange;
+        }
     }
 
     private void CheckMountRange()
     {
-        if (agent.remainingDistance < _mount.MountData.MountRange)
+        if (agent.remainingDistance < _mount.ReturnData().MountRange)
         {
+            _movingToMount = false;
             InputManager.OnUpdate -= CheckMountRange;
             Mount();
         } 
         else
         {
-            agent.SetDestination(_mountPoint.position);
+            agent.SetDestination(_mount.transform.position);
         }
     }
 
     private void Mount()
     {
         agent.enabled = false;
-        transform.position = _mountPoint.position;
-        transform.rotation = _mountPoint.rotation;
-        transform.parent = _mountPoint;
+        transform.position = _mount.transform.position;
+        transform.rotation = _mount.transform.rotation;
+        transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
     }
 
@@ -82,5 +85,10 @@ public class TransportableController : MonoBehaviour
         {
             attackController.CallAttack(target);
         }
+    }
+
+    private void RerouteHandler()
+    {
+        if (_movingToMount) InputManager.OnUpdate -= CheckMountRange;
     }
 }

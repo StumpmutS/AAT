@@ -1,0 +1,87 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[RequireComponent(typeof(EntityController), typeof(Collider))]
+public abstract class BaseMountableController : MonoBehaviour
+{
+    [SerializeField] protected MountablePointLinkController _mountablePointLink;
+
+    [SerializeField] private GameObject mountableVisualsPrefab;
+    [SerializeField] private Vector3 visualsOffset;
+
+    public event Action<BaseMountableController> OnMountableHover = delegate { };
+    public event Action OnMountableHoverStop = delegate { };
+
+    private bool _visualsDisplayed;
+    private bool _previewDisplayed;
+    private EntityController entityController;
+    private GameObject _preview;
+
+    public abstract BaseMountableDataInfo ReturnData();
+
+    protected virtual void Awake()
+    {
+        entityController = GetComponent<EntityController>();
+        entityController.OnHover += Hover;
+        entityController.OnHoverStop += StopHover;
+    }
+
+    private void Start()
+    {
+        MountManager.Instance.AddMountable(this);
+        mountableVisualsPrefab = Instantiate(mountableVisualsPrefab, gameObject.transform);
+        mountableVisualsPrefab.transform.position += visualsOffset;
+        mountableVisualsPrefab.SetActive(false);
+    }
+
+    private void Hover()
+    {
+        OnMountableHover.Invoke(this);
+    }
+
+    private void StopHover()
+    {
+        OnMountableHoverStop.Invoke();
+    }
+
+    public void DisplayVisuals()
+    {
+        if (_visualsDisplayed) return;
+        _visualsDisplayed = true;
+        mountableVisualsPrefab.SetActive(true);
+    }
+
+    public void RemoveVisuals()
+    {
+        if (!_visualsDisplayed) return;
+        _visualsDisplayed = false;
+        mountableVisualsPrefab.SetActive(false);
+    }
+
+    public void CallDisplayPreview(GameObject transportableUnitPreview, int unitAmount)
+    {
+        if (_previewDisplayed) return;
+        _previewDisplayed = true;
+        DisplayPreview(transportableUnitPreview, unitAmount);
+    }
+
+    protected virtual void DisplayPreview(GameObject transportableUnitPreview, int unitAmount)
+    {
+        _preview = Instantiate(transportableUnitPreview, transform);
+        MountManager.Instance.AddHoveredMountable(this);
+
+        if (unitAmount > 1)
+        {
+            _mountablePointLink.BeginPreviewDisplayLink(this, transportableUnitPreview, unitAmount - 1, true); //CHANGE TRUE TO BE BASED OFF MOUSE POSITION IN RELATION TO COLLIDER
+        }
+    }
+
+    public void RemovePreview()
+    {
+        if (!_previewDisplayed) return;
+        _previewDisplayed = false;
+        Destroy(_preview.gameObject);
+    }
+}
