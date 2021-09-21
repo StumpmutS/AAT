@@ -27,7 +27,7 @@ public class MountManager : MonoBehaviour
 
     public void AddHoveredMountable(BaseMountableController mountable)
     {
-        _hoveredMountables.Add(mountable);
+        if (!_hoveredMountables.Contains(mountable)) _hoveredMountables.Add(mountable);
     }
 
     public void AddTransportable(TransportableController transportableController)
@@ -98,8 +98,6 @@ public class MountManager : MonoBehaviour
         foreach (var mountable in _mountableControllers)
         {
             mountable.DisplayVisuals();
-            mountable.OnMountableHover += DisplayMountablePreview;
-            mountable.OnMountableHoverStop += RemoveMountablePreviews;
         }
         InputManager.OnRightClick -= TransportablePerformMount;
     }

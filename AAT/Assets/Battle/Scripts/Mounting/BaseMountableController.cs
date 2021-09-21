@@ -17,7 +17,7 @@ public abstract class BaseMountableController : MonoBehaviour
     private bool _visualsDisplayed;
     private bool _previewDisplayed;
     private EntityController entityController;
-    private GameObject _preview;
+    private PoolingObject _preview;
 
     public abstract BaseMountableDataInfo ReturnData();
 
@@ -34,6 +34,11 @@ public abstract class BaseMountableController : MonoBehaviour
         mountableVisualsPrefab = Instantiate(mountableVisualsPrefab, gameObject.transform);
         mountableVisualsPrefab.transform.position += visualsOffset;
         mountableVisualsPrefab.SetActive(false);
+    }
+
+    public void ResetLink(MountablePointLinkController newLink)
+    {
+        _mountablePointLink = newLink;
     }
 
     private void Hover()
@@ -60,16 +65,20 @@ public abstract class BaseMountableController : MonoBehaviour
         mountableVisualsPrefab.SetActive(false);
     }
 
-    public void CallDisplayPreview(GameObject transportableUnitPreview, int unitAmount)
+    public void CallDisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)
     {
         if (_previewDisplayed) return;
         _previewDisplayed = true;
         DisplayPreview(transportableUnitPreview, unitAmount);
     }
 
-    protected virtual void DisplayPreview(GameObject transportableUnitPreview, int unitAmount)
+    protected virtual void DisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)
     {
-        _preview = Instantiate(transportableUnitPreview, transform);
+        _preview = PoolingManager.Instance.CreatePoolingObject(transportableUnitPreview);
+        Transform previewTransform = _preview.transform;
+        previewTransform.position = transform.position;
+        previewTransform.rotation = transform.rotation;
+        previewTransform.SetParent(transform);
         MountManager.Instance.AddHoveredMountable(this);
 
         if (unitAmount > 1)
@@ -82,6 +91,6 @@ public abstract class BaseMountableController : MonoBehaviour
     {
         if (!_previewDisplayed) return;
         _previewDisplayed = false;
-        Destroy(_preview.gameObject);
+        _preview.Deactivate();
     }
 }

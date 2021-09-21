@@ -9,7 +9,9 @@ public class MountablePointLinkController : MonoBehaviour
     public List<BaseMountableController> MountablePoints => _mountablePoints;
 
     private MountablePointLinkController _parentLink = null;
+    private List<MountablePointLinkController> _childLinks = new List<MountablePointLinkController>();
     private ILinkable linkable;
+    private bool _active = true;
 
     private void Awake()
     {
@@ -17,35 +19,49 @@ public class MountablePointLinkController : MonoBehaviour
         if (linkable != null) linkable.OnJoin += JoinLinks;
     }
 
-    public void SetParentLink(MountablePointLinkController link)
+    public void SetChildLink(MountablePointLinkController link, bool insert)
     {
-        _parentLink = link;
+        if (_parentLink != null) 
+        {
+            _parentLink.SetChildLink(link, insert);
+        }
+        int newIndex = _mountablePoints.Count - 1;
+        _childLinks.Add(link);
+        if (insert)
+            _mountablePoints.InsertRange(0, link.MountablePoints);
+        else
+            _mountablePoints.AddRange(link.MountablePoints);
+        foreach (var mountable in link.MountablePoints)
+        {
+            mountable.ResetLink(this);
+        }
+        link.Deactivate();
+    }
+
+    private void Deactivate()
+    {
+        _mountablePoints.Clear();
+        _active = false;
     }
 
     private void JoinLinks(MountablePointLinkController otherLink, bool insert)
     {
-        if (insert)
-            _mountablePoints.InsertRange(0, otherLink.MountablePoints);
-        else
-            _mountablePoints.AddRange(otherLink.MountablePoints);
-        otherLink.SetParentLink(this);
-        otherLink.enabled = false;
+        print(insert? "insertting" : "adding");
+        otherLink.SetChildLink(this, insert);
+        _parentLink = otherLink;
     }
 
-    public void BeginPreviewDisplayLink(BaseMountableController mountable, GameObject visuals, int unitAmount, bool up)
+    public void BeginPreviewDisplayLink(BaseMountableController mountable, PoolingObject visuals, int unitAmount, bool up)
     {
-        if (_parentLink != null)
-        {
-            _parentLink.BeginPreviewDisplayLink(mountable, visuals, unitAmount, up);
-            return;
-        }
+        if (!_active) return;
         int index = _mountablePoints.IndexOf(mountable);
+        print(index);
         if (index == 0) SendThrough(visuals, unitAmount, true);
         else if (index == _mountablePoints.Count - 1) SendThrough(visuals, unitAmount, false);
         else SendAltering(index, visuals, unitAmount, up);
     }
 
-    private void SendAltering(int index, GameObject visuals, int unitAmount, bool up)
+    private void SendAltering(int index, PoolingObject visuals, int unitAmount, bool up)
     {
         bool upSend = up;
         int upIndex = index + 1;
@@ -73,11 +89,11 @@ public class MountablePointLinkController : MonoBehaviour
         }
     }
 
-    private void SendThrough(GameObject visuals, int unitAmount, bool up)
+    private void SendThrough(PoolingObject visuals, int unitAmount, bool up)
     {
         if (up)
         {
-            for (int i = 1; i < unitAmount; i++)
+            for (int i = 1; i < unitAmount + 1; i++)
             {
                 if (i >= _mountablePoints.Count) 
                 {
@@ -89,7 +105,7 @@ public class MountablePointLinkController : MonoBehaviour
         }
         else
         {
-            for (int i = _mountablePoints.Count - 1; i < unitAmount; i--)
+            for (int i = _mountablePoints.Count - 2; i > _mountablePoints.Count - (unitAmount + 2); i--)
             {
                 if (i < 0)
                 {

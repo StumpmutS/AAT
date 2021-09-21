@@ -1147,7 +1147,7 @@ MonoBehaviour:
   outline: {fileID: 5759228335420568730}
   unitStatsModifierManager: {fileID: 430060796365761778}
   unitDeathController: {fileID: -3991292208228322283}
-  unitVisuals: {fileID: 919132149155446097, guid: b024d73f61b7aac409cacc17ce48c325, type: 3}
+  unitVisuals: {fileID: -378061192886151853, guid: 8dd30d7cc8f5ce84981e3798e338ee62, type: 3}
 --- !u!114 &-3991292208228322283
 MonoBehaviour:
   m_ObjectHideFlags: 0

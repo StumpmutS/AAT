@@ -25,7 +25,7 @@ public class WallPlacementManager : MonoBehaviour
     private Vector3 baseWallPreviewScale;
 
     private int _connectedWallEndIndex = -1;
-    List<WallJointController> _joints = new List<WallJointController>();
+    private List<WallJointController> _joints = new List<WallJointController>();
 
     private void Awake()
     {
@@ -137,10 +137,17 @@ public class WallPlacementManager : MonoBehaviour
         }
         if (_joints.Count > 1)
         {
+            foreach (var wall in _joints[0].ConnectedWalls)
+                if (_joints[1].ConnectedWalls.Contains(wall)) return;
+
             _connectedWallEndIndex = 2;
             Vector3 targetVector = _joints[0].transform.position - _joints[1].transform.position;
 
-            wallPreview.transform.rotation = Quaternion.FromToRotation(Vector3.right, targetVector);
+            var targetRotation = Quaternion.FromToRotation(Vector3.right, targetVector);
+            var previousRotation = transform.rotation;
+            wallPreview.transform.rotation = targetRotation;
+            if (targetRotation != previousRotation)
+                wallPreview.transform.Rotate(0, 180, 0);
 
             wallPreview.transform.position = new Vector3(
                 _joints[1].transform.position.x + targetVector.x / 2, 

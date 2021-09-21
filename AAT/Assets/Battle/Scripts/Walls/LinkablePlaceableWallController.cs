@@ -26,12 +26,12 @@ public class LinkablePlaceableWallController : PlaceableWallController, ILinkabl
                     switch (index)
                     {
                         case 0:
-                            OnJoin.Invoke(otherLink, false);
-                            break;
-                        case 1:
                             OnJoin.Invoke(otherLink, true);
                             break;
-                        case 2: OnJoin.Invoke(otherLink, i == 0? true : false);
+                        case 1:
+                            OnJoin.Invoke(otherLink, false);
+                            break;
+                        case 2: OnJoin.Invoke(otherLink, i == 0? false : true);
                             break;
                     }
             }

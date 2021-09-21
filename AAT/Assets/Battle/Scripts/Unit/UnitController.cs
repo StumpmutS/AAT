@@ -7,12 +7,12 @@ public class UnitController : OutlineEntityController
 {
     [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
     [SerializeField] private UnitDeathController unitDeathController;
-    [SerializeField] private GameObject unitVisuals;
-    public GameObject UnitVisuals => unitVisuals;
+    [SerializeField] private PoolingObject unitVisuals;
+    public PoolingObject UnitVisuals => unitVisuals;
 
     public event Action<UnitController> OnDeath = delegate { };
 
-    private void Start()
+    private void Awake()
     {
         unitDeathController.OnUnitDeath += UnitDeath;
     }
