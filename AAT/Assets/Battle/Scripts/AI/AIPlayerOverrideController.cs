@@ -40,7 +40,7 @@ public class AIPlayerOverrideController : AIPathfinder
         InputManager.OnRightClick -= SetTargetDestination;
     }
 
-    private void SetTargetDestination()
+    public void SetTargetDestination()
     {
         if (!_active) return;
         Reroute();

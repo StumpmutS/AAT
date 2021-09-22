@@ -1197,6 +1197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c801011149489744b139f29c67add3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   AI: {fileID: 5759228335420568733}
   agent: {fileID: 5759228335420568731}
   statsMod: {fileID: 430060796365761778}

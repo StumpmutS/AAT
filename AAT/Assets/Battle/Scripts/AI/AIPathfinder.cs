@@ -8,7 +8,6 @@ using UnityEngine.AI;
 public class AIPathfinder : MonoBehaviour
 {
     [SerializeField] private LayerMask enemyTeamLayer;
-    public LayerMask EnemyTeamLayer => enemyTeamLayer;
     [SerializeField] private bool chaseEnabled;
     [SerializeField] private bool patrolEnabled;
     [SerializeField] private List<Vector3> patrolPoints;

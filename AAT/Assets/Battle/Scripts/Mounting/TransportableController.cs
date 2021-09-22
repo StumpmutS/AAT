@@ -7,6 +7,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(UnitController))]
 public class TransportableController : MonoBehaviour
 {
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private AIPathfinder AI;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private UnitStatsModifierManager statsMod;
@@ -20,7 +21,9 @@ public class TransportableController : MonoBehaviour
 
     private float attackRange => statsMod.CurrentUnitStatsData.AttackRange;
     private BaseMountableController _mount = null;
+    private bool _mounted;
     private bool _movingToMount;
+    private bool _checkGroundSubscribed;
 
     private void Awake()
     {
@@ -38,11 +41,13 @@ public class TransportableController : MonoBehaviour
     private void Select()
     {
         OnTransportableSelect.Invoke(this);
+        if (_mounted) SubscribeCheckGround(true);
     }
 
     private void Deselect()
     {
         OnTransportableDeselect.Invoke(this);
+        SubscribeCheckGround(false);
     }
 
     public void BeginMountProcess(BaseMountableController mount)
@@ -72,11 +77,13 @@ public class TransportableController : MonoBehaviour
 
     private void Mount()
     {
+        _mounted = true;
         agent.enabled = false;
         transform.position = _mount.transform.position;
         transform.rotation = _mount.transform.rotation;
         transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
+        SubscribeCheckGround(true);
     }
 
     private void CheckAttack()
@@ -87,8 +94,44 @@ public class TransportableController : MonoBehaviour
         }
     }
 
+    private void CheckGround()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(transform.position, -Vector3.up, out var demountHit, groundLayer) && Physics.Raycast(ray))
+        {
+            SubscribeCheckGround(false);
+            Demount(demountHit.point);
+        }
+    }
+
+    private void Demount(Vector3 pos)
+    {
+        _mount = null;
+        _mounted = false;
+        transform.position = pos;
+        agent.enabled = true;
+        agent.Warp(pos);
+        if (AI != null) AI.Activate();
+        var AIOverride = AI as AIPlayerOverrideController;
+        if (AIOverride != null) AIOverride.SetTargetDestination();
+    }
+
     private void RerouteHandler()
     {
         if (_movingToMount) InputManager.OnUpdate -= CheckMountRange;
+    }
+
+    private void SubscribeCheckGround(bool subscribe)
+    {
+        if (subscribe && !_checkGroundSubscribed)
+        {
+            _checkGroundSubscribed = true;
+            InputManager.OnRightClick += CheckGround;
+        }
+        else if (_checkGroundSubscribed)
+        {
+            _checkGroundSubscribed = false;
+            InputManager.OnRightClick -= CheckGround;
+        }
     }
 }
