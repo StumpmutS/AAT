@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8c5da6d8048b7f24180c066f379d402d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,4 +130,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 90829029774520668}
   UnitsUIContainer: {fileID: 0}
-  spawnerPrefab: {fileID: 6965836578903922021, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
+  UpgradesUIContainer: {fileID: 0}
+  spawnerPrefab: {fileID: 0}
