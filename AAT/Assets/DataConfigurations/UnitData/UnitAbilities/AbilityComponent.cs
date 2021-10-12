@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class AbilityComponent : ScriptableObject
 {
     public bool Repeat;
+    public float RepeatIntervals;
     public float ComponentDelay;
     public float ComponentDuration;
 

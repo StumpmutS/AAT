@@ -94,6 +94,7 @@ public class UnitGroupController : MonoBehaviour
 
     private void SetupUnit(UnitController unit)
     {
+        unit.SetGroup(this);
         unit.OnSelect += SelectGroup;
         unit.OnDeselect += DeselectGroup;
         unit.OnOutline += OutlineGroup;

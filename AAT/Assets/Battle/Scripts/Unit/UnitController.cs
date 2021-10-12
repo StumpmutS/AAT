@@ -10,6 +10,9 @@ public class UnitController : OutlineEntityController
     [SerializeField] private PoolingObject unitVisuals;
     public PoolingObject UnitVisuals => unitVisuals;
 
+    private UnitGroupController unitGroup;
+    public UnitGroupController UnitGroup => unitGroup;
+
     public event Action<UnitController> OnDeath = delegate { };
 
     private void Awake()
@@ -26,5 +29,10 @@ public class UnitController : OutlineEntityController
     public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo)
     {
         unitStatsModifierManager.ModifyStats(unitStatsDataInfo);
+    }
+
+    public void SetGroup(UnitGroupController group)
+    {
+        unitGroup = group;
     }
 }

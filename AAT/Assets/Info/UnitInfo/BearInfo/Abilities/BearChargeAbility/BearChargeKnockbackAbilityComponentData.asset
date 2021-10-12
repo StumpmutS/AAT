@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Repeat: 0
   ComponentDelay: 0.25
-  ComponentDuration: 0.5
+  ComponentDuration: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitController))]
+[RequireComponent(typeof(UnitController), typeof(UnitAnimationController))]
 public class AbilityHandler : MonoBehaviour
 {
     [SerializeField] private List<UnitAbilityData> unitAbilityData;
@@ -13,10 +13,12 @@ public class AbilityHandler : MonoBehaviour
     public event Action<bool> OnAbilityUsed = delegate { };
 
     private UnitController unitController;
+    private UnitAnimationController unitAnimationController;
 
     private void Awake()
     {
         unitController = GetComponent<UnitController>();
+        unitAnimationController = GetComponent<UnitAnimationController>();
         unitController.OnSelect += SendDisplayData;
         foreach (var abilityData in unitAbilityData)
         {
@@ -39,6 +41,7 @@ public class AbilityHandler : MonoBehaviour
         {
             StartCoroutine(DelayComponentCoroutine(abilityComponent));
         }
+        unitAnimationController.SetAbility(abilityIndex);
     }
 
     private IEnumerator DelayComponentCoroutine(AbilityComponent abilityComponent)
@@ -63,7 +66,7 @@ public class AbilityHandler : MonoBehaviour
         while (true)
         {
             abilityComponent.ActivateComponent(gameObject);
-            yield return 0;
+            yield return new WaitForSeconds(abilityComponent.RepeatIntervals);
         }
     }
 

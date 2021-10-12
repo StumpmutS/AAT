@@ -11,7 +11,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: bf30b6a95a75aaf4ea6a0cf277793fcc, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0616b5d409331d948877c2675794efc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitCarcass: {fileID: 3965564993945371083, guid: 9ceeeab8a98cef942902128dc6262675, type: 3}
 --- !u!114 &5993545401423962512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4cf1322a7c0b74ba4b8246fa5189e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAbilityData: []
+  unitAbilityData:
+  - {fileID: 11400000, guid: ae0d786fa4115d447b104b0698bd934a, type: 2}
 --- !u!1001 &1960080801768736873
 PrefabInstance:
   m_ObjectHideFlags: 0
