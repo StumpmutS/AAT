@@ -15,7 +15,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
     private int _maxSpawnLocationUse;
     private Vector3 _spawnerOffset;
     private GameObject _spawnerVisuals;
-    private UnitController _unitPrefab;
+    protected UnitController _unitPrefab;
     private UnitGroupController _unitGroupPrefab;
     protected RectTransform _upgradesUIContainer;
     private List<UnitStatsUpgradeData> _upgrades;
@@ -31,7 +31,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
     private List<int> queuedUnitsperGroup = new List<int>();
 
     protected List<UnitGroupController> activeUnitGroups = new List<UnitGroupController>();
-    private Dictionary<int, int> unitGroupNumbers = new Dictionary<int, int>();
+    protected Dictionary<int, int> unitGroupNumbers = new Dictionary<int, int>();
     private Dictionary<int, IEnumerator> unitGroupCoroutines = new Dictionary<int, IEnumerator>();
 
     public event Action<BaseSpawnerController> OnSpawnerSelect = delegate { };
@@ -164,7 +164,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnUnitsCoroutine(float spawnTime, int groupIndex)
+    protected virtual IEnumerator SpawnUnitsCoroutine(float spawnTime, int groupIndex)
     {
         yield return new WaitForSeconds(spawnTime);
         for (int i = 0; i < unitGroupNumbers[groupIndex]; i++)

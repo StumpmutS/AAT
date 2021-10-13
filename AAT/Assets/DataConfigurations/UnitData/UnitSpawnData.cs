@@ -23,4 +23,11 @@ public class UnitSpawnData : ScriptableObject
 public class UnitSpawnDataListList
 {
     public List<UnitSpawnData> UnitSpawnDataList;
+    public List<Vector3ListList> UnitPatrolPointLists;
+}
+
+[Serializable]
+public class Vector3ListList
+{
+    public List<Vector3> Vector3s;
 }

@@ -10,7 +10,7 @@ public class AIPathfinder : MonoBehaviour
     [SerializeField] private LayerMask enemyTeamLayer;
     [SerializeField] private bool chaseEnabled;
     [SerializeField] private bool patrolEnabled;
-    [SerializeField] private List<Vector3> patrolPoints;
+    [SerializeField] private List<Vector3> _patrolPoints;
     [SerializeField] private UnitStatsModifierManager unitDataManager;
     [SerializeField] protected UnitAnimationController unitAnimationController;
     [SerializeField] private AbilityHandler abilityHandler;
@@ -150,7 +150,7 @@ public class AIPathfinder : MonoBehaviour
             unitAnimationController.SetMovement(movementSpeed);
         patrolling = true;
         OnPatrolStart.Invoke();
-        OnPatrol.Invoke(patrolPoints);
+        OnPatrol.Invoke(_patrolPoints);
     }
 
     protected virtual void NoAIState()
@@ -168,6 +168,11 @@ public class AIPathfinder : MonoBehaviour
     public void SetAbilityUsage(bool value)
     {
         _usingAbility = value;
+    }
+
+    public void SetPatrolPoints(List<Vector3> patrolPoints)
+    {
+        _patrolPoints = patrolPoints;
     }
 
     public virtual void Activate()

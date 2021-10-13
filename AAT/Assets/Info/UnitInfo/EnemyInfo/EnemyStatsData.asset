@@ -23,7 +23,7 @@ MonoBehaviour:
     MovementSpeed: 5
     SightRange: 10
     AttackRange: 3
-    ChaseSpeedPercentMultiplier: 2000
+    ChaseSpeedPercentMultiplier: 200
     TransportState: 1
     AttackState: 1
     MoveState: 1

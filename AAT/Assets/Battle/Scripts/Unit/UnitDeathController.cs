@@ -21,7 +21,7 @@ public class UnitDeathController : MonoBehaviour
     private void Die()
     {
         if (unitCarcass != null) Instantiate(unitCarcass, transform.position, transform.rotation);
-        gameObject.SetActive(false);
         OnUnitDeath.Invoke();
+        gameObject.SetActive(false);
     }
 }

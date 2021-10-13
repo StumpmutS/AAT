@@ -53,6 +53,7 @@ public class EntityController : MonoBehaviour
     public virtual void Deselect()
     {
         if (!selected) return;
+        print("deselect");
         selected = false;
         OnDeselect.Invoke();
         InputManager.OnLeftCLick -= Deselect;

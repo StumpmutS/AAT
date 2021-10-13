@@ -4651,6 +4651,19 @@ MonoBehaviour:
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
+    UnitPatrolPointLists:
+    - Vector3s:
+      - {x: -6.5, y: 0.39, z: -11.3}
+    - Vector3s:
+      - {x: -6.5, y: 0.39, z: -11.3}
+    - Vector3s:
+      - {x: -6.5, y: 0.39, z: -11.3}
+    - Vector3s:
+      - {x: -6.5, y: 0.39, z: -11.3}
+    - Vector3s:
+      - {x: -6.5, y: 0.39, z: -11.3}
+    - Vector3s:
+      - {x: -6.5, y: 0.39, z: -11.3}
   - UnitSpawnDataList:
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
@@ -4658,6 +4671,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
+    UnitPatrolPointLists: []
   - UnitSpawnDataList:
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
@@ -4665,6 +4679,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
     - {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
+    UnitPatrolPointLists: []
 --- !u!114 &2007025106
 MonoBehaviour:
   m_ObjectHideFlags: 0

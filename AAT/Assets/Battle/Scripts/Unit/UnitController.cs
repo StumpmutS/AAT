@@ -10,6 +10,7 @@ public class UnitController : OutlineEntityController
     [SerializeField] private PoolingObject unitVisuals;
     public PoolingObject UnitVisuals => unitVisuals;
 
+    private AIPathfinder AI;
     private UnitGroupController unitGroup;
     public UnitGroupController UnitGroup => unitGroup;
 
@@ -17,6 +18,7 @@ public class UnitController : OutlineEntityController
 
     private void Awake()
     {
+        AI = GetComponent<AIPathfinder>();
         unitDeathController.OnUnitDeath += UnitDeath;
     }
 
@@ -34,5 +36,10 @@ public class UnitController : OutlineEntityController
     public void SetGroup(UnitGroupController group)
     {
         unitGroup = group;
+    }
+
+    public void SetPatrolPoints(List<Vector3> patrolPoints)
+    {
+        AI.SetPatrolPoints(patrolPoints);
     }
 }

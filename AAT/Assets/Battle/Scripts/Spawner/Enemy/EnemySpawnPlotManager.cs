@@ -54,7 +54,7 @@ public class EnemySpawnPlotManager : MonoBehaviour
 
         for (int i = 0; i < instance.spawnerPlots.Count; i++)
         {
-            instance.spawnerPlots[i].SetupSpawner(instance.wavesUnitSpawnData[waveIndex].UnitSpawnDataList[i]);
+            instance.spawnerPlots[i].SetupSpawner(instance.wavesUnitSpawnData[waveIndex].UnitSpawnDataList[i], instance.wavesUnitSpawnData[waveIndex].UnitPatrolPointLists[i].Vector3s);
             activeSpawnerPlots.Add(instance.spawnerPlots[i]);
         }
     }

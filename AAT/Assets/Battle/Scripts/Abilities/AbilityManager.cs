@@ -19,7 +19,7 @@ public class AbilityManager : MonoBehaviour
     {
         for (int i = 0; i < instance.abilityButtonsContainer.childCount; i++)
         {
-            Destroy(instance.abilityButtonsContainer.GetChild(0).gameObject);
+            Destroy(instance.abilityButtonsContainer.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < unitAbilityDataInfo.Count; i++)
