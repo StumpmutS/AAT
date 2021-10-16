@@ -24,6 +24,7 @@ public class TransportableController : MonoBehaviour
     private bool _mounted;
     private bool _movingToMount;
     private bool _checkGroundSubscribed;
+    private bool _selected = false;
 
     private void Awake()
     {
@@ -43,12 +44,14 @@ public class TransportableController : MonoBehaviour
     {
         OnTransportableSelect.Invoke(this);
         if (_mounted) SubscribeCheckGround(true);
+        _selected = true;
     }
 
     private void Deselect()
     {
         OnTransportableDeselect.Invoke(this);
         SubscribeCheckGround(false);
+        _selected = false;
     }
 
     public void BeginMountProcess(BaseMountableController mount)
@@ -84,7 +87,7 @@ public class TransportableController : MonoBehaviour
         transform.rotation = _mount.transform.rotation;
         transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
-        SubscribeCheckGround(true);
+        if (_selected) SubscribeCheckGround(true);
     }
 
     private void CheckAttack()

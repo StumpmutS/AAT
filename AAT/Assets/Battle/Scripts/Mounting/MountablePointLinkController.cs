@@ -55,7 +55,6 @@ public class MountablePointLinkController : MonoBehaviour
     {
         if (!_active) return;
         int index = _mountablePoints.IndexOf(mountable);
-        print(index);
         if (index == 0) SendThrough(visuals, unitAmount, true);
         else if (index == _mountablePoints.Count - 1) SendThrough(visuals, unitAmount, false);
         else SendAltering(index, visuals, unitAmount, up);
