@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EntityController : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void Select()
     {
-        if (selected) return;
+        if (selected || CustomAATEventSystemManager.Instance.OverUI()) return;
         selected = true;
         OnSelect.Invoke();
         if (!mouseOver)
@@ -52,7 +53,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void Deselect()
     {
-        if (!selected) return;
+        if (!selected || CustomAATEventSystemManager.Instance.OverUI()) return;
         print("deselect");
         selected = false;
         OnDeselect.Invoke();

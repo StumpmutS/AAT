@@ -27,7 +27,8 @@ public class TransportableController : MonoBehaviour
 
     private void Awake()
     {
-        if (AI is AIPlayerOverrideController) GetComponent<AIPlayerOverrideController>().OnReroute += RerouteHandler;
+        var AIOverride = AI as AIPlayerOverrideController;
+        if (AIOverride != null) AIOverride.OnReroute += RerouteHandler;
         unitController = GetComponent<UnitController>();
         unitController.OnSelect += Select;
         unitController.OnDeselect += Deselect;

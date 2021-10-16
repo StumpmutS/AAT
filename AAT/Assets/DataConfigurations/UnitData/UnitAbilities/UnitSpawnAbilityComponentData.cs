@@ -19,7 +19,9 @@ public class UnitSpawnAbilityComponentData : AbilityComponent
             {
                 var instantiatedUnit = Instantiate(unitPrefab, objTransform.position, objTransform.rotation);
                 gameObject.GetComponent<UnitController>().UnitGroup.AddUnit(instantiatedUnit);
-                instantiatedUnit.transform.localPosition += spawnOffsets[spawnOffsetIndex];
+                instantiatedUnit.transform.localPosition += instantiatedUnit.transform.right * spawnOffsets[spawnOffsetIndex].x;
+                instantiatedUnit.transform.localPosition += instantiatedUnit.transform.up * spawnOffsets[spawnOffsetIndex].y;
+                instantiatedUnit.transform.localPosition += instantiatedUnit.transform.forward * spawnOffsets[spawnOffsetIndex].z;
             }
             spawnOffsetIndex++;
         }

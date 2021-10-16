@@ -7,10 +7,15 @@ public class UnitController : OutlineEntityController
 {
     [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
     [SerializeField] private UnitDeathController unitDeathController;
-    [SerializeField] private PoolingObject unitVisuals;
+    [SerializeField] private PoolingObject unitVisuals;     
     public PoolingObject UnitVisuals => unitVisuals;
+    [SerializeField] private bool chaseState;
+    public bool ChaseState => chaseState;
+    [SerializeField] private bool patrolState;
+    public bool PatrolState => patrolState;
+    [SerializeField] private List<Vector3> _patrolPoints;
+    public List<Vector3> PatrolPoints => _patrolPoints;
 
-    private AIPathfinder AI;
     private UnitGroupController unitGroup;
     public UnitGroupController UnitGroup => unitGroup;
 
@@ -18,7 +23,6 @@ public class UnitController : OutlineEntityController
 
     private void Awake()
     {
-        AI = GetComponent<AIPathfinder>();
         unitDeathController.OnUnitDeath += UnitDeath;
     }
 
@@ -40,6 +44,12 @@ public class UnitController : OutlineEntityController
 
     public void SetPatrolPoints(List<Vector3> patrolPoints)
     {
-        AI.SetPatrolPoints(patrolPoints);
+        _patrolPoints = patrolPoints;
+        patrolState = true;
+    }
+
+    public void SetChaseState(bool value)
+    {
+        chaseState = value;
     }
 }

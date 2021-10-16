@@ -511,6 +511,10 @@ MonoBehaviour:
   outline: {fileID: 4331704148283514334}
   unitStatsModifierManager: {fileID: 4331704148283514328}
   unitDeathController: {fileID: 4331704148283514320}
+  unitVisuals: {fileID: 0}
+  chaseState: 1
+  patrolState: 1
+  _patrolPoints: []
 --- !u!114 &4331704148283514320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0616b5d409331d948877c2675794efc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitCarcass: {fileID: 0}
 --- !u!114 &4331704148283514335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,14 +540,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e505fa7b256f94998a890bbf47d183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitController: {fileID: 4331704148283514321}
   enemyTeamLayer:
     serializedVersion: 2
     m_Bits: 64
-  chaseEnabled: 1
-  patrolEnabled: 1
-  patrolPoints:
-  - {x: -3, y: 0, z: -5}
   unitDataManager: {fileID: 4331704148283514328}
+  unitAnimationController: {fileID: 0}
+  abilityHandler: {fileID: 0}
 --- !u!114 &4331704148283514330
 MonoBehaviour:
   m_ObjectHideFlags: 0

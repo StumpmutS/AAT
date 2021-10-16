@@ -7,10 +7,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIPathfinder : MonoBehaviour
 {
+    [SerializeField] private UnitController unitController;
     [SerializeField] private LayerMask enemyTeamLayer;
-    [SerializeField] private bool chaseEnabled;
-    [SerializeField] private bool patrolEnabled;
-    [SerializeField] private List<Vector3> _patrolPoints;
     [SerializeField] private UnitStatsModifierManager unitDataManager;
     [SerializeField] protected UnitAnimationController unitAnimationController;
     [SerializeField] private AbilityHandler abilityHandler;
@@ -18,6 +16,9 @@ public class AIPathfinder : MonoBehaviour
     protected float movementSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
     private float sightRange => unitDataManager.CurrentUnitStatsData.SightRange;
     private float attackRange => unitDataManager.CurrentUnitStatsData.AttackRange;
+    private bool chaseEnabled => unitController.ChaseState;
+    private bool patrolEnabled => unitController.PatrolState;
+    private List<Vector3> _patrolPoints => unitController.PatrolPoints;
 
     public event Action OnActivation = delegate { };
     public event Action OnDeactivation = delegate { };
@@ -168,11 +169,6 @@ public class AIPathfinder : MonoBehaviour
     public void SetAbilityUsage(bool value)
     {
         _usingAbility = value;
-    }
-
-    public void SetPatrolPoints(List<Vector3> patrolPoints)
-    {
-        _patrolPoints = patrolPoints;
     }
 
     public virtual void Activate()

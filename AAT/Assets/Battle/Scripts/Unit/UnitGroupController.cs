@@ -60,6 +60,7 @@ public class UnitGroupController : MonoBehaviour
         {
             unit.Select();
         }
+        UnitGroupSelectionManager.Instance.AddUnitGroup(this);
     }
 
     public void DeselectGroup()
@@ -70,6 +71,7 @@ public class UnitGroupController : MonoBehaviour
         {
             unit.Deselect();
         }
+        UnitGroupSelectionManager.Instance.RemoveUnitGroup(this);
     }
 
     public void OutlineGroup()
@@ -120,4 +122,24 @@ public class UnitGroupController : MonoBehaviour
         }
     }
     #endregion
+
+    public void SetChaseStates(bool value)
+    {
+        foreach (var unit in units)
+        {
+            unit.SetChaseState(value);
+        }
+    }
+
+    public bool GetChaseStates()
+    {
+        int chaseStateCompare = 0;
+        foreach (var unit in units)
+        {
+            if (unit.ChaseState) chaseStateCompare++;
+            else chaseStateCompare--;
+        }
+        if (chaseStateCompare == units.Count) return chaseStateCompare >= 0 ? true : false;
+        else return false;
+    }
 }
