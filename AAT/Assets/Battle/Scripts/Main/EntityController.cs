@@ -54,7 +54,6 @@ public class EntityController : MonoBehaviour
     public virtual void Deselect()
     {
         if (!selected || CustomAATEventSystemManager.Instance.OverUI()) return;
-        print("deselect");
         selected = false;
         OnDeselect.Invoke();
         InputManager.OnLeftCLick -= Deselect;

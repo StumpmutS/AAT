@@ -12,8 +12,8 @@ public class MountManager : MonoBehaviour
     private HashSet<TransportableController> _transportableControllers = new HashSet<TransportableController>();
     private List<TransportableController> _selectedTransportables = new List<TransportableController>();
     private UnitController _selectedUnitType;
-
     private List<BaseMountableController> _hoveredMountables = new List<BaseMountableController>();
+    private bool _previewDisplayed = false;
 
     private void Awake()
     {
@@ -72,12 +72,16 @@ public class MountManager : MonoBehaviour
 
     private void DisplayMountablePreview(BaseMountableController mountable)
     {
-        foreach (var mountableController in _mountableControllers)
+        if (!_previewDisplayed)
         {
-            mountableController.RemoveVisuals();                
+            _previewDisplayed = true;
+            foreach (var mountableController in _mountableControllers)
+            {
+                mountableController.RemoveVisuals();
+            }
+            InputManager.OnRightClick += TransportablePerformMount;
         }
         mountable.CallDisplayPreview(_selectedUnitType.UnitVisuals, _selectedTransportables.Count);
-        InputManager.OnRightClick += TransportablePerformMount;
     }
 
     private void TransportablePerformMount()
@@ -90,6 +94,9 @@ public class MountManager : MonoBehaviour
 
     private void RemoveMountablePreviews()
     {
+        if (!_previewDisplayed) return;
+
+        _previewDisplayed = false;
         foreach (var mountable in _hoveredMountables)
         {
             mountable.RemovePreview();

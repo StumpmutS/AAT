@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SquirrelSpawnData
   m_EditorClassIdentifier: 
   SpawnGroupsAmount: 4
-  UnitsPerGroupAmount: 3
+  UnitsPerGroupAmount: 15
   SpawnTime: 1
   RespawnTime: 5
   MaxSpawnLocationUse: 3

@@ -110,6 +110,7 @@ public class TransportableController : MonoBehaviour
 
     private void Demount(Vector3 pos)
     {
+        print("demount");
         _mount = null;
         _mounted = false;
         transform.position = pos;

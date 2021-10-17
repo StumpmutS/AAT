@@ -7,7 +7,6 @@ using UnityEngine;
 public abstract class BaseMountableController : MonoBehaviour
 {
     [SerializeField] protected MountablePointLinkController _mountablePointLink;
-
     [SerializeField] private GameObject mountableVisualsPrefab;
     [SerializeField] private Vector3 visualsOffset;
 
