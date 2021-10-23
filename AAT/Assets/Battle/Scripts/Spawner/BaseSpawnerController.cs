@@ -20,6 +20,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
     protected RectTransform _upgradesUIContainer;
     private List<UnitStatsUpgradeData> _upgrades;
     private int _currentUpgradeIndex;
+    protected SectorController _sectorController;
 
     private EntityController _currentSpawnerVisualsEntity;
     public EntityController CurrentSpawnerVisualsEntity => _currentSpawnerVisualsEntity;
@@ -44,7 +45,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         }
     }
 
-    public void Setup(UnitSpawnData unitSpawnData, RectTransform upgradesUIContainer = null)
+    public void Setup(UnitSpawnData unitSpawnData, SectorController sector, RectTransform upgradesUIContainer = null)
     {
         _spawnGroupsAmount = unitSpawnData.SpawnGroupsAmount;
         _unitsPerGroupAmount = unitSpawnData.UnitsPerGroupAmount;
@@ -57,6 +58,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         _unitGroupPrefab = unitSpawnData.UnitGroupPrefab;
         _upgradesUIContainer = upgradesUIContainer;
         _upgrades = unitSpawnData.UnitStatsUpgradeData;
+        _sectorController = sector;
 
         unitStatsModifierManager.Setup(unitSpawnData.UnitStatsData);
 
@@ -171,6 +173,11 @@ public abstract class BaseSpawnerController : MonoBehaviour
         {
             UnitController instantiatedUnit = Instantiate(_unitPrefab, activeUnitGroups[groupIndex].transform.position, Quaternion.identity);
             activeUnitGroups[groupIndex].AddUnit(instantiatedUnit);
+            _sectorController.AddUnit(instantiatedUnit);
+            for (int j = 0; j < _currentUpgradeIndex; j++)
+            {
+                instantiatedUnit.ModifyStats(_upgrades[j].UnitStatsDataInfo);
+            }
         }
     }
     #endregion
@@ -223,10 +230,10 @@ public abstract class BaseSpawnerController : MonoBehaviour
     {
         if (_currentUpgradeIndex >= _upgrades.Count) return;
 
-        UnitStatsDataInfo unitStatsDataInfo = _upgrades[_currentUpgradeIndex].UnitStatsDataInfo;
+        UnitStatsDataInfo upgradeStats = _upgrades[_currentUpgradeIndex].UnitStatsDataInfo;
 
-        unitStatsModifierManager.ModifyStats(unitStatsDataInfo);
-        OnModifyStats.Invoke(unitStatsDataInfo);
+        unitStatsModifierManager.ModifyStats(upgradeStats);
+        OnModifyStats.Invoke(upgradeStats);
         _currentUpgradeIndex++;
     }
     #endregion

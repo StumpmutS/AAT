@@ -31,19 +31,10 @@ public class UnitStatsModifierManager : MonoBehaviour
         currentUnitStatsData = instantiatedUnitStatsData.UnitStatsDataInfo;
     }
 
-    public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo)
+    public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo, bool add = true)
     {
-        currentUnitStatsData.MaxHealth += unitStatsDataInfo.MaxHealth;
-        currentUnitStatsData.BaseArmorPercent += unitStatsDataInfo.BaseArmorPercent;
-        currentUnitStatsData.MaxArmorPercent += unitStatsDataInfo.MaxArmorPercent;
-        currentUnitStatsData.Damage += unitStatsDataInfo.Damage;
-        currentUnitStatsData.CritMultiplierPercent += unitStatsDataInfo.CritMultiplierPercent;
-        currentUnitStatsData.CritChancePercent += unitStatsDataInfo.CritChancePercent;
-        currentUnitStatsData.AttackSpeedPercent += unitStatsDataInfo.AttackSpeedPercent;
-        currentUnitStatsData.MovementSpeed += unitStatsDataInfo.MovementSpeed;
-        currentUnitStatsData.SightRange += unitStatsDataInfo.SightRange;
-        currentUnitStatsData.AttackRange += unitStatsDataInfo.AttackRange;
-        currentUnitStatsData.ChaseSpeedPercentMultiplier += unitStatsDataInfo.ChaseSpeedPercentMultiplier;
+        if (add) currentUnitStatsData.AddFloatStats(unitStatsDataInfo);
+        else currentUnitStatsData.SubtractFloatStats(unitStatsDataInfo);
 
         if (unitStatsDataInfo.TransportState != ETransportationType.None)
         {

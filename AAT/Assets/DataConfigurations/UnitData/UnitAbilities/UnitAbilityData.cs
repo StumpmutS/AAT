@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Unit Data/Abilities/Unit Ability Data")]
 public class UnitAbilityData : ScriptableObject
 {
-    public UnitAbilityDataInfo unitAbilityDataInfo;
+    public UnitAbilityDataInfo UnitAbilityDataInfo;
 }
 
 [Serializable]

@@ -13,6 +13,20 @@ MonoBehaviour:
   m_Name: EnemyStatsData
   m_EditorClassIdentifier: 
   UnitStatsDataInfo:
+    UnitFloatStats:
+      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+      _values:
+      - 200
+      - 35
+      - 50
+      - 20
+      - 110
+      - 10
+      - 60
+      - 5
+      - 10
+      - 3
+      - 200
     MaxHealth: 200
     BaseArmorPercent: 35
     MaxArmorPercent: 50

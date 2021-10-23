@@ -9,6 +9,7 @@ public class SpawnerPlotController : OutlineEntityController
     [SerializeField] private RectTransform UnitsUIContainer;
     [SerializeField] private RectTransform UpgradesUIContainer;
     [SerializeField] private SpawnerController spawnerPrefab;
+    [SerializeField] private SectorController sector;
 
     public event Action<SpawnerPlotController> OnSpawnerPlotSelect = delegate { };
 
@@ -45,6 +46,6 @@ public class SpawnerPlotController : OutlineEntityController
     {
         SpawnerController instantiatedSpawner = Instantiate(spawnerPrefab, transform.position, transform.rotation);
         SpawnerManager.AddSpawnerPlot(instantiatedSpawner);
-        instantiatedSpawner.Setup(spawnData, UpgradesUIContainer);
+        instantiatedSpawner.Setup(spawnData, sector, UpgradesUIContainer);
     }
 }

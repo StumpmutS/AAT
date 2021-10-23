@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
-  m_Name: BearStatsData
+  m_Name: SquirrelComradeSectorPowerThreshold3
   m_EditorClassIdentifier: 
   UnitStatsDataInfo:
     UnitFloatStats:
       _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
       _values:
-      - 3000
-      - 50
-      - 80
-      - 200
-      - 400
-      - 50
-      - 35
-      - 2
-      - 25
-      - 10
-      - 600
-    MaxHealth: 3000
-    BaseArmorPercent: 50
-    MaxArmorPercent: 80
-    Damage: 200
-    CritMultiplierPercent: 400
-    CritChancePercent: 50
-    AttackSpeedPercent: 35
-    MovementSpeed: 2
-    SightRange: 25
-    AttackRange: 10
-    ChaseSpeedPercentMultiplier: 600
-    TransportState: 2
-    AttackState: 1
-    MoveState: 1
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 100
+      - 0
+      - 0
+      - 0
+      - 0
+    MaxHealth: 0
+    BaseArmorPercent: 0
+    MaxArmorPercent: 0
+    Damage: 0
+    CritMultiplierPercent: 0
+    CritChancePercent: 0
+    AttackSpeedPercent: 0
+    MovementSpeed: 0
+    SightRange: 0
+    AttackRange: 0
+    ChaseSpeedPercentMultiplier: 0
+    TransportState: 0
+    AttackState: 0
+    MoveState: 0

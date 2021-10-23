@@ -961,6 +961,7 @@ GameObject:
   - component: {fileID: -2680104130768556178}
   - component: {fileID: 430060796365761778}
   - component: {fileID: 6019638265588333270}
+  - component: {fileID: 6519343231381679187}
   m_Layer: 6
   m_Name: SquirrelPrefab
   m_TagString: Good
@@ -1206,6 +1207,21 @@ MonoBehaviour:
   agent: {fileID: 5759228335420568731}
   statsMod: {fileID: 430060796365761778}
   attackController: {fileID: 5759228335420568726}
+--- !u!114 &6519343231381679187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840677430842725870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602f5dff855760440aec0aa5eb797eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: -8213272441465151675}
+  unitPassiveData:
+  - {fileID: 11400000, guid: 7b4eeba6c8af763488b0ba5df672aabc, type: 2}
 --- !u!1 &4922851530394433235
 GameObject:
   m_ObjectHideFlags: 0

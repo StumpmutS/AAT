@@ -8,8 +8,8 @@ public class BaseChaseController : MonoBehaviour
 {
     [SerializeField] private UnitStatsModifierManager unitDataManager;
 
-    private float baseSpeed => unitDataManager.CurrentUnitStatsData.MovementSpeed;
-    private float chaseSpeedPercentMultiplier => unitDataManager.CurrentUnitStatsData.ChaseSpeedPercentMultiplier;
+    private float baseSpeed => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed];
+    private float chaseSpeedPercentMultiplier => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
 
     private AIPathfinder AI;
     private NavMeshAgent agent;

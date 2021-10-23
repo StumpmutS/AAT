@@ -9,30 +9,30 @@ public class AOEDamageAbilityComponentData : AbilityComponent
     [SerializeField] private float damageRadius;
     [SerializeField] private float damage;
 
-    private Dictionary<GameObject, List<Collider>> damagedEnemies = new Dictionary<GameObject, List<Collider>>();
+    private Dictionary<UnitController, List<Collider>> damagedEnemies = new Dictionary<UnitController, List<Collider>>();
 
-    public override void ActivateComponent(GameObject gameObject)
+    public override void ActivateComponent(UnitController unit)
     {
         damage = -Mathf.Abs(damage);
         Collider[] enemyCollidersHit = new Collider[25];
-        Physics.OverlapSphereNonAlloc(gameObject.transform.position, damageRadius, enemyCollidersHit, enemyLayer);
+        Physics.OverlapSphereNonAlloc(unit.transform.position, damageRadius, enemyCollidersHit, enemyLayer);
         foreach (var enemyCollider in enemyCollidersHit)
         {
             if (enemyCollider == null) continue;
-            if (damagedEnemies.ContainsKey(gameObject))
+            if (damagedEnemies.ContainsKey(unit))
             {
-                if (damagedEnemies[gameObject].Contains(enemyCollider)) continue;
+                if (damagedEnemies[unit].Contains(enemyCollider)) continue;
             }
-            else damagedEnemies[gameObject] = new List<Collider>();
+            else damagedEnemies[unit] = new List<Collider>();
 
             enemyCollider.GetComponent<IHealth>().ModifyHealth(damage);
-            damagedEnemies[gameObject].Add(enemyCollider);
+            damagedEnemies[unit].Add(enemyCollider);
         }
     }
 
-    public override void DeactivateComponent(GameObject gameObject)
+    public override void DeactivateComponent(UnitController unit)
     {
-        if (damagedEnemies.ContainsKey(gameObject))
-            damagedEnemies[gameObject].Clear();
+        if (damagedEnemies.ContainsKey(unit))
+            damagedEnemies[unit].Clear();
     }
 }

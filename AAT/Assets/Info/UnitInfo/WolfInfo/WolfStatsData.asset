@@ -13,6 +13,20 @@ MonoBehaviour:
   m_Name: WolfStatsData
   m_EditorClassIdentifier: 
   UnitStatsDataInfo:
+    UnitFloatStats:
+      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+      _values:
+      - 100
+      - 30
+      - 50
+      - 40
+      - 400
+      - 25
+      - 125
+      - 5
+      - 20
+      - 5
+      - 300
     MaxHealth: 100
     BaseArmorPercent: 30
     MaxArmorPercent: 50

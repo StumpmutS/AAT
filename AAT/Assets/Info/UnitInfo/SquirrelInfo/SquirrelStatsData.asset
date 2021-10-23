@@ -13,6 +13,20 @@ MonoBehaviour:
   m_Name: SquirrelStatsData
   m_EditorClassIdentifier: 
   UnitStatsDataInfo:
+    UnitFloatStats:
+      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+      _values:
+      - 200
+      - 20
+      - 50
+      - 5
+      - 120
+      - 10
+      - 200
+      - 3.5
+      - 10
+      - 5
+      - 200
     MaxHealth: 200
     BaseArmorPercent: 20
     MaxArmorPercent: 50

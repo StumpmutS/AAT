@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 198c942595edbc1479a366ac34d64d12, type: 3}
   m_Name: BearChargeAbilityData
   m_EditorClassIdentifier: 
-  unitAbilityDataInfo:
-    AbilityName: Bear Charge
-    CooldownTime: 3
-    ActiveTime: 0.75
+  UnitAbilityDataInfo:
+    AbilityName: Charge
+    CooldownTime: 10
+    ActiveTime: 1.5
+    TransportUsage: 0
     AbilityComponents:
     - {fileID: 11400000, guid: 2e6b4edd972df354988737b38abf2a8e, type: 2}
-    - {fileID: 11400000, guid: 81ed1d54ad525f84281b9c9bbf4871ee, type: 2}
     - {fileID: 11400000, guid: 040c008b2ce85874582fb0ce1cbd8384, type: 2}
+    - {fileID: 11400000, guid: 81ed1d54ad525f84281b9c9bbf4871ee, type: 2}

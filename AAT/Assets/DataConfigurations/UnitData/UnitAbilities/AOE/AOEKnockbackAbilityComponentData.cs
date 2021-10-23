@@ -11,15 +11,15 @@ public class AOEKnockbackAbilityComponentData : AbilityComponent
     [SerializeField] private float knockbackSpeed;
     [SerializeField] private float knockbackLerpEndPercent;
 
-    public override void ActivateComponent(GameObject gameObject)
+    public override void ActivateComponent(UnitController unit)
     {
         Collider[] enemyCollidersHit = new Collider[25];
-        Physics.OverlapSphereNonAlloc(gameObject.transform.position, knockbackRadius, enemyCollidersHit, enemyLayer);
+        Physics.OverlapSphereNonAlloc(unit.transform.position, knockbackRadius, enemyCollidersHit, enemyLayer);
         foreach (var enemyCollider in enemyCollidersHit)
         {
             if (enemyCollider == null) continue;
             Transform enemyTransform = enemyCollider.transform;
-            var direction = (enemyTransform.position - gameObject.transform.position);
+            var direction = (enemyTransform.position - unit.transform.position);
             KnockbackManager.Instance.AddKnockback(enemyTransform, direction, knockbackDistance, knockbackSpeed, knockbackLerpEndPercent);
         }
     }

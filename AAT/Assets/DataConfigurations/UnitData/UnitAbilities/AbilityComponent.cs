@@ -9,6 +9,6 @@ public abstract class AbilityComponent : ScriptableObject
     public float ComponentDelay;
     public float ComponentDuration;
 
-    public abstract void ActivateComponent(GameObject gameObject);
-    public virtual void DeactivateComponent(GameObject gameObject) { }
+    public abstract void ActivateComponent(UnitController unit);
+    public virtual void DeactivateComponent(UnitController unit) { }
 }

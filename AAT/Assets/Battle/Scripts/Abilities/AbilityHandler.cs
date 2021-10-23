@@ -22,7 +22,7 @@ public class AbilityHandler : MonoBehaviour
         unitController.OnSelect += SendDisplayData;
         foreach (var abilityData in unitAbilityData)
         {
-            unitAbilityDataInfo.Add(abilityData.unitAbilityDataInfo);
+            unitAbilityDataInfo.Add(abilityData.UnitAbilityDataInfo);
         }
     }
 
@@ -53,11 +53,11 @@ public class AbilityHandler : MonoBehaviour
             StartCoroutine(repeatCoroutine);
             yield return new WaitForSeconds(abilityComponent.ComponentDuration);
             StopCoroutine(repeatCoroutine);
-            abilityComponent.DeactivateComponent(gameObject);
+            abilityComponent.DeactivateComponent(unitController);
         } else 
         {
-            abilityComponent.ActivateComponent(gameObject);
-            abilityComponent.DeactivateComponent(gameObject);
+            abilityComponent.ActivateComponent(unitController);
+            abilityComponent.DeactivateComponent(unitController);
         }
     }
 
@@ -65,7 +65,7 @@ public class AbilityHandler : MonoBehaviour
     {
         while (true)
         {
-            abilityComponent.ActivateComponent(gameObject);
+            abilityComponent.ActivateComponent(unitController);
             yield return new WaitForSeconds(abilityComponent.RepeatIntervals);
         }
     }

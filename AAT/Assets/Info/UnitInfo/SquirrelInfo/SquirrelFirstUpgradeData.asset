@@ -13,10 +13,26 @@ MonoBehaviour:
   m_Name: SquirrelFirstUpgradeData
   m_EditorClassIdentifier: 
   UnitStatsDataInfo:
+    UnitFloatStats:
+      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+      _values:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 10
+      - 0
+      - 0
+      - 0
     MaxHealth: 0
     BaseArmorPercent: 0
     MaxArmorPercent: 0
     Damage: 0
+    CritMultiplierPercent: 0
+    CritChancePercent: 0
     AttackSpeedPercent: 0
     MovementSpeed: 10
     SightRange: 0

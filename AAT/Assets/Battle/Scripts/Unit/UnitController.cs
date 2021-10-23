@@ -18,6 +18,8 @@ public class UnitController : OutlineEntityController
 
     private UnitGroupController unitGroup;
     public UnitGroupController UnitGroup => unitGroup;
+    private SectorController sectorController;
+    public SectorController SectorController => sectorController;
 
     public event Action<UnitController> OnDeath = delegate { };
 
@@ -29,12 +31,19 @@ public class UnitController : OutlineEntityController
     private void UnitDeath()
     {
         Deselect();
+        if (sectorController != null) sectorController.RemoveUnit(this);
         OnDeath.Invoke(this);
     }
 
-    public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo)
+    public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo, bool add = true)
     {
-        unitStatsModifierManager.ModifyStats(unitStatsDataInfo);
+        unitStatsModifierManager.ModifyStats(unitStatsDataInfo, add);
+    }
+
+    #region Setters
+    public void SetSector(SectorController sector)
+    {
+        sectorController = sector;
     }
 
     public void SetGroup(UnitGroupController group)
@@ -52,4 +61,5 @@ public class UnitController : OutlineEntityController
     {
         chaseState = value;
     }
+    #endregion
 }

@@ -19,7 +19,7 @@ public class TransportableController : MonoBehaviour
     public event Action<TransportableController> OnTransportableSelect = delegate { };
     public event Action<TransportableController> OnTransportableDeselect = delegate { };
 
-    private float attackRange => statsMod.CurrentUnitStatsData.AttackRange;
+    private float attackRange => statsMod.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.AttackRange];
     private BaseMountableController _mount = null;
     private bool _mounted;
     private bool _movingToMount;
@@ -88,6 +88,7 @@ public class TransportableController : MonoBehaviour
         transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
         if (_selected) SubscribeCheckGround(true);
+        unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier);
     }
 
     private void CheckAttack()

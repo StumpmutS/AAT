@@ -8,17 +8,17 @@ public class DashAbilityComponentData : AbilityComponent
     [SerializeField] private Vector3 DashDistance;
     [SerializeField] private float DashSpeed;
 
-    public override void ActivateComponent(GameObject gameObject)
+    public override void ActivateComponent(UnitController unit)
     {
-        Dash(gameObject);
+        Dash(unit);
     }
 
-    private void Dash(GameObject gameObject)
+    private void Dash(UnitController unit)
     {
-        var targetPosition = gameObject.transform.position +
-            (gameObject.transform.right * DashDistance.x) +
-            (gameObject.transform.up * DashDistance.y) +
-            (gameObject.transform.forward * DashDistance.z);
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPosition, DashSpeed * Time.deltaTime);
+        var targetPosition = unit.transform.position +
+            (unit.transform.right * DashDistance.x) +
+            (unit.transform.up * DashDistance.y) +
+            (unit.transform.forward * DashDistance.z);
+        unit.transform.position = Vector3.MoveTowards(unit.transform.position, targetPosition, DashSpeed * Time.deltaTime);
     }
 }
