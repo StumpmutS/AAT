@@ -32,7 +32,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: BaseGrayFur
-    second: {fileID: 2100000, guid: a82e3452af92a204eb1b5ab56e494e57, type: 2}
+    second: {fileID: 2100000, guid: e4f4b8b83eb8853449518887d2d3dd07, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

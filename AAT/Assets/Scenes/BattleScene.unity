@@ -5503,7 +5503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479f3e560a61fd4a9bdd77333a425a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSetupTime: 20
+  waveSetupTime: 15
   spawnerPlots:
   - {fileID: 1681625066415372506}
   - {fileID: 124459870}
