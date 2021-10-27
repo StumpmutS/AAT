@@ -1,11 +1,16 @@
-Shader "Unlit/ToonShader"
+Shader "Toon/ToonShader"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Brightness("Brightness", Range(0, 1)) = 0
-        _ShadowLevel("Shadow Level", Range(0, 1)) = 0
-        _Strength("Strength", Range(0, 1)) = 0
+        _GlossyTex("Glossy Texture", 2D) = "black" {}
+        _DarkDotCutoff("Dark Cutoff", float) = -.12
+        _LightDotCutoff("Light Cutoff", float) = .995
+        _DarkValue("Dark Value", float) = -.45
+        _LightValue("Light Value", float) = 6.78
+        _MidValue("Mid Value", float) = 1.39
+        _Strength("Strength", float) = .5
+        _Brightness("Brightness", Range(0, 1)) = 1
         _Color("Color", COLOR) = (1, 1, 1, 1)
     }
     SubShader
@@ -37,15 +42,39 @@ Shader "Unlit/ToonShader"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float _Brightness;
-            float _ShadowLevel;
+            sampler2D _GlossyTex;
+            float4 _GlossyTex_ST;
+            float _DarkDotCutoff;
+            float _LightDotCutoff;
+            float _DarkValue;
+            float _LightValue;
+            float _MidValue;
             float _Strength;
+            float _Brightness;
             float4 _Color;
 
-            float Toon(float3 normal, float3 lightDir)
+            half3 Toon(float3 normal, float3 lightDir)
             {
-                float NdotL = max(0, dot(normalize(normal), normalize(lightDir)));
-                return floor(NdotL/_ShadowLevel);
+                float NdotL = dot(normalize(normal), normalize(lightDir));
+                if (NdotL < _DarkDotCutoff) return _DarkValue;
+                else return _MidValue;
+            }
+            
+            half3 GlossyToon(float3 normal, float3 lightDir, fixed4 baseColor, fixed4 glossyColor)
+            {
+                half3 rgbFinal;
+                float NdotL = dot(normalize(normal), normalize(lightDir));
+                bool isGlossy = glossyColor.rgb == half3(1, 1, 1)? true : false;
+                if (isGlossy && NdotL > _LightDotCutoff) rgbFinal = _LightValue * glossyColor.rgb;
+                else if (NdotL < _DarkDotCutoff) rgbFinal = _DarkValue * baseColor.rgb ;
+                else rgbFinal = _MidValue * baseColor.rgb;
+
+                if (!isGlossy)
+                {
+                    rgbFinal += _Brightness;
+                    rgbFinal *= _Strength;
+                }
+                return rgbFinal * _Color;
             }
 
             v2f vert (appdata v)
@@ -60,9 +89,10 @@ Shader "Unlit/ToonShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                col *= (Toon(i.worldNormal, _WorldSpaceLightPos0.xyz) + _Brightness) * _Strength * _Color;
-                return col;
+                fixed4 baseCol = tex2D(_MainTex, i.uv);
+                fixed4 glossyCol = tex2D(_GlossyTex, i.uv);
+                baseCol.rgb = GlossyToon(i.worldNormal, _WorldSpaceLightPos0.xyz, baseCol, glossyCol);
+                return baseCol;
             }
             ENDCG
         }

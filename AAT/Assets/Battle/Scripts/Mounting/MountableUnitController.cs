@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class MountableUnitController : BaseMountableController
 {
+    [SerializeField] private UnitController unit;
     [SerializeField] private MountableUnitData mountableUnitData;
 
     public override BaseMountableDataInfo ReturnData()
     {
         return mountableUnitData.MountableInfo;
+    }
+
+    public override void ActivateMounted()
+    {
+        unit.ModifyStats(mountableUnitData.MountableInfo.TransportingModifier);
     }
 }

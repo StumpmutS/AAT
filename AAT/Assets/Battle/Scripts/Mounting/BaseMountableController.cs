@@ -92,4 +92,6 @@ public abstract class BaseMountableController : MonoBehaviour
         _previewDisplayed = false;
         _preview.Deactivate();
     }
+
+    public virtual void ActivateMounted() { }
 }

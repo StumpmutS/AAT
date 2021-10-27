@@ -89,6 +89,7 @@ public class TransportableController : MonoBehaviour
         InputManager.OnUpdate += CheckAttack;
         if (_selected) SubscribeCheckGround(true);
         unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier);
+        _mount.ActivateMounted();
     }
 
     private void CheckAttack()

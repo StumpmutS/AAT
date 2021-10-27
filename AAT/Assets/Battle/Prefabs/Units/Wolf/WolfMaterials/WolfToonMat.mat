@@ -19,16 +19,25 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _GlossyTex:
+        m_Texture: {fileID: 2800000, guid: 7aae8060494e18a43af1d83d5f28eb2c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 9cd3b11263a7976498649ab8e25d69e8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 0.702
+    - _Brightness: 0.474
+    - _DarkDotCutoff: -0.12
+    - _DarkValue: -0.45
+    - _LightDotCutoff: 0.99
+    - _LightValue: 2.53
     - _MaxDark: 0
+    - _MidValue: 1.39
     - _ShadowLevel: 0.5
-    - _Strength: 0.655
+    - _Strength: 0.41
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_BuildTextureStacks: []
