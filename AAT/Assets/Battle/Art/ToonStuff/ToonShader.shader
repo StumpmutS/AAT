@@ -15,16 +15,20 @@ Shader "Toon/ToonShader"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 100
-
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
+        
         Pass
         {
-            CGPROGRAM
+            Tags { "LightMode" = "UniversalForward" } 
+            
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile _ _SHADOWS_SOFT
 
-            #include "UnityCG.cginc"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             struct appdata
             {
@@ -36,6 +40,7 @@ Shader "Toon/ToonShader"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
+                float3 positionWS : TEXCOORD1;
                 float4 vertex : SV_POSITION;
                 half3 worldNormal : NORMAL;
             };
@@ -52,21 +57,19 @@ Shader "Toon/ToonShader"
             float _Strength;
             float _Brightness;
             float4 _Color;
-
-            half3 Toon(float3 normal, float3 lightDir)
-            {
-                float NdotL = dot(normalize(normal), normalize(lightDir));
-                if (NdotL < _DarkDotCutoff) return _DarkValue;
-                else return _MidValue;
-            }
             
-            half3 GlossyToon(float3 normal, float3 lightDir, fixed4 baseColor, fixed4 glossyColor)
+            half3 GlossyToon(float3 normal, Light light, half4 baseColor, half4 glossyColor)
             {
                 half3 rgbFinal;
-                float NdotL = dot(normalize(normal), normalize(lightDir));
+                float NdotL = dot(normalize(normal), normalize(light.direction));
                 bool isGlossy = glossyColor.rgb == half3(1, 1, 1)? true : false;
-                if (isGlossy && NdotL > _LightDotCutoff) rgbFinal = _LightValue * glossyColor.rgb;
-                else if (NdotL < _DarkDotCutoff) rgbFinal = _DarkValue * baseColor.rgb ;
+                if (light.shadowAttenuation == 0)
+                {
+                    rgbFinal = _DarkValue * baseColor.rgb;
+                    isGlossy = true;
+                }
+                else if (isGlossy && NdotL > _LightDotCutoff) rgbFinal = _LightValue * glossyColor.rgb;
+                else if (NdotL < _DarkDotCutoff) rgbFinal = _DarkValue * baseColor.rgb;
                 else rgbFinal = _MidValue * baseColor.rgb;
 
                 if (!isGlossy)
@@ -80,21 +83,23 @@ Shader "Toon/ToonShader"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                VertexPositionInputs positionInputs = GetVertexPositionInputs(v.vertex.xyz);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
+                o.positionWS = positionInputs.positionWS;
+                o.vertex = positionInputs.positionCS;
+                o.worldNormal = TransformObjectToWorldNormal(v.normal);
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            half4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed4 baseCol = tex2D(_MainTex, i.uv);
-                fixed4 glossyCol = tex2D(_GlossyTex, i.uv);
-                baseCol.rgb = GlossyToon(i.worldNormal, _WorldSpaceLightPos0.xyz, baseCol, glossyCol);
+                Light mainLight = GetMainLight(TransformWorldToShadowCoord(i.positionWS));
+                half4 baseCol = tex2D(_MainTex, i.uv);
+                half4 glossyCol = tex2D(_GlossyTex, i.uv);
+                baseCol.rgb = GlossyToon(i.worldNormal, mainLight, baseCol, glossyCol);
                 return baseCol;
             }
-            ENDCG
+            ENDHLSL
         }
     }
 }

@@ -90,7 +90,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DarkDotCutoff: -0.12
-    - _DarkValue: -0.45
+    - _DarkValue: 0.45
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0

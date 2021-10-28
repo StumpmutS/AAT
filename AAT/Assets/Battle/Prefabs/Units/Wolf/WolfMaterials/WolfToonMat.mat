@@ -31,7 +31,7 @@ Material:
     m_Floats:
     - _Brightness: 0.474
     - _DarkDotCutoff: -0.12
-    - _DarkValue: -0.45
+    - _DarkValue: 0.39
     - _LightDotCutoff: 0.99
     - _LightValue: 2.53
     - _MaxDark: 0

@@ -6,8 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(IHealth))]
 public class UnitDeathController : MonoBehaviour
 {
-    [SerializeField] GameObject unitCarcass;
+    [SerializeField] private GameObject unitCarcass;
 
+    private bool _dead = false;
     private IHealth healthController;
 
     public event Action OnUnitDeath = delegate { };
@@ -20,6 +21,8 @@ public class UnitDeathController : MonoBehaviour
 
     private void Die()
     {
+        if (_dead) return;
+        _dead = true;
         if (unitCarcass != null) Instantiate(unitCarcass, transform.position, transform.rotation);
         OnUnitDeath.Invoke();
         gameObject.SetActive(false);
