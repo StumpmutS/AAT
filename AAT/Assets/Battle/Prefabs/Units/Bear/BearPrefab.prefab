@@ -92,6 +92,7 @@ MonoBehaviour:
   _mountablePointLink: {fileID: 2980568224354809988}
   mountableVisualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 4, z: 0}
+  unit: {fileID: 2654164613639485816}
   mountableUnitData: {fileID: 11400000, guid: 185f5b6791a30bf498c3fd41faf10651, type: 2}
 --- !u!114 &4911671615595417950
 MonoBehaviour:
@@ -108,6 +109,7 @@ MonoBehaviour:
   _mountablePointLink: {fileID: 2980568224354809988}
   mountableVisualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 4, z: 0}
+  unit: {fileID: 2654164613639485816}
   mountableUnitData: {fileID: 11400000, guid: 185f5b6791a30bf498c3fd41faf10651, type: 2}
 --- !u!1 &8430112197387743635
 GameObject:
@@ -182,6 +184,7 @@ MonoBehaviour:
   _mountablePointLink: {fileID: 2980568224354809988}
   mountableVisualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 4, z: 0}
+  unit: {fileID: 2654164613639485816}
   mountableUnitData: {fileID: 11400000, guid: 185f5b6791a30bf498c3fd41faf10651, type: 2}
 --- !u!1 &9003117018386545755
 GameObject:

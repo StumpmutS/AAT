@@ -7,14 +7,15 @@ using UnityEngine.AI;
 [RequireComponent(typeof(UnitController))]
 public class TransportableController : MonoBehaviour
 {
+    [SerializeField] private TransportableData transportableData;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private AIPathfinder AI;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private UnitStatsModifierManager statsMod;
     [SerializeField] private BaseAttackController attackController;
 
-    private UnitController unitController;
-    public UnitController UnitController => unitController;
+    private UnitController _unitController;
+    public UnitController UnitController => _unitController;
 
     public event Action<TransportableController> OnTransportableSelect = delegate { };
     public event Action<TransportableController> OnTransportableDeselect = delegate { };
@@ -30,9 +31,9 @@ public class TransportableController : MonoBehaviour
     {
         var AIOverride = AI as AIPlayerOverrideController;
         if (AIOverride != null) AIOverride.OnReroute += RerouteHandler;
-        unitController = GetComponent<UnitController>();
-        unitController.OnSelect += Select;
-        unitController.OnDeselect += Deselect;
+        _unitController = GetComponent<UnitController>();
+        _unitController.OnSelect += Select;
+        _unitController.OnDeselect += Deselect;
     }
 
     private void Start()
@@ -56,13 +57,12 @@ public class TransportableController : MonoBehaviour
 
     public void BeginMountProcess(BaseMountableController mount)
     {
-        if (mount != _mount)
-        {
-            if (AI != null) AI.Deactivate();
-            _mount = mount;
-            _movingToMount = true;
-            InputManager.OnUpdate += CheckMountRange;
-        }
+        if (mount == _mount) return;
+        
+        if (AI != null) AI.Deactivate();
+        _mount = mount;
+        _movingToMount = true;
+        InputManager.OnUpdate += CheckMountRange;
     }
 
     private void CheckMountRange()
@@ -88,8 +88,9 @@ public class TransportableController : MonoBehaviour
         transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
         if (_selected) SubscribeCheckGround(true);
-        unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier);
-        _mount.ActivateMounted();
+        _unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier);
+        _unitController.ModifyStats(transportableData.SelfStatsAlter);
+        _mount.ActivateMounted(transportableData.MountStatsAlter);
     }
 
     private void CheckAttack()
@@ -113,6 +114,9 @@ public class TransportableController : MonoBehaviour
     private void Demount(Vector3 pos)
     {
         print("demount");
+        _unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier, false);
+        _unitController.ModifyStats(transportableData.SelfStatsAlter, false);
+        _mount.DeactivateMounted(transportableData.MountStatsAlter);
         _mount = null;
         _mounted = false;
         transform.position = pos;

@@ -1200,6 +1200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c801011149489744b139f29c67add3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transportableData: {fileID: 11400000, guid: 5938ae9176b298643898fab0c0d8c2d4, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 2048
