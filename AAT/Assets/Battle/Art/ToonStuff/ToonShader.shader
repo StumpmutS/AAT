@@ -17,6 +17,15 @@ Shader "Toon/ToonShader"
     {
         Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
         
+        HLSLINCLUDE
+        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+        CBUFFER_START(UnityPerMaterial)
+        float4 MainTex_ST;
+        half4 _Color;
+        CBUFFER_END
+        ENDHLSL
+        
         Pass
         {
             Tags { "LightMode" = "UniversalForward" } 
@@ -56,7 +65,6 @@ Shader "Toon/ToonShader"
             float _MidValue;
             float _Strength;
             float _Brightness;
-            float4 _Color;
             
             half3 GlossyToon(float3 normal, Light light, half4 baseColor, half4 glossyColor)
             {
@@ -66,7 +74,6 @@ Shader "Toon/ToonShader"
                 if (light.shadowAttenuation == 0)
                 {
                     rgbFinal = _DarkValue * baseColor.rgb;
-                    isGlossy = true;
                 }
                 else if (isGlossy && NdotL > _LightDotCutoff) rgbFinal = _LightValue * glossyColor.rgb;
                 else if (NdotL < _DarkDotCutoff) rgbFinal = _DarkValue * baseColor.rgb;
