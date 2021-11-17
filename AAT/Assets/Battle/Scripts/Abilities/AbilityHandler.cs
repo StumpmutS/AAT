@@ -35,7 +35,7 @@ public class AbilityHandler : MonoBehaviour
     {
         var info = unitAbilityDataInfo[abilityIndex];
         if (abilitiesByActiveState.ContainsKey(info))
-            if (abilitiesByActiveState[info] == true) return;
+            if (abilitiesByActiveState[info]) return;
         StartCooldown(info);
         foreach (var abilityComponent in info.AbilityComponents)
         {

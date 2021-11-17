@@ -13,8 +13,22 @@ MonoBehaviour:
   m_Name: PlaceableWallMountableData
   m_EditorClassIdentifier: 
   MountableInfo:
-    MountRange: 10
+    MountRange: 2
     MountedUnitModifier:
+      UnitFloatStats:
+        _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+        _values:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
       MaxHealth: 0
       BaseArmorPercent: 0
       MaxArmorPercent: 0

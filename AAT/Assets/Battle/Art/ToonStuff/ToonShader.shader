@@ -79,12 +79,12 @@ Shader "Toon/ToonShader"
                 else if (NdotL < _DarkDotCutoff) rgbFinal = _DarkValue * baseColor.rgb;
                 else rgbFinal = _MidValue * baseColor.rgb;
 
-                if (!isGlossy)
-                {
+                //if (!isGlossy)
+                //{
                     rgbFinal += _Brightness;
                     rgbFinal *= _Strength;
-                }
-                return rgbFinal * _Color;
+                //}
+                return rgbFinal * _Color.rgb;
             }
 
             v2f vert (appdata v)

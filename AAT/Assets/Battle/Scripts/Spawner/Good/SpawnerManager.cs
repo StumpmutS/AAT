@@ -57,12 +57,12 @@ public class SpawnerManager : MonoBehaviour
         {
             if (spawner != null)
             {
-                spawner.CurrentSpawnerVisualsEntity.Deselect();
+                spawner.CurrentSpawnerVisualsSelectable.Deselect();
             }
         }
         if (spawners[keyPressed - 1] != null)
         {
-            spawners[keyPressed - 1].CurrentSpawnerVisualsEntity.Select();
+            spawners[keyPressed - 1].CurrentSpawnerVisualsSelectable.Select();
 
         }
     }

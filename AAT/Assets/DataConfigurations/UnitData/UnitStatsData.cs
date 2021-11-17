@@ -56,6 +56,11 @@ public class UnitStatsDataInfo
             UnitFloatStats[kvp.Key] -= kvp.Value;
         }
     }
+
+    public void AddSingle(EUnitFloatStats statType, float amount)
+    {
+        UnitFloatStats[statType] += amount;
+    }
 }
 
 public enum EUnitFloatStats 

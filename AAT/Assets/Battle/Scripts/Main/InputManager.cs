@@ -31,6 +31,7 @@ public class InputManager : MonoBehaviour
     public static event Action<int> OnNumberKey4 = delegate { };
     public static event Action<int> OnNumberKey5 = delegate { };
     public static event Action<int> OnNumberKey6 = delegate { };
+    public static event Action<int> OnNumberKey7 = delegate { };
 
     public static event Action OnTPressed = delegate { };
 
@@ -156,6 +157,10 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
         {
             OnNumberKey6.Invoke(6);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            OnNumberKey7.Invoke(7);
         }
     }
 

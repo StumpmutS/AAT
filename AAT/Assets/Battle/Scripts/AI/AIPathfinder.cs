@@ -31,15 +31,15 @@ public class AIPathfinder : MonoBehaviour
     public event Action OnPatrolStart = delegate { };
     public event Action OnNoAIState = delegate { };
 
-    protected NavMeshAgent agent;
-    private bool patrolling = false;
+    protected NavMeshAgent _agent;
+    private bool _patrolling = false;
     private GameObject _currentAttackTarget = null;
     private bool _usingAbility = false;
     protected bool _active = true;
 
     protected virtual void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         if (abilityHandler != null)
             abilityHandler.OnAbilityUsed += SetAbilityUsage;
         unitDataManager.OnRefreshStats += RefreshMovementSpeed;
@@ -47,16 +47,15 @@ public class AIPathfinder : MonoBehaviour
 
     private void Start()
     {
-        agent.speed = movementSpeed;
+        _agent.speed = movementSpeed;
     }
 
     private void Update()
     {
         if (!_active) return;
-
+        
         if (_usingAbility)
         {
-            agent.SetDestination(transform.position);
             OnNoAIState.Invoke();
             return;
         }
@@ -72,7 +71,7 @@ public class AIPathfinder : MonoBehaviour
             {
                 Chase(chaseTarget);
             }
-            else if (patrolEnabled && !patrolling)
+            else if (patrolEnabled && !_patrolling)
             {
                 Patrol();
             }
@@ -81,7 +80,7 @@ public class AIPathfinder : MonoBehaviour
                 NoAIState();
             }
         }
-        else if (patrolEnabled && !patrolling)
+        else if (patrolEnabled && !_patrolling)
         {
             Patrol();
         }
@@ -131,7 +130,7 @@ public class AIPathfinder : MonoBehaviour
     {
         if (unitAnimationController != null)
             unitAnimationController.SetMovement(0);
-        patrolling = false;
+        _patrolling = false;
         OnAttackStart.Invoke();
         OnAttack.Invoke(target);
     }
@@ -140,7 +139,7 @@ public class AIPathfinder : MonoBehaviour
     {
         if (unitAnimationController != null)
             unitAnimationController.SetMovement(movementSpeed);
-        patrolling = false;
+        _patrolling = false;
         OnChaseStart.Invoke();
         OnChase.Invoke(target);
     }
@@ -149,7 +148,7 @@ public class AIPathfinder : MonoBehaviour
     {
         if (unitAnimationController != null)
             unitAnimationController.SetMovement(movementSpeed);
-        patrolling = true;
+        _patrolling = true;
         OnPatrolStart.Invoke();
         OnPatrol.Invoke(_patrolPoints);
     }
@@ -163,14 +162,15 @@ public class AIPathfinder : MonoBehaviour
 
     private void RefreshMovementSpeed()
     {
-        agent.speed = movementSpeed;
+        _agent.speed = movementSpeed;
     }
 
-    public void SetAbilityUsage(bool value)
+    private void SetAbilityUsage(bool value)
     {
+        _agent.enabled = !value;
         _usingAbility = value;
     }
-
+    
     public virtual void Activate()
     {
         OnActivation.Invoke();

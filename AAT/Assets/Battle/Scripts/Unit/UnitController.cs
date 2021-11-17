@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitController : OutlineEntityController
+public class UnitController : OutlineSelectableController
 {
     [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
+    public UnitStatsModifierManager UnitStatsModifierManager => unitStatsModifierManager;
     [SerializeField] private UnitDeathController unitDeathController;
     [SerializeField] private PoolingObject unitVisuals;     
     public PoolingObject UnitVisuals => unitVisuals;
@@ -15,11 +16,12 @@ public class UnitController : OutlineEntityController
     public bool PatrolState => patrolState;
     [SerializeField] private List<Vector3> _patrolPoints;
     public List<Vector3> PatrolPoints => _patrolPoints;
+    [SerializeField] private Collider[] colliders;
+    public Collider[] Colliders => colliders;
 
-    private UnitGroupController unitGroup;
-    public UnitGroupController UnitGroup => unitGroup;
-    private SectorController sectorController;
-    public SectorController SectorController => sectorController;
+    public UnitGroupController UnitGroup { get; private set; }
+    public SectorController SectorController { get; private set; }
+    public bool IsDead { get; private set; }
 
     public event Action<UnitController> OnDeath = delegate { };
 
@@ -31,7 +33,8 @@ public class UnitController : OutlineEntityController
     private void UnitDeath()
     {
         Deselect();
-        if (sectorController != null) sectorController.RemoveUnit(this);
+        if (SectorController != null) SectorController.RemoveUnit(this);
+        IsDead = true;
         OnDeath.Invoke(this);
     }
 
@@ -43,12 +46,12 @@ public class UnitController : OutlineEntityController
     #region Setters
     public void SetSector(SectorController sector)
     {
-        sectorController = sector;
+        SectorController = sector;
     }
 
     public void SetGroup(UnitGroupController group)
     {
-        unitGroup = group;
+        UnitGroup = group;
     }
 
     public void SetPatrolPoints(List<Vector3> patrolPoints)
@@ -62,4 +65,6 @@ public class UnitController : OutlineEntityController
         chaseState = value;
     }
     #endregion
+
+
 }

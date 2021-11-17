@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EntityController))]
+[RequireComponent(typeof(SelectableController))]
 public class AIPlayerOverrideController : AIPathfinder
 {
-    private EntityController entity;
+    private SelectableController _selectable;
     private bool movementOverride;
     private bool MovementOverride
     {
@@ -25,9 +25,9 @@ public class AIPlayerOverrideController : AIPathfinder
     protected override void Awake()
     {
         base.Awake();
-        entity = GetComponent<EntityController>();
-        entity.OnSelect += SubscribeToInputManager;
-        entity.OnDeselect += UnsubscribeFromInputManager;
+        _selectable = GetComponent<SelectableController>();
+        _selectable.OnSelect += SubscribeToInputManager;
+        _selectable.OnDeselect += UnsubscribeFromInputManager;
     }
 
     private void SubscribeToInputManager()
@@ -51,7 +51,7 @@ public class AIPlayerOverrideController : AIPathfinder
         if (Physics.Raycast(ray, out var hit))
         {
             Vector3 destination = hit.point;
-            agent.SetDestination(destination);
+            _agent.SetDestination(new Vector3(destination.x, transform.position.y, destination.z));
         }
     }
 
@@ -81,7 +81,8 @@ public class AIPlayerOverrideController : AIPathfinder
 
     private void CheckTargetDistance()
     {
-        if (agent.remainingDistance < .1f)
+        if (!_agent.enabled) return;
+        if (_agent.remainingDistance < .1f)
         {
             MovementOverride = false;
         }

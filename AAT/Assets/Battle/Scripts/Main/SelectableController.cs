@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EntityController : MonoBehaviour
+public class SelectableController : MonoBehaviour
 {
     public event Action OnSelect = delegate { };
     public event Action OnDeselect = delegate { };

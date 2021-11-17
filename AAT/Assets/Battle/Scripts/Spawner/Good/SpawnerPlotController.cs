@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnerPlotController : OutlineEntityController
+public class SpawnerPlotController : OutlineSelectableController
 {
     [SerializeField] private RectTransform UnitsUIContainer;
     [SerializeField] private RectTransform UpgradesUIContainer;

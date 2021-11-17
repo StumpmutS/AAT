@@ -51,4 +51,9 @@ public class UnitStatsModifierManager : MonoBehaviour
 
         OnRefreshStats.Invoke();
     }
+
+    public void ModifyFloatStat(EUnitFloatStats statType, float amount)
+    {
+        
+    }
 }

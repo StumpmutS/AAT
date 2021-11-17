@@ -6,13 +6,13 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
 public class BaseChaseController : MonoBehaviour
 {
-    [SerializeField] private UnitStatsModifierManager unitDataManager;
+    [SerializeField] protected UnitStatsModifierManager unitDataManager;
 
-    private float baseSpeed => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed];
-    private float chaseSpeedPercentMultiplier => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
+    protected float moveSpeed => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed];
+    protected float chaseSpeedPercentMultiplier => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
 
-    private AIPathfinder AI;
-    private NavMeshAgent agent;
+    protected AIPathfinder AI;
+    protected NavMeshAgent agent;
 
     private void Awake()
     {
@@ -26,12 +26,14 @@ public class BaseChaseController : MonoBehaviour
 
     protected virtual void Chase(GameObject target)
     {
-        agent.speed = baseSpeed * (chaseSpeedPercentMultiplier / 100);
+        unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, (moveSpeed * chaseSpeedPercentMultiplier / 100) - moveSpeed);
+        agent.speed = moveSpeed;
         agent.SetDestination(target.transform.position);
     }
 
-    private void StopChase()
+    protected virtual void StopChase()
     {
-        agent.speed = baseSpeed;
+        unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, -((moveSpeed * chaseSpeedPercentMultiplier / 100) - moveSpeed));
+        agent.speed = moveSpeed;
     }
 }

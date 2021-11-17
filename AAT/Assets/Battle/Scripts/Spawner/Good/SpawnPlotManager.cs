@@ -25,6 +25,7 @@ public class SpawnPlotManager : MonoBehaviour
         InputManager.OnNumberKey4 += SelectSpawnerPlotByIndex;
         InputManager.OnNumberKey5 += SelectSpawnerPlotByIndex;
         InputManager.OnNumberKey6 += SelectSpawnerPlotByIndex;
+        InputManager.OnNumberKey7 += SelectSpawnerPlotByIndex;
     }
 
     private void SetActiveSpawnerPlot(SpawnerPlotController spawnerPlot)

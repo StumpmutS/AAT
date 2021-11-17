@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(UnitAnimationController))]
 public class AnimatedAttackController : BaseAttackController
 {
-    UnitAnimationController unitAnimation;
+    protected UnitAnimationController unitAnimation;
 
     protected override void Awake()
     {
@@ -13,13 +13,13 @@ public class AnimatedAttackController : BaseAttackController
         unitAnimation = GetComponent<UnitAnimationController>();
     }
 
-    protected override void BaseAttack(GameObject target)
+    protected override void BaseAttack(UnitController target)
     {
         unitAnimation.SetAttack(true);
         base.BaseAttack(target);
     }
 
-    protected override void CritAttack(GameObject target)
+    protected override void CritAttack(UnitController target)
     {
         unitAnimation.SetCrit(true);
         base.CritAttack(target);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutlineEntityController : EntityController
+public class OutlineSelectableController : SelectableController
 {
     [SerializeField] private Outline outline;
 

@@ -22,8 +22,8 @@ public abstract class BaseSpawnerController : MonoBehaviour
     private int _currentUpgradeIndex;
     protected SectorController _sectorController;
 
-    private EntityController _currentSpawnerVisualsEntity;
-    public EntityController CurrentSpawnerVisualsEntity => _currentSpawnerVisualsEntity;
+    private SelectableController _currentSpawnerVisualsSelectable;
+    public SelectableController CurrentSpawnerVisualsSelectable => _currentSpawnerVisualsSelectable;
 
     private int currentSpawningCount;
     private Dictionary<Transform, int> spawnPointActiveGroups = new Dictionary<Transform, int>();
@@ -75,10 +75,10 @@ public abstract class BaseSpawnerController : MonoBehaviour
     {
         GameObject instantiatedSpawnerVisuals = Instantiate(_spawnerVisuals, gameObject.transform);
         instantiatedSpawnerVisuals.transform.position += _spawnerOffset;
-        EntityController spawnerVisualsEntity = instantiatedSpawnerVisuals.GetComponent<EntityController>();
-        _currentSpawnerVisualsEntity = spawnerVisualsEntity;
-        spawnerVisualsEntity.OnSelect += Select;
-        spawnerVisualsEntity.OnDeselect += Deselect;
+        SelectableController spawnerVisualsSelectable = instantiatedSpawnerVisuals.GetComponent<SelectableController>();
+        _currentSpawnerVisualsSelectable = spawnerVisualsSelectable;
+        spawnerVisualsSelectable.OnSelect += Select;
+        spawnerVisualsSelectable.OnDeselect += Deselect;
     }
 
     protected virtual void Select()

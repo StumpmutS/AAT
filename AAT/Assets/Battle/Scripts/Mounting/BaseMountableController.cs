@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EntityController), typeof(Collider))]
+[RequireComponent(typeof(SelectableController), typeof(Collider))]
 public abstract class BaseMountableController : MonoBehaviour
 {
     [SerializeField] protected MountablePointLinkController _mountablePointLink;
@@ -15,16 +15,16 @@ public abstract class BaseMountableController : MonoBehaviour
 
     private bool _visualsDisplayed;
     private bool _previewDisplayed;
-    private EntityController entityController;
+    private SelectableController _selectableController;
     private PoolingObject _preview;
 
     public abstract BaseMountableDataInfo ReturnData();
 
     protected virtual void Awake()
     {
-        entityController = GetComponent<EntityController>();
-        entityController.OnHover += Hover;
-        entityController.OnHoverStop += StopHover;
+        _selectableController = GetComponent<SelectableController>();
+        _selectableController.OnHover += Hover;
+        _selectableController.OnHoverStop += StopHover;
     }
 
     private void Start()

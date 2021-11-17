@@ -9,43 +9,41 @@ public class BaseAttackController : MonoBehaviour
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
 
-    private float damage => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.Damage];
-    private float critChancePercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.CritChancePercent];
-    private float critMultiplierPercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.CritMultiplierPercent];
+    protected float damage => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.Damage];
+    protected float critChancePercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.CritChancePercent];
+    protected float critMultiplierPercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.CritMultiplierPercent];
     private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.AttackSpeedPercent];
 
-    private AIPathfinder AI;
-    private NavMeshAgent agent;
-    private bool canAttack;
+    protected AIPathfinder AI;
+    protected NavMeshAgent _agent;
+    protected bool _canAttack;
 
     protected virtual void Awake()
     {
-        canAttack = true;
+        _canAttack = true;
         AI = GetComponent<AIPathfinder>();
         AI.OnAttack += CallAttack;
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
-    public void CallAttack(GameObject target)
+    public virtual void CallAttack(GameObject target)
     {
         transform.LookAt(target.transform);
-        if (agent.enabled)//ai deactivation
-            agent.SetDestination(transform.position);
-        if (canAttack)
-        {
-            CheckCrit(target);
-            StartCoroutine(StartAttackTimer());
-        }
+        if (_agent.enabled)
+            _agent.SetDestination(transform.position);
+        if (!_canAttack) return;
+        CheckCrit(target.GetComponent<UnitController>());
+        StartCoroutine(StartAttackTimer());
     }
 
-    private IEnumerator StartAttackTimer()
+    protected IEnumerator StartAttackTimer()
     {
-        canAttack = false;
+        _canAttack = false;
         yield return new WaitForSeconds(100 / attackSpeedPercent);
-        canAttack = true;
+        _canAttack = true;
     }
 
-    private void CheckCrit(GameObject target)
+    protected virtual void CheckCrit(UnitController target)
     {
         if (UnityEngine.Random.Range(0f, 100f) <= critChancePercent)
         {
@@ -57,12 +55,12 @@ public class BaseAttackController : MonoBehaviour
         }
     }
 
-    protected virtual void BaseAttack(GameObject target)
+    protected virtual void BaseAttack(UnitController target)
     {
         target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(damage));
     }
 
-    protected virtual void CritAttack(GameObject target)
+    protected virtual void CritAttack(UnitController target)
     {
         target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(damage) * (critMultiplierPercent / 100));
     }
