@@ -20,6 +20,11 @@ public class AnimatedCavalryAttackController : AnimatedAttackController
         _chargeTime = 0;
         _target = target.GetComponent<UnitController>();
         InputManager.OnUpdate += Charge;
+        ExecuteStartAttackTimer();
+    }
+
+    protected virtual void ExecuteStartAttackTimer()
+    {
         StartCoroutine(StartAttackTimer());
     }
 
@@ -63,11 +68,9 @@ public class AnimatedCavalryAttackController : AnimatedAttackController
     {
         InputManager.OnUpdate -= Charge;
         CheckCrit(_target);
-        if (_target.IsDead)
-        {
-            _target = null;
-        }
+        _target = null;
         unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, -_chargeSpeedChange);
+        _chargeSpeedChange = 0;
         if (_agent != null)
             _agent.speed = moveSpeed;
     }

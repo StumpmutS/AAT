@@ -57,7 +57,7 @@ public class UnitStatsDataInfo
         }
     }
 
-    public void AddSingle(EUnitFloatStats statType, float amount)
+    public void AddSingleStat(EUnitFloatStats statType, float amount)
     {
         UnitFloatStats[statType] += amount;
     }

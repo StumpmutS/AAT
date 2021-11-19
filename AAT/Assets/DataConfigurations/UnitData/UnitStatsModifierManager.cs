@@ -54,6 +54,6 @@ public class UnitStatsModifierManager : MonoBehaviour
 
     public void ModifyFloatStat(EUnitFloatStats statType, float amount)
     {
-        
+        currentUnitStatsData.AddSingleStat(statType, amount);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,11 @@ public class BaseChaseController : MonoBehaviour
 
     protected float moveSpeed => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed];
     protected float chaseSpeedPercentMultiplier => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
+    private float _alteredMoveSpeed;
 
     protected AIPathfinder AI;
     protected NavMeshAgent agent;
+    private bool _stopped = true;
 
     private void Awake()
     {
@@ -22,18 +25,35 @@ public class BaseChaseController : MonoBehaviour
         AI.OnPatrolStart += StopChase;
         AI.OnAttackStart += StopChase;
         AI.OnNoAIState += StopChase;
+        
+    }
+
+    private void Start()
+    {
+        _alteredMoveSpeed = moveSpeed * chaseSpeedPercentMultiplier / 100 - moveSpeed;
     }
 
     protected virtual void Chase(GameObject target)
     {
-        unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, (moveSpeed * chaseSpeedPercentMultiplier / 100) - moveSpeed);
+        if (_stopped)
+        {
+            unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _alteredMoveSpeed);
+            _stopped = false;
+        }
+
+        Vector3 targetPos = target.transform.position;
+        agent.SetDestination(new Vector3(targetPos.x, transform.position.y, targetPos.z));
         agent.speed = moveSpeed;
-        agent.SetDestination(target.transform.position);
     }
 
     protected virtual void StopChase()
     {
-        unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, -((moveSpeed * chaseSpeedPercentMultiplier / 100) - moveSpeed));
+        if (!_stopped)
+        {
+            unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, -_alteredMoveSpeed);
+            _stopped = true;
+        }
+
         agent.speed = moveSpeed;
     }
 }

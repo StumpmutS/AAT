@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackController
@@ -8,18 +9,24 @@ public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackContro
     [SerializeField] private float flyBackSpeed;
 
     private Vector3 _originalPosition;
+    private Quaternion _originalRotation;
 
     private void Start()
     {
         _originalPosition = transform.position;
+        _originalRotation = transform.rotation;
     }
 
     public override void CallAttack(GameObject target)
     {
         base.CallAttack(target);
+        if (!_canAttack) return;
         AI.Deactivate();
         _agent.enabled = false;
+        StartCoroutine(StartAttackTimer());
     }
+
+    protected override void ExecuteStartAttackTimer() { }
 
     protected override void AddSpeed()
     {
@@ -39,7 +46,7 @@ public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackContro
     private void FlyBack()
     {
         Vector3 pos = transform.position;
-        transform.position = Vector3.MoveTowards(pos, pos + new Vector3(pos.x, _originalPosition.y, pos.z), flyBackSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(pos, pos + new Vector3(0, _originalPosition.y, 0), flyBackSpeed * Time.deltaTime);
         if (transform.position.y >= _originalPosition.y)
         {
             transform.position = new Vector3(transform.position.x, _originalPosition.y, transform.position.z);
