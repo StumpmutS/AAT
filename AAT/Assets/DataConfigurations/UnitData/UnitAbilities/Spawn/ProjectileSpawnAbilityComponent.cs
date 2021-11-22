@@ -21,8 +21,8 @@ public class ProjectileSpawnAbilityComponent : AbilityComponent
                 objTransform.localPosition += objTransform.right * spawnOffsets[j].x
                                               + objTransform.up * spawnOffsets[j].y
                                               + objTransform.forward * spawnOffsets[j].z;
-                instantiatedProjectile.FireProjectile(unit.UnitStatsModifierManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.Damage], 
-                    unit.Colliders, objTransform.forward, unit.UnitStatsModifierManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed]);
+                instantiatedProjectile.FireProjectile(unit.UnitStatsModifierManager.CurrentUnitStatsData[EUnitFloatStats.Damage], 
+                    unit.Colliders, objTransform.forward, unit.UnitStatsModifierManager.CurrentUnitStatsData[EUnitFloatStats.MovementSpeed]);
             }
         }
     }

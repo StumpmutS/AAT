@@ -13,13 +13,13 @@ public class MountableUnitController : BaseMountableController
         return mountableUnitData.MountableInfo;
     }
 
-    public override void ActivateMounted(UnitStatsDataInfo stats)
+    public override void ActivateMounted(BaseUnitStatsData stats)
     {
         unit.ModifyStats(mountableUnitData.MountableInfo.TransportingModifier);
         unit.ModifyStats(stats);
     }
 
-    public override void DeactivateMounted(UnitStatsDataInfo stats)
+    public override void DeactivateMounted(BaseUnitStatsData stats)
     {
         unit.ModifyStats(mountableUnitData.MountableInfo.TransportingModifier, false);
         unit.ModifyStats(stats, false);

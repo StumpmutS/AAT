@@ -5,10 +5,9 @@ using UnityEngine.AI;
 
 public class AnimatedCavalryAttackController : AnimatedAttackController
 {
-    [SerializeField] private float chargeEndDistance;
-    
-    protected float chaseSpeedPercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
-    protected float moveSpeed => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed];
+    protected float chaseSpeedPercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.ChaseSpeedPercentMultiplier];
+    protected float moveSpeed => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MovementSpeed];
+    private float chargeEndDistance => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.ChargeEndDistance];
 
     protected UnitController _target;
     private float _chargeTime;

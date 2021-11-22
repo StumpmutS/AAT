@@ -38,9 +38,9 @@ public class UnitController : OutlineSelectableController
         OnDeath.Invoke(this);
     }
 
-    public void ModifyStats(UnitStatsDataInfo unitStatsDataInfo, bool add = true)
+    public void ModifyStats(BaseUnitStatsData baseUnitStatsDataInfo, bool add = true)
     {
-        unitStatsModifierManager.ModifyStats(unitStatsDataInfo, add);
+        unitStatsModifierManager.ModifyStats(baseUnitStatsDataInfo, add);
     }
 
     #region Setters

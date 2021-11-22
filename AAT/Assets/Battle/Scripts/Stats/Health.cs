@@ -6,7 +6,7 @@ using UnityEngine;
 public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
-    private float maxHealth => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MaxHealth];
+    private float maxHealth => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MaxHealth];
 
     public event Action<float> OnHealthChanged = delegate { };
     public event Action OnDie = delegate { };

@@ -17,4 +17,4 @@ MonoBehaviour:
   ComponentDelay: 7
   ComponentDuration: 1
   DashDistance: {x: 0, y: 10, z: 3}
-  DashSpeed: 20
+  DashSpeedPercentMultiplier: 100

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimatedChaseController : BaseChaseController
 {
-    [SerializeField] protected UnitAnimationController unitAnimation;
+    [SerializeField] private UnitAnimationController unitAnimation;
     
     protected override void Chase(GameObject target)
     {

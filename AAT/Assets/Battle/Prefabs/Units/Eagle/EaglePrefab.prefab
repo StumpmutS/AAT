@@ -47,17 +47,17 @@ GameObject:
   - component: {fileID: 6079372021434539573}
   - component: {fileID: 6461623584834916860}
   - component: {fileID: 7466604220745568491}
-  - component: {fileID: 1106056683436901003}
   - component: {fileID: 5526276689807506076}
   - component: {fileID: 5758481584148021665}
   - component: {fileID: 1653157638212893442}
   - component: {fileID: 6575215709091429772}
-  - component: {fileID: 6547983488774710834}
+  - component: {fileID: 6873907644955445216}
   - component: {fileID: 6646878468723361836}
   - component: {fileID: 8394582672397567426}
   - component: {fileID: 8721951631975033772}
   - component: {fileID: -5213976225514073441}
-  - component: {fileID: 6171310084503530002}
+  - component: {fileID: 5682520330015329591}
+  - component: {fileID: 8419816382797004127}
   m_Layer: 6
   m_Name: EaglePrefab
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 7466604220745568491}
-  unitStatsModifierManager: {fileID: 1106056683436901003}
+  unitStatsModifierManager: {fileID: 6873907644955445216}
   unitDeathController: {fileID: 1653157638212893442}
   unitVisuals: {fileID: 0}
   chaseState: 1
@@ -122,19 +122,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1106056683436901003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6851545171700319375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseUnitStatsData: {fileID: 11400000, guid: 5206fe77f06bf2444882e0f8e2b90b75, type: 2}
 --- !u!114 &5526276689807506076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224acc55b1311784f9c4f30b353fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitDataManager: {fileID: 1106056683436901003}
+  unitDataManager: {fileID: 6873907644955445216}
 --- !u!114 &5758481584148021665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +184,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6547983488774710834
+--- !u!114 &6873907644955445216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,16 +193,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6851545171700319375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021610527d2089c41963d3b85bad8bf1, type: 3}
+  m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitController: {fileID: 6461623584834916860}
-  enemyTeamLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  unitDataManager: {fileID: 1106056683436901003}
-  unitAnimationController: {fileID: 6646878468723361836}
-  abilityHandler: {fileID: 8394582672397567426}
+  unitStatsData: {fileID: 0}
 --- !u!114 &6646878468723361836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,10 +260,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc34f2f74ea9cf4faee26ef209772f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitDataManager: {fileID: 1106056683436901003}
+  unitDataManager: {fileID: 6873907644955445216}
   chargeEndDistance: 3
   flyBackSpeed: 30
---- !u!114 &6171310084503530002
+--- !u!114 &5682520330015329591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,8 +275,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb01c899b737484f85cec62cd47093b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitDataManager: {fileID: 1106056683436901003}
+  unitDataManager: {fileID: 6873907644955445216}
   unitAnimation: {fileID: 6646878468723361836}
+--- !u!114 &8419816382797004127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6851545171700319375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 021610527d2089c41963d3b85bad8bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitController: {fileID: 6461623584834916860}
+  enemyTeamLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  unitDataManager: {fileID: 6873907644955445216}
+  unitAnimationController: {fileID: 6646878468723361836}
+  abilityHandler: {fileID: 8394582672397567426}
 --- !u!1001 &1674684178429916041
 PrefabInstance:
   m_ObjectHideFlags: 0

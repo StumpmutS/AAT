@@ -114,11 +114,11 @@ public class UnitGroupController : MonoBehaviour
     }
 
     #region StatModifierMethods
-    private void ModifyUnitStats(UnitStatsDataInfo unitStatsDataInfo)
+    private void ModifyUnitStats(BaseUnitStatsData baseUnitStatsDataInfo)
     {
         foreach (var unit in units)
         {
-            unit.ModifyStats(unitStatsDataInfo);
+            unit.ModifyStats(baseUnitStatsDataInfo);
         }
     }
     #endregion

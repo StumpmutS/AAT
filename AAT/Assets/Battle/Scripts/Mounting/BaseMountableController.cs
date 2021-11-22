@@ -93,6 +93,6 @@ public abstract class BaseMountableController : MonoBehaviour
         _preview.Deactivate();
     }
 
-    public virtual void ActivateMounted(UnitStatsDataInfo stats) { }
-    public virtual void DeactivateMounted(UnitStatsDataInfo stats) { }
+    public virtual void ActivateMounted(BaseUnitStatsData stats) { }
+    public virtual void DeactivateMounted(BaseUnitStatsData stats) { }
 }

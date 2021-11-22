@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Unit Data/Base/Transportable Unit Data")]
 public class TransportableData : ScriptableObject
 {
-    public UnitStatsDataInfo SelfStatsAlter;
-    public UnitStatsDataInfo MountStatsAlter;
+    public BaseUnitStatsData SelfStatsAlter;
+    public BaseUnitStatsData MountStatsAlter;
 }

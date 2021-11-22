@@ -60,7 +60,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         _upgrades = unitSpawnData.UnitStatsUpgradeData;
         _sectorController = sector;
 
-        unitStatsModifierManager.Setup(unitSpawnData.UnitStatsData);
+        unitStatsModifierManager.Setup(unitSpawnData.baseUnitStatsData);
 
         for (int i = 0; i < _spawnGroupsAmount; i++)
         {
@@ -176,7 +176,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
             _sectorController.AddUnit(instantiatedUnit);
             for (int j = 0; j < _currentUpgradeIndex; j++)
             {
-                instantiatedUnit.ModifyStats(_upgrades[j].UnitStatsDataInfo);
+                instantiatedUnit.ModifyStats(_upgrades[j].baseUnitStatsDataInfo);
             }
         }
     }
@@ -224,13 +224,13 @@ public abstract class BaseSpawnerController : MonoBehaviour
     #endregion
 
     #region StatsModification
-    public event Action<UnitStatsDataInfo> OnModifyStats = delegate { };
+    public event Action<BaseUnitStatsData> OnModifyStats = delegate { };
 
     public void ModifyUnitGroupStats()
     {
         if (_currentUpgradeIndex >= _upgrades.Count) return;
 
-        UnitStatsDataInfo upgradeStats = _upgrades[_currentUpgradeIndex].UnitStatsDataInfo;
+        BaseUnitStatsData upgradeStats = _upgrades[_currentUpgradeIndex].baseUnitStatsDataInfo;
 
         unitStatsModifierManager.ModifyStats(upgradeStats);
         OnModifyStats.Invoke(upgradeStats);

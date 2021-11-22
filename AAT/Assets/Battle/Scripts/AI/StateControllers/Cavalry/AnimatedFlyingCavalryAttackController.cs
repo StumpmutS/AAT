@@ -6,15 +6,13 @@ using UnityEngine;
 
 public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackController
 {
-    [SerializeField] private float flyBackSpeed;
+    private float flyBackSpeed => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.ReturnSpeed];
 
     private Vector3 _originalPosition;
-    private Quaternion _originalRotation;
 
     private void Start()
     {
         _originalPosition = transform.position;
-        _originalRotation = transform.rotation;
     }
 
     public override void CallAttack(GameObject target)

@@ -9,10 +9,10 @@ public class BaseAttackController : MonoBehaviour
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
 
-    protected float damage => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.Damage];
-    protected float critChancePercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.CritChancePercent];
-    protected float critMultiplierPercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.CritMultiplierPercent];
-    private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.AttackSpeedPercent];
+    protected float damage => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.Damage];
+    protected float critChancePercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.CritChancePercent];
+    protected float critMultiplierPercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.CritMultiplierPercent];
+    private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.AttackSpeedPercent];
 
     protected AIPathfinder AI;
     protected NavMeshAgent _agent;

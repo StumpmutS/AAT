@@ -11,5 +11,5 @@ public class MountableUnitData : MountableData<MountableUnitDataInfo>
 [Serializable]
 public class MountableUnitDataInfo : BaseMountableDataInfo
 {
-    public UnitStatsDataInfo TransportingModifier;
+    public BaseUnitStatsData TransportingModifier;
 }

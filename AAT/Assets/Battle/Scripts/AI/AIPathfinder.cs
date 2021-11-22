@@ -13,9 +13,9 @@ public class AIPathfinder : MonoBehaviour
     [SerializeField] protected UnitAnimationController unitAnimationController;
     [SerializeField] private AbilityHandler abilityHandler;
 
-    protected float movementSpeed => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.MovementSpeed];
-    private float sightRange => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.SightRange];
-    private float attackRange => unitDataManager.CurrentUnitStatsData.UnitFloatStats[EUnitFloatStats.AttackRange];
+    protected float movementSpeed => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MovementSpeed];
+    private float sightRange => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.SightRange];
+    private float attackRange => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.AttackRange];
     private bool chaseEnabled => unitController.ChaseState;
     private bool patrolEnabled => unitController.PatrolState;
     private List<Vector3> _patrolPoints => unitController.PatrolPoints;

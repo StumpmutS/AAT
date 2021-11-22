@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Unit Data/Base/Unit Spawn Data")]
 public class UnitSpawnData : ScriptableObject
@@ -15,7 +16,7 @@ public class UnitSpawnData : ScriptableObject
     public GameObject SpawnerVisuals;
     public UnitController UnitPrefab;
     public UnitGroupController UnitGroupPrefab;
-    public UnitStatsData UnitStatsData;
+    public BaseUnitStatsData baseUnitStatsData;
     public List<UnitStatsUpgradeData> UnitStatsUpgradeData;
 }
 

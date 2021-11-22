@@ -5,15 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Unit Data/Passives/Sector Power Stats Passive Component")]
 public class SectorPowerStatsBuffPassiveComponent : SectorPowerDeterminedPassiveComponent
 {
-    [SerializeField] private List<UnitStatsData> unitStatsUpgradeData;
+    [SerializeField] private List<BaseUnitStatsData> unitStatsUpgradeData;
 
     protected override void ActivateThresholdIndex(int index)
     {
-        _unit.ModifyStats(unitStatsUpgradeData[index].UnitStatsDataInfo);
+        _unit.ModifyStats(unitStatsUpgradeData[index]);
     }
 
     protected override void DeactivateThresholdIndex(int index)
     {
-        _unit.ModifyStats(unitStatsUpgradeData[index].UnitStatsDataInfo, false);
+        _unit.ModifyStats(unitStatsUpgradeData[index], false);
     }
 }
