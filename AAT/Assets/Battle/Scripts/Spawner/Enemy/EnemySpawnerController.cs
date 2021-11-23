@@ -17,8 +17,10 @@ public class EnemySpawnerController : BaseSpawnerController
         if (activeUnitGroups[groupIndex].Units.Count <= 0)
         {
             deadUnitGroupsCount++;
+            print(deadUnitGroupsCount);
             if (deadUnitGroupsCount >= _spawnGroupsAmount)
             {
+                print("all dead");
                 EnemySpawnerManager.SpawnerDefeatHandler();
             }
         }

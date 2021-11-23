@@ -288,6 +288,7 @@ MonoBehaviour:
   chaseState: 1
   patrolState: 1
   _patrolPoints: []
+  colliders: []
 --- !u!114 &636180067387719803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUnitStatsData: {fileID: 11400000, guid: 6d70fb3d216649145848bb5fa052ae3e, type: 2}
+  unitStatsData: {fileID: 11400000, guid: 6d70fb3d216649145848bb5fa052ae3e, type: 2}
 --- !u!114 &4425282573941339854
 MonoBehaviour:
   m_ObjectHideFlags: 0

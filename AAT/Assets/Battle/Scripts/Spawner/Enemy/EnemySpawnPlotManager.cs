@@ -16,7 +16,7 @@ public class EnemySpawnPlotManager : MonoBehaviour
     public static event Action OnNextWave = delegate { };
 
     private static EnemySpawnPlotManager instance;
-    private static int currentWaveIndex = 0;
+    private static int currentWaveIndex;
 
     private void Awake()
     {
@@ -30,9 +30,10 @@ public class EnemySpawnPlotManager : MonoBehaviour
 
     public static void NextWave()
     {
+        print("next wave");
         currentWaveIndex++;
-        if (currentWaveIndex >= instance.wavesUnitSpawnData.Count)
-        SetupWave(currentWaveIndex);
+        if (currentWaveIndex < instance.wavesUnitSpawnData.Count)
+            SetupWave(currentWaveIndex);
         OnNextWave.Invoke();
     }
 
@@ -44,11 +45,6 @@ public class EnemySpawnPlotManager : MonoBehaviour
     private static IEnumerator SetupWaveCoroutine(int waveIndex)
     {
         yield return new WaitForSeconds(instance.waveSetupTime);
-
-        foreach (var spawnerPlot in activeSpawnerPlots)
-        {
-            spawnerPlot.gameObject.SetActive(false);
-        }
 
         activeSpawnerPlots.Clear();
 

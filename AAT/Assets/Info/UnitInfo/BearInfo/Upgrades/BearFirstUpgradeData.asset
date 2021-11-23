@@ -12,32 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b81eb9366d85b640b57e722eb2d33ce, type: 3}
   m_Name: BearFirstUpgradeData
   m_EditorClassIdentifier: 
-  UnitStatsDataInfo:
-    UnitFloatStats:
-      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
-      _values:
-      - 40
-      - 30
-      - 0
-      - 10
-      - 0
-      - 0
-      - 200
-      - 0
-      - 0
-      - 0
-      - 0
-    MaxHealth: 40
-    BaseArmorPercent: 30
-    MaxArmorPercent: 0
-    Damage: 10
-    CritMultiplierPercent: 0
-    CritChancePercent: 0
-    AttackSpeedPercent: 200
-    MovementSpeed: 0
-    SightRange: 0
-    AttackRange: 0
-    ChaseSpeedPercentMultiplier: 0
-    TransportState: 0
-    AttackState: 0
-    MoveState: 0
+  baseUnitStatsDataInfo: {fileID: 11400000, guid: 467db97d4f0e830438caf20a32ef3f1b, type: 2}

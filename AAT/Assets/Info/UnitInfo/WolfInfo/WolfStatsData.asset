@@ -12,32 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
   m_Name: WolfStatsData
   m_EditorClassIdentifier: 
-  UnitStatsDataInfo:
-    UnitFloatStats:
-      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
-      _values:
-      - 100
-      - 30
-      - 50
-      - 40
-      - 400
-      - 25
-      - 125
-      - 5
-      - 20
-      - 5
-      - 300
-    MaxHealth: 100
-    BaseArmorPercent: 30
-    MaxArmorPercent: 50
-    Damage: 40
-    CritMultiplierPercent: 400
-    CritChancePercent: 25
-    AttackSpeedPercent: 125
-    MovementSpeed: 5
-    SightRange: 20
-    AttackRange: 5
-    ChaseSpeedPercentMultiplier: 300
-    TransportState: 0
-    AttackState: 1
-    MoveState: 1
+  UnitFloatStats:
+    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    _values:
+    - 400
+    - 30
+    - 45
+    - 50
+    - 200
+    - 30
+    - 200
+    - 6
+    - 20
+    - 5
+    - 200
+  TransportState: 0
+  AttackState: 1
+  MoveState: 1
