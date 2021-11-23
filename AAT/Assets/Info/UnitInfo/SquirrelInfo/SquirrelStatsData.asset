@@ -12,32 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
   m_Name: SquirrelStatsData
   m_EditorClassIdentifier: 
-  UnitStatsDataInfo:
-    UnitFloatStats:
-      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
-      _values:
-      - 200
-      - 20
-      - 50
-      - 5
-      - 120
-      - 10
-      - 200
-      - 3.5
-      - 10
-      - 5
-      - 200
-    MaxHealth: 200
-    BaseArmorPercent: 20
-    MaxArmorPercent: 50
-    Damage: 5
-    CritMultiplierPercent: 0
-    CritChancePercent: 10
-    AttackSpeedPercent: 200
-    MovementSpeed: 3.5
-    SightRange: 10
-    AttackRange: 5
-    ChaseSpeedPercentMultiplier: 200
-    TransportState: 1
-    AttackState: 2
-    MoveState: 1
+  UnitFloatStats:
+    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    _values:
+    - 100
+    - 10
+    - 25
+    - 10
+    - 200
+    - 110
+    - 100
+    - 5
+    - 13
+    - 6
+    - 200
+  TransportState: 1
+  AttackState: 2
+  MoveState: 1
