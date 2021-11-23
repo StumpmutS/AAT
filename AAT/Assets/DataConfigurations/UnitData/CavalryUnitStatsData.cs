@@ -6,16 +6,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Unit Data/Base/Cavalry Unit Stats Data")]
 public class CavalryUnitStatsData : BaseUnitStatsData
 {
-    public SerializableDictionary<ECavalryFloatStat, float> CavalryFloatStats =
-        new SerializableDictionary<ECavalryFloatStat, float>()
+    public SerializableDictionary<EUnitFloatStats, float> CavalryFloatStats =
+        new SerializableDictionary<EUnitFloatStats, float>()
         {
-            {ECavalryFloatStat.ChargeEndDistance, 0f},
-            {ECavalryFloatStat.ReturnSpeed, 0f}
+            {EUnitFloatStats.ChargeEndDistance, 0f},
+            {EUnitFloatStats.ReturnSpeed, 0f}
         };
-}
 
-public enum ECavalryFloatStat
-{
-    ChargeEndDistance,
-    ReturnSpeed
+    public override Dictionary<EUnitFloatStats, float> GetStats()
+    {
+        Dictionary<EUnitFloatStats, float> stats = new Dictionary<EUnitFloatStats, float>();
+        foreach (var kvp in UnitFloatStats)
+        {
+            stats.Add(kvp.Key, kvp.Value);
+        }
+
+        foreach (var kvp in CavalryFloatStats)
+        {
+            stats.Add(kvp.Key, kvp.Value);
+        }
+        return stats;
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -30,16 +31,16 @@ public class UnitStatsModifierManager : MonoBehaviour
     
     private void SetupCurrentUnitStatsData(BaseUnitStatsData unitStatsData)
     {
-        foreach (var kvp in unitStatsData.UnitFloatStats)
+        foreach (var kvp in unitStatsData.GetStats())
         {
             CurrentUnitStatsData[kvp.Key] = kvp.Value;
         }
     }
 
-    public void ModifyStats(BaseUnitStatsData baseUnitStatsDataInfo, bool add = true)
+    public void ModifyStats(BaseUnitStatsData stats, bool add = true)
     {
-        if (add) AddFloatStats(baseUnitStatsDataInfo);
-        else SubtractFloatStats(baseUnitStatsDataInfo);
+        if (add) AddFloatStats(stats);
+        else SubtractFloatStats(stats);
 
         OnRefreshStats.Invoke();
     }
@@ -64,22 +65,23 @@ public class UnitStatsModifierManager : MonoBehaviour
     
     private void AddFloatStats(BaseUnitStatsData stats)
     {
-        foreach (var kvp in stats.UnitFloatStats)
+        foreach (var stat in stats.GetStats().Where(kvp => CurrentUnitStatsData.ContainsKey(kvp.Key)))
         {
-            CurrentUnitStatsData[kvp.Key] += kvp.Value;
+            CurrentUnitStatsData[stat.Key] += stat.Value;
         }
     }
 
     private void SubtractFloatStats(BaseUnitStatsData stats)
     {
-        foreach (var kvp in stats.UnitFloatStats)
+        foreach (var stat in stats.GetStats().Where(kvp => CurrentUnitStatsData.ContainsKey(kvp.Key)))
         {
-            CurrentUnitStatsData[kvp.Key] -= kvp.Value;
+            CurrentUnitStatsData[stat.Key] -= stat.Value;
         }
     }
 
     public void ModifyFloatStat(EUnitFloatStats statType, float amount)
     {
-        CurrentUnitStatsData[statType] += amount;
+        if (CurrentUnitStatsData.ContainsKey(statType))
+            CurrentUnitStatsData[statType] += amount;
     }
 }
