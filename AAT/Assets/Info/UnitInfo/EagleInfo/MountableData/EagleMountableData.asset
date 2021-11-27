@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 778a3ad8b7a651b408be8ba2467f1757, type: 3}
-  m_Name: BearMountableData
+  m_Name: EagleMountableData
   m_EditorClassIdentifier: 
   MountableInfo:
-    MountRange: 7
-    MountedUnitModifier: {fileID: 11400000, guid: 07be237fd1c057b42bed3321525f7790, type: 2}
-    SelfModifier: {fileID: 11400000, guid: 2a86b6b44133955468fe56334d5400fc, type: 2}
+    MountRange: 45
+    MountedUnitModifier: {fileID: 11400000, guid: 0dda7b860d8cd8147aa8a602421c2c98, type: 2}
+    SelfModifier: {fileID: 11400000, guid: b1a01adc20fbc4b4d8125413f9a0993f, type: 2}

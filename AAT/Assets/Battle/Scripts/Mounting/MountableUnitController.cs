@@ -15,13 +15,13 @@ public class MountableUnitController : BaseMountableController
 
     public override void ActivateMounted(BaseUnitStatsData stats)
     {
-        unit.ModifyStats(mountableUnitData.MountableInfo.TransportingModifier);
+        unit.ModifyStats(mountableUnitData.MountableInfo.SelfModifier);
         unit.ModifyStats(stats);
     }
 
     public override void DeactivateMounted(BaseUnitStatsData stats)
     {
-        unit.ModifyStats(mountableUnitData.MountableInfo.TransportingModifier, false);
+        unit.ModifyStats(mountableUnitData.MountableInfo.SelfModifier, false);
         unit.ModifyStats(stats, false);
     }
 }

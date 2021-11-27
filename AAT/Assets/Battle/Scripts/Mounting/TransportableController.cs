@@ -88,7 +88,7 @@ public class TransportableController : MonoBehaviour
         transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
         if (_selected) SubscribeCheckGround(true);
-        _unitController.ModifyStats(_mount.ReturnData().mountedBaseUnitModifier);
+        _unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier);
         _unitController.ModifyStats(transportableData.SelfStatsAlter);
         _mount.ActivateMounted(transportableData.MountStatsAlter);
     }
@@ -114,7 +114,7 @@ public class TransportableController : MonoBehaviour
     private void Demount(Vector3 pos)
     {
         print("demount");
-        _unitController.ModifyStats(_mount.ReturnData().mountedBaseUnitModifier, false);
+        _unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier, false);
         _unitController.ModifyStats(transportableData.SelfStatsAlter, false);
         _mount.DeactivateMounted(transportableData.MountStatsAlter);
         _mount = null;

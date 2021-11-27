@@ -31,11 +31,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a77622bfce62f74f99ac3e702472be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mountablePointLink: {fileID: 0}
+  _mountablePointLink: {fileID: 4377782669269336123}
   mountableVisualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 0, z: 0}
   unit: {fileID: 6461623584834916860}
-  mountableUnitData: {fileID: 0}
+  mountableUnitData: {fileID: 11400000, guid: 1daaeb42878775c488dd4386dec581a5, type: 2}
 --- !u!1 &6851545171700319375
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitStatsData: {fileID: 0}
+  unitStatsData: {fileID: 11400000, guid: 4621817d89c5dc140bb23f7107e98044, type: 2}
 --- !u!114 &6646878468723361836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,8 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitDataManager: {fileID: 6873907644955445216}
-  chargeEndDistance: 3
-  flyBackSpeed: 30
 --- !u!114 &5682520330015329591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,6 +563,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 121592989847141649, guid: f06e1ea9bb7a4c94382fde030ecfff3c, type: 3}
   m_PrefabInstance: {fileID: 4352805856759918890}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4377782669269336123 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 47648410093957393, guid: f06e1ea9bb7a4c94382fde030ecfff3c, type: 3}
+  m_PrefabInstance: {fileID: 4352805856759918890}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9523b33745ee7b240bf09838f1d55f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5416589730737625382 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8593943910664841228, guid: f06e1ea9bb7a4c94382fde030ecfff3c, type: 3}

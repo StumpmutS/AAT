@@ -12,5 +12,5 @@ public class MountableData<T> : ScriptableObject where T : BaseMountableDataInfo
 public class BaseMountableDataInfo
 {
     public float MountRange;
-    public BaseUnitStatsData mountedBaseUnitModifier;
+    public BaseUnitStatsData MountedUnitModifier;
 }

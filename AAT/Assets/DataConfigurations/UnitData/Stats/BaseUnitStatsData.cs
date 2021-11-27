@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Data/Base/Unit Stats Data")]
+[CreateAssetMenu(menuName = "Unit Data/Stats/Unit Stats Data")]
 public class BaseUnitStatsData : ScriptableObject
 {    
     public SerializableDictionary<EUnitFloatStats, float> UnitFloatStats = new SerializableDictionary<EUnitFloatStats, float>()

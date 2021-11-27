@@ -15,10 +15,8 @@ public class EnemySpawnerManager : MonoBehaviour
     public static void SpawnerDefeatHandler()
     {
         defeatedSpawnerCount++;
-        print("spawner: " + defeatedSpawnerCount);
         if (defeatedSpawnerCount >= EnemySpawnPlotManager.SpawnerPlots.Count)
         {
-            print("send next wave");
             EnemySpawnPlotManager.NextWave();
         }
     }

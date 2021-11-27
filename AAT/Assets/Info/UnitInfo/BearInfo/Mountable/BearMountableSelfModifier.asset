@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
-  m_Name: BearMountableTransportingModifier
+  m_Name: BearMountableSelfModifier
   m_EditorClassIdentifier: 
   UnitFloatStats:
     _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
@@ -22,10 +22,10 @@ MonoBehaviour:
     - 0
     - 0
     - 0
+    - -0.5
     - 0
     - 0
-    - 10
-    - 0
+    - -100
   TransportState: 0
   AttackState: 0
   MoveState: 0

@@ -30,7 +30,6 @@ public class EnemySpawnPlotManager : MonoBehaviour
 
     public static void NextWave()
     {
-        print("next wave");
         currentWaveIndex++;
         if (currentWaveIndex < instance.wavesUnitSpawnData.Count)
             SetupWave(currentWaveIndex);

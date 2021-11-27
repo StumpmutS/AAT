@@ -12,32 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
   m_Name: SquirrelComradeSectorPowerThreshold2
   m_EditorClassIdentifier: 
-  UnitStatsDataInfo:
-    UnitFloatStats:
-      _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
-      _values:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 25
-      - 0
-      - 0
-      - 0
-      - 0
-    MaxHealth: 0
-    BaseArmorPercent: 0
-    MaxArmorPercent: 0
-    Damage: 0
-    CritMultiplierPercent: 0
-    CritChancePercent: 0
-    AttackSpeedPercent: 0
-    MovementSpeed: 0
-    SightRange: 0
-    AttackRange: 0
-    ChaseSpeedPercentMultiplier: 0
-    TransportState: 0
-    AttackState: 0
-    MoveState: 0
+  UnitFloatStats:
+    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    _values:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 100
+    - 0
+    - 0
+    - 0
+    - 0
+  TransportState: 0
+  AttackState: 0
+  MoveState: 0

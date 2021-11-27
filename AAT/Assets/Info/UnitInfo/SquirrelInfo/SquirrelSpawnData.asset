@@ -21,6 +21,6 @@ MonoBehaviour:
   SpawnerVisuals: {fileID: 5786109076718938141, guid: 4ab723db798d8bb4bab3c890c2ffa7bc, type: 3}
   UnitPrefab: {fileID: -8213272441465151675, guid: db35d4426829de84295bcc20188331c6, type: 3}
   UnitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
-  UnitStatsData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
+  baseUnitStatsData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
   UnitStatsUpgradeData:
   - {fileID: 11400000, guid: 20715c124d506ec46baaaa7bed4de486, type: 2}

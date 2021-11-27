@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
-  m_Name: SquirrelComradeSectorPowerThreshold3
+  m_Script: {fileID: 11500000, guid: 94d01318526c1584e8e02fb58f65dbe6, type: 3}
+  m_Name: EagleMountableSelfModifier
   m_EditorClassIdentifier: 
   UnitFloatStats:
     _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
@@ -21,11 +21,16 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 150
+    - 0
+    - -3
     - 0
     - 0
-    - 0
-    - 0
+    - -100
   TransportState: 0
   AttackState: 0
   MoveState: 0
+  CavalryFloatStats:
+    _keys: 0b0000000c000000
+    _values:
+    - 0
+    - 0
