@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class UnitStatsModifierManager : MonoBehaviour
 {
-    [SerializeField] private BaseUnitStatsData unitStatsData;
+    [SerializeField] private ArmoredHealthUnitStatsData unitStatsData;
 
     public Dictionary<EUnitFloatStats, float> CurrentUnitStatsData { get; private set; } =
         new Dictionary<EUnitFloatStats, float>();
@@ -24,12 +24,12 @@ public class UnitStatsModifierManager : MonoBehaviour
         }
     }
 
-    public void Setup(BaseUnitStatsData unitStatsData)
+    public void Setup(ArmoredHealthUnitStatsData unitStatsData)
     {
         SetupCurrentUnitStatsData(unitStatsData);
     }
     
-    private void SetupCurrentUnitStatsData(BaseUnitStatsData unitStatsData)
+    private void SetupCurrentUnitStatsData(ArmoredHealthUnitStatsData unitStatsData)
     {
         foreach (var kvp in unitStatsData.GetStats())
         {
@@ -37,7 +37,7 @@ public class UnitStatsModifierManager : MonoBehaviour
         }
     }
 
-    public void ModifyStats(BaseUnitStatsData stats, bool add = true)
+    public void ModifyStats(ArmoredHealthUnitStatsData stats, bool add = true)
     {
         if (add) AddFloatStats(stats);
         else SubtractFloatStats(stats);
@@ -63,7 +63,7 @@ public class UnitStatsModifierManager : MonoBehaviour
         OnRefreshStats.Invoke();
     }
     
-    private void AddFloatStats(BaseUnitStatsData stats)
+    private void AddFloatStats(ArmoredHealthUnitStatsData stats)
     {
         foreach (var stat in stats.GetStats().Where(kvp => CurrentUnitStatsData.ContainsKey(kvp.Key)))
         {
@@ -71,7 +71,7 @@ public class UnitStatsModifierManager : MonoBehaviour
         }
     }
 
-    private void SubtractFloatStats(BaseUnitStatsData stats)
+    private void SubtractFloatStats(ArmoredHealthUnitStatsData stats)
     {
         foreach (var stat in stats.GetStats().Where(kvp => CurrentUnitStatsData.ContainsKey(kvp.Key)))
         {

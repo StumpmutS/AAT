@@ -16,6 +16,11 @@ public class CavalryUnitStatsData : BaseUnitStatsData
     public override Dictionary<EUnitFloatStats, float> GetStats()
     {
         Dictionary<EUnitFloatStats, float> stats = new Dictionary<EUnitFloatStats, float>();
+        foreach (var kvp in ArmoredHealthFloatStats)
+        {
+            stats.Add(kvp.Key, kvp.Value);
+        }
+        
         foreach (var kvp in UnitFloatStats)
         {
             stats.Add(kvp.Key, kvp.Value);

@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d01318526c1584e8e02fb58f65dbe6, type: 3}
   m_Name: EagleStatsData
   m_EditorClassIdentifier: 
-  UnitFloatStats:
-    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+  ArmoredHealthFloatStats:
+    _keys: 000000000100000002000000
     _values:
     - 300
     - 10
-    - 50
+    - 15
+  UnitFloatStats:
+    _keys: 030000000400000005000000060000000700000008000000090000000a000000
+    _values:
     - 100
     - 200
     - 40

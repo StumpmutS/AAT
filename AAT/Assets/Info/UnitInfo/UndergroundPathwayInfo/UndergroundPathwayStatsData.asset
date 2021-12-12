@@ -9,26 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
-  m_Name: BearMountableSelfModifier
+  m_Script: {fileID: 11500000, guid: 43502a7ce1ec831489ed3b4dc1c0031f, type: 3}
+  m_Name: UndergroundPathwayStatsData
   m_EditorClassIdentifier: 
   ArmoredHealthFloatStats:
     _keys: 000000000100000002000000
     _values:
+    - 100
     - 0
     - 0
-    - 0
-  UnitFloatStats:
-    _keys: 030000000400000005000000060000000700000008000000090000000a000000
-    _values:
-    - 0
-    - 0
-    - 0
-    - 0
-    - -0.5
-    - 0
-    - 0
-    - -100
-  TransportState: 0
-  AttackState: 0
-  MoveState: 0

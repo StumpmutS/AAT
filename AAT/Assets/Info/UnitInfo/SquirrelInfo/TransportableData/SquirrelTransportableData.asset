@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f802356be04603479c99a613dd38d9c, type: 3}
   m_Name: SquirrelTransportableData
   m_EditorClassIdentifier: 
-  SelfStatsAlter: {fileID: 11400000, guid: 34ca10cd108861547a9a27f0d8073c32, type: 2}
-  MountStatsAlter: {fileID: 11400000, guid: 34ca10cd108861547a9a27f0d8073c32, type: 2}
+  SelfStatsAlter: {fileID: 11400000, guid: 3b1332e73aefd9c488c32cd77258407c, type: 2}
+  MountStatsAlter: {fileID: 11400000, guid: 3b1332e73aefd9c488c32cd77258407c, type: 2}

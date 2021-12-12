@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
   m_Name: EnemyStatsData
   m_EditorClassIdentifier: 
-  UnitFloatStats:
-    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+  ArmoredHealthFloatStats:
+    _keys: 000000000100000002000000
     _values:
     - 200
     - 20
     - 30
+  UnitFloatStats:
+    _keys: 030000000400000005000000060000000700000008000000090000000a000000
+    _values:
     - 30
     - 200
-    - 110
+    - 10
     - 100
     - 4
     - 10

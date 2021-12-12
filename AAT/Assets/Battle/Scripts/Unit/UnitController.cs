@@ -38,7 +38,7 @@ public class UnitController : OutlineSelectableController
         OnDeath.Invoke(this);
     }
 
-    public void ModifyStats(BaseUnitStatsData baseUnitStatsDataInfo, bool add = true)
+    public void ModifyStats(ArmoredHealthUnitStatsData baseUnitStatsDataInfo, bool add = true)
     {
         unitStatsModifierManager.ModifyStats(baseUnitStatsDataInfo, add);
     }

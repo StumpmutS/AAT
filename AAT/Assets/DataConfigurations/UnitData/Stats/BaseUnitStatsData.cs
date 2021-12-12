@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Data/Stats/Unit Stats Data")]
-public class BaseUnitStatsData : ScriptableObject
+[CreateAssetMenu(menuName = "Unit Data/Stats/Base Unit Stats Data")]
+public class BaseUnitStatsData : ArmoredHealthUnitStatsData
 {    
     public SerializableDictionary<EUnitFloatStats, float> UnitFloatStats = new SerializableDictionary<EUnitFloatStats, float>()
     {
-        {EUnitFloatStats.MaxHealth, 0f },
-        {EUnitFloatStats.BaseArmorPercent, 0f },
-        {EUnitFloatStats.MaxArmorPercent, 0f },
         {EUnitFloatStats.Damage, 0f },
         {EUnitFloatStats.CritMultiplierPercent, 0f },
         {EUnitFloatStats.CritChancePercent, 0f },
@@ -24,8 +21,18 @@ public class BaseUnitStatsData : ScriptableObject
     public EAttackType AttackState;
     public EMovementType MoveState;
 
-    public virtual Dictionary<EUnitFloatStats, float> GetStats()
+    public override Dictionary<EUnitFloatStats, float> GetStats()
     {
-        return UnitFloatStats;
+        Dictionary<EUnitFloatStats, float> stats = new Dictionary<EUnitFloatStats, float>();
+        foreach (var kvp in ArmoredHealthFloatStats)
+        {
+            stats.Add(kvp.Key, kvp.Value);
+        }
+
+        foreach (var kvp in UnitFloatStats)
+        {
+            stats.Add(kvp.Key, kvp.Value);
+        }
+        return stats;
     }
 }

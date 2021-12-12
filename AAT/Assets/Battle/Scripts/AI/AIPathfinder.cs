@@ -126,6 +126,8 @@ public class AIPathfinder : MonoBehaviour
         return target;
     }
 
+    //dont do animation stuff in here
+
     protected virtual void Attack(GameObject target)
     {
         if (unitAnimationController != null)
