@@ -15,7 +15,8 @@ MonoBehaviour:
   UnitAbilityDataInfo:
     AbilityName: Tunnel
     CooldownTime: 30
-    ActiveTime: 4
+    ActiveTime: 7
+    TargetTimeOutTime: 10
     TransportUsage: 0
     AbilityComponents:
-    - {fileID: 11400000, guid: 9c86ccde1ad9b454db53db693ed55997, type: 2}
+    - {fileID: 11400000, guid: 1467fd439466612489399d41d94cab3f, type: 2}

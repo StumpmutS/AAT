@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
+[RequireComponent(typeof(AIPathfinder), typeof(AATAgentController))]
 public class BaseChaseController : MonoBehaviour
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
@@ -14,13 +14,13 @@ public class BaseChaseController : MonoBehaviour
     private float _alteredMoveSpeed;
 
     protected AIPathfinder AI;
-    protected NavMeshAgent agent;
+    protected AATAgentController agent;
     private bool _stopped = true;
 
     private void Awake()
     {
         AI = GetComponent<AIPathfinder>();
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<AATAgentController>();
         AI.OnChase += Chase;
         AI.OnPatrolStart += StopChase;
         AI.OnAttackStart += StopChase;
@@ -43,7 +43,7 @@ public class BaseChaseController : MonoBehaviour
 
         Vector3 targetPos = target.transform.position;
         agent.SetDestination(new Vector3(targetPos.x, transform.position.y, targetPos.z));
-        agent.speed = moveSpeed;
+        agent.SetSpeed(moveSpeed);
     }
 
     protected virtual void StopChase()
@@ -54,6 +54,6 @@ public class BaseChaseController : MonoBehaviour
             _stopped = true;
         }
 
-        agent.speed = moveSpeed;
+        agent.SetSpeed(moveSpeed);
     }
 }

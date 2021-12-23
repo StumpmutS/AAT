@@ -50,8 +50,8 @@ public class AIPlayerOverrideController : AIPathfinder
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit))
         {
-            Vector3 destination = hit.point;
-            _agent.SetDestination(new Vector3(destination.x, transform.position.y, destination.z));
+            Vector3 destination = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            _agent.SetDestination(destination);
         }
     }
 
@@ -81,8 +81,8 @@ public class AIPlayerOverrideController : AIPathfinder
 
     private void CheckTargetDistance()
     {
-        if (!_agent.enabled) return;
-        if (_agent.remainingDistance < .1f)
+        if (!_agent.AgentEnabled) return;
+        if (_agent.RemainingDistance < .1f)
         {
             MovementOverride = false;
         }

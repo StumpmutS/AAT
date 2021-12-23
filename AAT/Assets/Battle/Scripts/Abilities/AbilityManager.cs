@@ -8,7 +8,7 @@ public class AbilityManager : MonoBehaviour
     [SerializeField] private RectTransform abilityButtonsContainer;
     [SerializeField] private AbilityButtonController abilityButtonPrefab;
 
-    public static AbilityManager instance;
+    private static AbilityManager instance;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class AbilityManager : MonoBehaviour
 
     private void RemoveAbilityButtonDisplay()
     {
+        if (CustomAATEventSystemManager.Instance.OverUI()) return;
         instance.abilityButtonsContainer.gameObject.SetActive(false);
         InputManager.OnLeftCLick -= instance.RemoveAbilityButtonDisplay;
     }

@@ -5,15 +5,28 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Unit Data/Stats/Unit Armored Health Stats Data")]
 public class ArmoredHealthUnitStatsData : ScriptableObject
 {
-    public SerializableDictionary<EUnitFloatStats, float> ArmoredHealthFloatStats = new SerializableDictionary<EUnitFloatStats, float>()
-    {
-        {EUnitFloatStats.MaxHealth, 0f },
-        {EUnitFloatStats.BaseArmorPercent, 0f },
-        {EUnitFloatStats.MaxArmorPercent, 0f }
-    };
+    public SerializableDictionary<EUnitFloatStats, float> ArmoredHealthFloatStats = 
+        new SerializableDictionary<EUnitFloatStats, float>()
+        {
+            {EUnitFloatStats.MaxHealth, 0f },
+            {EUnitFloatStats.BaseArmorPercent, 0f },
+            {EUnitFloatStats.MaxArmorPercent, 0f }
+        };
 
-    public virtual Dictionary<EUnitFloatStats, float> GetStats()
+    protected Dictionary<EUnitFloatStats, float> ReturnStats = new Dictionary<EUnitFloatStats, float>();
+
+    public Dictionary<EUnitFloatStats, float> GetStats()
     {
-        return ArmoredHealthFloatStats;
+        ReturnStats.Clear();
+        FillReturnStats();
+        return ReturnStats;
+    }
+
+    protected virtual void FillReturnStats()
+    {
+        foreach (var kvp in ArmoredHealthFloatStats)
+        {
+            ReturnStats.Add(kvp.Key, kvp.Value);
+        }
     }
 }

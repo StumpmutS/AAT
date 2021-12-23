@@ -59,7 +59,7 @@ public class AnimatedCavalryAttackController : AnimatedAttackController
     {
         float addSpeed =  ((moveSpeed * chaseSpeedPercent / 100) - moveSpeed) * Time.deltaTime;
         unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, addSpeed);
-        _agent.speed += addSpeed;
+        _agent.SetSpeed(_agent.Speed + addSpeed);
         _chargeSpeedChange += addSpeed;
     }
 
@@ -71,6 +71,6 @@ public class AnimatedCavalryAttackController : AnimatedAttackController
         unitDataManager.ModifyFloatStat(EUnitFloatStats.MovementSpeed, -_chargeSpeedChange);
         _chargeSpeedChange = 0;
         if (_agent != null)
-            _agent.speed = moveSpeed;
+            _agent.SetSpeed(moveSpeed);
     }
 }

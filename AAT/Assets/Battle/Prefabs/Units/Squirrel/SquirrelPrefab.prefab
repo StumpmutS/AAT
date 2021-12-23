@@ -565,7 +565,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2153349754267822321, guid: b024d73f61b7aac409cacc17ce48c325, type: 3}
+  - {fileID: 2100000, guid: bef107a01dc16e346aa673056065b828, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -962,6 +962,7 @@ GameObject:
   - component: {fileID: 430060796365761778}
   - component: {fileID: 6019638265588333270}
   - component: {fileID: 6519343231381679187}
+  - component: {fileID: 5837929759990295216}
   m_Layer: 6
   m_Name: SquirrelPrefab
   m_TagString: Good
@@ -1080,7 +1081,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4840677430842725870}
   m_Enabled: 1
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 1000
@@ -1206,7 +1207,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   AI: {fileID: 5759228335420568733}
-  agent: {fileID: 5759228335420568731}
+  agent: {fileID: 0}
   statsMod: {fileID: 430060796365761778}
   attackController: {fileID: 5759228335420568726}
 --- !u!114 &6519343231381679187
@@ -1224,6 +1225,18 @@ MonoBehaviour:
   unit: {fileID: -8213272441465151675}
   unitPassiveData:
   - {fileID: 11400000, guid: 7b4eeba6c8af763488b0ba5df672aabc, type: 2}
+--- !u!114 &5837929759990295216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840677430842725870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4922851530394433235
 GameObject:
   m_ObjectHideFlags: 0

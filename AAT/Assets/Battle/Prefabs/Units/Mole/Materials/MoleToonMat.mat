@@ -99,7 +99,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _LightDotCutoff: 0.61
-    - _LightValue: 6.78
+    - _LightValue: 6.35
     - _Metallic: 0
     - _MidValue: 2.94
     - _OcclusionStrength: 1
@@ -110,7 +110,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 0.5
+    - _Strength: 0.35
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1

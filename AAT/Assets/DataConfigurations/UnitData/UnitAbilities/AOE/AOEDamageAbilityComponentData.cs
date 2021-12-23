@@ -11,7 +11,7 @@ public class AOEDamageAbilityComponentData : AbilityComponent
 
     private Dictionary<UnitController, List<Collider>> damagedEnemies = new Dictionary<UnitController, List<Collider>>();
 
-    public override void ActivateComponent(UnitController unit)
+    public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         damage = -Mathf.Abs(damage);
         Collider[] enemyCollidersHit = new Collider[25];

@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(UnitController))]
+[RequireComponent(typeof(UnitController), typeof(AATAgentController))]
 public class TransportableController : MonoBehaviour
 {
     [SerializeField] private TransportableData transportableData;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private AIPathfinder AI;
-    [SerializeField] private NavMeshAgent agent;
+    
     [SerializeField] private UnitStatsModifierManager statsMod;
     [SerializeField] private BaseAttackController attackController;
 
+    private AATAgentController _agent;
     private UnitController _unitController;
     public UnitController UnitController => _unitController;
 
@@ -32,6 +33,7 @@ public class TransportableController : MonoBehaviour
         var AIOverride = AI as AIPlayerOverrideController;
         if (AIOverride != null) AIOverride.OnReroute += RerouteHandler;
         _unitController = GetComponent<UnitController>();
+        _agent = GetComponent<AATAgentController>();
         _unitController.OnSelect += Select;
         _unitController.OnDeselect += Deselect;
     }
@@ -67,7 +69,7 @@ public class TransportableController : MonoBehaviour
 
     private void CheckMountRange()
     {
-        if (agent.remainingDistance < _mount.ReturnData().MountRange)
+        if (_agent.RemainingDistance < _mount.ReturnData().MountRange)
         {
             _movingToMount = false;
             InputManager.OnUpdate -= CheckMountRange;
@@ -75,14 +77,14 @@ public class TransportableController : MonoBehaviour
         } 
         else
         {
-            agent.SetDestination(_mount.transform.position);
+            _agent.SetDestination(_mount.transform.position);
         }
     }
 
     private void Mount()
     {
         _mounted = true;
-        agent.enabled = false;
+        _agent.DisableAgent(this);
         transform.position = _mount.transform.position;
         transform.rotation = _mount.transform.rotation;
         transform.parent = _mount.transform;
@@ -120,8 +122,8 @@ public class TransportableController : MonoBehaviour
         _mount = null;
         _mounted = false;
         transform.position = pos;
-        agent.enabled = true;
-        agent.Warp(pos);
+        _agent.EnableAgent(this);
+        _agent.Warp(pos);
         if (AI != null) AI.Activate();
         var AIOverride = AI as AIPlayerOverrideController;
         if (AIOverride != null) AIOverride.SetTargetDestination();

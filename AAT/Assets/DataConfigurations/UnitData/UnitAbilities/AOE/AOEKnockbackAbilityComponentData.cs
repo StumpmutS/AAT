@@ -11,7 +11,7 @@ public class AOEKnockbackAbilityComponentData : AbilityComponent
     [SerializeField] private float knockbackSpeed;
     [SerializeField] private float knockbackLerpEndPercent;
 
-    public override void ActivateComponent(UnitController unit)
+    public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         Collider[] enemyCollidersHit = new Collider[25];
         Physics.OverlapSphereNonAlloc(unit.transform.position, knockbackRadius, enemyCollidersHit, enemyLayer);

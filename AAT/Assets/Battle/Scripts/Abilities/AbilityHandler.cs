@@ -6,23 +6,26 @@ using UnityEngine;
 [RequireComponent(typeof(UnitController), typeof(UnitAnimationController))]
 public class AbilityHandler : MonoBehaviour
 {
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private List<UnitAbilityData> unitAbilityData;
-    private List<UnitAbilityDataInfo> unitAbilityDataInfo = new List<UnitAbilityDataInfo>();
-    private Dictionary<UnitAbilityDataInfo, bool> abilitiesByActiveState = new Dictionary<UnitAbilityDataInfo, bool>();
+    
+    private List<UnitAbilityDataInfo> _unitAbilityDataInfo = new List<UnitAbilityDataInfo>();
+    private Dictionary<UnitAbilityDataInfo, bool> _abilitiesByActiveState = new Dictionary<UnitAbilityDataInfo, bool>();
+    private HashSet<int> _abilityIndexesAwaitingInput = new HashSet<int>();
+    private bool _checkGroundSubscribed;
+    private UnitController _unitController;
+    private UnitAnimationController _unitAnimationController;
 
     public event Action<bool> OnAbilityUsed = delegate { };
 
-    private UnitController unitController;
-    private UnitAnimationController unitAnimationController;
-
     private void Awake()
     {
-        unitController = GetComponent<UnitController>();
-        unitAnimationController = GetComponent<UnitAnimationController>();
-        unitController.OnSelect += SendDisplayData;
+        _unitController = GetComponent<UnitController>();
+        _unitAnimationController = GetComponent<UnitAnimationController>();
+        _unitController.OnSelect += SendDisplayData;
         foreach (var abilityData in unitAbilityData)
         {
-            unitAbilityDataInfo.Add(abilityData.UnitAbilityDataInfo);
+            _unitAbilityDataInfo.Add(abilityData.UnitAbilityDataInfo);
         }
     }
 
@@ -31,41 +34,96 @@ public class AbilityHandler : MonoBehaviour
         unitAbilityData.Add(unitAbility);
     }
 
-    private void ActivateAbility(int abilityIndex)
+    private void AwaitAbilityInput(int abilityIndex)
     {
-        var info = unitAbilityDataInfo[abilityIndex];
-        if (abilitiesByActiveState.ContainsKey(info))
-            if (abilitiesByActiveState[info]) return;
+        var info = _unitAbilityDataInfo[abilityIndex];
+
+        if (info.TargetTimeOutTime > 0)
+        {
+            SubscribeCheckGround();
+            _abilityIndexesAwaitingInput.Add(abilityIndex);
+            StartCoroutine(TargetedTimeOutTimer(info.TargetTimeOutTime, abilityIndex));
+        }
+        else
+        {
+            ActivateAbility(abilityIndex);
+        }
+    }
+
+    private IEnumerator TargetedTimeOutTimer(float waitTime, int index)
+    {
+        yield return new WaitForSeconds(waitTime);
+        if (_abilityIndexesAwaitingInput.Contains(index))
+        {
+            UnsubscribeCheckGround();
+            _abilityIndexesAwaitingInput.Remove(index);
+        }
+    }
+
+    private void SubscribeCheckGround()
+    {
+        if (_checkGroundSubscribed) return;
+        InputManager.OnLeftCLick += CheckGround;
+        _checkGroundSubscribed = true;
+    }
+
+    private void UnsubscribeCheckGround()
+    {
+        if (!_checkGroundSubscribed) return;
+        InputManager.OnLeftCLick += CheckGround;
+        _checkGroundSubscribed = false;
+    }
+
+    private void CheckGround()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hit, groundLayer))
+        {
+            foreach(var index in _abilityIndexesAwaitingInput)
+            {
+                ActivateAbility(index, hit.point);
+                UnsubscribeCheckGround();
+            }
+            _abilityIndexesAwaitingInput.Clear();
+        }
+    }
+
+    private void ActivateAbility(int abilityIndex, Vector3 point = default)
+    {
+        var info = _unitAbilityDataInfo[abilityIndex];
+        if (_abilitiesByActiveState.ContainsKey(info))
+            if (_abilitiesByActiveState[info]) return;
         StartCooldown(info);
         foreach (var abilityComponent in info.AbilityComponents)
         {
-            StartCoroutine(DelayComponentCoroutine(abilityComponent));
+            StartCoroutine(DelayComponentCoroutine(abilityComponent, point));
         }
-        unitAnimationController.SetAbility(abilityIndex);
+        _unitAnimationController.SetAbility(abilityIndex);
     }
 
-    private IEnumerator DelayComponentCoroutine(AbilityComponent abilityComponent)
+    private IEnumerator DelayComponentCoroutine(AbilityComponent abilityComponent, Vector3 point = default)
     {
         yield return new WaitForSeconds(abilityComponent.ComponentDelay);
         if (abilityComponent.Repeat)
         {
-            var repeatCoroutine = RepeatComponentActivationCoroutine(abilityComponent);
+            var repeatCoroutine = RepeatComponentActivationCoroutine(abilityComponent, point);
             StartCoroutine(repeatCoroutine);
             yield return new WaitForSeconds(abilityComponent.ComponentDuration);
             StopCoroutine(repeatCoroutine);
-            abilityComponent.DeactivateComponent(unitController);
-        } else 
+            abilityComponent.DeactivateComponent(_unitController);
+        } 
+        else 
         {
-            abilityComponent.ActivateComponent(unitController);
-            abilityComponent.DeactivateComponent(unitController);
+            abilityComponent.ActivateComponent(_unitController, point);
+            abilityComponent.DeactivateComponent(_unitController);
         }
     }
 
-    private IEnumerator RepeatComponentActivationCoroutine(AbilityComponent abilityComponent)
+    private IEnumerator RepeatComponentActivationCoroutine(AbilityComponent abilityComponent, Vector3 point = default)
     {
         while (true)
         {
-            abilityComponent.ActivateComponent(unitController);
+            abilityComponent.ActivateComponent(_unitController, point);
             yield return new WaitForSeconds(abilityComponent.RepeatIntervals);
         }
     }
@@ -78,9 +136,9 @@ public class AbilityHandler : MonoBehaviour
 
     private IEnumerator StartCooldownCoroutine(UnitAbilityDataInfo ability)
     {
-        abilitiesByActiveState[ability] = true;
+        _abilitiesByActiveState[ability] = true;
         yield return new WaitForSeconds(ability.CooldownTime);
-        abilitiesByActiveState[ability] = false;
+        _abilitiesByActiveState[ability] = false;
     }
 
     private IEnumerator StartActiveTimeCoroutine(UnitAbilityDataInfo ability)
@@ -92,6 +150,6 @@ public class AbilityHandler : MonoBehaviour
 
     private void SendDisplayData()
     {
-        AbilityManager.DisplayAbilityButtons(unitAbilityDataInfo, ActivateAbility);
+        AbilityManager.DisplayAbilityButtons(_unitAbilityDataInfo, AwaitAbilityInput);
     }
 }

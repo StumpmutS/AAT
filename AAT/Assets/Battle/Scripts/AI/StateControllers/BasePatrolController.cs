@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
+[RequireComponent(typeof(AIPathfinder), typeof(AATAgentController))]
 public class BasePatrolController : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    private AATAgentController agent;
     private AIPathfinder AI;
     private bool patrolling = false;
     private List<Vector3> _patrolPoints;
@@ -16,7 +16,7 @@ public class BasePatrolController : MonoBehaviour
     private void Awake()
     {
         AI = GetComponent<AIPathfinder>();
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<AATAgentController>();
         AI.OnPatrol += Patrol;
         AI.OnChaseStart += StopPatrol;
         AI.OnAttackStart += StopPatrol;
@@ -26,7 +26,7 @@ public class BasePatrolController : MonoBehaviour
     {
         if (patrolling)
         {
-            if (agent.remainingDistance < .1f)
+            if (agent.RemainingDistance < .1f)
             {
                 NextPatrolPoint();
             }
@@ -38,7 +38,6 @@ public class BasePatrolController : MonoBehaviour
         _patrolPoints = patrolPoints;
         SetDestination(0);
         patrolling = true;
-
     }
 
     private void StopPatrol()

@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: 4781951162920444690
     second: Armature|ArmatureAction
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SquirrelBase
+    second: {fileID: 2100000, guid: bef107a01dc16e346aa673056065b828, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

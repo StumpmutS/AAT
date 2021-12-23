@@ -8,8 +8,8 @@ public class ProjectileSpawnAbilityComponent : AbilityComponent
     [SerializeField] private ProjectileController unitPrefab;
     [SerializeField] private int projectilesPerOffset;
     [SerializeField] private List<Vector3> spawnOffsets;
-    
-    public override void ActivateComponent(UnitController unit)
+
+    public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         var objTransform = unit.transform;
         

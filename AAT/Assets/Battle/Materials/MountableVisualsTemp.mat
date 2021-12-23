@@ -103,7 +103,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DarkDotCutoff: -0.12
-    - _DarkValue: -0.45
+    - _DarkValue: 0.34
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -124,7 +124,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 0.5
+    - _Strength: 1
     - _Surface: 0
     - _UVSec: 0
     - _WorkflowMode: 1

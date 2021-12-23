@@ -9,6 +9,6 @@ public class AnimatedChaseController : BaseChaseController
     protected override void Chase(GameObject target)
     {
         base.Chase(target);
-        unitAnimation.SetMovement(agent.speed);
+        unitAnimation.SetMovement(agent.Speed);
     }
 }

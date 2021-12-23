@@ -9,9 +9,9 @@ public class UnitSpawnAbilityComponentData : AbilityComponent
     [SerializeField] private UnitGroupController unitGroupPrefab;
     [SerializeField] private UnitController unitPrefab;
     [SerializeField] private int unitsPerOffset;
-    [SerializeField] private List<Vector3> spawnOffsets;
+    [SerializeField] protected List<Vector3> spawnOffsets;
 
-    public override void ActivateComponent(UnitController unit)
+    public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         var objTransform = unit.transform;
 

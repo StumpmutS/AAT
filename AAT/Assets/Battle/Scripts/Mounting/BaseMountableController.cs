@@ -4,35 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SelectableController), typeof(Collider))]
-public abstract class BaseMountableController : MonoBehaviour
+public abstract class BaseMountableController : InteractableController //come up with better inheritance (ticket)
 {
     [SerializeField] protected MountablePointLinkController _mountablePointLink;
-    [SerializeField] private GameObject mountableVisualsPrefab;
-    [SerializeField] private Vector3 visualsOffset;
 
     public event Action<BaseMountableController> OnMountableHover = delegate { };
     public event Action OnMountableHoverStop = delegate { };
 
-    private bool _visualsDisplayed;
     private bool _previewDisplayed;
-    private SelectableController _selectableController;
     private PoolingObject _preview;
 
     public abstract BaseMountableDataInfo ReturnData();
 
-    protected virtual void Awake()
+    protected override void Start()
     {
-        _selectableController = GetComponent<SelectableController>();
-        _selectableController.OnHover += Hover;
-        _selectableController.OnHoverStop += StopHover;
-    }
-
-    private void Start()
-    {
+        base.Start();
         MountManager.Instance.AddMountable(this);
-        mountableVisualsPrefab = Instantiate(mountableVisualsPrefab, gameObject.transform);
-        mountableVisualsPrefab.transform.position += visualsOffset;
-        mountableVisualsPrefab.SetActive(false);
     }
 
     public void ResetLink(MountablePointLinkController newLink)
@@ -40,28 +27,16 @@ public abstract class BaseMountableController : MonoBehaviour
         _mountablePointLink = newLink;
     }
 
-    private void Hover()
+    protected override void HoverHandler()
     {
+        base.HoverHandler();
         OnMountableHover.Invoke(this);
     }
 
-    private void StopHover()
+    protected override void HoverStopHandler()
     {
+        base.HoverStopHandler();
         OnMountableHoverStop.Invoke();
-    }
-
-    public void DisplayVisuals()
-    {
-        if (_visualsDisplayed) return;
-        _visualsDisplayed = true;
-        mountableVisualsPrefab.SetActive(true);
-    }
-
-    public void RemoveVisuals()
-    {
-        if (!_visualsDisplayed) return;
-        _visualsDisplayed = false;
-        mountableVisualsPrefab.SetActive(false);
     }
 
     public void CallDisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)

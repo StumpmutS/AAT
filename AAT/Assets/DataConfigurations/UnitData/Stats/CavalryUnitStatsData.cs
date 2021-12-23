@@ -13,23 +13,12 @@ public class CavalryUnitStatsData : BaseUnitStatsData
             {EUnitFloatStats.ReturnSpeed, 0f}
         };
 
-    public override Dictionary<EUnitFloatStats, float> GetStats()
+    protected override void FillReturnStats()
     {
-        Dictionary<EUnitFloatStats, float> stats = new Dictionary<EUnitFloatStats, float>();
-        foreach (var kvp in ArmoredHealthFloatStats)
-        {
-            stats.Add(kvp.Key, kvp.Value);
-        }
-        
-        foreach (var kvp in UnitFloatStats)
-        {
-            stats.Add(kvp.Key, kvp.Value);
-        }
-
+        base.FillReturnStats();
         foreach (var kvp in CavalryFloatStats)
         {
-            stats.Add(kvp.Key, kvp.Value);
+            ReturnStats.Add(kvp.Key, kvp.Value);
         }
-        return stats;
     }
 }

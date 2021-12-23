@@ -10,7 +10,7 @@ public class DashAbilityComponentData : AbilityComponent
 
     private Dictionary<UnitController, float> _unitsDashed = new Dictionary<UnitController, float>();
 
-    public override void ActivateComponent(UnitController unit)
+    public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         Dash(unit);
     }

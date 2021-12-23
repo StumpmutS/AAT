@@ -20,7 +20,7 @@ public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackContro
         base.CallAttack(target);
         if (!_canAttack) return;
         AI.Deactivate();
-        _agent.enabled = false;
+        _agent.DisableAgent(this);
         StartCoroutine(StartAttackTimer());
     }
 
@@ -50,7 +50,7 @@ public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackContro
             transform.position = new Vector3(transform.position.x, _originalPosition.y, transform.position.z);
             InputManager.OnUpdate -= FlyBack;
             AI.Activate();
-            _agent.enabled = true;
+            _agent.EnableAgent(this);
         }
     }
 }

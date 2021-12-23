@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AATAgentController))]
 public class AIPathfinder : MonoBehaviour
 {
     [SerializeField] private UnitController unitController;
@@ -31,7 +31,7 @@ public class AIPathfinder : MonoBehaviour
     public event Action OnPatrolStart = delegate { };
     public event Action OnNoAIState = delegate { };
 
-    protected NavMeshAgent _agent;
+    protected AATAgentController _agent;
     private bool _patrolling = false;
     private GameObject _currentAttackTarget = null;
     private bool _usingAbility = false;
@@ -39,7 +39,7 @@ public class AIPathfinder : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<AATAgentController>();
         if (abilityHandler != null)
             abilityHandler.OnAbilityUsed += SetAbilityUsage;
         unitDataManager.OnRefreshStats += RefreshMovementSpeed;
@@ -47,7 +47,7 @@ public class AIPathfinder : MonoBehaviour
 
     private void Start()
     {
-        _agent.speed = movementSpeed;
+        _agent.SetSpeed(movementSpeed);
     }
 
     private void Update()
@@ -164,12 +164,13 @@ public class AIPathfinder : MonoBehaviour
 
     private void RefreshMovementSpeed()
     {
-        _agent.speed = movementSpeed;
+        _agent.SetSpeed(movementSpeed);
     }
 
     private void SetAbilityUsage(bool value)
     {
-        _agent.enabled = !value;
+        if (value) _agent.DisableAgent(this);
+        else _agent.EnableAgent(this);
         _usingAbility = value;
     }
     

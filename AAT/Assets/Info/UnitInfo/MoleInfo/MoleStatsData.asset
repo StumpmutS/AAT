@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 71f2713a1a943534eb2ef739d7bcea63, type: 3}
   m_Name: MoleStatsData
   m_EditorClassIdentifier: 
   ArmoredHealthFloatStats:
@@ -29,6 +29,7 @@ MonoBehaviour:
     - 7
     - 3
     - 150
-  TransportState: 0
-  AttackState: 1
-  MoveState: 2
+  TraverseStats:
+    _keys: 0d000000
+    _values:
+    - 5

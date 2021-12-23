@@ -14,5 +14,7 @@ public enum EUnitFloatStats
     ChaseSpeedPercentMultiplier,
     //Cavalry
     ChargeEndDistance,
-    ReturnSpeed
+    ReturnSpeed,
+    //Traverse
+    TraverseSpeed
 }

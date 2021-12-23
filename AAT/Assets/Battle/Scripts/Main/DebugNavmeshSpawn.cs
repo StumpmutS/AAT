@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AATAgentController))]
 public class DebugNavmeshSpawn : MonoBehaviour
 {
-    NavMeshAgent agent;
+    AATAgentController agent;
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<AATAgentController>();
         agent.Warp(transform.position);
         agent.SetDestination(transform.position + (Vector3.forward * .01f));
     }

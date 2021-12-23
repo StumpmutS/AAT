@@ -10,7 +10,6 @@ Shader "Toon/ToonShader"
         _LightValue("Light Value", float) = 6.78
         _MidValue("Mid Value", float) = 1.39
         _Strength("Strength", float) = .5
-        _Brightness("Brightness", Range(0, 1)) = 1
         _Color("Color", COLOR) = (1, 1, 1, 1)
     }
     SubShader
@@ -64,7 +63,6 @@ Shader "Toon/ToonShader"
             float _LightValue;
             float _MidValue;
             float _Strength;
-            float _Brightness;
             
             half3 GlossyToon(float3 normal, Light light, half4 baseColor, half4 glossyColor)
             {
@@ -79,11 +77,8 @@ Shader "Toon/ToonShader"
                 else if (NdotL < _DarkDotCutoff) rgbFinal = _DarkValue * baseColor.rgb;
                 else rgbFinal = _MidValue * baseColor.rgb;
 
-                //if (!isGlossy)
-                //{
-                    rgbFinal += _Brightness;
-                    rgbFinal *= _Strength;
-                //}
+                rgbFinal *= _Strength;
+
                 return rgbFinal * _Color.rgb;
             }
 

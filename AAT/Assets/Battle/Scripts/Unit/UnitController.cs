@@ -43,6 +43,18 @@ public class UnitController : OutlineSelectableController
         unitStatsModifierManager.ModifyStats(baseUnitStatsDataInfo, add);
     }
 
+    public override void Select()
+    {
+        base.Select();
+        UnitManager.Instance.AddSelectedUnit(this);
+    }
+
+    public override void Deselect()
+    {
+        base.Deselect();
+        UnitManager.Instance.RemoveSelectedUnit(this);
+    }
+
     #region Setters
     public void SetSector(SectorController sector)
     {
@@ -66,5 +78,9 @@ public class UnitController : OutlineSelectableController
     }
     #endregion
 
-
+    public void Interact(InteractableController interactable)
+    {
+        //walk to interactable i will just make another ticket i want this to be over
+        interactable.Affect(this);
+    }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathfinder), typeof(NavMeshAgent))]
+[RequireComponent(typeof(AIPathfinder), typeof(AATAgentController))]
 public class BaseAttackController : MonoBehaviour
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
@@ -15,7 +15,7 @@ public class BaseAttackController : MonoBehaviour
     private float attackSpeedPercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.AttackSpeedPercent];
 
     protected AIPathfinder AI;
-    protected NavMeshAgent _agent;
+    protected AATAgentController _agent;
     protected bool _canAttack;
 
     protected virtual void Awake()
@@ -23,13 +23,13 @@ public class BaseAttackController : MonoBehaviour
         _canAttack = true;
         AI = GetComponent<AIPathfinder>();
         AI.OnAttack += CallAttack;
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<AATAgentController>();
     }
 
     public virtual void CallAttack(GameObject target)
     {
         transform.LookAt(target.transform);
-        if (_agent.enabled)
+        if (_agent.AgentEnabled)
             _agent.SetDestination(transform.position);
         if (!_canAttack) return;
         CheckCrit(target.GetComponent<UnitController>());

@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 5167471315293224069}
   - component: {fileID: 5737441775786386933}
   - component: {fileID: 7194832862651965249}
+  - component: {fileID: 3081515647219320983}
   m_Layer: 0
   m_Name: UndergroundPathwayPrefab
   m_TagString: Untagged
@@ -203,7 +204,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.2, y: 1.2, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7194832862651965249
 MonoBehaviour:
@@ -223,3 +224,18 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &3081515647219320983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880642761709956856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c922f9916c0b35448417e193d0b66a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
+  visualsOffset: {x: 0, y: 1, z: 0}
+  exitPointOffset: {x: 0, y: 0, z: 1}
