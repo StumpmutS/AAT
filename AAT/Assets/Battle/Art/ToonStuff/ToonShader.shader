@@ -11,19 +11,11 @@ Shader "Toon/ToonShader"
         _MidValue("Mid Value", float) = 1.39
         _Strength("Strength", float) = .5
         _Color("Color", COLOR) = (1, 1, 1, 1)
-    }
+    }        
+
     SubShader
     {
         Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
-        
-        HLSLINCLUDE
-        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-
-        CBUFFER_START(UnityPerMaterial)
-        float4 MainTex_ST;
-        half4 _Color;
-        CBUFFER_END
-        ENDHLSL
         
         Pass
         {
@@ -63,6 +55,7 @@ Shader "Toon/ToonShader"
             float _LightValue;
             float _MidValue;
             float _Strength;
+            half4 _Color;
             
             half3 GlossyToon(float3 normal, Light light, half4 baseColor, half4 glossyColor)
             {
@@ -102,6 +95,43 @@ Shader "Toon/ToonShader"
                 return baseCol;
             }
             ENDHLSL
+        }
+
+        CGINCLUDE
+        #include "UnityCG.cginc"
+        struct v2fShadow {
+            V2F_SHADOW_CASTER;
+            UNITY_VERTEX_OUTPUT_STEREO
+        };
+    
+        v2fShadow vertShadow( appdata_base v )
+        {
+            v2fShadow o;
+            UNITY_SETUP_INSTANCE_ID(v);
+            UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+            TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+            return o;
+        }
+    
+        float4 fragShadow( v2fShadow i ) : SV_Target
+        {
+            SHADOW_CASTER_FRAGMENT(i)
+        }
+        ENDCG
+        
+        Pass
+        {
+            Name "ShadowCaster"
+            Tags { "LightMode" = "ShadowCaster" }
+            LOD 80
+            
+            CGPROGRAM
+            #pragma vertex vertShadow
+            #pragma fragment fragShadow
+            #pragma target 2.0
+            #pragma multi_compile_shadowcaster
+            ENDCG
+
         }
     }
 }

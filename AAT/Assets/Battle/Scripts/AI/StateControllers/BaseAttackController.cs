@@ -26,7 +26,7 @@ public class BaseAttackController : MonoBehaviour
         _agent = GetComponent<AATAgentController>();
     }
 
-    public virtual void CallAttack(GameObject target)
+    public virtual void CallAttack(Collider target)
     {
         transform.LookAt(target.transform);
         if (_agent.AgentEnabled)

@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
+using UnityEditor.Compilation;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PoolingObject : MonoBehaviour
 {
-    [SerializeField] private int idLength = 8;
-
-    [HideInInspector] [SerializeField] private string id;
-    public string ID => id;
-
+    [HideInInspector] [SerializeField] private string poolingTag;
+    public string PoolingTag => poolingTag;
+    
     public event Action<PoolingObject> OnDeactivate = delegate { };
 
     public void Activate()
@@ -25,23 +26,7 @@ public class PoolingObject : MonoBehaviour
 
     private void OnValidate()
     {
-        GenerateID();
-    }
-
-    private void GenerateID()
-    {
-        string newId = "";
-        for (int i = 0; i < idLength; i++)
-        {
-            int number = UnityEngine.Random.Range(0, 9);
-            newId += number;
-        }
-        if (!PoolingIDs.PoolingIds.Contains(id))
-        {
-            id = newId;
-            Debug.Log($"New Pooling ID Created: {newId}");
-            PoolingIDs.AddID(id);
-        }
-        else GenerateID();
+        poolingTag = gameObject.name;
+        Debug.Log("Pooling tag created for: " + poolingTag);
     }
 }

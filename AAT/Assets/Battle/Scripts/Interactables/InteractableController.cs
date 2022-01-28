@@ -1,31 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SelectableController))]
-public class InteractableController : MonoBehaviour
+public abstract class InteractableController : MonoBehaviour
 {
+    [SerializeField] private EInteractableType interactableType;
+    public EInteractableType InteractableType => interactableType;
     [SerializeField] private GameObject visualsPrefab;
     [SerializeField] private Vector3 visualsOffset;
-
-    public UnitController Unit { get; private set; }
+    [SerializeField] protected SelectableController selectable;
 
     private GameObject _visuals;
+    protected PoolingObject _preview;
+    private bool _previewDisplayed;
+
+    public event Action<InteractableController> OnInteractableDestroyed = delegate {  };
 
     protected virtual void Awake()
     {
         InteractableManager.Instance.AddInteractable(this);
-        Unit = GetComponent<UnitController>();
-        Unit.OnHover += HoverHandler;
-        Unit.OnHoverStop += HoverStopHandler;
+        selectable.OnHover += HoverHandler;
+        selectable.OnHoverStop += HoverStopHandler;
+        if (selectable is UnitController unit) unit.OnDeath += DestroyInteractable;
     }
 
-    protected virtual void Start()
+    private void DestroyInteractable(UnitController notNeeded)
     {
-        var instantiateVisuals = Instantiate(visualsPrefab, transform);
-        instantiateVisuals.transform.position += visualsOffset;
-        instantiateVisuals.gameObject.SetActive(false);
-        _visuals = instantiateVisuals;
+        OnInteractableDestroyed.Invoke(this);
+    }
+    
+    private void Start()
+    {
+        var instantiatedVisuals = Instantiate(visualsPrefab, transform);
+        instantiatedVisuals.transform.position += visualsOffset;
+        instantiatedVisuals.gameObject.SetActive(false);
+        _visuals = instantiatedVisuals;
     }
 
     public void DisplayVisuals()
@@ -35,21 +45,45 @@ public class InteractableController : MonoBehaviour
 
     public void RemoveVisuals()
     {
-        _visuals.SetActive(false);
+        if (_visuals != null) _visuals.SetActive(false);
     }
 
-    protected virtual void HoverHandler()
+    private void HoverHandler()
     {
         InteractableManager.Instance.SetHoveredInteractable(this);
     }
 
-    protected virtual void HoverStopHandler()
+    private void HoverStopHandler()
     {
         InteractableManager.Instance.RemoveHoveredInteractable(this);
     }
 
-    public virtual void Affect(UnitController unit)
+    public virtual void SetupInteractions(List<UnitController> units)
     {
+        foreach (var unit in units)
+        {
+            unit.Interact(this, RequestAffection);
+        }
+    }
 
+    protected abstract void RequestAffection(UnitController unit);
+
+    public void CallDisplayPreview(PoolingObject previewObject, int unitAmount)
+    {
+        if (_previewDisplayed) return;
+        _previewDisplayed = true;
+        DisplayPreview(previewObject, unitAmount);
+    }
+
+    protected virtual void DisplayPreview(PoolingObject previewObject, int unitAmount)
+    {
+        _preview = PoolingManager.Instance.CreatePoolingObject(previewObject);
+    }
+
+    public void RemovePreview()
+    {
+        if (!_previewDisplayed) return;
+        _previewDisplayed = false;
+        _preview.Deactivate();
     }
 }

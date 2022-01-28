@@ -13,28 +13,25 @@ public class AIPathfinder : MonoBehaviour
     [SerializeField] protected UnitAnimationController unitAnimationController;
     [SerializeField] private AbilityHandler abilityHandler;
 
-    protected float movementSpeed => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MovementSpeed];
-    private float sightRange => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.SightRange];
-    private float attackRange => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.AttackRange];
-    private bool chaseEnabled => unitController.ChaseState;
-    private bool patrolEnabled => unitController.PatrolState;
+    protected float _movementSpeed => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MovementSpeed];
+    private float _sightRange => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.SightRange];
+    private float _attackRange => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.AttackRange];
+    private bool _chaseEnabled => unitController.ChaseState;
+    private bool _patrolEnabled => unitController.PatrolState;
     private List<Vector3> _patrolPoints => unitController.PatrolPoints;
-
-    public event Action OnActivation = delegate { };
-    public event Action OnDeactivation = delegate { };
     
-    public event Action<GameObject> OnChase = delegate { };
+    public event Action<Collider> OnChase = delegate { };
     public event Action OnChaseStart = delegate { };
-    public event Action<GameObject> OnAttack = delegate { };
+    public event Action<Collider> OnAttack = delegate { };
     public event Action OnAttackStart = delegate { };
     public event Action<List<Vector3>> OnPatrol = delegate { };
     public event Action OnPatrolStart = delegate { };
     public event Action OnNoAIState = delegate { };
 
     protected AATAgentController _agent;
-    private bool _patrolling = false;
-    private GameObject _currentAttackTarget = null;
-    private bool _usingAbility = false;
+    private bool _patrolling;
+    private Collider _currentAttackTarget;
+    private bool _usingAbility;
     protected bool _active = true;
 
     protected virtual void Awake()
@@ -47,7 +44,7 @@ public class AIPathfinder : MonoBehaviour
 
     private void Start()
     {
-        _agent.SetSpeed(movementSpeed);
+        _agent.SetSpeed(_movementSpeed);
     }
 
     private void Update()
@@ -60,18 +57,18 @@ public class AIPathfinder : MonoBehaviour
             return;
         }
 
-        if (CheckRange(attackRange, out GameObject attackTarget))
+        if (CheckRange(_attackRange, out var attackTarget))
         {
             _currentAttackTarget = attackTarget;
             Attack(attackTarget);
         }
-        else if (chaseEnabled)
+        else if (_chaseEnabled)
         {
-            if (CheckRange(sightRange, out GameObject chaseTarget))
+            if (CheckRange(_sightRange, out var chaseTarget))
             {
                 Chase(chaseTarget);
             }
-            else if (patrolEnabled && !_patrolling)
+            else if (_patrolEnabled && !_patrolling)
             {
                 Patrol();
             }
@@ -80,7 +77,7 @@ public class AIPathfinder : MonoBehaviour
                 NoAIState();
             }
         }
-        else if (patrolEnabled && !_patrolling)
+        else if (_patrolEnabled && !_patrolling)
         {
             Patrol();
         }
@@ -90,7 +87,7 @@ public class AIPathfinder : MonoBehaviour
         }
     }
     
-    public bool CheckRange(float range, out GameObject target)
+    public bool CheckRange(float range, out Collider target)
     {
         if (Physics.CheckSphere(transform.position, range, enemyTeamLayer))
         {
@@ -101,34 +98,19 @@ public class AIPathfinder : MonoBehaviour
         return false;
     }
 
-    private GameObject FindTarget(float range)
+    private Collider FindTarget(float range)
     {
-        GameObject target = null;
-        float targetDistanceSquared = Mathf.Infinity;
-        Collider[] hits = new Collider[50];
-        Physics.OverlapSphereNonAlloc(transform.position, range, hits, enemyTeamLayer);
-        foreach(Collider collider in hits)
-        {
-            if (collider != null)
-            {
-                GameObject potentialTarget = collider.gameObject;
-                if (potentialTarget == _currentAttackTarget) return _currentAttackTarget;
-
-                float newDistanceSquared = (transform.position - potentialTarget.transform.position).sqrMagnitude;
-                if (newDistanceSquared < targetDistanceSquared)
-                {
-                    targetDistanceSquared = newDistanceSquared;
-                    target = potentialTarget;
-                }
-            }
-        }
+        var hits = new Collider[50];
+        var position = transform.position;
+        Physics.OverlapSphereNonAlloc(position, range, hits, enemyTeamLayer);
+        var target = DistanceCompare.FindClosestCollider(hits, position, _currentAttackTarget);
         _currentAttackTarget = null;
         return target;
     }
 
     //dont do animation stuff in here
 
-    protected virtual void Attack(GameObject target)
+    protected virtual void Attack(Collider target)
     {
         if (unitAnimationController != null)
             unitAnimationController.SetMovement(0);
@@ -137,10 +119,10 @@ public class AIPathfinder : MonoBehaviour
         OnAttack.Invoke(target);
     }
 
-    protected virtual void Chase(GameObject target)
+    protected virtual void Chase(Collider target)
     {
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(movementSpeed);
+            unitAnimationController.SetMovement(_movementSpeed);
         _patrolling = false;
         OnChaseStart.Invoke();
         OnChase.Invoke(target);
@@ -149,7 +131,7 @@ public class AIPathfinder : MonoBehaviour
     protected virtual void Patrol()
     {
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(movementSpeed);
+            unitAnimationController.SetMovement(_movementSpeed);
         _patrolling = true;
         OnPatrolStart.Invoke();
         OnPatrol.Invoke(_patrolPoints);
@@ -164,7 +146,7 @@ public class AIPathfinder : MonoBehaviour
 
     private void RefreshMovementSpeed()
     {
-        _agent.SetSpeed(movementSpeed);
+        _agent.SetSpeed(_movementSpeed);
     }
 
     private void SetAbilityUsage(bool value)
@@ -174,15 +156,13 @@ public class AIPathfinder : MonoBehaviour
         _usingAbility = value;
     }
     
-    public virtual void Activate()
+    public void Activate()
     {
-        OnActivation.Invoke();
         _active = true;
     }
 
     public virtual void Deactivate()
     {
-        OnDeactivation.Invoke();
         _active = false;
     }
 }

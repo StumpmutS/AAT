@@ -13,7 +13,7 @@ public class AnimatedCavalryAttackController : AnimatedAttackController
     private float _chargeTime;
     protected float _chargeSpeedChange;
     
-    public override void CallAttack(GameObject target)
+    public override void CallAttack(Collider target)
     {
         if (!_canAttack) return;
         _chargeTime = 0;

@@ -29,13 +29,13 @@ public class AbilityManager : MonoBehaviour
         }
 
         instance.abilityButtonsContainer.gameObject.SetActive(true);
-        InputManager.OnLeftCLick += instance.RemoveAbilityButtonDisplay;
+        InputManager.OnLeftCLickUp += instance.RemoveAbilityButtonDisplay;
     }
 
     private void RemoveAbilityButtonDisplay()
     {
         if (CustomAATEventSystemManager.Instance.OverUI()) return;
         instance.abilityButtonsContainer.gameObject.SetActive(false);
-        InputManager.OnLeftCLick -= instance.RemoveAbilityButtonDisplay;
+        InputManager.OnLeftCLickUp -= instance.RemoveAbilityButtonDisplay;
     }
 }

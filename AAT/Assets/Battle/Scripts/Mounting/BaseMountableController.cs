@@ -2,72 +2,67 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(SelectableController), typeof(Collider))]
-public abstract class BaseMountableController : InteractableController //come up with better inheritance (ticket)
+[RequireComponent(typeof(Collider))]
+public class BaseMountableController : InteractableController
 {
-    [SerializeField] protected MountablePointLinkController _mountablePointLink;
+    [SerializeField] private SelfOtherStatsData mountData;
+    public SelfOtherStatsData MountData => mountData;
+    [SerializeField] private MountablePointLinkController mountablePointLink;
 
-    public event Action<BaseMountableController> OnMountableHover = delegate { };
-    public event Action OnMountableHoverStop = delegate { };
+    private UnitController _unit;
 
-    private bool _previewDisplayed;
-    private PoolingObject _preview;
-
-    public abstract BaseMountableDataInfo ReturnData();
-
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
-        MountManager.Instance.AddMountable(this);
+        base.Awake();
+        _unit = selectable as UnitController;
     }
 
-    public void ResetLink(MountablePointLinkController newLink)
+    public void SetLink(MountablePointLinkController newLink)
     {
-        _mountablePointLink = newLink;
+        mountablePointLink = newLink;
     }
 
-    protected override void HoverHandler()
+    public override void SetupInteractions(List<UnitController> units)
     {
-        base.HoverHandler();
-        OnMountableHover.Invoke(this);
-    }
-
-    protected override void HoverStopHandler()
-    {
-        base.HoverStopHandler();
-        OnMountableHoverStop.Invoke();
-    }
-
-    public void CallDisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)
-    {
-        if (_previewDisplayed) return;
-        _previewDisplayed = true;
-        DisplayPreview(transportableUnitPreview, unitAmount);
-    }
-
-    protected virtual void DisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)
-    {
-        _preview = PoolingManager.Instance.CreatePoolingObject(transportableUnitPreview);
-        Transform previewTransform = _preview.transform;
-        previewTransform.position = transform.position;
-        previewTransform.rotation = transform.rotation;
-        previewTransform.SetParent(transform);
-        MountManager.Instance.AddHoveredMountable(this);
-
-        if (unitAmount > 1)
+        var previewedMountables = mountablePointLink.PreviewedMountables;
+        for (int i = 0; i < previewedMountables.Count; i++)
         {
-            _mountablePointLink.BeginPreviewDisplayLink(this, transportableUnitPreview, unitAmount - 1, true); //CHANGE TRUE TO BE BASED OFF MOUSE POSITION IN RELATION TO COLLIDER
+            units[i].Interact(previewedMountables[i], previewedMountables[i].RequestAffection);
         }
     }
 
-    public void RemovePreview()
+    protected override void RequestAffection(UnitController unit)
     {
-        if (!_previewDisplayed) return;
-        _previewDisplayed = false;
-        _preview.Deactivate();
+        unit.GetComponent<TransportableController>().Mount(this);
     }
 
-    public virtual void ActivateMounted(ArmoredHealthUnitStatsData stats) { }
-    public virtual void DeactivateMounted(ArmoredHealthUnitStatsData stats) { }
+    protected override void DisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)
+    {
+        base.DisplayPreview(transportableUnitPreview, unitAmount);
+        var previewTransform = _preview.transform;
+        previewTransform.position = transform.position;
+        previewTransform.rotation = transform.rotation;
+        previewTransform.SetParent(transform);
+
+        if (unitAmount > 1)
+        {
+            mountablePointLink.BeginPreviewDisplayLink(this, transportableUnitPreview, unitAmount - 1, true); //TODO: CHANGE TRUE TO BE BASED OFF MOUSE POSITION IN RELATION TO COLLIDER
+        }
+    }
+
+    public void ActivateMounted(ArmoredHealthUnitStatsData stats)
+    {
+        if (_unit == null) return;
+        _unit.ModifyStats(stats);
+        _unit.ModifyStats(mountData.SelfModifier);
+    }
+
+    public virtual void DeactivateMounted(ArmoredHealthUnitStatsData stats)
+    {
+        if (_unit == null) return;
+        _unit.ModifyStats(stats, false);
+        _unit.ModifyStats(mountData.SelfModifier, false);
+    }
 }

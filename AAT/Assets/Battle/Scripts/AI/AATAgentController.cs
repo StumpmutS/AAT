@@ -34,10 +34,7 @@ public class AATAgentController : MonoBehaviour
     public void EnableAgent(MonoBehaviour caller)
     {
         _disablers.Remove(caller);
-        if (_disablers.Count <= 0)
-        {
-            _agent.enabled = true;
-        }
+        if (_disablers.Count <= 0) _agent.enabled = true;
     }
 
     public void DisableAgent(MonoBehaviour caller)

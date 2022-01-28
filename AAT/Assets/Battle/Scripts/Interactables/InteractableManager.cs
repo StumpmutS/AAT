@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractableManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class InteractableManager : MonoBehaviour
     private HashSet<InteractableController> _interactables = new HashSet<InteractableController>();
     private int _unitSelectedCount;
     private InteractableController _hoveredInteractable;
+    private PoolingObject _selectedUnitPreview;
 
     private void Awake()
     {
@@ -17,8 +19,8 @@ public class InteractableManager : MonoBehaviour
 
     private void Start()
     {
-        UnitManager.Instance.OnUnitAdded += HandeUnitAdded;
-        UnitManager.Instance.OnUnitRemoved += HandleUnitRemoved;
+        UnitManager.Instance.OnUnitSelected += HandleUnitSelected;
+        UnitManager.Instance.OnUnitDeselected += HandleUnitDeselected;
     }
 
     public void AddInteractable(InteractableController interactable)
@@ -26,67 +28,64 @@ public class InteractableManager : MonoBehaviour
         _interactables.Add(interactable);
     }
 
-    private void HandeUnitAdded(UnitController unit)
-    {
-        unit.OnSelect += HandleUnitSelected;
-        unit.OnDeselect += HandleUnitDeselected;
-    }
-
-    private void HandleUnitRemoved(UnitController unit)
-    {
-        unit.OnSelect -= HandleUnitSelected;
-        unit.OnDeselect -= HandleUnitDeselected;
-    }
-
-    private void HandleUnitSelected()
+    private void HandleUnitSelected(UnitController unit)
     {
         _unitSelectedCount++;
-        foreach (var interactable in _interactables)
+        foreach (var interactable in _interactables.Where(interactable => unit.InteractableTypes.Contains(interactable.InteractableType)))
         {
             interactable.DisplayVisuals();
         }
+
+        _selectedUnitPreview = unit.UnitVisuals;
     }
 
-    private void HandleUnitDeselected()
+    private void HandleUnitDeselected(UnitController unit)
     {
         _unitSelectedCount--;
-        if (_unitSelectedCount <= 0)
+        if (_unitSelectedCount > 0) return;
+        foreach (var interactable in _interactables)
         {
-            foreach (var interactable in _interactables)
-            {
-                interactable.RemoveVisuals();
-            }
+            interactable.RemoveVisuals();
+            interactable.RemovePreview();
         }
     }
 
     public void SetHoveredInteractable(InteractableController interactable)
     {
-        AwaitInput();
         _hoveredInteractable = interactable;
+        if (_unitSelectedCount <= 0 || _selectedUnitPreview == null) return;
+        AwaitInput();
+        foreach (var Interactable in _interactables)
+        {
+            Interactable.RemovePreview();
+        }
+        interactable.CallDisplayPreview(_selectedUnitPreview, _unitSelectedCount);
     }
 
     public void RemoveHoveredInteractable(InteractableController interactable)
     {
-        StopAwait();
         if (_hoveredInteractable == interactable) _hoveredInteractable = null;
+        if (_unitSelectedCount <= 0) return;
+        StopAwait();
+        foreach (var Interactable in _interactables)
+        {
+            Interactable.RemovePreview();
+        }
     }
 
     private void AwaitInput()
     {
-        InputManager.OnRightClick += Interact;
+        InputManager.OnRightClickDown += Interact;
     }
 
     private void StopAwait()
     {
-        InputManager.OnRightClick -= Interact;
+        InputManager.OnRightClickDown -= Interact;
     }
 
     private void Interact()
     {
         if (_hoveredInteractable == null) return;
-        foreach (var unit in UnitManager.Instance.SelectedUnits)
-        {
-            unit.Interact(_hoveredInteractable);
-        }
+        _hoveredInteractable.SetupInteractions(UnitManager.Instance.SelectedUnits.ToList());
     }
 }

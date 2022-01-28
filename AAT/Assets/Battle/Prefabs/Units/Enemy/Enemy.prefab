@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 4331704148283514331}
   - component: {fileID: 4331704148283514328}
   - component: {fileID: 9030462966438899541}
+  - component: {fileID: 2959305468691906753}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Bad
@@ -438,7 +439,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4331704148283514345}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 0.005
+  m_Radius: 0.001
   m_Speed: 3.5
   m_Acceleration: 1000
   avoidancePriority: 50
@@ -510,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 4331704148283514334}
   unitStatsModifierManager: {fileID: 4331704148283514328}
+  interactableTypes: 
   unitDeathController: {fileID: 4331704148283514320}
   unitVisuals: {fileID: 0}
   chaseState: 1
@@ -609,5 +611,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba2ef1ab59f949741bb85fd8946b77f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2959305468691906753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331704148283514345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

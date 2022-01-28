@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class PoolingManager : MonoBehaviour
 {
-    private static PoolingManager instance;
-    public static PoolingManager Instance => instance;
+    public static PoolingManager Instance { get; private set; }
 
     private Dictionary<string, List<PoolingObject>> inactivePoolingObjects = new Dictionary<string, List<PoolingObject>>();
     private Dictionary<string, List<PoolingObject>> activePoolingObjects = new Dictionary<string, List<PoolingObject>>();
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     public PoolingObject CreatePoolingObject(PoolingObject poolingObject)
     {
-        string id = poolingObject.ID;
+        string id = poolingObject.PoolingTag;
         if (!activePoolingObjects.ContainsKey(id)) activePoolingObjects[id] = new List<PoolingObject>();
         if (!inactivePoolingObjects.ContainsKey(id)) inactivePoolingObjects[id] = new List<PoolingObject>();
 
@@ -38,7 +37,7 @@ public class PoolingManager : MonoBehaviour
 
     private void SetInactive(PoolingObject poolingObject)
     {
-        string id = poolingObject.ID;
+        string id = poolingObject.PoolingTag;
         if (activePoolingObjects[id].Remove(poolingObject))
         {
             inactivePoolingObjects[id].Add(poolingObject);

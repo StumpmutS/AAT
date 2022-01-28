@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnerPlotController : OutlineSelectableController
+public class SpawnerPlotController : OutlineSelectableController //TODO: wtf
 {
     [SerializeField] private RectTransform UnitsUIContainer;
     [SerializeField] private RectTransform UpgradesUIContainer;
@@ -18,7 +18,7 @@ public class SpawnerPlotController : OutlineSelectableController
         HideUnitSpawnerButtons();
     }
 
-    public override void Select()
+    protected override void Select()
     {
         base.Select();
         DisplayUnitSpawnerButtons();
@@ -26,7 +26,7 @@ public class SpawnerPlotController : OutlineSelectableController
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public override void Deselect()
+    protected override void Deselect()
     {
         base.Deselect();
         HideUnitSpawnerButtons();

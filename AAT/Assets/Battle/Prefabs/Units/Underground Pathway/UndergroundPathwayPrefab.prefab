@@ -148,12 +148,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 7194832862651965249}
   unitStatsModifierManager: {fileID: 5167471315293224069}
+  interactableTypes: 
   unitDeathController: {fileID: 4711663701533172652}
   unitVisuals: {fileID: 0}
   chaseState: 0
   patrolState: 0
   _patrolPoints: []
   colliders: []
+  unitManager: {fileID: 0}
 --- !u!114 &6684075605916107545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c922f9916c0b35448417e193d0b66a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableType: 2
   visualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 1, z: 0}
+  selectable: {fileID: 234317371117068412}
   exitPointOffset: {x: 0, y: 0, z: 1}

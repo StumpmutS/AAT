@@ -5,99 +5,61 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(UnitController), typeof(AATAgentController))]
-public class TransportableController : MonoBehaviour
+public class TransportableController : MonoBehaviour //TODO:
 {
-    [SerializeField] private TransportableData transportableData;
+    [SerializeField] private SelfOtherStatsData transportableData;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private AIPathfinder AI;
-    
     [SerializeField] private UnitStatsModifierManager statsMod;
     [SerializeField] private BaseAttackController attackController;
 
+    private UnitController _unit;
+
+    private float _attackRange => statsMod.CurrentUnitStatsData[EUnitFloatStats.AttackRange];        
     private AATAgentController _agent;
-    private UnitController _unitController;
-    public UnitController UnitController => _unitController;
-
-    public event Action<TransportableController> OnTransportableSelect = delegate { };
-    public event Action<TransportableController> OnTransportableDeselect = delegate { };
-
-    private float attackRange => statsMod.CurrentUnitStatsData[EUnitFloatStats.AttackRange];
-    private BaseMountableController _mount = null;
-    private bool _mounted;
-    private bool _movingToMount;
+    private BaseMountableController _mount;
     private bool _checkGroundSubscribed;
-    private bool _selected = false;
-
+    private bool _selected;
+    
     private void Awake()
     {
-        var AIOverride = AI as AIPlayerOverrideController;
-        if (AIOverride != null) AIOverride.OnReroute += RerouteHandler;
-        _unitController = GetComponent<UnitController>();
+        _unit = GetComponent<UnitController>();
         _agent = GetComponent<AATAgentController>();
-        _unitController.OnSelect += Select;
-        _unitController.OnDeselect += Deselect;
-    }
-
-    private void Start()
-    {
-        MountManager.Instance.AddTransportable(this);
+        _unit.OnSelect += Select;
+        _unit.OnDeselect += Deselect;
     }
 
     private void Select()
     {
-        OnTransportableSelect.Invoke(this);
-        if (_mounted) SubscribeCheckGround(true);
+        if (_mount != null) SubscribeCheckGround();
         _selected = true;
     }
 
     private void Deselect()
     {
-        OnTransportableDeselect.Invoke(this);
-        SubscribeCheckGround(false);
+        UnsubscribeCheckGround();
         _selected = false;
     }
 
-    public void BeginMountProcess(BaseMountableController mount)
+    public void Mount(BaseMountableController mount)
     {
         if (mount == _mount) return;
-        
         if (AI != null) AI.Deactivate();
         _mount = mount;
-        _movingToMount = true;
-        InputManager.OnUpdate += CheckMountRange;
-    }
-
-    private void CheckMountRange()
-    {
-        if (_agent.RemainingDistance < _mount.ReturnData().MountRange)
-        {
-            _movingToMount = false;
-            InputManager.OnUpdate -= CheckMountRange;
-            Mount();
-        } 
-        else
-        {
-            _agent.SetDestination(_mount.transform.position);
-        }
-    }
-
-    private void Mount()
-    {
-        _mounted = true;
         _agent.DisableAgent(this);
         transform.position = _mount.transform.position;
         transform.rotation = _mount.transform.rotation;
         transform.parent = _mount.transform;
         InputManager.OnUpdate += CheckAttack;
-        if (_selected) SubscribeCheckGround(true);
-        _unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier);
-        _unitController.ModifyStats(transportableData.SelfStatsAlter);
-        _mount.ActivateMounted(transportableData.MountStatsAlter);
+        if (_selected) SubscribeCheckGround();
+        _unit.ModifyStats(_mount.MountData.OtherModifier);
+        _unit.ModifyStats(transportableData.SelfModifier);
+        _mount.ActivateMounted(transportableData.OtherModifier);
     }
 
     private void CheckAttack()
     {
-        if (AI.CheckRange(attackRange, out var target))
+        if (AI.CheckRange(_attackRange, out var target))
         {
             attackController.CallAttack(target);
         }
@@ -108,7 +70,7 @@ public class TransportableController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(transform.position, -Vector3.up, out var demountHit, groundLayer) && Physics.Raycast(ray))
         {
-            SubscribeCheckGround(false);
+            UnsubscribeCheckGround();
             Demount(demountHit.point);
         }
     }
@@ -116,35 +78,29 @@ public class TransportableController : MonoBehaviour
     private void Demount(Vector3 pos)
     {
         print("demount");
-        _unitController.ModifyStats(_mount.ReturnData().MountedUnitModifier, false);
-        _unitController.ModifyStats(transportableData.SelfStatsAlter, false);
-        _mount.DeactivateMounted(transportableData.MountStatsAlter);
+        _unit.ModifyStats(_mount.MountData.OtherModifier, false);
+        _unit.ModifyStats(transportableData.SelfModifier, false);
+        _mount.DeactivateMounted(transportableData.OtherModifier);
         _mount = null;
-        _mounted = false;
         transform.position = pos;
         _agent.EnableAgent(this);
         _agent.Warp(pos);
         if (AI != null) AI.Activate();
-        var AIOverride = AI as AIPlayerOverrideController;
-        if (AIOverride != null) AIOverride.SetTargetDestination();
+        if (AI is AIPlayerOverrideController AIOverride) AIOverride.SetTargetDestination();
+        InputManager.OnUpdate -= CheckAttack;
     }
 
-    private void RerouteHandler()
+    private void SubscribeCheckGround()
     {
-        if (_movingToMount) InputManager.OnUpdate -= CheckMountRange;
+        if (_checkGroundSubscribed) return;
+        _checkGroundSubscribed = true;
+        InputManager.OnRightClickDown += CheckGround;
     }
 
-    private void SubscribeCheckGround(bool subscribe)
+    private void UnsubscribeCheckGround()
     {
-        if (subscribe && !_checkGroundSubscribed)
-        {
-            _checkGroundSubscribed = true;
-            InputManager.OnRightClick += CheckGround;
-        }
-        else if (_checkGroundSubscribed)
-        {
-            _checkGroundSubscribed = false;
-            InputManager.OnRightClick -= CheckGround;
-        }
+        if (!_checkGroundSubscribed) return;
+        _checkGroundSubscribed = false;
+        InputManager.OnRightClickDown -= CheckGround;
     }
 }

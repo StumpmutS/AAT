@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TeleportPoint : InteractableController
 {
     [SerializeField] private Vector3 exitPointOffset;
-    public Vector3 ExitPointOffset => exitPointOffset;
 
-    public SectorController _sector { get; private set; }
+    public UnitController Unit { get; private set; }
+
+    private SectorController _sector;
     private TeleportPoint _otherTeleportPoint;
     private bool _hoverSubscribed;
 
     protected override void Awake()
     {
         base.Awake();
-        Unit.OnSelect += SelectTeleporter;
-        Unit.OnDeselect += DeselectTeleporter;
+        selectable.OnSelect += SelectTeleporter;
+        selectable.OnDeselect += DeselectTeleporter;
+        Unit = selectable as UnitController;
     }
 
     public void Setup(SectorController sector, TeleportPoint other)
@@ -26,16 +26,17 @@ public class TeleportPoint : InteractableController
 
     private void SelectTeleporter()
     {
-        _otherTeleportPoint.Unit.Select();
+        _otherTeleportPoint.Unit.CallSelect();
     }
 
     private void DeselectTeleporter()
     {
-        _otherTeleportPoint.Unit.Deselect();
+        _otherTeleportPoint.Unit.CallDeselect();
     }
 
-    public override void Affect(UnitController unit)
+    protected override void RequestAffection(UnitController unit)
     {
         unit.GetComponent<AATAgentController>().Warp(_otherTeleportPoint.transform.position + _otherTeleportPoint.exitPointOffset);
+        unit.SetSector(_sector);
     }
 }

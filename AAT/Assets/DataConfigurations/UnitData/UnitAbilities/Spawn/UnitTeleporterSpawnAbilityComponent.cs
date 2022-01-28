@@ -12,12 +12,12 @@ public class UnitTeleporterSpawnAbilityComponent : AbilityComponent
     public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         var instantiatedUnitGroup = Instantiate(unitGroupController);
-        var instaniatedOriginTeleporter = Instantiate(teleportPoint, unit.transform.position + originOffset, Quaternion.identity);
+        var instantiatedOriginTeleporter = Instantiate(teleportPoint, unit.transform.position + originOffset, Quaternion.identity);
         var instantiatedDestinationTeleporter = Instantiate(teleportPoint, point + destinationOffset, Quaternion.identity);
-        instaniatedOriginTeleporter.Setup(unit.SectorController, instantiatedDestinationTeleporter);
-        instantiatedDestinationTeleporter.Setup(unit.SectorController, instaniatedOriginTeleporter);
-        instaniatedOriginTeleporter.Unit.SetGroup(instantiatedUnitGroup);
-        instaniatedOriginTeleporter.Unit.SetSector(unit.SectorController);
+        instantiatedOriginTeleporter.Setup(unit.SectorController, instantiatedDestinationTeleporter);
+        instantiatedDestinationTeleporter.Setup(unit.SectorController, instantiatedOriginTeleporter);
+        instantiatedOriginTeleporter.Unit.SetGroup(instantiatedUnitGroup);
+        instantiatedOriginTeleporter.Unit.SetSector(unit.SectorController);
         instantiatedDestinationTeleporter.Unit.SetGroup(instantiatedUnitGroup);
         instantiatedDestinationTeleporter.Unit.SetSector(unit.SectorController);
     }

@@ -1146,12 +1146,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 5759228335420568730}
   unitStatsModifierManager: {fileID: 430060796365761778}
+  interactableTypes: 0100000002000000
   unitDeathController: {fileID: -3991292208228322283}
   unitVisuals: {fileID: -378061192886151853, guid: 8dd30d7cc8f5ce84981e3798e338ee62, type: 3}
   chaseState: 1
   patrolState: 1
   _patrolPoints: []
   colliders: []
+  unitManager: {fileID: 0}
 --- !u!114 &-3991292208228322283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,7 +1209,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   AI: {fileID: 5759228335420568733}
-  agent: {fileID: 0}
   statsMod: {fileID: 430060796365761778}
   attackController: {fileID: 5759228335420568726}
 --- !u!114 &6519343231381679187

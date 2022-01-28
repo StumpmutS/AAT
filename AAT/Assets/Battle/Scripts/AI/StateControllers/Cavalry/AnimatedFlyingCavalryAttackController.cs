@@ -15,7 +15,7 @@ public class AnimatedFlyingCavalryAttackController : AnimatedCavalryAttackContro
         _originalPosition = transform.position;
     }
 
-    public override void CallAttack(GameObject target)
+    public override void CallAttack(Collider target)
     {
         base.CallAttack(target);
         if (!_canAttack) return;

@@ -24,13 +24,13 @@ public class OutlineSelectableController : SelectableController
         RemoveOutline();
     }
 
-    public override void Select()
+    protected override void Select()
     {
         base.Select();
         Outline();
     }
 
-    public override void Deselect()
+    protected override void Deselect()
     {
         base.Deselect();
         RemoveOutline();
@@ -46,7 +46,7 @@ public class OutlineSelectableController : SelectableController
     
     public void RemoveOutline()
     {
-        if (selected || !outlined) return;
+        if (_selected || !outlined) return;
 
         outlined = false;
         outline.enabled = false;

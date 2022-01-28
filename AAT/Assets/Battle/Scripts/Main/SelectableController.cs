@@ -11,51 +11,80 @@ public class SelectableController : MonoBehaviour
     public event Action OnHover = delegate { };
     public event Action OnHoverStop = delegate { };
 
-    protected bool selected = false;
-    private bool mouseOver = false;
+    protected bool _selected;
+    private bool _mouseOver;
+    private bool _selectSubscribed;
+    private bool _deselectSubscribed;
 
     protected virtual void OnMouseEnter()
     {
-        mouseOver = true;
+        _mouseOver = true;
         OnHover.Invoke();
-        InputManager.OnLeftCLick += Select;
-        InputManager.OnLeftCLick -= Deselect;
-        InputManager.OnMinus += TestDamage;
-    }
-
-    private void TestDamage()
-    {
-        var health = GetComponent<IHealth>();
-        if (health != null)
-            health.ModifyHealth(-100f);
+        SubscribeSelect();
+        UnsubscribeDeselect();
     }
 
     protected virtual void OnMouseExit()
     {
-        mouseOver = false;
+        _mouseOver = false;
         OnHoverStop.Invoke();
-        InputManager.OnLeftCLick -= Select;
-        InputManager.OnLeftCLick += Deselect;
-        InputManager.OnMinus -= TestDamage;
+        UnsubscribeSelect();
+        if (_selected) SubscribeDeselect();
     }
 
-    public virtual void Select()
+    public void CallSelect()
     {
-        if (selected || CustomAATEventSystemManager.Instance.OverUI()) return;
-        selected = true;
+        if (_selected || CustomAATEventSystemManager.Instance.OverUI()) return;
+        Select();
+    }
+
+    protected virtual void Select()
+    {
+        _selected = true;
         OnSelect.Invoke();
-        if (!mouseOver)
-        {
-            InputManager.OnLeftCLick -= Select;
-            InputManager.OnLeftCLick += Deselect;
-        }
+        if (_mouseOver) return;
+        UnsubscribeSelect();
+        SubscribeDeselect();
     }
 
-    public virtual void Deselect()
+    public void CallDeselect()
     {
-        if (!selected || CustomAATEventSystemManager.Instance.OverUI()) return;
-        selected = false;
+        if (!_selected || CustomAATEventSystemManager.Instance.OverUI()) return;
+        Deselect();
+    }
+    
+    protected virtual void Deselect()
+    {
+        _selected = false;
         OnDeselect.Invoke();
-        InputManager.OnLeftCLick -= Deselect;
+        UnsubscribeDeselect();
+    }
+
+    private void SubscribeSelect()
+    {
+        if (_selectSubscribed) return;
+        _selectSubscribed = true;
+        InputManager.OnLeftCLickUp += CallSelect;
+    }
+
+    private void UnsubscribeSelect()
+    {
+        if (!_selectSubscribed) return;
+        _selectSubscribed = false;
+        InputManager.OnLeftCLickUp -= CallSelect;
+    }
+    
+    private void SubscribeDeselect() 
+    {
+        if (_deselectSubscribed) return;
+        _deselectSubscribed = true;
+        InputManager.OnLeftCLickUp += CallDeselect;
+    }
+    
+    private void UnsubscribeDeselect() 
+    {
+        if (!_deselectSubscribed) return;
+        _deselectSubscribed = false;
+        InputManager.OnLeftCLickUp -= CallDeselect;
     }
 }

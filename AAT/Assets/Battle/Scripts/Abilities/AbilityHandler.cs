@@ -63,14 +63,14 @@ public class AbilityHandler : MonoBehaviour
     private void SubscribeCheckGround()
     {
         if (_checkGroundSubscribed) return;
-        InputManager.OnLeftCLick += CheckGround;
+        InputManager.OnLeftCLickUp += CheckGround;
         _checkGroundSubscribed = true;
     }
 
     private void UnsubscribeCheckGround()
     {
         if (!_checkGroundSubscribed) return;
-        InputManager.OnLeftCLick += CheckGround;
+        InputManager.OnLeftCLickUp += CheckGround;
         _checkGroundSubscribed = false;
     }
 

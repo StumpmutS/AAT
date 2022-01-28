@@ -7,14 +7,14 @@ using UnityEngine;
 public class AIPlayerOverrideController : AIPathfinder
 {
     private SelectableController _selectable;
-    private bool movementOverride;
+    private bool _movementOverride;
     private bool MovementOverride
     {
-        get { return movementOverride; }
+        get => _movementOverride;
         set
         {
-            if (value == movementOverride) return;
-            movementOverride = value;
+            if (value == _movementOverride) return;
+            _movementOverride = value;
             if (!value) InputManager.OnUpdate -= CheckTargetDistance;
             else InputManager.OnUpdate += CheckTargetDistance;
         }
@@ -32,12 +32,12 @@ public class AIPlayerOverrideController : AIPathfinder
 
     private void SubscribeToInputManager()
     {
-        InputManager.OnRightClick += SetTargetDestination;
+        InputManager.OnRightClickDown += SetTargetDestination;
     }
 
-    public void UnsubscribeFromInputManager()
+    private void UnsubscribeFromInputManager()
     {
-        InputManager.OnRightClick -= SetTargetDestination;
+        InputManager.OnRightClickDown -= SetTargetDestination;
     }
 
     public void SetTargetDestination()
@@ -46,22 +46,20 @@ public class AIPlayerOverrideController : AIPathfinder
         Reroute();
         MovementOverride = true;
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(movementSpeed);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit))
-        {
-            Vector3 destination = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            _agent.SetDestination(destination);
-        }
+            unitAnimationController.SetMovement(_movementSpeed);
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (!Physics.Raycast(ray, out var hit)) return;
+        var destination = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+        _agent.SetDestination(destination);
     }
 
-    protected override void Attack(GameObject target)
+    protected override void Attack(Collider target)
     {
         MovementOverride = false;
         base.Attack(target);
     }
 
-    protected override void Chase(GameObject target)
+    protected override void Chase(Collider target)
     {
         MovementOverride = false;
         base.Chase(target);

@@ -54,12 +54,12 @@ public class SpawnPlotManager : MonoBehaviour
         {
             if (i != keyPressed - 1)
             {
-                spawnerPlots[i].Deselect();
+                spawnerPlots[i].CallDeselect();
             }
         }
         if (!inactiveSpawnerPlotIndexes.Contains(keyPressed - 1))
         {
-            spawnerPlots[keyPressed - 1].Select();
+            spawnerPlots[keyPressed - 1].CallSelect();
         }
     }
 }

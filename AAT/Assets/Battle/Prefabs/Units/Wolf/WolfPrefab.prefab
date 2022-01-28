@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 1557524196485199542}
   unitStatsModifierManager: {fileID: 2289227302551243074}
+  interactableTypes: 02000000
   unitDeathController: {fileID: 589332596698672781}
   unitVisuals: {fileID: 0}
   chaseState: 1
@@ -271,6 +272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4cf1322a7c0b74ba4b8246fa5189e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   unitAbilityData:
   - {fileID: 11400000, guid: ae0d786fa4115d447b104b0698bd934a, type: 2}
 --- !u!1001 &1960080801768736873

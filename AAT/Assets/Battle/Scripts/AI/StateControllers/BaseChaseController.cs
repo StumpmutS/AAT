@@ -33,7 +33,7 @@ public class BaseChaseController : MonoBehaviour
         _alteredMoveSpeed = moveSpeed * chaseSpeedPercentMultiplier / 100 - moveSpeed;
     }
 
-    protected virtual void Chase(GameObject target)
+    protected virtual void Chase(Collider target)
     {
         if (_stopped)
         {

@@ -6,7 +6,7 @@ public class AnimatedChaseController : BaseChaseController
 {
     [SerializeField] private UnitAnimationController unitAnimation;
     
-    protected override void Chase(GameObject target)
+    protected override void Chase(Collider target)
     {
         base.Chase(target);
         unitAnimation.SetMovement(agent.Speed);

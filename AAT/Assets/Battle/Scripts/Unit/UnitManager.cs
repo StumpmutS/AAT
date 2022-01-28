@@ -10,8 +10,8 @@ public class UnitManager : MonoBehaviour
     public HashSet<UnitController> Units { get; private set; } = new HashSet<UnitController>();
     public HashSet<UnitController> SelectedUnits { get; private set; } = new HashSet<UnitController>();
 
-    public event Action<UnitController> OnUnitAdded = delegate { };
-    public event Action<UnitController> OnUnitRemoved = delegate { };
+    public event Action<UnitController> OnUnitSelected = delegate { };
+    public event Action<UnitController> OnUnitDeselected = delegate { };
 
     private void Awake()
     {
@@ -22,23 +22,23 @@ public class UnitManager : MonoBehaviour
     {
         unit.OnDeath += RemoveUnit;
         Units.Add(unit);
-        OnUnitAdded.Invoke(unit);
     }
 
     private void RemoveUnit(UnitController unit)
     {
         unit.OnDeath -= RemoveUnit;
         Units.Remove(unit);
-        OnUnitRemoved.Invoke(unit);
     }
 
     public void AddSelectedUnit(UnitController unit)
     {
         SelectedUnits.Add(unit);
+        OnUnitSelected.Invoke(unit);
     }
 
     public void RemoveSelectedUnit(UnitController unit)
     {
         SelectedUnits.Remove(unit);
+        OnUnitDeselected.Invoke(unit);
     }
 }

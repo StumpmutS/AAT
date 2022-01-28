@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f802356be04603479c99a613dd38d9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 43a7fb086cb39dd44a241642dae6e78b, type: 3}
   m_Name: SquirrelTransportableData
   m_EditorClassIdentifier: 
-  SelfStatsAlter: {fileID: 11400000, guid: 3b1332e73aefd9c488c32cd77258407c, type: 2}
-  MountStatsAlter: {fileID: 11400000, guid: 3b1332e73aefd9c488c32cd77258407c, type: 2}
+  SelfModifier: {fileID: 11400000, guid: f6a959d04c8542e4a84219d0c1e9f262, type: 2}
+  OtherModifier: {fileID: 11400000, guid: cededc6b5f1d2b243bf4fbd81938c635, type: 2}

@@ -38,7 +38,7 @@ public class UnitGroupController : MonoBehaviour
         SetupUnit(unit);
         if (selected)
         {
-            unit.Select();
+            unit.CallSelect();
         } 
         else if (outlined)
         {
@@ -58,7 +58,7 @@ public class UnitGroupController : MonoBehaviour
         selected = true;
         foreach (var unit in units)
         {
-            unit.Select();
+            unit.CallSelect();
         }
         UnitGroupSelectionManager.Instance.AddUnitGroup(this);
     }
@@ -69,7 +69,7 @@ public class UnitGroupController : MonoBehaviour
         selected = false;
         foreach (var unit in units)
         {
-            unit.Deselect();
+            unit.CallDeselect();
         }
         UnitGroupSelectionManager.Instance.RemoveUnitGroup(this);
     }
@@ -113,7 +113,6 @@ public class UnitGroupController : MonoBehaviour
         unit.OnDeath -= UnitDeathHandler;
     }
 
-    #region StatModifierMethods
     private void ModifyUnitStats(BaseUnitStatsData baseUnitStatsDataInfo)
     {
         foreach (var unit in units)
@@ -121,7 +120,6 @@ public class UnitGroupController : MonoBehaviour
             unit.ModifyStats(baseUnitStatsDataInfo);
         }
     }
-    #endregion
 
     public void SetChaseStates(bool value)
     {

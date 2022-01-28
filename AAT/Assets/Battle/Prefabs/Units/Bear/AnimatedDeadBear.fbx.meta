@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -5252918349552365476
     second: BearDeath
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fur
+    second: {fileID: 2100000, guid: d3c7b8093bfc3f14c9ae8c76c3c7d74c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

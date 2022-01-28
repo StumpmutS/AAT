@@ -9,8 +9,9 @@ public class InputManager : MonoBehaviour
 
     public static event Action OnUpdate = delegate{ };
 
-    public static event Action OnLeftCLick = delegate { };
-    public static event Action OnRightClick = delegate { };
+    public static event Action OnLeftCLickUp = delegate { };
+    public static event Action OnLeftClickDown = delegate { };
+    public static event Action OnRightClickDown = delegate { };
 
     public static event Action<float> OnMouseYChange = delegate { };
     public static event Action<float> OnMouseXChange = delegate { };
@@ -62,13 +63,17 @@ public class InputManager : MonoBehaviour
     #region Check Methods
     private void CheckMouseButtons()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnLeftClickDown.Invoke();
+        }
         if (Input.GetMouseButtonUp(0))
         {
-            OnLeftCLick.Invoke();
+            OnLeftCLickUp.Invoke();
         }
         if (Input.GetMouseButtonDown(1))
         {
-            OnRightClick.Invoke();
+            OnRightClickDown.Invoke();
         }
     }
 

@@ -7,6 +7,8 @@ public class UnitController : OutlineSelectableController
 {
     [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
     public UnitStatsModifierManager UnitStatsModifierManager => unitStatsModifierManager;
+    [SerializeField] private List<EInteractableType> interactableTypes;
+    public List<EInteractableType> InteractableTypes => interactableTypes;
     [SerializeField] private UnitDeathController unitDeathController;
     [SerializeField] private PoolingObject unitVisuals;     
     public PoolingObject UnitVisuals => unitVisuals;
@@ -18,6 +20,7 @@ public class UnitController : OutlineSelectableController
     public List<Vector3> PatrolPoints => _patrolPoints;
     [SerializeField] private Collider[] colliders;
     public Collider[] Colliders => colliders;
+    [SerializeField] private UnitManager unitManager;
 
     public UnitGroupController UnitGroup { get; private set; }
     public SectorController SectorController { get; private set; }
@@ -28,11 +31,13 @@ public class UnitController : OutlineSelectableController
     private void Awake()
     {
         unitDeathController.OnUnitDeath += UnitDeath;
+        if (unitManager == null) unitManager = UnitManager.Instance;
+        unitManager.AddUnit(this);
     }
 
     private void UnitDeath()
     {
-        Deselect();
+        CallDeselect();
         if (SectorController != null) SectorController.RemoveUnit(this);
         IsDead = true;
         OnDeath.Invoke(this);
@@ -43,13 +48,13 @@ public class UnitController : OutlineSelectableController
         unitStatsModifierManager.ModifyStats(baseUnitStatsDataInfo, add);
     }
 
-    public override void Select()
+    protected override void Select()
     {
         base.Select();
         UnitManager.Instance.AddSelectedUnit(this);
     }
 
-    public override void Deselect()
+    protected override void Deselect()
     {
         base.Deselect();
         UnitManager.Instance.RemoveSelectedUnit(this);
@@ -78,9 +83,9 @@ public class UnitController : OutlineSelectableController
     }
     #endregion
 
-    public void Interact(InteractableController interactable)
+    public void Interact(InteractableController interactable, Action<UnitController> callback)
     {
-        //walk to interactable i will just make another ticket i want this to be over
-        interactable.Affect(this);
+        //TODO: walk to interactable
+        callback.Invoke(this);
     }
 }

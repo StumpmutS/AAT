@@ -1,221 +1,309 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.AI.Navigation;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class WallPlacementManager : MonoBehaviour
 {
-    [SerializeField] private float wallRotationAmount;
-    [SerializeField] private Vector3 wallScaleAmount;
     [SerializeField] private RectTransform wallPlacementUI;
+    [SerializeField] private MountablePointLinkController mountablePointLinkPrefab;
     [SerializeField] private PlaceableWallController placeableWallPrefab;
     [SerializeField] private Vector3 wallOffset;
     [SerializeField] private LayerMask wallJointLayer;
-    [SerializeField] private float snapRadius;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] [Tooltip("Must be greater than min distance ((Wall Dim+Joint Dim)*2+.01)")] private float snapRadius;
 
-    public static event Action OnBeginWallPlacement = delegate { };
-    public static event Action OnEndWallPlacement = delegate { };
-
-    private Vector3 vectorWallRotationAmount;
-    private Quaternion nextWallRotation;
-    private bool wallPlacementActive = false;
-    private WallVisualsController wallPreview;
-    private Vector3 baseWallPreviewScale;
-
-    private int _connectedWallEndIndex = -1;
-    private List<WallJointController> _joints = new List<WallJointController>();
-
+    public static WallPlacementManager Instance { get; private set; }
+    
+    private HashSet<WallJointController> _wallJoints = new HashSet<WallJointController>();
+    private WallJointController _currentWallJoint;
+    private Vector3 _currentJointPositionZeroY;
+    private Collider _currentJointCollider;
+    private bool _wallPlacementActive;
+    private bool _validPlacement;
+    
     private void Awake()
     {
-        InputManager.OnTPressed += BeginWallPlacement;
-        wallPreview = placeableWallPrefab.WallVisuals;
-        vectorWallRotationAmount = new Vector3(0, wallRotationAmount, 0);
-        nextWallRotation = Quaternion.Euler(Vector3.zero);
+        Instance = this;
+        InputManager.OnTPressed += ActivateWallPlacementInterface;
     }
 
-    private void Start()
+    public void AddWallJoint(WallJointController wallJoint)
     {
-        wallPreview = Instantiate(wallPreview);
-        wallPreview.transform.localScale = placeableWallPrefab.transform.localScale;
-        wallPreview.gameObject.SetActive(false);
-        baseWallPreviewScale = wallPreview.transform.localScale;
+        _wallJoints.Add(wallJoint);
+        wallJoint.OnJointSelect += BeginWallPlacement;
     }
 
-    public void BeginWallPlacement()
+    private void ActivateWallPlacementInterface()
     {
-        if (wallPlacementActive) return;
-        wallPlacementActive = true;
-        InputManager.OnTPressed += EndWallPlacement;
+        _wallPlacementActive = true;
+        InputManager.OnTPressed -= ActivateWallPlacementInterface;
+        InputManager.OnTPressed += DeactivateWallPlacementInterface;
+    }
+    
+    private void DeactivateWallPlacementInterface()
+    {
+        _wallPlacementActive = false;
+        InputManager.OnTPressed -= DeactivateWallPlacementInterface;
+        InputManager.OnTPressed += ActivateWallPlacementInterface;
+    }
+
+    private void BeginWallPlacement(WallJointController wallJoint)
+    {
+        if (_currentWallJoint != null || !_wallPlacementActive || wallJoint.WallNumber > 1) return;
+        _currentWallJoint = wallJoint;
+        _currentJointPositionZeroY = new Vector3(_currentWallJoint.transform.position.x, 0,
+            _currentWallJoint.transform.position.z);
+        _currentJointCollider = wallJoint.GetComponent<Collider>();
+        InputManager.OnRightClickDown += EndWallPlacement;
         InputManager.OnUpdate += MoveWallPreview;
-        InputManager.OnMouseWheelScroll += RotateWallPreview;
-        InputManager.OnPlus += ScaleUpWallPreview;
-        InputManager.OnMinus += ScaleDownWallPreview;
-        InputManager.OnLeftCLick += PlaceWall;
-        OnBeginWallPlacement.Invoke();
-        ActivateWallPreview();
+        InputManager.OnLeftCLickUp += PlaceWall;
+        InputManager.OnMouseWheelScroll += ReversePreviewDirection;
         wallPlacementUI.gameObject.SetActive(true);
     }
 
     private void EndWallPlacement()
     {
-        if (!wallPlacementActive) return;
-        wallPlacementActive = false;
-        InputManager.OnTPressed -= EndWallPlacement;
+        if (_currentWallJoint == null) return;
+        _currentWallJoint = null;
+        foreach (var preview in _wallPreviews)
+        {
+            preview.Deactivate();
+        }
+        _currentConnectorPreview.Deactivate();
+        if (_createdConnectorPreview != null) _createdConnectorPreview.Deactivate();
+        if (_createdJointPreview != null) _createdJointPreview.Deactivate();
+        InputManager.OnRightClickDown -= EndWallPlacement;
         InputManager.OnUpdate -= MoveWallPreview;
-        InputManager.OnMouseWheelScroll -= RotateWallPreview;
-        InputManager.OnPlus -= ScaleUpWallPreview;
-        InputManager.OnMinus -= ScaleDownWallPreview;
-        InputManager.OnLeftCLick -= PlaceWall;
-        OnEndWallPlacement.Invoke();
-        DeactivateWallPreview();
+        InputManager.OnLeftCLickUp -= PlaceWall;
+        InputManager.OnMouseWheelScroll -= ReversePreviewDirection;
         wallPlacementUI.gameObject.SetActive(false);
     }
 
     #region WallPreview
-    private void ActivateWallPreview()
-    {
-        wallPreview.gameObject.SetActive(true);
-        MoveWallPreview();
-    }
-
-    private void DeactivateWallPreview()
-    {
-        wallPreview.gameObject.SetActive(false);
-    }
-
-    private void RotateWallPreview(float amount)
-    {
-        if (amount > 0)
-        {
-            nextWallRotation.eulerAngles += vectorWallRotationAmount;
-            wallPreview.transform.rotation = nextWallRotation;
-        }
-        else
-        {
-            nextWallRotation.eulerAngles -= vectorWallRotationAmount;
-            wallPreview.transform.rotation = nextWallRotation;
-        }
-    }
-
-    private void ScaleUpWallPreview()
-    {
-        wallPreview.transform.localScale += wallScaleAmount;
-    }
-
-    private void ScaleDownWallPreview()
-    {
-        wallPreview.transform.localScale -= wallScaleAmount;
-    }
+    private bool _reverse;
+    private HashSet<PreviewPoolingObject> _wallPreviews = new HashSet<PreviewPoolingObject>();
+    private PreviewPoolingObject _currentConnectorPreview;
+    private PreviewPoolingObject _createdConnectorPreview;
+    private PreviewPoolingObject _createdJointPreview;
+    private WallJointController _snapJoint;
+    private Vector3 _normDirection;
 
     private void MoveWallPreview()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit))
+        if (Physics.Raycast(ray, out var groundHit, groundLayer))
         {
-            wallPreview.transform.position = hit.point + wallOffset;
-
-            if (hit.collider.gameObject.GetComponent<NavMeshSurface>() != null)
-            {
-                CheckSnap();
-            }
+            CreateWallPreviews(groundHit.point);
         }
     }
 
-    private void CheckSnap()
+    private void ReversePreviewDirection(float notUsed) => _reverse = !_reverse;
+
+    private void CreateWallPreviews(Vector3 point)
     {
-        int singleWallEndIndex = -1;
-        _joints.Clear();
-        for (int i = 0; i < wallPreview.WallEnds.Count; i++)
+        //SNAP
+        var snap = false;
+        var colliders = new Collider[10];
+        Physics.OverlapSphereNonAlloc(point, snapRadius, colliders, wallJointLayer);//TODO: make range not hardcoded
+        var minDistance = (placeableWallPrefab.DimensionsContainer.XDimensions + _currentWallJoint.ConnectorXDimensions) * 2 + .01f;
+        var ignoreColliders = new Collider[10];
+        Physics.OverlapSphereNonAlloc(_currentWallJoint.transform.position, minDistance, ignoreColliders, wallJointLayer);
+        for (var i = 0; i < 10; i++)
         {
-            if (CheckWallJoints(wallPreview.WallEnds[i], out var joint))
+            if (ignoreColliders.Contains(colliders[i]))
             {
-                singleWallEndIndex = i;
-                _joints.Add(joint);
+                colliders[i] = null;
+                continue;
+            }
+            if (colliders[i] == null) continue;
+            if (!colliders[i].GetComponent<WallJointController>()
+                .AngleValid(_currentWallJoint.transform.position - colliders[i].transform.position, 60))
+            {
+                colliders[i] = null;
             }
         }
-        if (_joints.Count > 1)
+        var closest = DistanceCompare.FindClosestCollider(colliders, point, ignore:_currentJointCollider);
+        if (closest != null)
         {
-            foreach (var wall in _joints[0].ConnectedWalls)
-                if (_joints[1].ConnectedWalls.Contains(wall)) return;
-
-            _connectedWallEndIndex = 2;
-            Vector3 targetVector = _joints[0].transform.position - _joints[1].transform.position;
-
-            var targetRotation = Quaternion.FromToRotation(Vector3.right, targetVector);
-            var previousRotation = transform.rotation;
-            wallPreview.transform.rotation = targetRotation;
-            if (targetRotation != previousRotation)
-                wallPreview.transform.Rotate(0, 180, 0);
-
-            wallPreview.transform.position = new Vector3(
-                _joints[1].transform.position.x + targetVector.x / 2, 
-                _joints[1].transform.position.y + targetVector.y / 2, 
-                _joints[1].transform.position.z + targetVector.z / 2);
-
-            wallPreview.transform.localScale = new Vector3(
-                targetVector.magnitude - (1 + Mathf.Abs(wallPreview.WallEnds[0].localPosition.x)),
-                wallPreview.transform.localScale.y,
-                wallPreview.transform.localScale.z);
+            point = closest.transform.position;
+            _snapJoint = closest.GetComponent<WallJointController>();
+            snap = true;
         }
-        else if (_joints.Count > 0)
+        
+        //CRUNCH THE NUMBERS
+        DeactivatePreviews();
+        _wallPreviews.Clear();
+        var dragDirection =  new Vector3(point.x, 0, point.z) - _currentJointPositionZeroY;
+        _normDirection = dragDirection.normalized;
+        var minLarger = false;
+        if (minDistance > dragDirection.magnitude)
         {
-            _connectedWallEndIndex = singleWallEndIndex;
-            Vector3 endOffset = wallPreview.transform.position - wallPreview.WallEnds[singleWallEndIndex].position;
-            wallPreview.transform.position = _joints[0].transform.position + endOffset;
+            dragDirection = _normDirection * minDistance;
+            point = new Vector3(_currentJointPositionZeroY.x + dragDirection.x, point.y, _currentJointPositionZeroY.z + dragDirection.z);
+            minLarger = true;
+        }
+        var exactWallNumber = (dragDirection.magnitude - _currentWallJoint.ConnectorXDimensions * 2) /
+                             placeableWallPrefab.DimensionsContainer.XDimensions;
+        var wallNumber = Mathf.Floor(exactWallNumber);
+        var scaleFillAmount = (exactWallNumber - wallNumber) * placeableWallPrefab.DimensionsContainer.XDimensions / 2;
+        var connectorSize = scaleFillAmount / _currentWallJoint.ConnectorXDimensions + 1;
+        var connectorOffset = (connectorSize * _currentWallJoint.ConnectorXDimensions + placeableWallPrefab.DimensionsContainer.XDimensions / 2) * _normDirection;
+        var jointConnectOffset = _currentJointPositionZeroY + wallOffset + connectorOffset;
+
+        //SPAWN THE STUFF
+        for (int i = 0; i < wallNumber; i++)
+        {
+            var wallVisuals = PoolingManager.Instance.CreatePoolingObject(placeableWallPrefab.WallVisuals) as PreviewPoolingObject;
+            wallVisuals.transform.position = _normDirection * (i * placeableWallPrefab.DimensionsContainer.XDimensions) + jointConnectOffset;
+            wallVisuals.transform.right = dragDirection;
+            if (Vector3.Dot(wallVisuals.transform.forward, _currentWallJoint.transform.forward) < 0)
+                wallVisuals.transform.right = -dragDirection;
+            if (_reverse) wallVisuals.transform.forward = -wallVisuals.transform.forward;
+            wallVisuals.gameObject.SetActive(true);
+            _wallPreviews.Add(wallVisuals);
+        }
+        var currentWallConnector = _currentWallJoint.SetupConnectorPreview(_normDirection, _reverse, scaleFillAmount);
+        _currentConnectorPreview = currentWallConnector;
+        var createdJointPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.JointPreview) as PreviewPoolingObject;
+        createdJointPreview.transform.rotation = _currentWallJoint.transform.rotation;
+        createdJointPreview.transform.position = new Vector3(point.x, wallOffset.y, point.z);
+        var createdConnectorPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.ConnectorPrefab.ConnectorVisuals) as PreviewPoolingObject;
+        createdConnectorPreview.transform.position = createdJointPreview.transform.position - _normDirection * connectorSize * _currentWallJoint.ConnectorXDimensions / 2;
+        createdConnectorPreview.transform.rotation = currentWallConnector.transform.rotation;
+        createdConnectorPreview.transform.localScale = currentWallConnector.transform.localScale;
+        _createdJointPreview = createdJointPreview;
+        _createdConnectorPreview = createdConnectorPreview;
+        if (snap)
+        {
+            _createdJointPreview.Deactivate();
+            _createdJointPreview = null;
+        }
+        
+        //VALID CHECKS
+        var obstacleSize = _normDirection * _currentWallJoint.DimensionsContainer.XDimensions * _currentWallJoint.transform.localScale.x * _currentWallJoint.Obstacle.radius;
+        if (NavMesh.SamplePosition(_currentJointPositionZeroY + obstacleSize, out var hit, 6, -1))
+        {
+            var target = snap ? point - obstacleSize : point;
+            if (minDistance > (target - _currentJointPositionZeroY).magnitude) target = _currentJointPositionZeroY + _normDirection * minDistance;
+            if (NavMesh.Raycast(hit.position, target, out var notNeeded, -1))
+            {
+                SetInvalid();
+                return;
+            }
         }
         else
         {
-            _connectedWallEndIndex = -1;
+            Debug.LogError("No position found on NavMesh to sample");
         }
+        if (!_currentWallJoint.AngleValid(_normDirection, 60f))
+        {
+            SetInvalid();
+            return;
+        }
+        SetValid();
     }
 
-    private bool CheckWallJoints(Transform wallEnd, out WallJointController wallJoint)
+    private void DeactivatePreviews()
     {
-        wallJoint = null;
-        float endDistanceSqr = Mathf.Infinity;
-
-        Collider[] snapColliders = new Collider[10];
-        Physics.OverlapSphereNonAlloc(wallEnd.position, snapRadius, snapColliders, wallJointLayer);
-        foreach (var collider in snapColliders)
+        foreach (var wallVisualsObject in _wallPreviews)
         {
-            if (collider == null) continue;
-            float newDistanceSqr = (wallEnd.position - collider.transform.position).sqrMagnitude;
-            if (newDistanceSqr < endDistanceSqr)
-            {
-                endDistanceSqr = newDistanceSqr;
-                wallJoint = collider.GetComponent<WallJointController>();
-            }
+            wallVisualsObject.Deactivate();
         }
-        if (wallJoint == null) return false;
-        return true;
+        if (_createdConnectorPreview != null) _createdConnectorPreview.Deactivate();
+        if (_currentConnectorPreview != null) _currentConnectorPreview.Deactivate();
+        if (_createdJointPreview != null) _createdJointPreview.Deactivate();
+    }
+
+    private void SetValid()
+    {
+        _validPlacement = true;
+        foreach (var previewWall in _wallPreviews)
+        {
+            previewWall.Preview.SetValid();
+        }
+        if (_createdConnectorPreview != null) _createdConnectorPreview.Preview.SetValid();
+        if (_currentConnectorPreview != null) _currentConnectorPreview.Preview.SetValid();
+        if (_createdJointPreview != null) _createdJointPreview.Preview.SetValid();
+    }
+
+    private void SetInvalid()
+    {
+        _validPlacement = false;
+        foreach (var previewWall in _wallPreviews)
+        {
+            previewWall.Preview.SetInvalid();
+        }
+        if (_createdConnectorPreview != null) _createdConnectorPreview.Preview.SetInvalid();
+        if (_currentConnectorPreview != null) _currentConnectorPreview.Preview.SetInvalid();
+        if (_createdJointPreview != null) _createdJointPreview.Preview.SetInvalid();
     }
     #endregion
 
     private void PlaceWall()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit))
+        if (!_validPlacement) return;
+        
+        var currentChain = CheckChain(_currentWallJoint, _normDirection);
+        var otherChain = false;
+        if (_snapJoint != null) otherChain = CheckChain(_snapJoint, -_normDirection);
+        var wallMountables = _wallPreviews.Select(wallPreview => wallPreview.InitiateUsage().GetComponent<PlaceableWallController>().Mountable).ToList();
+
+        _currentWallJoint.SetupConnector(_currentConnectorPreview.InitiateUsage().GetComponent<WallJointConnectorController>(), _normDirection);
+        _currentConnectorPreview.Deactivate();
+        
+        var endJoint = _createdJointPreview == null ? _snapJoint : _createdJointPreview.InitiateUsage().GetComponent<WallJointController>();
+        endJoint.SetupConnector(_createdConnectorPreview.InitiateUsage().GetComponent<WallJointConnectorController>(), -_normDirection);
+        _createdConnectorPreview.Deactivate();
+        if (_createdJointPreview != null) _createdJointPreview.Deactivate();
+            
+        SetupMountables(endJoint, wallMountables, currentChain, otherChain);
+        EndWallPlacement();
+    }
+    
+    private bool CheckChain(WallJointController joint, Vector3 direction)
+    {
+        foreach (var wall in _wallPreviews)
         {
-            if (hit.collider.gameObject.GetComponent<NavMeshSurface>() != null)
-            {
-                var instantiatedWall = Instantiate(placeableWallPrefab, wallPreview.transform.position, wallPreview.transform.rotation);
-                instantiatedWall.transform.localScale = wallPreview.transform.localScale;
-                wallPreview.transform.localScale = baseWallPreviewScale;
-                if (_connectedWallEndIndex == 1)
-                {
-                    instantiatedWall.Setup(0, _joints);
-                }
-                else if (_connectedWallEndIndex == 0)
-                {
-                    instantiatedWall.Setup(1, _joints);
-                }
-                else
-                {
-                    instantiatedWall.Setup(_connectedWallEndIndex, _joints);
-                }
-            }
+            return joint.CheckChain(direction, wall.transform.forward);
         }
+        Debug.LogError("Wall collection was empty");
+        return false;
+    }
+
+    private void SetupMountables(WallJointController endJoint, List<BaseMountableController> mountables, bool currentChain, bool otherChain)
+    {
+        var currentPoint = _currentWallJoint.GetComponent<LinkPointController>();
+        var endPoint = endJoint.GetComponent<LinkPointController>();
+        
+        var instantiatedLink = Instantiate(mountablePointLinkPrefab);
+        if (currentChain)
+        {
+            if (otherChain)
+            {        
+                if (currentPoint.StartEnd && !endPoint.StartEnd)
+                {
+                    mountables.Reverse();
+                    instantiatedLink.CreateLinkDouble(endPoint, currentPoint, mountables);
+                }
+                else instantiatedLink.CreateLinkDouble(currentPoint, endPoint, mountables);
+                return;
+            }
+            print("current");
+            instantiatedLink.CreateLinkSingle(_currentWallJoint.GetComponent<LinkPointController>(), endJoint.GetComponent<LinkPointController>(), mountables);
+            return;
+        }
+        if (otherChain)
+        {
+            print("other");
+            instantiatedLink.CreateLinkSingle(endJoint.GetComponent<LinkPointController>(), _currentWallJoint.GetComponent<LinkPointController>(), mountables, true);
+            return;
+        }
+        
+        instantiatedLink.CreateNewLink(_currentWallJoint.GetComponent<LinkPointController>(), endJoint.GetComponent<LinkPointController>(), mountables);
     }
 }
