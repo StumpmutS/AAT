@@ -15,7 +15,7 @@ public class UnitTeleporterSpawnAbilityComponent : AbilityComponent
         var instantiatedOriginTeleporter = Instantiate(teleportPoint, unit.transform.position + originOffset, Quaternion.identity);
         var instantiatedDestinationTeleporter = Instantiate(teleportPoint, point + destinationOffset, Quaternion.identity);
         instantiatedOriginTeleporter.Setup(unit.SectorController, instantiatedDestinationTeleporter);
-        instantiatedDestinationTeleporter.Setup(unit.SectorController, instantiatedOriginTeleporter);
+        instantiatedDestinationTeleporter.Setup(unit.SectorController, instantiatedOriginTeleporter);//TODO: might not be same sector
         instantiatedOriginTeleporter.Unit.SetGroup(instantiatedUnitGroup);
         instantiatedOriginTeleporter.Unit.SetSector(unit.SectorController);
         instantiatedDestinationTeleporter.Unit.SetGroup(instantiatedUnitGroup);

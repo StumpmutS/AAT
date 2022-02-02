@@ -1,23 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
 using UnityEngine;
 
 public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
 {
-    [SerializeField] private List<float> sectorPowerThresholds;
-    private int _currentThresholdIndex;
-    protected UnitController _unit;
+    [SerializeField] private List<int> sectorPowerThresholds;
+    private Dictionary<SectorController, int> _currentThresholdIndexesBySector = new Dictionary<SectorController, int>();
+    protected Dictionary<SectorController, HashSet<UnitController>> _unitsBySector =
+        new Dictionary<SectorController, HashSet<UnitController>>();
 
-    public override void ActivateComponent(UnitController unitController)
+    public override void ActivateComponent(UnitController unit)
     {
-        _unit = unitController;
-        var thresholdIndex = DetermineThreshold(unitController.SectorController.GetSectorPower());
+        if (!_unitsBySector.ContainsKey(unit.SectorController))
+        {
+            _unitsBySector[unit.SectorController] = new HashSet<UnitController>();
+            unit.SectorController.OnSectorPowerChanged += RedetermineThreshold;
+        }
+        
+        _unitsBySector[unit.SectorController].Add(unit);
+        
+        var thresholdIndex = DetermineThreshold(unit.SectorController.GetSectorPower());
         if (thresholdIndex > -1)
         {
-            _currentThresholdIndex = thresholdIndex;
-            ActivateThresholdIndex(thresholdIndex);
+            _currentThresholdIndexesBySector[unit.SectorController] = thresholdIndex;
+            ActivateThresholdIndex(unit.SectorController, thresholdIndex);
         }
-        unitController.SectorController.OnSectorPowerChanged += RedetermineThreshold;
     }
 
     private int DetermineThreshold(float sectorPower)
@@ -29,26 +38,23 @@ public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
         return -1;
     }
 
-    private void RedetermineThreshold(float newPower)
+    private void RedetermineThreshold(SectorController sector, int newPower)
     {
-        if (_currentThresholdIndex == sectorPowerThresholds.Count - 1)
+        if (_currentThresholdIndexesBySector.ContainsKey(sector))
         {
-            if (newPower < sectorPowerThresholds[_currentThresholdIndex])
-            {
-                DeactivateThresholdIndex(_currentThresholdIndex);
-                var thresholdIndex = DetermineThreshold(newPower);
-                if (thresholdIndex > -1) ActivateThresholdIndex(thresholdIndex);
-            }
+            if (newPower == sectorPowerThresholds[_currentThresholdIndexesBySector[sector]]) return;
+            DeactivateThresholdIndex(sector, _currentThresholdIndexesBySector[sector]);
         }
-        else if (newPower > sectorPowerThresholds[_currentThresholdIndex + 1] || newPower < sectorPowerThresholds[_currentThresholdIndex - 1])
+        var thresholdIndex = DetermineThreshold(newPower);
+        if (thresholdIndex > -1)
         {
-            DeactivateThresholdIndex(_currentThresholdIndex);
-            var thresholdIndex = DetermineThreshold(newPower);
-            if (thresholdIndex > -1) ActivateThresholdIndex(thresholdIndex);
+            ActivateThresholdIndex(sector, thresholdIndex);
+            _currentThresholdIndexesBySector[sector] = thresholdIndex;
         }
+        else _currentThresholdIndexesBySector.Remove(sector);
     }
 
-    protected abstract void ActivateThresholdIndex(int index);
+    protected abstract void ActivateThresholdIndex(SectorController sector, int index);
 
-    protected abstract void DeactivateThresholdIndex(int index);
+    protected abstract void DeactivateThresholdIndex(SectorController sector, int index);
 }

@@ -7,13 +7,19 @@ public class SectorPowerStatsBuffPassiveComponent : SectorPowerDeterminedPassive
 {
     [SerializeField] private List<BaseUnitStatsData> unitStatsUpgradeData;
 
-    protected override void ActivateThresholdIndex(int index)
+    protected override void ActivateThresholdIndex(SectorController sector, int index)
     {
-        _unit.ModifyStats(unitStatsUpgradeData[index]);
+        foreach (var unit in _unitsBySector[sector])
+        {
+            unit.ModifyStats(unitStatsUpgradeData[index]);
+        }
     }
 
-    protected override void DeactivateThresholdIndex(int index)
+    protected override void DeactivateThresholdIndex(SectorController sector, int index)
     {
-        _unit.ModifyStats(unitStatsUpgradeData[index], false);
+        foreach (var unit in _unitsBySector[sector])
+        {
+            unit.ModifyStats(unitStatsUpgradeData[index], false);
+        }
     }
 }

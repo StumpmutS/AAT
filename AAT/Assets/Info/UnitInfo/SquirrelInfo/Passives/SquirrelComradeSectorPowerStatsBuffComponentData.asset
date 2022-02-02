@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f62016e1848ab74a997a0ca8bc811a6, type: 3}
   m_Name: SquirrelComradeSectorPowerStatsBuffComponentData
   m_EditorClassIdentifier: 
-  sectorPowerThresholds:
-  - 1
-  - 5
-  - 15
+  sectorPowerThresholds: 0d0000000f00000010000000
   unitStatsUpgradeData:
   - {fileID: 11400000, guid: c1a9ee8009c86ff43a50d9f4b79c3166, type: 2}
   - {fileID: 11400000, guid: 1ea64669774249d42b7b97533e076e2d, type: 2}

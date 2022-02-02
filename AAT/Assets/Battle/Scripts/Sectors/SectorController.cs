@@ -1,21 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class SectorController : MonoBehaviour
 {
-    private List<UnitController> units = new List<UnitController>();
+    private HashSet<UnitController> _units = new HashSet<UnitController>();
 
-    public event Action<float> OnSectorPowerChanged = delegate { };
+    public event Action<SectorController, int> OnSectorPowerChanged = delegate { };
 
-    public float GetSectorPower()
+    public int GetSectorPower()
     {
         int sectorPower = 0;
 
-        foreach (var unit in units)
+        foreach (var unit in _units)
         {
-            //super duper complex power calculation
+            //TODO: super duper complex power calculation
             sectorPower += 1;
         }
 
@@ -24,14 +25,14 @@ public class SectorController : MonoBehaviour
 
     public void AddUnit(UnitController unit)
     {
-        units.Add(unit);
+        _units.Add(unit);
         unit.SetSector(this);
-        OnSectorPowerChanged.Invoke(GetSectorPower());
+        OnSectorPowerChanged.Invoke(this, GetSectorPower());
     }
 
     public void RemoveUnit(UnitController unit)
     {
-        units.Remove(unit);
-        OnSectorPowerChanged.Invoke(GetSectorPower());
+        _units.Remove(unit);
+        OnSectorPowerChanged.Invoke(this, GetSectorPower());
     }
 }

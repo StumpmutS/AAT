@@ -140,12 +140,10 @@ public class WallPlacementManager : MonoBehaviour
         _wallPreviews.Clear();
         var dragDirection =  new Vector3(point.x, 0, point.z) - _currentJointPositionZeroY;
         _normDirection = dragDirection.normalized;
-        var minLarger = false;
         if (minDistance > dragDirection.magnitude)
         {
             dragDirection = _normDirection * minDistance;
             point = new Vector3(_currentJointPositionZeroY.x + dragDirection.x, point.y, _currentJointPositionZeroY.z + dragDirection.z);
-            minLarger = true;
         }
         var exactWallNumber = (dragDirection.magnitude - _currentWallJoint.ConnectorXDimensions * 2) /
                              placeableWallPrefab.DimensionsContainer.XDimensions;
