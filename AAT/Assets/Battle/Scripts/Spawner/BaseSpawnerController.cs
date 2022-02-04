@@ -120,11 +120,11 @@ public abstract class BaseSpawnerController : MonoBehaviour
     private IEnumerator SpawnUnitGroupCoroutine(float spawnTime, int groupIndex, int unitsPerGroup)
     {
         int spawnPointIndex = GetFirstInactiveSpawnerIndex();
-        if (groupIndex <= -1)
+        if (groupIndex < 0)
         {
             groupIndex = GetEmptyGroup();
         }
-        if (unitsPerGroup <= -1)
+        if (unitsPerGroup < 0)
         {
             unitsPerGroup = _unitsPerGroupAmount;
         }
@@ -142,28 +142,25 @@ public abstract class BaseSpawnerController : MonoBehaviour
 
         yield return new WaitForSeconds(spawnTime);
 
-        if (unitGroupNumbers[groupIndex] == unitsPerGroup)
-        {
-            unitGroup.Setup(ActiveUnitDeathHandler, this, groupIndex);
+        if (!unitGroupCoroutines.ContainsKey(groupIndex)) yield break;
+        
+        unitGroup.Setup(ActiveUnitDeathHandler, this, groupIndex);
+        spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
+        currentSpawningCount--;
 
-            spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
-            currentSpawningCount--;
-
-            //if there is a unit group in queue use the first inactive spawn point to spawn the queued unit group
-            if (queuedGroupIndex.Count > 0)
-            {
-                int inactiveSpawnerIndex = GetFirstInactiveSpawnerIndex();
-                if (inactiveSpawnerIndex > -1)
-                {
-                    int queuedIndex = queuedGroupIndex[queuedGroupIndex.Count - 1];
-                    int queuedUnitsCount = queuedUnitsperGroup[queuedUnitsperGroup.Count - 1];
-                    queuedGroupIndex.RemoveAt(queuedGroupIndex.Count - 1);
-                    queuedUnitsperGroup.RemoveAt(queuedUnitsperGroup.Count - 1);
-                    currentSpawningCount++;
-                    SpawnUnitGroup(spawnTime, queuedIndex, queuedUnitsCount);
-                }
-            }
-        }
+        //if there is a unit group in queue use the first inactive spawn point to spawn the queued unit group
+        if (queuedGroupIndex.Count < 1) yield break;
+        
+        int inactiveSpawnerIndex = GetFirstInactiveSpawnerIndex();
+        
+        if (inactiveSpawnerIndex < 0) yield break;
+        
+        int queuedIndex = queuedGroupIndex[0];
+        int queuedUnitsCount = queuedUnitsperGroup[0];
+        queuedGroupIndex.RemoveAt(0);
+        queuedUnitsperGroup.RemoveAt(0);
+        currentSpawningCount++;
+        SpawnUnitGroup(spawnTime, queuedIndex, queuedUnitsCount);
     }
 
     protected virtual IEnumerator SpawnUnitsCoroutine(float spawnTime, int groupIndex)
@@ -198,6 +195,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         if (spawnPointIndex > -1)
         {
             StopCoroutine(unitGroupCoroutines[groupIndex]);
+            unitGroupCoroutines.Remove(groupIndex);
             spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
             currentSpawningCount--;
         }
@@ -209,10 +207,8 @@ public abstract class BaseSpawnerController : MonoBehaviour
         if (CheckQueue(groupIndex, out int index))
         {
             queuedUnitsperGroup[index]++;
-            return;
         }
-
-        if (CheckSpawning(groupIndex) > -1)
+        else if (CheckSpawning(groupIndex) > -1)
         {
             unitGroupNumbers[groupIndex]++;
         }
@@ -271,16 +267,8 @@ public abstract class BaseSpawnerController : MonoBehaviour
 
     private bool CheckQueue(int groupIndex, out int index)
     {
-        for (int i = 0; i < queuedGroupIndex.Count; i++)
-        {
-            if (queuedGroupIndex[i] == groupIndex)
-            {
-                index = i;
-                return true;
-            }
-        }
-        index = -1;
-        return false;
+        index = queuedGroupIndex.IndexOf(groupIndex);
+        return index > -1;
     }
 
     private int CheckSpawning(int groupIndex)
