@@ -143,7 +143,6 @@ public class MountablePointLinkController : MonoBehaviour
 
     private void SetupNew(LinkPointController linkPointStart, LinkPointController linkPointEnd)
     {
-        print("new");
         linkPointStart.Setup(this, true);
         linkPointEnd.Setup(this, false);
         _linkPoints.Add(linkPointStart);

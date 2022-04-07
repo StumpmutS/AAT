@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectableController : MonoBehaviour
+public class SelectableController : StumpEntity
 {
     public event Action OnSelect = delegate { };
     public event Action OnDeselect = delegate { };
@@ -34,7 +34,13 @@ public class SelectableController : MonoBehaviour
 
     public void CallSelect()
     {
-        if (_selected || CustomAATEventSystemManager.Instance.OverUI()) return;
+        if (_selected || StumpEventSystemManagerReference.Instance.OverUI()) return;
+        Select();
+    }
+
+    public void CallSelectOverrideUICheck()
+    {
+        if (_selected) return;
         Select();
     }
 
@@ -49,7 +55,7 @@ public class SelectableController : MonoBehaviour
 
     public void CallDeselect()
     {
-        if (!_selected || CustomAATEventSystemManager.Instance.OverUI()) return;
+        if (!_selected || StumpEventSystemManagerReference.Instance.OverUI()) return;
         Deselect();
     }
     

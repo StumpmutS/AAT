@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class PlaceableWallController : MonoBehaviour
+public class PlaceableWallController : WallController
 {
-    [SerializeField] private DimensionsContainer dimensionsContainer;
-    public DimensionsContainer DimensionsContainer => dimensionsContainer;
     [SerializeField] private PreviewPoolingObject wallVisuals;
     public PreviewPoolingObject WallVisuals => wallVisuals;
     [SerializeField] private BaseMountableController mountable;

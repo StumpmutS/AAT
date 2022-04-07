@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a7fb086cb39dd44a241642dae6e78b, type: 3}
   m_Name: BearMountData
   m_EditorClassIdentifier: 
-  SelfModifier: {fileID: 11400000, guid: 2a86b6b44133955468fe56334d5400fc, type: 2}
-  OtherModifier: {fileID: 11400000, guid: 07be237fd1c057b42bed3321525f7790, type: 2}
+  SelfModifier: {fileID: 11400000, guid: fb5d677a407793149b4aa88585ca7e7c, type: 2}
+  OtherModifier: {fileID: 11400000, guid: aca52821693780c44b4b9cee668a6d53, type: 2}

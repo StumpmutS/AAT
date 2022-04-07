@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private bool leftShiftDown;
+    private bool _leftShiftDown;
 
     public static event Action OnUpdate = delegate{ };
 
@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
     public static event Action<float> OnMouseXChange = delegate { };
 
     public static event Action<float> OnMouseWheelScroll = delegate { };
+    public static event Action OnMouseWheelDown = delegate { };
+    public static event Action OnMouseWheelUp = delegate { };
 
     public static event Action<float> OnVerticalAxis = delegate { };
     public static event Action<float> OnHorizontalAxis = delegate { };
@@ -75,6 +77,14 @@ public class InputManager : MonoBehaviour
         {
             OnRightClickDown.Invoke();
         }
+        if (Input.GetMouseButtonDown(2))
+        {
+            OnMouseWheelDown.Invoke();
+        }
+        if (Input.GetMouseButtonUp(2))
+        {
+            OnMouseWheelUp.Invoke();
+        }
     }
 
     private void CheckMouseMovement()
@@ -123,12 +133,12 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            leftShiftDown = true;
+            _leftShiftDown = true;
             OnLeftShiftPressed.Invoke();
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            leftShiftDown = false;
+            _leftShiftDown = false;
             OnLeftShiftEnd.Invoke();
         }
     }
@@ -179,7 +189,7 @@ public class InputManager : MonoBehaviour
 
     private void CheckSymbols()
     {
-        if (leftShiftDown && Input.GetKeyDown(KeyCode.Equals))
+        if (_leftShiftDown && Input.GetKeyDown(KeyCode.Equals))
         {
             OnPlus.Invoke();
         }

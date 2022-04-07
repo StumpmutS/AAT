@@ -10,14 +10,8 @@ public class BaseMountableController : InteractableController
     [SerializeField] private SelfOtherStatsData mountData;
     public SelfOtherStatsData MountData => mountData;
     [SerializeField] private MountablePointLinkController mountablePointLink;
-
-    private UnitController _unit;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _unit = selectable as UnitController;
-    }
+    [SerializeField] private UnitController unit;
+    public UnitController Unit => unit;
 
     public void SetLink(MountablePointLinkController newLink)
     {
@@ -35,6 +29,7 @@ public class BaseMountableController : InteractableController
 
     protected override void RequestAffection(UnitController unit)
     {
+        unit.FinishInteraction();
         unit.GetComponent<TransportableController>().Mount(this);
     }
 
@@ -52,17 +47,17 @@ public class BaseMountableController : InteractableController
         }
     }
 
-    public void ActivateMounted(ArmoredHealthUnitStatsData stats)
+    public void ActivateMounted(BaseUnitStatsData stats)
     {
-        if (_unit == null) return;
-        _unit.ModifyStats(stats);
-        _unit.ModifyStats(mountData.SelfModifier);
+        if (unit == null) return;
+        unit.ModifyStats(stats);
+        unit.ModifyStats(mountData.SelfModifier);
     }
 
-    public virtual void DeactivateMounted(ArmoredHealthUnitStatsData stats)
+    public virtual void DeactivateMounted(BaseUnitStatsData stats)
     {
-        if (_unit == null) return;
-        _unit.ModifyStats(stats, false);
-        _unit.ModifyStats(mountData.SelfModifier, false);
+        if (unit == null) return;
+        unit.ModifyStats(stats, false);
+        unit.ModifyStats(mountData.SelfModifier, false);
     }
 }

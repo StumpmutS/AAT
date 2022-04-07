@@ -76,6 +76,7 @@ public class AbilityHandler : MonoBehaviour
 
     private void CheckGround()
     {
+        if (StumpEventSystemManagerReference.Instance.OverUI()) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit, groundLayer))
         {
@@ -121,7 +122,7 @@ public class AbilityHandler : MonoBehaviour
 
     private IEnumerator RepeatComponentActivationCoroutine(AbilityComponent abilityComponent, Vector3 point = default)
     {
-        while (true)
+        while (gameObject.activeSelf)
         {
             abilityComponent.ActivateComponent(_unitController, point);
             yield return new WaitForSeconds(abilityComponent.RepeatIntervals);
@@ -150,6 +151,6 @@ public class AbilityHandler : MonoBehaviour
 
     private void SendDisplayData()
     {
-        AbilityManager.DisplayAbilityButtons(_unitAbilityDataInfo, AwaitAbilityInput);
+        AbilityManager.Instance.DisplayAbilityButtons(_unitAbilityDataInfo, AwaitAbilityInput);
     }
 }

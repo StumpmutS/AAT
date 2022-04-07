@@ -7,13 +7,14 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "Unit Data/Base/Unit Spawn Data")]
 public class UnitSpawnData : ScriptableObject
 {
+    public SpawnerController Spawner;
     public int SpawnGroupsAmount;
     public int UnitsPerGroupAmount;
     public float SpawnTime;
     public float RespawnTime;
     public int MaxSpawnLocationUse;
     public Vector3 SpawnerOffset;
-    public GameObject SpawnerVisuals;
+    public SelectableController SpawnerVisuals;
     public UnitController UnitPrefab;
     public UnitGroupController UnitGroupPrefab;
     public BaseUnitStatsData baseUnitStatsData;

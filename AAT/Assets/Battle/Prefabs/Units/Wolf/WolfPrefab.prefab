@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 8236721309389557523}
   - component: {fileID: 1844404850188911789}
   - component: {fileID: 3017257209817583751}
+  - component: {fileID: 633619629572197474}
   m_Layer: 6
   m_Name: WolfPrefab
   m_TagString: Good
@@ -89,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNumber: 0
   outline: {fileID: 1557524196485199542}
   unitStatsModifierManager: {fileID: 2289227302551243074}
   interactableTypes: 02000000
@@ -98,6 +100,7 @@ MonoBehaviour:
   patrolState: 1
   _patrolPoints: []
   colliders: []
+  unitManager: {fileID: 0}
 --- !u!114 &2289227302551243074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitStatsData: {fileID: 11400000, guid: 703c0f72c96e0ff43a85c944b5476182, type: 2}
+  unitStatsData: {fileID: 11400000, guid: 33e21373a9078784c8af0296898a3ec1, type: 2}
 --- !u!114 &1726361164340146014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +148,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3333148748072315802}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
@@ -183,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 4383820987806807772}
   movementFloatName: MoveSpeed
+  chaseBoolName: 
   attackBoolName: Attacking
   critBoolName: CritStrike
   idleRandomIntName: IdleRandom
@@ -234,6 +238,9 @@ MonoBehaviour:
   unitDataManager: {fileID: 2289227302551243074}
   unitAnimationController: {fileID: 5993545401423962512}
   abilityHandler: {fileID: 3017257209817583751}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &8236721309389557523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +284,22 @@ MonoBehaviour:
     m_Bits: 2048
   unitAbilityData:
   - {fileID: 11400000, guid: ae0d786fa4115d447b104b0698bd934a, type: 2}
+--- !u!114 &633619629572197474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3333148748072315802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 744993545796701531}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &1960080801768736873
 PrefabInstance:
   m_ObjectHideFlags: 0

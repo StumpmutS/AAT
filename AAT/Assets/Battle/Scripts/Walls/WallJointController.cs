@@ -8,6 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(SelectableController))]
 public class WallJointController : MonoBehaviour
 {
+    [Tooltip("Must be < 30")] [SerializeField] private float maxMainWallValidAngle;
     [SerializeField] private WallPlacementManager wallPlacementManager;
     [SerializeField] private WallJointConnectorController connectorPrefab;
     public WallJointConnectorController ConnectorPrefab => connectorPrefab;
@@ -25,6 +26,8 @@ public class WallJointController : MonoBehaviour
     private Vector3 _wallDirection;
     private Vector3 _wallForwardDirection;
 
+    [HideInInspector][SerializeField] private List<Vector3> _mainWallDirections;
+
     public event Action<WallJointController> OnJointSelect = delegate { };
 
     private void Awake()
@@ -35,9 +38,13 @@ public class WallJointController : MonoBehaviour
         wallPlacementManager.AddWallJoint(this);
     }
 
+    public void SetManager(WallPlacementManager manager)
+    {
+        wallPlacementManager = manager;
+    }
+
     public PreviewPoolingObject SetupConnectorPreview(Vector3 normalizedDirection, bool reverse, float spaceToFill)
     {
-        //TODO: spacetofill is for outer part of wall connector
         if (spaceToFill < 0) spaceToFill = ConnectorXDimensions;
         var connectorPreview = PoolingManager.Instance.CreatePoolingObject(connectorPrefab.ConnectorVisuals) as PreviewPoolingObject;
         connectorPreview.transform.right = normalizedDirection;
@@ -61,10 +68,18 @@ public class WallJointController : MonoBehaviour
         WallNumber++;
     }
 
+    public void SetupMainConnector(WallJointConnectorController connector, Vector3 direction)
+    {
+        _mainWallDirections ??= new List<Vector3>();
+        _mainWallDirections.Add(direction);
+        connector.transform.parent = transform;
+    }
+
     public bool AngleValid(Vector3 direction, float minAngle)
     {
+        if (_mainWallDirections.Any(dir => Vector3.Angle(dir, direction) <= maxMainWallValidAngle)) return false;
         if (_wallDirection == default) return true;
-        return !(Vector3.Angle(_wallDirection, direction) < minAngle);
+        return Vector3.Angle(_wallDirection, direction) >= minAngle;
     }
 
     public bool CheckChain(Vector3 direction, Vector3 forwardDirection)

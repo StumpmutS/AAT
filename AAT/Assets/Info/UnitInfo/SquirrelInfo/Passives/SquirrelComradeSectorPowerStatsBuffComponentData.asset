@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sectorPowerThresholds: 0d0000000f00000010000000
   unitStatsUpgradeData:
-  - {fileID: 11400000, guid: c1a9ee8009c86ff43a50d9f4b79c3166, type: 2}
-  - {fileID: 11400000, guid: 1ea64669774249d42b7b97533e076e2d, type: 2}
-  - {fileID: 11400000, guid: dd9b87fe091c0524980da5470452687b, type: 2}
+  - {fileID: 11400000, guid: 8c82acdf703d2a8499cec311e3a54ffe, type: 2}
+  - {fileID: 11400000, guid: 068f0c240aa675d47bdfbf456ba8fc5c, type: 2}
+  - {fileID: 11400000, guid: d1dfe29c72f54c2418f8f103899fce11, type: 2}

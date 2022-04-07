@@ -12,6 +12,7 @@ public class TransportableController : MonoBehaviour //TODO:
     [SerializeField] private AIPathfinder AI;
     [SerializeField] private UnitStatsModifierManager statsMod;
     [SerializeField] private BaseAttackController attackController;
+    [SerializeField] private UnitDeathController deathController;
 
     private UnitController _unit;
 
@@ -55,6 +56,7 @@ public class TransportableController : MonoBehaviour //TODO:
         _unit.ModifyStats(_mount.MountData.OtherModifier);
         _unit.ModifyStats(transportableData.SelfModifier);
         _mount.ActivateMounted(transportableData.OtherModifier);
+        _mount.Unit.OnDeath += MountDeathHandler;
     }
 
     private void CheckAttack()
@@ -81,6 +83,7 @@ public class TransportableController : MonoBehaviour //TODO:
         _unit.ModifyStats(_mount.MountData.OtherModifier, false);
         _unit.ModifyStats(transportableData.SelfModifier, false);
         _mount.DeactivateMounted(transportableData.OtherModifier);
+        _mount.Unit.OnDeath -= MountDeathHandler;
         _mount = null;
         transform.position = pos;
         _agent.EnableAgent(this);
@@ -102,5 +105,10 @@ public class TransportableController : MonoBehaviour //TODO:
         if (!_checkGroundSubscribed) return;
         _checkGroundSubscribed = false;
         InputManager.OnRightClickDown -= CheckGround;
+    }
+
+    private void MountDeathHandler(UnitController notNeeded)
+    {
+        deathController.Die();
     }
 }

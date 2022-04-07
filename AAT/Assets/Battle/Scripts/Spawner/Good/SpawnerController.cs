@@ -8,7 +8,7 @@ public class SpawnerController : BaseSpawnerController
 {
     protected override void ActiveUnitDeathHandler(int groupIndex)
     {
-        if (activeUnitGroups[groupIndex].Units.Count <= 0)
+        if (_activeUnitGroups[groupIndex].Units.Count <= 0)
         {
             RespawnUnitGroup(groupIndex);
         }
@@ -18,22 +18,22 @@ public class SpawnerController : BaseSpawnerController
         }
     }
 
-    protected override void Select()
+    protected override void SelectHandler()
     {
-        base.Select();
-        foreach (var unitGroup in activeUnitGroups)
+        base.SelectHandler();
+        foreach (var unitGroup in _activeUnitGroups)
         {
             unitGroup.SelectGroup();
         }
-        _upgradesUIContainer.gameObject.SetActive(true);
+        _upgradesUIContainer.SetActive(true);
     }
 
-    protected override void Deselect()
+    protected override void DeselectHandler()
     {
-        foreach (var unitGroup in activeUnitGroups)
+        foreach (var unitGroup in _activeUnitGroups)
         {
             unitGroup.DeselectGroup();
         }
-        _upgradesUIContainer.gameObject.SetActive(false);
+        _upgradesUIContainer.SetActive(false);
     }
 }

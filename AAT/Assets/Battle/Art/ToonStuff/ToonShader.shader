@@ -4,12 +4,12 @@ Shader "Toon/ToonShader"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _GlossyTex("Glossy Texture", 2D) = "black" {}
-        _DarkDotCutoff("Dark Cutoff", float) = -.12
-        _LightDotCutoff("Light Cutoff", float) = .995
-        _DarkValue("Dark Value", float) = -.45
-        _LightValue("Light Value", float) = 6.78
-        _MidValue("Mid Value", float) = 1.39
-        _Strength("Strength", float) = .5
+        _DarkDotCutoff("Dark Cutoff", float) = -.2
+        _LightDotCutoff("Light Cutoff", float) = .8
+        _DarkValue("Dark Value", float) = .25
+        _LightValue("Light Value", float) = 4
+        _MidValue("Mid Value", float) = 1
+        _Strength("Strength", float) = 1
         _Color("Color", COLOR) = (1, 1, 1, 1)
     }        
 

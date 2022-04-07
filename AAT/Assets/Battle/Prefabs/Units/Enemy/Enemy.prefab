@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNumber: 0
   outline: {fileID: 4331704148283514334}
   unitStatsModifierManager: {fileID: 4331704148283514328}
   interactableTypes: 
@@ -518,6 +519,7 @@ MonoBehaviour:
   patrolState: 1
   _patrolPoints: []
   colliders: []
+  unitManager: {fileID: 0}
 --- !u!114 &4331704148283514320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitStatsData: {fileID: 11400000, guid: 033f38054f4b383498c2c1e7e04cb99d, type: 2}
+  unitStatsData: {fileID: 11400000, guid: 1e5ddec3ec4aef74096b1816522b4478, type: 2}
 --- !u!114 &9030462966438899541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,3 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 4331704148283514321}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048

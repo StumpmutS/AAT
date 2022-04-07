@@ -305,6 +305,7 @@ MonoBehaviour:
   selectable: {fileID: 5582304018362055113}
   mountData: {fileID: 11400000, guid: 8135d6063dc0fe344a1106b1c7756f9d, type: 2}
   mountablePointLink: {fileID: 0}
+  unit: {fileID: 5582304018362055113}
 --- !u!1001 &4931340970958372918
 PrefabInstance:
   m_ObjectHideFlags: 0

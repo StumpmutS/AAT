@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNumber: 0
   outline: {fileID: 7466604220745568491}
   unitStatsModifierManager: {fileID: 6873907644955445216}
   interactableTypes: 
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitStatsData: {fileID: 11400000, guid: 4621817d89c5dc140bb23f7107e98044, type: 2}
+  unitStatsData: {fileID: 11400000, guid: f2b505be318106b45b49bd3b026f2058, type: 2}
 --- !u!114 &6646878468723361836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8724132440788318405}
   movementFloatName: MoveSpeed
+  chaseBoolName: 
   attackBoolName: Attacking
   critBoolName: CritStrike
   idleRandomIntName: IdleRandom
@@ -264,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitDataManager: {fileID: 6873907644955445216}
   unitAnimation: {fileID: 6646878468723361836}
+  animateChase: 0
 --- !u!114 &8419816382797004127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +286,9 @@ MonoBehaviour:
   unitDataManager: {fileID: 6873907644955445216}
   unitAnimationController: {fileID: 6646878468723361836}
   abilityHandler: {fileID: 8394582672397567426}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &1939978698338078484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +301,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 6461623584834916860}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &1674684178429916041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -557,6 +567,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8255363790943932862, guid: f06e1ea9bb7a4c94382fde030ecfff3c, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6461623584834916860}
     - target: {fileID: 8255363790943932862, guid: f06e1ea9bb7a4c94382fde030ecfff3c, type: 3}
       propertyPath: mountData
       value: 

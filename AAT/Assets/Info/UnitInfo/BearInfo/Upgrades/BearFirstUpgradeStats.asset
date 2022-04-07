@@ -9,26 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3049a86a0eb75ef4eadd0839141133bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 43502a7ce1ec831489ed3b4dc1c0031f, type: 3}
   m_Name: BearFirstUpgradeStats
   m_EditorClassIdentifier: 
-  ArmoredHealthFloatStats:
-    _keys: 000000000100000002000000
-    _values:
-    - 0
-    - 20
-    - 20
-  UnitFloatStats:
-    _keys: 030000000400000005000000060000000700000008000000090000000a000000
-    _values:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-  TransportState: 0
-  AttackState: 0
-  MoveState: 0
+  Stats:
+  - {fileID: 11400000, guid: 7a17b37ffb0bfbd4692f9fb7f7635acf, type: 2}
+  - {fileID: 11400000, guid: 0dd95f60a1fa533429206ae00e29a64f, type: 2}

@@ -27,6 +27,7 @@ public class UnitController : OutlineSelectableController
     public bool IsDead { get; private set; }
 
     public event Action<UnitController> OnDeath = delegate { };
+    public event Action OnInteractionFinished = delegate { };
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class UnitController : OutlineSelectableController
         OnDeath.Invoke(this);
     }
 
-    public void ModifyStats(ArmoredHealthUnitStatsData baseUnitStatsDataInfo, bool add = true)
+    public void ModifyStats(BaseUnitStatsData baseUnitStatsDataInfo, bool add = true)
     {
         unitStatsModifierManager.ModifyStats(baseUnitStatsDataInfo, add);
     }
@@ -87,5 +88,10 @@ public class UnitController : OutlineSelectableController
     {
         //TODO: walk to interactable
         callback.Invoke(this);
+    }
+
+    public void FinishInteraction()
+    {
+        OnInteractionFinished.Invoke();
     }
 }

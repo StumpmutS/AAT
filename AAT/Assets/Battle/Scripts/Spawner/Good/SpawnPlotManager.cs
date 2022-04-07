@@ -6,17 +6,19 @@ using UnityEngine;
 public class SpawnPlotManager : MonoBehaviour
 {
     [SerializeField] protected List<SpawnerPlotController> spawnerPlots;
+    [SerializeField] private SpawnerPlotButtonsController buttonsController;
 
     public List<SpawnerPlotController> SpawnerPlots => spawnerPlots;
 
-    private SpawnerPlotController activeSpawnerPlot;
-    private List<int> inactiveSpawnerPlotIndexes = new List<int>();
+    private SpawnerPlotController _activeSpawnerPlot;
+    private List<int> _inactiveSpawnerPlotIndexes = new List<int>();
 
     private void Start()
     {
         foreach (var spawnerPlot in spawnerPlots)
         {
             spawnerPlot.OnSpawnerPlotSelect += SetActiveSpawnerPlot;
+            spawnerPlot.OnSpawnerPlotDeselect += RemoveButtons;
         }
 
         InputManager.OnNumberKey1 += SelectSpawnerPlotByIndex;
@@ -28,38 +30,42 @@ public class SpawnPlotManager : MonoBehaviour
         InputManager.OnNumberKey7 += SelectSpawnerPlotByIndex;
     }
 
-    private void SetActiveSpawnerPlot(SpawnerPlotController spawnerPlot)
+    public void AddPlot(SpawnerPlotController plot)
     {
-        activeSpawnerPlot = spawnerPlot;
+        spawnerPlots.Add(plot);
+    }
+
+    private void SetActiveSpawnerPlot(SpawnerPlotController spawnerPlot, EFaction faction)
+    {
+        _activeSpawnerPlot = spawnerPlot;
+        buttonsController.DisplayByFaction(faction);
+    }
+
+    private void RemoveButtons()
+    {
+        buttonsController.RemoveButtons();
     }
 
     public void SetupActiveSpawner(UnitSpawnData unitSpawnData)
     {
-        for (int i = 0; i < spawnerPlots.Count; i++)
-        {
-            if (spawnerPlots[i] == activeSpawnerPlot)
-            {
-                SpawnerManager.SetNextSpawnerPlotIndex(i);
-                inactiveSpawnerPlotIndexes.Add(i);
-                break;
-            }
-        }
+        var index = spawnerPlots.IndexOf(_activeSpawnerPlot);
+        
+        SpawnerManager.Instance.SetNextSpawnerPlotIndex(index);
+        _inactiveSpawnerPlotIndexes.Add(index);
 
-        activeSpawnerPlot.SetupSpawner(unitSpawnData);
+        DeselectAllPlots();
+        RemoveButtons();
+        _activeSpawnerPlot.SetupSpawner(unitSpawnData);
     }
 
     private void SelectSpawnerPlotByIndex(int keyPressed)
     {
-        for (int i = 0; i < spawnerPlots.Count; i++)
-        {
-            if (i != keyPressed - 1)
-            {
-                spawnerPlots[i].CallDeselect();
-            }
-        }
-        if (!inactiveSpawnerPlotIndexes.Contains(keyPressed - 1))
+        DeselectAllPlots();
+        if (!_inactiveSpawnerPlotIndexes.Contains(keyPressed - 1))
         {
             spawnerPlots[keyPressed - 1].CallSelect();
         }
     }
+
+    private void DeselectAllPlots() => spawnerPlots.ForEach(plot => plot.CallDeselect());
 }

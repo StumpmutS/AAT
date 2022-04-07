@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 484fa2bfcf72b3a46b2f06a7220ca78a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - factionColors: {fileID: 11400000, guid: ae6282163b779334a90bf1d12950c1ef, type: 2}
+  - mat: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

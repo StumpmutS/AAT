@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43502a7ce1ec831489ed3b4dc1c0031f, type: 3}
   m_Name: UndergroundPathwayStatsData
   m_EditorClassIdentifier: 
-  ArmoredHealthFloatStats:
-    _keys: 000000000100000002000000
-    _values:
-    - 100
-    - 0
-    - 0
+  Stats:
+  - {fileID: 11400000, guid: 1be2eb0fe162f124bbacf18a904b59bb, type: 2}
+  - {fileID: 11400000, guid: d0e243c513a64af4d841a737a3db2b4e, type: 2}
+  - {fileID: 11400000, guid: 1e41e6b06d8bedc449181880cfe6b947, type: 2}

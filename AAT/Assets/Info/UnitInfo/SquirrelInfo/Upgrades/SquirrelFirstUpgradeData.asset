@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b81eb9366d85b640b57e722eb2d33ce, type: 3}
   m_Name: SquirrelFirstUpgradeData
   m_EditorClassIdentifier: 
-  baseUnitStatsDataInfo: {fileID: 11400000, guid: f34faf8b9c450004785aad97938b7e54, type: 2}
+  baseUnitStatsDataInfo: {fileID: 11400000, guid: a0523e290fbb6444b9700e5b2716599d, type: 2}

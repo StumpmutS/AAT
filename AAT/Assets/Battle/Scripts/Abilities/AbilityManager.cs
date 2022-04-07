@@ -8,34 +8,31 @@ public class AbilityManager : MonoBehaviour
     [SerializeField] private RectTransform abilityButtonsContainer;
     [SerializeField] private AbilityButtonController abilityButtonPrefab;
 
-    private static AbilityManager instance;
+    public static AbilityManager Instance { get; private set; }
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    private void Awake() => Instance = this;
 
-    public static void DisplayAbilityButtons(List<UnitAbilityDataInfo> unitAbilityDataInfo, Action<int> abilityCallback)
+    public void DisplayAbilityButtons(List<UnitAbilityDataInfo> unitAbilityDataInfo, Action<int> abilityCallback)
     {
-        for (int i = 0; i < instance.abilityButtonsContainer.childCount; i++)
+        for (int i = 0; i < Instance.abilityButtonsContainer.childCount; i++)
         {
-            Destroy(instance.abilityButtonsContainer.GetChild(i).gameObject);
+            Destroy(Instance.abilityButtonsContainer.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < unitAbilityDataInfo.Count; i++)
         {
-            var instantiatedButton = Instantiate(instance.abilityButtonPrefab, instance.abilityButtonsContainer);
+            var instantiatedButton = Instantiate(Instance.abilityButtonPrefab, Instance.abilityButtonsContainer);
             instantiatedButton.Setup(unitAbilityDataInfo[i], abilityCallback, i);
         }
 
-        instance.abilityButtonsContainer.gameObject.SetActive(true);
-        InputManager.OnLeftCLickUp += instance.RemoveAbilityButtonDisplay;
+        Instance.abilityButtonsContainer.gameObject.SetActive(true);
+        InputManager.OnLeftCLickUp += Instance.RemoveAbilityButtonDisplay;
     }
 
     private void RemoveAbilityButtonDisplay()
     {
-        if (CustomAATEventSystemManager.Instance.OverUI()) return;
-        instance.abilityButtonsContainer.gameObject.SetActive(false);
-        InputManager.OnLeftCLickUp -= instance.RemoveAbilityButtonDisplay;
+        if (StumpEventSystemManagerReference.Instance.OverUI()) return;
+        abilityButtonsContainer.gameObject.SetActive(false);
+        InputManager.OnLeftCLickUp -= RemoveAbilityButtonDisplay;
     }
 }

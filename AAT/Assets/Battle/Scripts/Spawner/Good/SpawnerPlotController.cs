@@ -4,48 +4,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnerPlotController : OutlineSelectableController //TODO: wtf
+[RequireComponent(typeof(SelectableController))]
+public class SpawnerPlotController : MonoBehaviour
 {
-    [SerializeField] private RectTransform UnitsUIContainer;
-    [SerializeField] private RectTransform UpgradesUIContainer;
-    [SerializeField] private SpawnerController spawnerPrefab;
+    [SerializeField] private GameObject upgradesUIContainer;
     [SerializeField] private SectorController sector;
+    [SerializeField] private EFaction faction;
 
-    public event Action<SpawnerPlotController> OnSpawnerPlotSelect = delegate { };
+    private SelectableController _selectable;
+    
+    public event Action<SpawnerPlotController, EFaction> OnSpawnerPlotSelect = delegate { };
+    public event Action OnSpawnerPlotDeselect = delegate { };
 
-    private void Start()
+    private void Awake()
     {
-        HideUnitSpawnerButtons();
+        _selectable = GetComponent<SelectableController>();
+        _selectable.OnSelect += Select;
+        _selectable.OnDeselect += Deselect;
     }
 
-    protected override void Select()
+    private void Select()
     {
-        base.Select();
-        DisplayUnitSpawnerButtons();
-        OnSpawnerPlotSelect.Invoke(this);
-        Cursor.lockState = CursorLockMode.None;
+        OnSpawnerPlotSelect.Invoke(this, faction);
     }
 
-    protected override void Deselect()
-    {
-        base.Deselect();
-        HideUnitSpawnerButtons();
-    }
-
-    private void DisplayUnitSpawnerButtons()
-    {
-        UnitsUIContainer.gameObject.SetActive(true);
-    }
-
-    private void HideUnitSpawnerButtons()
-    {
-        UnitsUIContainer.gameObject.SetActive(false);
-    }
+    private void Deselect() => OnSpawnerPlotDeselect.Invoke();
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        SpawnerController instantiatedSpawner = Instantiate(spawnerPrefab, transform.position, transform.rotation);
-        SpawnerManager.AddSpawnerPlot(instantiatedSpawner);
-        instantiatedSpawner.Setup(spawnData, sector, UpgradesUIContainer);
+        SpawnerController instantiatedSpawner = Instantiate(spawnData.Spawner, transform.position, transform.rotation);
+        SpawnerManager.Instance.AddSpawnerPlot(instantiatedSpawner);
+        instantiatedSpawner.Setup(spawnData, sector, upgradesUIContainer);
+        gameObject.SetActive(false);
     }
+
+    public void Setup(GameObject upgradesUI, SectorController sector, EFaction faction)
+    {
+        upgradesUIContainer = upgradesUI;
+        this.sector = sector;
+        this.faction = faction;
+    }
+    
+    public void CallSelect() => _selectable.CallSelect();
+
+    public void CallDeselect() => _selectable.CallDeselect();
 }

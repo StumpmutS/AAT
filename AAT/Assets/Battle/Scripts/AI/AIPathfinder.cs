@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Utility.Scripts;
 
 [RequireComponent(typeof(AATAgentController))]
 public class AIPathfinder : MonoBehaviour
 {
-    [SerializeField] private UnitController unitController;
+    [SerializeField] protected UnitController unitController;
     [SerializeField] private LayerMask enemyTeamLayer;
     [SerializeField] private UnitStatsModifierManager unitDataManager;
     [SerializeField] protected UnitAnimationController unitAnimationController;
@@ -40,6 +41,8 @@ public class AIPathfinder : MonoBehaviour
         if (abilityHandler != null)
             abilityHandler.OnAbilityUsed += SetAbilityUsage;
         unitDataManager.OnRefreshStats += RefreshMovementSpeed;
+        _agent.OnPathSet += SetAnimations;
+        _agent.OnPathFinished += ResetAnimations;
     }
 
     private void Start()
@@ -113,25 +116,27 @@ public class AIPathfinder : MonoBehaviour
     protected virtual void Attack(Collider target)
     {
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(0);
+            ResetAnimations();
         _patrolling = false;
         OnAttackStart.Invoke();
         OnAttack.Invoke(target);
+        _agent.ClearQueue();
     }
 
     protected virtual void Chase(Collider target)
     {
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(_movementSpeed);
+            SetAnimations();
         _patrolling = false;
         OnChaseStart.Invoke();
         OnChase.Invoke(target);
+        _agent.ClearQueue();
     }
 
     protected virtual void Patrol()
     {
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(_movementSpeed);
+            SetAnimations();
         _patrolling = true;
         OnPatrolStart.Invoke();
         OnPatrol.Invoke(_patrolPoints);
@@ -140,7 +145,7 @@ public class AIPathfinder : MonoBehaviour
     protected virtual void NoAIState()
     {
         if (unitAnimationController != null)
-            unitAnimationController.SetMovement(0);
+            ResetAnimations();
         OnNoAIState.Invoke();
     }
 
@@ -155,7 +160,11 @@ public class AIPathfinder : MonoBehaviour
         else _agent.EnableAgent(this);
         _usingAbility = value;
     }
-    
+
+    private void SetAnimations() => unitAnimationController.SetMovement(_movementSpeed);
+
+    private void ResetAnimations() => unitAnimationController.SetMovement(0);
+
     public void Activate()
     {
         _active = true;

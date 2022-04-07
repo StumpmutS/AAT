@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class UnitStatsModifierManager : MonoBehaviour
 {
-    [SerializeField] private ArmoredHealthUnitStatsData unitStatsData;
+    [SerializeField] private BaseUnitStatsData unitStatsData;
 
     public Dictionary<EUnitFloatStats, float> CurrentUnitStatsData { get; private set; } =
         new Dictionary<EUnitFloatStats, float>();
@@ -20,24 +20,19 @@ public class UnitStatsModifierManager : MonoBehaviour
     {
         if (unitStatsData != null)
         {
-            SetupCurrentUnitStatsData(unitStatsData);
+            Setup(unitStatsData);
         }
     }
 
-    public void Setup(ArmoredHealthUnitStatsData unitStatsData)
+    public void Setup(BaseUnitStatsData unitStatsData)
     {
-        SetupCurrentUnitStatsData(unitStatsData);
-    }
-    
-    private void SetupCurrentUnitStatsData(ArmoredHealthUnitStatsData unitStatsData)
-    {
-        foreach (var kvp in unitStatsData.GetStats())
+        foreach (var stat in unitStatsData.Stats)
         {
-            CurrentUnitStatsData[kvp.Key] = kvp.Value;
+            CurrentUnitStatsData[stat.Stat] = stat.Value;
         }
     }
 
-    public void ModifyStats(ArmoredHealthUnitStatsData stats, bool add = true)
+    public void ModifyStats(BaseUnitStatsData stats, bool add = true)
     {
         if (add) AddFloatStats(stats);
         else SubtractFloatStats(stats);
@@ -63,19 +58,19 @@ public class UnitStatsModifierManager : MonoBehaviour
         OnRefreshStats.Invoke();
     }
     
-    private void AddFloatStats(ArmoredHealthUnitStatsData stats)
+    private void AddFloatStats(BaseUnitStatsData stats)
     {
-        foreach (var stat in stats.GetStats().Where(kvp => CurrentUnitStatsData.ContainsKey(kvp.Key)))
+        foreach (var stat in stats.Stats.Where(stat => CurrentUnitStatsData.ContainsKey(stat.Stat)))
         {
-            CurrentUnitStatsData[stat.Key] += stat.Value;
+            CurrentUnitStatsData[stat.Stat] += stat.Value;
         }
     }
 
-    private void SubtractFloatStats(ArmoredHealthUnitStatsData stats)
+    private void SubtractFloatStats(BaseUnitStatsData stats)
     {
-        foreach (var stat in stats.GetStats().Where(kvp => CurrentUnitStatsData.ContainsKey(kvp.Key)))
+        foreach (var stat in stats.Stats.Where(stat => CurrentUnitStatsData.ContainsKey(stat.Stat)))
         {
-            CurrentUnitStatsData[stat.Key] -= stat.Value;
+            CurrentUnitStatsData[stat.Stat] -= stat.Value;
         }
     }
 

@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.AI.Navigation;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using Utility.Scripts;
 
 public class WallPlacementManager : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class WallPlacementManager : MonoBehaviour
     [SerializeField] private LayerMask wallJointLayer;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] [Tooltip("Must be greater than min distance ((Wall Dim+Joint Dim)*2+.01)")] private float snapRadius;
+    [SerializeField] private float wallMinValidAngle;
 
     public static WallPlacementManager Instance { get; private set; }
     
@@ -198,7 +198,7 @@ public class WallPlacementManager : MonoBehaviour
         {
             Debug.LogError("No position found on NavMesh to sample");
         }
-        if (!_currentWallJoint.AngleValid(_normDirection, 60f))
+        if (!_currentWallJoint.AngleValid(_normDirection, wallMinValidAngle))
         {
             SetInvalid();
             return;

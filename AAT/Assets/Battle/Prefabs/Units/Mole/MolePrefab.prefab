@@ -88,6 +88,9 @@ MonoBehaviour:
   unitDataManager: {fileID: 3397298655619451056}
   unitAnimationController: {fileID: 6764052497972657542}
   abilityHandler: {fileID: 3455355994740846882}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &2653315157436244296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,8 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNumber: 0
   outline: {fileID: 9059945189865398283}
   unitStatsModifierManager: {fileID: 3397298655619451056}
+  interactableTypes: 02000000
   unitDeathController: {fileID: 4723412625336821999}
   unitVisuals: {fileID: 0}
   chaseState: 1
@@ -109,6 +114,7 @@ MonoBehaviour:
   _patrolPoints: []
   colliders:
   - {fileID: 7071189808360804298}
+  unitManager: {fileID: 0}
 --- !u!114 &99471962510876565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 5296070765856366558}
   movementFloatName: MoveSpeed
+  chaseBoolName: 
   attackBoolName: Attacking
   critBoolName: CritStrike
   idleRandomIntName: IdleRandom
@@ -171,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitStatsData: {fileID: 11400000, guid: 707878b5017354b41bd1bf1b533d35a6, type: 2}
+  unitStatsData: {fileID: 11400000, guid: 706b52d4db22f494b94959ff37d61a5b, type: 2}
 --- !u!114 &2647229043083221786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 2653315157436244296}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!95 &5296070765856366558
 Animator:
   serializedVersion: 3

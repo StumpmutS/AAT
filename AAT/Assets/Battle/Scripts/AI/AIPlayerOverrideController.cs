@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SelectableController))]
 public class AIPlayerOverrideController : AIPathfinder
 {
+    [SerializeField] private LayerMask ground;
+    
     private SelectableController _selectable;
     private bool _movementOverride;
     private bool MovementOverride
@@ -19,8 +19,6 @@ public class AIPlayerOverrideController : AIPathfinder
             else InputManager.OnUpdate += CheckTargetDistance;
         }
     }
-
-    public event Action OnReroute = delegate { };
 
     protected override void Awake()
     {
@@ -43,12 +41,11 @@ public class AIPlayerOverrideController : AIPathfinder
     public void SetTargetDestination()
     {
         if (!_active) return;
-        Reroute();
         MovementOverride = true;
         if (unitAnimationController != null)
             unitAnimationController.SetMovement(_movementSpeed);
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!Physics.Raycast(ray, out var hit)) return;
+        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, ground)) return;
         var destination = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         _agent.SetDestination(destination);
     }
@@ -84,11 +81,6 @@ public class AIPlayerOverrideController : AIPathfinder
         {
             MovementOverride = false;
         }
-    }
-
-    private void Reroute()
-    {
-        OnReroute.Invoke();
     }
 
     public override void Deactivate()

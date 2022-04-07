@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class KnockbackManager : MonoBehaviour
 {
-    private static KnockbackManager instance;
-    public static KnockbackManager Instance => instance;
+    public static KnockbackManager Instance { get; private set; }
 
     private void Awake()
     {
-        instance = this;   
+        Instance = this;   
     }
 
     public void AddKnockback(Transform transformToBeKnocked, Vector3 direction, float distance, float speed, float lerpEndPercent)

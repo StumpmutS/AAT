@@ -1132,6 +1132,9 @@ MonoBehaviour:
   unitDataManager: {fileID: 430060796365761778}
   unitAnimationController: {fileID: 0}
   abilityHandler: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &-8213272441465151675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,6 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNumber: 0
   outline: {fileID: 5759228335420568730}
   unitStatsModifierManager: {fileID: 430060796365761778}
   interactableTypes: 0100000002000000
@@ -1191,7 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitStatsData: {fileID: 11400000, guid: a5718b2ae59e9114a97876fc1f8ab138, type: 2}
+  unitStatsData: {fileID: 11400000, guid: b04ddbae02d8e51468f9f710a9cbfa7f, type: 2}
 --- !u!114 &6019638265588333270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,6 +1215,7 @@ MonoBehaviour:
   AI: {fileID: 5759228335420568733}
   statsMod: {fileID: 430060796365761778}
   attackController: {fileID: 5759228335420568726}
+  deathController: {fileID: -3991292208228322283}
 --- !u!114 &6519343231381679187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,6 +1243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d15ad879b8bcd54e823bfa53a8b5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: -8213272441465151675}
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &4922851530394433235
 GameObject:
   m_ObjectHideFlags: 0

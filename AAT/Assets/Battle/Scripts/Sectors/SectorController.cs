@@ -1,26 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class SectorController : MonoBehaviour
 {
     private HashSet<UnitController> _units = new HashSet<UnitController>();
+    public List<TeleportPoint> Teleporters { get; private set; }
 
     public event Action<SectorController, int> OnSectorPowerChanged = delegate { };
 
-    public int GetSectorPower()
+    public int GetSectorPower() => _units.Sum(CalculateSectorPower);
+
+    private int CalculateSectorPower(UnitController unit)
     {
-        int sectorPower = 0;
-
-        foreach (var unit in _units)
-        {
-            //TODO: super duper complex power calculation
-            sectorPower += 1;
-        }
-
-        return sectorPower;
+        return 1;
     }
 
     public void AddUnit(UnitController unit)

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a7fb086cb39dd44a241642dae6e78b, type: 3}
   m_Name: SquirrelTransportableData
   m_EditorClassIdentifier: 
-  SelfModifier: {fileID: 11400000, guid: f6a959d04c8542e4a84219d0c1e9f262, type: 2}
-  OtherModifier: {fileID: 11400000, guid: cededc6b5f1d2b243bf4fbd81938c635, type: 2}
+  SelfModifier: {fileID: 11400000, guid: ca560638aa7064443b1a0741fb611e9a, type: 2}
+  OtherModifier: {fileID: 11400000, guid: 2f9768b2ad960b7479ef307d40cb546c, type: 2}

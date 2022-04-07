@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitAnimationController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    [SerializeField] private string movementFloatName, attackBoolName, critBoolName, idleRandomIntName, idleSuperRandomIntName, abilityIntName;
+    [SerializeField] private string movementFloatName, chaseBoolName, attackBoolName, critBoolName, idleRandomIntName, idleSuperRandomIntName, abilityIntName;
     [SerializeField] private float minIdleRandomTime, maxIdleRandomTime, idleSuperRandomChancePercent;
     [SerializeField] private int idleRandomNumber, idleSuperRandomNumber;
 
@@ -24,6 +24,11 @@ public class UnitAnimationController : MonoBehaviour
             StopRandomIdle();
         }
         animator.SetFloat(movementFloatName, value);
+    }
+
+    public void SetChase(bool value)
+    {
+        animator.SetBool(chaseBoolName, value);
     }
 
     public void SetAttack(bool value)
@@ -51,11 +56,9 @@ public class UnitAnimationController : MonoBehaviour
     #region RandomIdleCoroutine
     private void StartRandomIdle()
     {
-        if (!_randomIdleCoroutineRunning)
-        {
-            _randomIdleCoroutine = StartRandomIdleCoroutine();
-            StartCoroutine(_randomIdleCoroutine);
-        }
+        if (_randomIdleCoroutineRunning) return;
+        _randomIdleCoroutine = StartRandomIdleCoroutine();
+        StartCoroutine(_randomIdleCoroutine);
     }
 
     private void StopRandomIdle()

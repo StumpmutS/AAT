@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility.Scripts;
 
 public class SectorDivider : MonoBehaviour
 {
-    [SerializeField] private SectorController[] sectors;
-    public SectorController[] Sectors => sectors;
+    [SerializeField] private SerializableTuple<SectorController, SectorController> sectors;
+    public SerializableTuple<SectorController, SectorController> Sectors => sectors;
 
+    public void SetSectors(SerializableTuple<SectorController, SectorController> newSectors)
+    {
+        sectors = newSectors;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

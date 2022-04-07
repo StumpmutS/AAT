@@ -19,7 +19,7 @@ public class UnitDeathController : MonoBehaviour
         healthController.OnDie += Die;
     }
 
-    private void Die()
+    public void Die()
     {
         if (_dead) return;
         _dead = true;

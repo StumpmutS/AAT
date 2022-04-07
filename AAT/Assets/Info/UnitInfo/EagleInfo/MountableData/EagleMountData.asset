@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a7fb086cb39dd44a241642dae6e78b, type: 3}
   m_Name: EagleMountData
   m_EditorClassIdentifier: 
-  SelfModifier: {fileID: 11400000, guid: b1a01adc20fbc4b4d8125413f9a0993f, type: 2}
-  OtherModifier: {fileID: 11400000, guid: 0dda7b860d8cd8147aa8a602421c2c98, type: 2}
+  SelfModifier: {fileID: 11400000, guid: e2766cfabc93ba84192d4eebf7d2ed4c, type: 2}
+  OtherModifier: {fileID: 11400000, guid: 604d3c5491e27704f8ee512398e3e0d1, type: 2}

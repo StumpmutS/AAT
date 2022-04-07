@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Utility.Scripts;
 
 public class SpawnerManager : MonoBehaviour
 {
     [SerializeField] private SpawnPlotManager spawnPlotManager;
+    
+    public static SpawnerManager Instance { get; private set; }
 
-    private static List<BaseSpawnerController> spawners = new List<BaseSpawnerController>();
-    private static int _nextIndex;
+    private List<BaseSpawnerController> spawners = new List<BaseSpawnerController>();
+    private int _nextIndex;
 
-    private static BaseSpawnerController activeSpawner;
+    private static BaseSpawnerController _activeSpawner;
 
     private void Awake()
     {
-        for (int i = 0; i < spawnPlotManager.SpawnerPlots.Count; i++)
-        {
-            spawners.Add(null);
-        }
+        Instance = this;
+        StumpListExtensions.EqualizeList(spawners, spawnPlotManager.SpawnerPlots.Count);
     }
 
     private void Start()
@@ -29,37 +31,26 @@ public class SpawnerManager : MonoBehaviour
         InputManager.OnNumberKey6 += SelectSpawnerByIndex;
     }
 
-    public static void AddSpawnerPlot(BaseSpawnerController spawner)
+    public void AddSpawnerPlot(BaseSpawnerController spawner)
     {
         spawners[_nextIndex] = spawner;
         spawner.OnSpawnerSelect += SetActiveSpawner;
     }
 
-    private static void SetActiveSpawner(BaseSpawnerController spawnerToSet)
-    {
-        foreach (var spawner in spawners)
-        {
-            if (spawnerToSet == spawner)
-            {
-                activeSpawner = spawnerToSet;
-            }
-        }
-    }
+    private void SetActiveSpawner(BaseSpawnerController spawnerToSet) => _activeSpawner = spawnerToSet;
 
-    public static void SetNextSpawnerPlotIndex(int index)
+    public void SetNextSpawnerPlotIndex(int index)
     {
         _nextIndex = index;
     }
 
     private void SelectSpawnerByIndex(int keyPressed)
     {
-        foreach (var spawner in spawners)
+        foreach (var spawner in spawners.Where(spawner => spawner != null))
         {
-            if (spawner != null)
-            {
-                spawner.CurrentSpawnerVisualsSelectable.CallDeselect();
-            }
+            spawner.CurrentSpawnerVisualsSelectable.CallDeselect();
         }
+
         if (spawners[keyPressed - 1] != null)
         {
             spawners[keyPressed - 1].CurrentSpawnerVisualsSelectable.CallSelect();
@@ -69,6 +60,6 @@ public class SpawnerManager : MonoBehaviour
 
     public void UpgradeActiveSpawnerStats()
     {
-        activeSpawner.ModifyUnitGroupStats();
+        _activeSpawner.ModifyUnitGroupStats();
     }
 }

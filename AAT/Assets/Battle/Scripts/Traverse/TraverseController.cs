@@ -22,20 +22,22 @@ public class TraverseController : MonoBehaviour
     public void AttemptTraverse()
     {
         if (_traversing) return;
-        if (Physics.Raycast(transform.position, agent.DesiredDestination - transform.position, out var hit, sectorDividerLayer))
+        if (!Physics.Raycast(transform.position, agent.DesiredDestination - transform.position, out var hit,
+            sectorDividerLayer)) return;
+        if (hit.collider.TryGetComponent<StumpEntity>(out var sEntity))
         {
-            if (hit.collider.TryGetComponent<SectorDivider>(out var sectorDivider))
-            {
-                _agentDestinationRef = agent.DesiredDestination;
-                _currentSectorDivider = sectorDivider;
-                float angle = Vector3.Angle(_agentDestinationRef - transform.position, sectorDivider.transform.right);
-                if (angle > 90) angle = 180 - angle;
-                float dividerXDistance = sectorDivider.transform.localScale.x;
-                float target = Mathf.Abs(dividerXDistance / Mathf.Cos(angle));
-                _targetDistanceSqr = target * target;
-                Traverse();
-            }
+            if (sEntity.GetTeam() != unit.GetTeam()) return;
         }
+
+        if (!hit.collider.TryGetComponent<SectorDivider>(out var sectorDivider)) return;
+        _agentDestinationRef = agent.DesiredDestination;
+        _currentSectorDivider = sectorDivider;
+        float angle = Vector3.Angle(_agentDestinationRef - transform.position, sectorDivider.transform.right);
+        if (angle > 90) angle = 180 - angle;
+        float dividerXDistance = sectorDivider.transform.localScale.x;
+        float target = Mathf.Abs(dividerXDistance / Mathf.Cos(angle));
+        _targetDistanceSqr = target * target;
+        Traverse();
     }
 
     private void Traverse()
@@ -53,7 +55,7 @@ public class TraverseController : MonoBehaviour
     protected virtual void EndTraverse()
     {
         InputManager.OnUpdate -= MoveTraversable;
-        unit.SetSector(unit.SectorController == _currentSectorDivider.Sectors[0] ? _currentSectorDivider.Sectors[1] : _currentSectorDivider.Sectors[0]);
+        unit.SetSector(unit.SectorController == _currentSectorDivider.Sectors.Item1 ? _currentSectorDivider.Sectors.Item2 : _currentSectorDivider.Sectors.Item1);
         AI.Activate();
         agent.EnableAgent(this);
         transform.position = _fakeTraversePosition;

@@ -22,6 +22,6 @@ public class CameraDefaultPositionManager : MonoBehaviour
     {
         if (cameraTarget.transform.position == defaultCameraPositions[0].position && cameraTarget.transform.rotation == defaultCameraPositions[0].rotation) return;
         cameraTarget.transform.position = defaultCameraPositions[cameraPositionIndex].position;
-        cameraTarget.SetCurrentRotation(defaultCameraPositions[cameraPositionIndex].rotation);
+        cameraTarget.transform.rotation = defaultCameraPositions[cameraPositionIndex].rotation;
     }
 }

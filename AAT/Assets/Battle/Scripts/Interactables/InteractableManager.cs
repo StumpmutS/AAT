@@ -53,12 +53,13 @@ public class InteractableManager : MonoBehaviour
     public void SetHoveredInteractable(InteractableController interactable)
     {
         _hoveredInteractable = interactable;
-        if (_unitSelectedCount <= 0 || _selectedUnitPreview == null) return;
+        if (_unitSelectedCount <= 0) return;
         AwaitInput();
         foreach (var Interactable in _interactables)
         {
             Interactable.RemovePreview();
         }
+        if (_selectedUnitPreview == null) return;
         interactable.CallDisplayPreview(_selectedUnitPreview, _unitSelectedCount);
     }
 

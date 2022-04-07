@@ -20,7 +20,8 @@ public class UnitGroupSelectionManager : MonoBehaviour
     public void AddUnitGroup(UnitGroupController unitGroup)
     {
         selectedUnitGroups.Add(unitGroup);
-        if (!unitGroupUIEnabled) foreach (var UIElement in unitGroupUI)
+        if (unitGroupUIEnabled) return;
+        foreach (var UIElement in unitGroupUI)
         {
             UIElement.gameObject.SetActive(true);
             UIElement.SetToUnitPreference(unitGroup.GetChaseStates());
@@ -30,7 +31,8 @@ public class UnitGroupSelectionManager : MonoBehaviour
     public void RemoveUnitGroup(UnitGroupController unitGroup)
     {
         selectedUnitGroups.Remove(unitGroup);
-        if (selectedUnitGroups.Count == 0) foreach (var UIelement in unitGroupUI)
+        if (selectedUnitGroups.Count != 0) return;
+        foreach (var UIelement in unitGroupUI)
         {
             UIelement.gameObject.SetActive(false);
         }
