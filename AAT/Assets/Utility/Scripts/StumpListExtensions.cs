@@ -4,7 +4,7 @@ namespace Utility.Scripts
 {
     public static class StumpListExtensions
     {
-        public static void PopulateDoubleList<T>(List<List<T>> grid, T populateWith, int mainCount, int subCount)
+        public static void Populate<T>(this List<List<T>> grid, T populateWith, int mainCount, int subCount)
         {
             while (grid.Count < mainCount)
             {
@@ -19,7 +19,7 @@ namespace Utility.Scripts
             }
         }
         
-        public static void EqualizeList<T>(List<T> list, int targetSize)
+        public static void Equalize<T>(this List<T> list, int targetSize)
         {
             if (list.Count > targetSize)
             {

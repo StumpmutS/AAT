@@ -38,8 +38,8 @@ public class StatGenerator : EditorWindow
 
     private void OnGUI()
     {
-        StumpListExtensions.EqualizeList(_stats, _amount);
-        StumpListExtensions.EqualizeList(_values, _amount);
+        _stats.Equalize(_amount);
+        _values.Equalize(_amount);
         
         DrawUI();
 

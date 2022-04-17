@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
-using UnityEngine;
 using UnityEditor;
-using UnityEditor.AI;
+using UnityEngine;
 using Utility.Scripts;
 
 public class HexMapCreator : EditorWindow
@@ -43,7 +41,7 @@ public class HexMapCreator : EditorWindow
     private Vector2 _generateButtonSize = new Vector2(210, 20);
     
     private EFaction _currentFaction = EFaction.None;
-    private List<bool> _toggleStates = new List<bool>(){true, false, false, false};
+    private List<bool> _toggleStates = new List<bool> {true, false, false, false};
     
     private float _3DMapSize = 50;
 
@@ -71,15 +69,15 @@ public class HexMapCreator : EditorWindow
     #region StoragePopulation
     private void PopulateGridStorage()
     {
-        StumpListExtensions.PopulateDoubleList(_buttons, new Rect(), _doubleColumns, _rows * 2);
-        StumpListExtensions.PopulateDoubleList(_hexes, new Vector3[]{}, _doubleColumns, _rows * 2);
-        StumpListExtensions.PopulateDoubleList(_factionGrid, EFaction.None, _doubleColumns, _rows * 2);
-        StumpListExtensions.EqualizeList(_buttons, _doubleColumns);
-        _buttons.ForEach(l => StumpListExtensions.EqualizeList(l, _rows * 2));
-        StumpListExtensions.EqualizeList(_hexes, _doubleColumns);
-        _hexes.ForEach(l => StumpListExtensions.EqualizeList(l, _rows * 2));
-        StumpListExtensions.EqualizeList(_factionGrid, _doubleColumns);
-        _factionGrid.ForEach(l => StumpListExtensions.EqualizeList(l, _rows * 2));
+        _buttons.Populate(new Rect(), _doubleColumns, _rows * 2);
+        _hexes.Populate(new Vector3[]{}, _doubleColumns, _rows * 2);
+        _factionGrid.Populate(EFaction.None, _doubleColumns, _rows * 2);
+        _buttons.Equalize(_doubleColumns);
+        _buttons.ForEach(l => l.Equalize(_rows * 2));
+        _hexes.Equalize(_doubleColumns);
+        _hexes.ForEach(l => l.Equalize(_rows * 2));
+        _factionGrid.Equalize(_doubleColumns);
+        _factionGrid.ForEach(l => l.Equalize(_rows * 2));
     }
     #endregion
     
@@ -376,9 +374,9 @@ public class HexMapCreator : EditorWindow
         Debug.Log("GENERATE!");
         GameObject hexRef = null;
         var jointRefGrid = new List<List<WallJointController[]>>(); //0 is bottom right vertex, 1 is right vertex
-        StumpListExtensions.PopulateDoubleList(jointRefGrid, new WallJointController[2], _doubleColumns, _rows * 2);
+        jointRefGrid.Populate(new WallJointController[2], _doubleColumns, _rows * 2);
         var hexPrefabs = new List<List<HexController>>();
-        StumpListExtensions.PopulateDoubleList(hexPrefabs, null, _doubleColumns, _rows * 2);
+        hexPrefabs.Populate(null, _doubleColumns, _rows * 2);
         for (int i = 0; i < _factionGrid.Count; i++)
         {
             for (int j = 0; j < _factionGrid[i].Count; j++)

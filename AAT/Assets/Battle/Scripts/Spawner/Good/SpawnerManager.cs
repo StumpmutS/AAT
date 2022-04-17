@@ -18,7 +18,7 @@ public class SpawnerManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        StumpListExtensions.EqualizeList(spawners, spawnPlotManager.SpawnerPlots.Count);
+        spawners.Equalize(spawnPlotManager.SpawnerPlots.Count);
     }
 
     private void Start()
