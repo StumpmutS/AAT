@@ -1,17 +1,19 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Utility.Scripts;
 
 public class InputManager : MonoBehaviour
 {
+    public static Vector3 RightClickUpPosition;
+    
     private bool _leftShiftDown;
 
     public static event Action OnUpdate = delegate{ };
 
-    public static event Action OnLeftCLickUp = delegate { };
     public static event Action OnLeftClickDown = delegate { };
+    public static event Action OnLeftCLickUp = delegate { };
     public static event Action OnRightClickDown = delegate { };
+    public static event Action OnRightClickUp = delegate { };
 
     public static event Action<float> OnMouseYChange = delegate { };
     public static event Action<float> OnMouseXChange = delegate { };
@@ -27,16 +29,19 @@ public class InputManager : MonoBehaviour
     public static event Action OnLeftShiftPressed = delegate { };
     public static event Action OnLeftShiftEnd = delegate { };
 
-    public static event Action<int> OnNumberKey0 = delegate { };
-    public static event Action<int> OnNumberKey1 = delegate { };
-    public static event Action<int> OnNumberKey2 = delegate { };
-    public static event Action<int> OnNumberKey3 = delegate { };
-    public static event Action<int> OnNumberKey4 = delegate { };
-    public static event Action<int> OnNumberKey5 = delegate { };
-    public static event Action<int> OnNumberKey6 = delegate { };
-    public static event Action<int> OnNumberKey7 = delegate { };
+    public static event Action<int> OnAlpha0 = delegate { };
+    public static event Action<int> OnAlpha1 = delegate { };
+    public static event Action<int> OnAlpha2 = delegate { };
+    public static event Action<int> OnAlpha3 = delegate { };
+    public static event Action<int> OnAlpha4 = delegate { };
+    public static event Action<int> OnAlpha5 = delegate { };
+    public static event Action<int> OnAlpha6 = delegate { };
+    public static event Action<int> OnAlpha7 = delegate { };
+    public static event Action<int> OnAlpha8 = delegate { };
+    public static event Action<int> OnAlpha9 = delegate { };
 
     public static event Action OnTPressed = delegate { };
+    public static event Action OnRPressed = delegate { };
 
     public static event Action OnPlus = delegate { };
     public static event Action OnMinus = delegate { };
@@ -45,7 +50,11 @@ public class InputManager : MonoBehaviour
     {
         OnUpdate.Invoke();
 
-        CheckMouseButtons();
+        //if (GetInput(out NetworkedInputData input))
+        //{
+            CheckMouseButtons();
+            //CheckNumbers();
+        //}
 
         CheckMouseMovement();
 
@@ -54,9 +63,7 @@ public class InputManager : MonoBehaviour
         CheckAxes();
 
         CheckLeftShift();
-
-        CheckNumbers();
-
+        
         CheckAlphabetKeys();
 
         CheckSymbols();
@@ -76,6 +83,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             OnRightClickDown.Invoke();
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            RightClickUpPosition.SetToCursorToWorldPosition();
+            OnRightClickUp.Invoke();
         }
         if (Input.GetMouseButtonDown(2))
         {
@@ -143,39 +155,47 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void CheckNumbers()
+    private void CheckNumbers(NetworkedInputData input)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA0_DOWN) != 0)
         {
-            OnNumberKey0.Invoke(0);
+            OnAlpha0.Invoke(0);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA1_DOWN) != 0)
         {
-            OnNumberKey1.Invoke(1);
+            OnAlpha1.Invoke(1);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA2_DOWN) != 0)
         {
-            OnNumberKey2.Invoke(2);
+            OnAlpha2.Invoke(2);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA3_DOWN) != 0)
         {
-            OnNumberKey3.Invoke(3);
+            OnAlpha3.Invoke(3);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA4_DOWN) != 0)
         {
-            OnNumberKey4.Invoke(4);
+            OnAlpha4.Invoke(4);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA5_DOWN) != 0)
         {
-            OnNumberKey5.Invoke(5);
+            OnAlpha5.Invoke(5);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA6_DOWN) != 0)
         {
-            OnNumberKey6.Invoke(6);
+            OnAlpha6.Invoke(6);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7))
+        if ((input.Buttons & NetworkedInputMapping.ALPHA7_DOWN) != 0)
         {
-            OnNumberKey7.Invoke(7);
+            OnAlpha7.Invoke(7);
+        }
+        if ((input.Buttons & NetworkedInputMapping.ALPHA8_DOWN) != 0)
+        {
+            OnAlpha8.Invoke(8);
+        }
+        if ((input.Buttons & NetworkedInputMapping.ALPHA9_DOWN) != 0)
+        {
+            OnAlpha9.Invoke(9);
         }
     }
 
@@ -184,6 +204,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             OnTPressed.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnRPressed.Invoke();
         }
     }
 

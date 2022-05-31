@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility.Scripts;
 
 [RequireComponent(typeof(IHealth))]
 public class HealthBar : MonoBehaviour
@@ -31,7 +30,7 @@ public class HealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        healthBar.transform.LookAt(Camera.main.transform);
+        healthBar.transform.LookAt(MainCameraRef.Cam.transform);
         healthBar.transform.Rotate(0, 180, 0);
     }
 }

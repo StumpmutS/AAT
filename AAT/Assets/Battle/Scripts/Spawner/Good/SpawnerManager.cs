@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,7 +9,7 @@ public class SpawnerManager : MonoBehaviour
     
     public static SpawnerManager Instance { get; private set; }
 
-    private List<BaseSpawnerController> spawners = new List<BaseSpawnerController>();
+    private List<BaseSpawnerController> spawners = new();
     private int _nextIndex;
 
     private static BaseSpawnerController _activeSpawner;
@@ -23,12 +22,12 @@ public class SpawnerManager : MonoBehaviour
 
     private void Start()
     {
-        InputManager.OnNumberKey1 += SelectSpawnerByIndex;
-        InputManager.OnNumberKey2 += SelectSpawnerByIndex;
-        InputManager.OnNumberKey3 += SelectSpawnerByIndex;
-        InputManager.OnNumberKey4 += SelectSpawnerByIndex;
-        InputManager.OnNumberKey5 += SelectSpawnerByIndex;
-        InputManager.OnNumberKey6 += SelectSpawnerByIndex;
+        InputManager.OnAlpha1 += SelectSpawnerByIndex;
+        InputManager.OnAlpha2 += SelectSpawnerByIndex;
+        InputManager.OnAlpha3 += SelectSpawnerByIndex;
+        InputManager.OnAlpha4 += SelectSpawnerByIndex;
+        InputManager.OnAlpha5 += SelectSpawnerByIndex;
+        InputManager.OnAlpha6 += SelectSpawnerByIndex;
     }
 
     public void AddSpawnerPlot(BaseSpawnerController spawner)

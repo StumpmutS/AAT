@@ -1,22 +1,25 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Utility.Scripts
 {
     public static class DistanceCompare
     {
-        public static Collider FindClosestCollider(Collider[] colliders, Vector3 fromPoint, Collider current = null, Collider ignore = null)
+        public static T FindClosestThing<T>(T[] things, Vector3 fromPoint, T returnIfPresent = default, T ignore = default) where T: Component
         {
-            Collider target = null;
+            if (returnIfPresent != default)
+                if (things.Contains(returnIfPresent)) return returnIfPresent;
+            
+            T target = default;
             var targetDistanceSquared = Mathf.Infinity;
-            foreach(var collider in colliders)
+            foreach(var thing in things)
             {
-                if (collider == null || collider == ignore) continue;
-                if (collider == current) return current;
+                if (thing is null || thing.Equals(ignore)) continue;
 
-                var newDistanceSquared = (fromPoint - collider.transform.position).sqrMagnitude;
+                var newDistanceSquared = (fromPoint - thing.transform.position).sqrMagnitude;
                 if (!(newDistanceSquared < targetDistanceSquared)) continue;
                 targetDistanceSquared = newDistanceSquared;
-                target = collider;
+                target = thing;
             }
             return target;
         }

@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class MountablePointLinkController : MonoBehaviour
@@ -9,7 +6,7 @@ public class MountablePointLinkController : MonoBehaviour
     [SerializeField] private List<BaseMountableController> mountablePoints;
     [SerializeField] private LinkPointController _linkPointStart, _linkPointEnd;
 
-    private List<LinkPointController> _linkPoints = new List<LinkPointController>();
+    private List<LinkPointController> _linkPoints = new();
     private bool _active = true;
     private bool _loop;
 
@@ -70,7 +67,7 @@ public class MountablePointLinkController : MonoBehaviour
     private void SetupSingle(LinkPointController linkPointHas, LinkPointController linkPointEnd, bool wallsFlipped)
     {
         print("single");
-        if (linkPointHas.StartEnd)
+        if (linkPointHas.Start)
         {print("has start");
             if (!wallsFlipped) mountablePoints.Reverse();
             mountablePoints.AddRange(linkPointHas.Link.mountablePoints);
@@ -85,7 +82,7 @@ public class MountablePointLinkController : MonoBehaviour
             _linkPoints.Add(linkPointEnd);
         }
 
-        linkPointEnd.Setup(this, linkPointHas.StartEnd);
+        linkPointEnd.Setup(this, linkPointHas.Start);
         linkPointHas.Link.Deactivate();
         foreach (var linkPoint in _linkPoints)
         {
@@ -97,9 +94,9 @@ public class MountablePointLinkController : MonoBehaviour
     private void SetupDouble(LinkPointController linkPointFrom, LinkPointController linkPointTo)
     {
         print("double");
-        if (linkPointFrom.StartEnd == linkPointTo.StartEnd)
+        if (linkPointFrom.Start == linkPointTo.Start)
         {
-            if (linkPointFrom.StartEnd)
+            if (linkPointFrom.Start)
             {
                 linkPointFrom.Link.mountablePoints.Reverse();
                 linkPointFrom.Link._linkPoints.Reverse();
@@ -127,7 +124,7 @@ public class MountablePointLinkController : MonoBehaviour
     {
         print("close");
         _loop = true;
-        if (linkPointFrom.StartEnd)
+        if (linkPointFrom.Start)
         {
             mountablePoints.Reverse();
         }
@@ -151,7 +148,7 @@ public class MountablePointLinkController : MonoBehaviour
     }
     #endregion
 
-    public List<BaseMountableController> PreviewedMountables { get; private set; } = new List<BaseMountableController>();
+    public List<BaseMountableController> PreviewedMountables { get; private set; } = new();
 
     public void BeginPreviewDisplayLink(BaseMountableController mountable, PoolingObject visuals, int unitAmount, bool up)
     {

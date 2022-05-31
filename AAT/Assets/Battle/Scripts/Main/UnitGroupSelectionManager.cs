@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ public class UnitGroupSelectionManager : MonoBehaviour
     [SerializeField] private List<UnitDeterminedUI> unitGroupUI;
 
     private bool unitGroupUIEnabled = false;
-    private HashSet<UnitGroupController> selectedUnitGroups = new HashSet<UnitGroupController>();
+    private HashSet<UnitGroupController> selectedUnitGroups = new();
     private static UnitGroupSelectionManager instance;
     public static UnitGroupSelectionManager Instance => instance;
 

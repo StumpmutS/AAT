@@ -31,6 +31,7 @@ public class EnemySpawnerController : BaseSpawnerController
         {
             UnitController instantiatedUnit = Instantiate(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity);
             _activeUnitGroups[groupIndex].AddUnit(instantiatedUnit);
+            _sectorController.AddUnit(instantiatedUnit);
             if (_patrolPoints != null) instantiatedUnit.SetPatrolPoints(_patrolPoints);
         }
     }

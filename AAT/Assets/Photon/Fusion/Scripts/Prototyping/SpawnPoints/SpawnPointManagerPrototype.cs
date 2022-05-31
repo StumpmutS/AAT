@@ -40,7 +40,7 @@ public abstract class SpawnPointManagerPrototype<T> : Fusion.Behaviour, ISpawnPo
   /// Serialized collection of all <see cref="ISpawnPointPrototype"/> of the type T found in the same scene as this component.
   /// </summary>
   [System.NonSerialized]
-  internal List<Component> _spawnPoints = new List<Component>();
+  internal List<Component> _spawnPoints = new();
 
   [System.NonSerialized]
   public int LastSpawnIndex = -1;

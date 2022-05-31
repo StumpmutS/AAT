@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a75eedd0ae935458596daf340764be, type: 3}
   m_Name: EagleCarpetBombFirstDashAbilityComponentData
   m_EditorClassIdentifier: 
-  Repeat: 1
+  Repeat: 0
   RepeatIntervals: 0
-  ComponentDelay: 2
-  ComponentDuration: 5
-  DashDistance: {x: 0, y: 0, z: 10}
-  DashSpeedPercentMultiplier: 100
+  ComponentDelay: 0
+  ComponentDuration: 3.73678
+  dashDistance: {x: 0, y: -5, z: 10}
+  dashSpeed: 3
+  durationPadding: 0.01

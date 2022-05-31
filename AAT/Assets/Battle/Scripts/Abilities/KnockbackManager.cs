@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KnockbackManager : MonoBehaviour
@@ -21,7 +20,7 @@ public class KnockbackManager : MonoBehaviour
         var targetDistance = direction.normalized * distance;
         Vector3 previousMoveAmount = Vector3.zero;
         Vector3 moveAmount = Vector3.zero;
-        float endValue = distance * (lerpEndPercent / 100);
+        float endValue = distance * (Mathf.Min(lerpEndPercent, 95) / 100);
 
         while (moveAmount.magnitude < endValue)
         {

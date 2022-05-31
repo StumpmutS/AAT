@@ -41,16 +41,16 @@ public class TeleportPoint : InteractableController
         OtherTeleportPoint.Unit.CallDeselect();
     }
 
-    protected override void RequestAffection(UnitController unit)
+    protected override void RequestAffection(InteractionComponentState componentState)
     {
-        StartCoroutine(WarpUnit(unit));
+        StartCoroutine(WarpInteractor(componentState));
     }
 
-    private IEnumerator WarpUnit(UnitController unit)
+    private IEnumerator WarpInteractor(InteractionComponentState componentState)
     {
         yield return new WaitForSeconds(teleportTime);
-        unit.GetComponent<AATAgentController>().Warp(OtherTeleportPoint.transform.position + OtherTeleportPoint.exitPointOffset);
-        unit.SetSector(OtherTeleportPoint._sector);
-        unit.FinishInteraction();
+        componentState.GetComponent<AgentBrain>().CurrentAgent.Warp(OtherTeleportPoint.transform.position + OtherTeleportPoint.exitPointOffset);
+        componentState.GetComponent<UnitController>().SetSector(OtherTeleportPoint._sector);
+        componentState.FinishInteraction();
     }
 }

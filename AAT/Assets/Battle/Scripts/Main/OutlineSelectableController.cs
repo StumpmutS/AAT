@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OutlineSelectableController : SelectableController
@@ -46,7 +44,7 @@ public class OutlineSelectableController : SelectableController
     
     public void RemoveOutline()
     {
-        if (_selected || !outlined) return;
+        if (Selected || !outlined) return;
 
         outlined = false;
         outline.enabled = false;

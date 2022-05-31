@@ -1,18 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitGroupController : MonoBehaviour
+public class UnitGroupController : MonoBehaviour //TODO
 {
-    private List<UnitController> units = new List<UnitController>();
+    private List<UnitController> units = new();
     public List<UnitController> Units => units;
 
     private Action<int> _unitDeathCallback;
     private int _groupIndex;
 
-    private bool selected = false; 
-    private bool outlined = false;
+    private bool _selected; 
+    private bool _outlined;
 
     public void Setup(Action<int> deathCallback, BaseSpawnerController spawner, int groupIndex)
     {
@@ -26,8 +25,8 @@ public class UnitGroupController : MonoBehaviour
         RemoveUnit(unit);
         if (units.Count <= 0)
         {
-            selected = false;
-            outlined = false;
+            _selected = false;
+            _outlined = false;
         }
         _unitDeathCallback?.Invoke(_groupIndex);
     }
@@ -36,11 +35,11 @@ public class UnitGroupController : MonoBehaviour
     {
         units.Add(unit);
         SetupUnit(unit);
-        if (selected)
+        if (_selected)
         {
             unit.CallSelect();
         } 
-        else if (outlined)
+        else if (_outlined)
         {
             unit.Outline();
         }
@@ -54,8 +53,8 @@ public class UnitGroupController : MonoBehaviour
 
     public void SelectGroup()
     {
-        if (selected) return;
-        selected = true;
+        if (_selected) return;
+        _selected = true;
         foreach (var unit in units)
         {
             unit.CallSelect();
@@ -65,8 +64,8 @@ public class UnitGroupController : MonoBehaviour
 
     public void DeselectGroup()
     {
-        if (!selected) return;
-        selected = false;
+        if (!_selected) return;
+        _selected = false;
         foreach (var unit in units)
         {
             unit.CallDeselect();
@@ -74,20 +73,20 @@ public class UnitGroupController : MonoBehaviour
         UnitGroupSelectionManager.Instance.RemoveUnitGroup(this);
     }
 
-    public void OutlineGroup()
+    private void OutlineGroup()
     {
-        if (outlined) return;
-        outlined = true;
+        if (_outlined) return;
+        _outlined = true;
         foreach (var unit in units)
         {
             unit.Outline();
         }
     }
 
-    public void RemoveGroupOutline()
+    private void RemoveGroupOutline()
     {
-        if (!outlined) return;
-        outlined = false;
+        if (!_outlined) return;
+        _outlined = false;
         foreach (var unit in units)
         {
             unit.RemoveOutline();

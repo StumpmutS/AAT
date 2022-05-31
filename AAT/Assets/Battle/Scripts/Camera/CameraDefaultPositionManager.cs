@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,13 +8,13 @@ public class CameraDefaultPositionManager : MonoBehaviour
 
     private void Start()
     {
-        InputManager.OnNumberKey0 += MoveCameraTo;
-        InputManager.OnNumberKey1 += MoveCameraTo;
-        InputManager.OnNumberKey2 += MoveCameraTo;
-        InputManager.OnNumberKey3 += MoveCameraTo;
-        InputManager.OnNumberKey4 += MoveCameraTo;
-        InputManager.OnNumberKey5 += MoveCameraTo;
-        InputManager.OnNumberKey6 += MoveCameraTo;
+        InputManager.OnAlpha0 += MoveCameraTo;
+        InputManager.OnAlpha1 += MoveCameraTo;
+        InputManager.OnAlpha2 += MoveCameraTo;
+        InputManager.OnAlpha3 += MoveCameraTo;
+        InputManager.OnAlpha4 += MoveCameraTo;
+        InputManager.OnAlpha5 += MoveCameraTo;
+        InputManager.OnAlpha6 += MoveCameraTo;
     }
 
     private void MoveCameraTo(int cameraPositionIndex)

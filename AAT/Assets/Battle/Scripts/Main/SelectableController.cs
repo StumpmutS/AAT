@@ -1,17 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class SelectableController : StumpEntity
+public class SelectableController : StumpTeamEntity
 {
     public event Action OnSelect = delegate { };
     public event Action OnDeselect = delegate { };
     public event Action OnHover = delegate { };
     public event Action OnHoverStop = delegate { };
 
-    protected bool _selected;
+    public bool Selected { get; private set; }
     private bool _mouseOver;
     private bool _selectSubscribed;
     private bool _deselectSubscribed;
@@ -29,24 +25,24 @@ public class SelectableController : StumpEntity
         _mouseOver = false;
         OnHoverStop.Invoke();
         UnsubscribeSelect();
-        if (_selected) SubscribeDeselect();
+        if (Selected) SubscribeDeselect();
     }
 
     public void CallSelect()
     {
-        if (_selected || StumpEventSystemManagerReference.Instance.OverUI()) return;
+        if (Selected || StumpEventSystemManagerReference.Instance.OverUI()) return;
         Select();
     }
 
     public void CallSelectOverrideUICheck()
     {
-        if (_selected) return;
+        if (Selected) return;
         Select();
     }
 
     protected virtual void Select()
     {
-        _selected = true;
+        Selected = true;
         OnSelect.Invoke();
         if (_mouseOver) return;
         UnsubscribeSelect();
@@ -55,13 +51,13 @@ public class SelectableController : StumpEntity
 
     public void CallDeselect()
     {
-        if (!_selected || StumpEventSystemManagerReference.Instance.OverUI()) return;
+        if (!Selected || StumpEventSystemManagerReference.Instance.OverUI()) return;
         Deselect();
     }
     
     protected virtual void Deselect()
     {
-        _selected = false;
+        Selected = false;
         OnDeselect.Invoke();
         UnsubscribeDeselect();
     }

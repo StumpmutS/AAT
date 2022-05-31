@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -54,7 +53,7 @@ public class WallJointController : MonoBehaviour
         }
         if (reverse) connectorPreview.transform.right = -connectorPreview.transform.right;
         var newConnectorScale = spaceToFill / ConnectorXDimensions + 1;
-        connectorPreview.transform.position = transform.position + normalizedDirection * newConnectorScale * ConnectorXDimensions / 2;
+        connectorPreview.transform.position = transform.position + normalizedDirection * (newConnectorScale * ConnectorXDimensions / 2);
         connectorPreview.transform.localScale = new Vector3(newConnectorScale,
             connectorPreview.transform.localScale.y, connectorPreview.transform.localScale.z);
         return connectorPreview;

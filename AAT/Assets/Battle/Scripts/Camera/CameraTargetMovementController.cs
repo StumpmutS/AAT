@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraTargetMovementController : MonoBehaviour
@@ -9,8 +6,8 @@ public class CameraTargetMovementController : MonoBehaviour
     [SerializeField] private float minHeight;
     [SerializeField] private float maxMove;
     [SerializeField] private float heightMultiplier;
-    [SerializeField] private float minMultiplier;
-    private float HeightMultiplier => Mathf.Max(transform.position.y, maxHeight * minMultiplier) * heightMultiplier;
+    [SerializeField] private float lowestHeightSpeedChangeMultiplier;
+    private float HeightMultiplier => Mathf.Max(transform.position.y, maxHeight * lowestHeightSpeedChangeMultiplier) * heightMultiplier;
     
     [SerializeField] private float verticalMoveSpeed;
     [SerializeField] private float horizontalMoveSpeed;
@@ -42,18 +39,18 @@ public class CameraTargetMovementController : MonoBehaviour
     private void MoveTargetVertical(float inputAmount)
     {
         if (_boostActive)
-            transform.Translate(new Vector3(transform.forward.x, 0, transform.forward.z) * inputAmount * HeightMultiplier * verticalMoveSpeed * boostSpeedMultiplier * Time.deltaTime, Space.World);
+            transform.Translate(new Vector3(transform.forward.x, 0, transform.forward.z) * (inputAmount * HeightMultiplier * verticalMoveSpeed * boostSpeedMultiplier * Time.deltaTime), Space.World);
         else
-            transform.Translate(new Vector3(transform.forward.x, 0, transform.forward.z) * inputAmount * HeightMultiplier * verticalMoveSpeed * Time.deltaTime, Space.World);
+            transform.Translate(new Vector3(transform.forward.x, 0, transform.forward.z) * (inputAmount * HeightMultiplier * verticalMoveSpeed * Time.deltaTime), Space.World);
         CheckMaxMove();
     }
 
     private void MoveTargetHorizontal(float inputAmount)
     {
         if (_boostActive)
-            transform.Translate(transform.right * inputAmount * HeightMultiplier * horizontalMoveSpeed * boostSpeedMultiplier * Time.deltaTime, Space.World);
+            transform.Translate(transform.right * (inputAmount * HeightMultiplier * horizontalMoveSpeed * boostSpeedMultiplier * Time.deltaTime), Space.World);
         else
-            transform.Translate(transform.right * inputAmount * HeightMultiplier * horizontalMoveSpeed * Time.deltaTime, Space.World);
+            transform.Translate(transform.right * (inputAmount * HeightMultiplier * horizontalMoveSpeed * Time.deltaTime), Space.World);
         CheckMaxMove();
     }
 
@@ -71,7 +68,7 @@ public class CameraTargetMovementController : MonoBehaviour
 
     private void MoveTargetUpDown(float inputAmount)
     {
-        transform.Translate(Vector3.up * -inputAmount * HeightMultiplier * upDownSpeed * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.up * (-inputAmount * HeightMultiplier * upDownSpeed), Space.World);
 
         if (transform.position.y > maxHeight)
             transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);

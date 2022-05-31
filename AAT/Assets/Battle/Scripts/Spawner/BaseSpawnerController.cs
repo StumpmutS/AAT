@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public abstract class BaseSpawnerController : MonoBehaviour
@@ -21,19 +20,19 @@ public abstract class BaseSpawnerController : MonoBehaviour
     protected GameObject _upgradesUIContainer;
     private List<UnitStatsUpgradeData> _upgrades;
     private int _currentUpgradeIndex;
-    private SectorController _sectorController;
+    protected SectorController _sectorController;
 
     public SelectableController CurrentSpawnerVisualsSelectable { get; private set; }
 
     private int _currentSpawningCount;
-    private Dictionary<Transform, int> _spawnPointActiveGroups = new Dictionary<Transform, int>();
+    private Dictionary<Transform, int> _spawnPointActiveGroups = new();
 
-    private List<int> _queuedGroupIndex = new List<int>();
-    private List<int> _queuedUnitsPerGroup = new List<int>();
+    private List<int> _queuedGroupIndex = new();
+    private List<int> _queuedUnitsPerGroup = new();
 
-    protected List<UnitGroupController> _activeUnitGroups = new List<UnitGroupController>();
-    protected Dictionary<int, int> _unitGroupNumbers = new Dictionary<int, int>();
-    private Dictionary<int, IEnumerator> _unitGroupCoroutines = new Dictionary<int, IEnumerator>();
+    protected List<UnitGroupController> _activeUnitGroups = new();
+    protected Dictionary<int, int> _unitGroupNumbers = new();
+    private Dictionary<int, IEnumerator> _unitGroupCoroutines = new();
 
     public event Action<BaseSpawnerController> OnSpawnerSelect = delegate { };
     public event Action<BaseUnitStatsData> OnModifyStats = delegate { };
@@ -61,7 +60,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         _upgrades = unitSpawnData.UnitStatsUpgradeData;
         _sectorController = sector;
 
-        unitStatsModifierManager.Setup(unitSpawnData.baseUnitStatsData);
+        unitStatsModifierManager.Init(unitSpawnData.baseUnitStatsData);
 
         for (int i = 0; i < _spawnGroupsAmount; i++)
         {
@@ -200,7 +199,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
             StopCoroutine(_unitGroupCoroutines[groupIndex]);
             _unitGroupCoroutines.Remove(groupIndex);
             _spawnPointActiveGroups[spawnPoints[spawnPointIndex]] = -1;
-            _currentSpawningCount--;//TODO: PROBLEM BUDDY?
+            _currentSpawningCount--;
         }
         QueueUnitGroup(_respawnTime, groupIndex);
     }

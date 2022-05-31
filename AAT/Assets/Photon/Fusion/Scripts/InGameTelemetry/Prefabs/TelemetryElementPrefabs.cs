@@ -2,7 +2,6 @@
 
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Fusion.Assistants {
   public static class TelemetryPrefabs {

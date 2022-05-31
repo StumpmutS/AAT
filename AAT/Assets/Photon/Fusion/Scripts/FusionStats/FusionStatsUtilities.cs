@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -124,10 +123,10 @@ namespace Fusion.StatsInternal {
       }
     }
 
-    public static Color DARK_GREEN = new Color(0.0f, 0.5f, 0.0f, 1.0f);
-    public static Color DARK_BLUE  = new Color(0.0f, 0.0f, 0.5f, 1.0f);
-    public static Color DARK_RED   = new Color(0.5f, 0.0f, 0.0f, 1.0f);
-    public static List<NetworkRunner> _reusableList = new List<NetworkRunner>(1);
+    public static Color DARK_GREEN = new(0.0f, 0.5f, 0.0f, 1.0f);
+    public static Color DARK_BLUE  = new(0.0f, 0.0f, 0.5f, 1.0f);
+    public static Color DARK_RED   = new(0.5f, 0.0f, 0.0f, 1.0f);
+    public static List<NetworkRunner> _reusableList = new(1);
 
     public static bool TryFindActiveRunner(FusionStats fusionStats, out NetworkRunner runner, SimulationModes? mode = null) {
 

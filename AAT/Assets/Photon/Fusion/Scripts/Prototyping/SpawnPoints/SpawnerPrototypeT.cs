@@ -6,7 +6,7 @@ using UnityEngine;
 [ScriptHelp(BackColor = EditorHeaderBackColor.Steel)]
 public class SpawnerPrototype<T> : SimulationBehaviour, IPlayerJoined, IPlayerLeft, ISpawned, ISceneLoadDone where T : Component, ISpawnPointPrototype {
 
-  protected Dictionary<PlayerRef, List<NetworkObject>> _spawnedLookup = new Dictionary<PlayerRef, List<NetworkObject>>();
+  protected Dictionary<PlayerRef, List<NetworkObject>> _spawnedLookup = new();
 
   public enum SpawnMethods { AutoOnNetworkStart, ByScriptOnly }
   public enum AuthorityOptions { Auto, Server, Player }

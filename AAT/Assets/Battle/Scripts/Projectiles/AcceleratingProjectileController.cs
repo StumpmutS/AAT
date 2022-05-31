@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AcceleratingProjectileController : ProjectileController
@@ -8,7 +6,6 @@ public class AcceleratingProjectileController : ProjectileController
     
     protected override void MoveProjectile()
     {
-        base.MoveProjectile();
-        _rigidBody.velocity += initialDirection * acceleration * Time.deltaTime;
+        _rigidBody.velocity += initialDirection * (acceleration * Time.deltaTime);
     }
 }

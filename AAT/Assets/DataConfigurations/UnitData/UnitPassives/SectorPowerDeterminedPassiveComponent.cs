@@ -1,31 +1,28 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Collections;
 using UnityEngine;
 
 public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
 {
     [SerializeField] private List<int> sectorPowerThresholds;
-    private Dictionary<SectorController, int> _currentThresholdIndexesBySector = new Dictionary<SectorController, int>();
+    private Dictionary<SectorController, int> _currentThresholdIndexesBySector = new();
     protected Dictionary<SectorController, HashSet<UnitController>> _unitsBySector =
-        new Dictionary<SectorController, HashSet<UnitController>>();
+        new();
 
     public override void ActivateComponent(UnitController unit)
     {
-        if (!_unitsBySector.ContainsKey(unit.SectorController))
+        if (!_unitsBySector.ContainsKey(unit.Sector))
         {
-            _unitsBySector[unit.SectorController] = new HashSet<UnitController>();
-            unit.SectorController.OnSectorPowerChanged += RedetermineThreshold;
+            _unitsBySector[unit.Sector] = new HashSet<UnitController>();
+            unit.Sector.OnSectorPowerChanged += RedetermineThreshold;
         }
         
-        _unitsBySector[unit.SectorController].Add(unit);
+        _unitsBySector[unit.Sector].Add(unit);
         
-        var thresholdIndex = DetermineThreshold(unit.SectorController.GetSectorPower());
+        var thresholdIndex = DetermineThreshold(unit.Sector.GetSectorPower());
         if (thresholdIndex > -1)
         {
-            _currentThresholdIndexesBySector[unit.SectorController] = thresholdIndex;
-            ActivateThresholdIndex(unit.SectorController, thresholdIndex);
+            _currentThresholdIndexesBySector[unit.Sector] = thresholdIndex;
+            ActivateThresholdIndex(unit.Sector, thresholdIndex);
         }
     }
 

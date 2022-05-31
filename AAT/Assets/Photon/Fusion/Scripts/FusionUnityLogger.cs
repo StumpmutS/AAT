@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -14,7 +12,7 @@ namespace Fusion {
     /// <param name="logger"></param>
     static partial void InitializePartial(ref FusionUnityLogger logger);
 
-    StringBuilder _builder = new StringBuilder();
+    StringBuilder _builder = new();
 
     /// <summary>
     /// If true, all messages will be prefixed with [Fusion] tag

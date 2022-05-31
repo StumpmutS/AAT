@@ -22,10 +22,10 @@ public class HexMapCreator : EditorWindow
     private float _a;
     int _doubleColumns = 5;
     int _rows = 5;
-    private List<List<Rect>> _buttons = new List<List<Rect>>();
-    private List<List<Vector3[]>> _hexes = new List<List<Vector3[]>>();
-    private List<List<EFaction>> _factionGrid = new List<List<EFaction>>();
-    Vector2 _hexPadding = new Vector2(10, 10);
+    private List<List<Rect>> _buttons = new();
+    private List<List<Vector3[]>> _hexes = new();
+    private List<List<EFaction>> _factionGrid = new();
+    Vector2 _hexPadding = new(10, 10);
     private float _outlineThickness = 5;
     private bool _showSelectionGrid;
     
@@ -36,12 +36,12 @@ public class HexMapCreator : EditorWindow
     private Rect _inputMenuBar;
     private float _inputMenuBarWidth = 210;
     private Rect _clearButton;
-    private Vector2 _clearButtonSize = new Vector2(210, 20);
+    private Vector2 _clearButtonSize = new(210, 20);
     private Rect _generateButton;
-    private Vector2 _generateButtonSize = new Vector2(210, 20);
+    private Vector2 _generateButtonSize = new(210, 20);
     
     private EFaction _currentFaction = EFaction.None;
-    private List<bool> _toggleStates = new List<bool> {true, false, false, false};
+    private List<bool> _toggleStates = new() {true, false, false, false};
     
     private float _3DMapSize = 50;
 
@@ -393,6 +393,8 @@ public class HexMapCreator : EditorWindow
         hexContainer.name = "Hex Container";
         var wallContainer = (GameObject)PrefabUtility.InstantiatePrefab(_containerPrefab);
         wallContainer.name = "Wall Container";
+        var jointContainer = (GameObject)PrefabUtility.InstantiatePrefab(_containerPrefab);
+        wallContainer.name = "Joint Container";
         var spawnPlotContainer = (GameObject)PrefabUtility.InstantiatePrefab(_containerPrefab);
         spawnPlotContainer.name = "Spawn Plot Container";
 
@@ -431,7 +433,7 @@ public class HexMapCreator : EditorWindow
                     if (j >= _rows)
                     {
                         bottomLeftVertexJoint = jointRefGrid[i][j - _rows + 1][1];
-                    } else if (i > 0)//TODO:
+                    } else if (i > 0)
                     {
                         bottomLeftVertexJoint = jointRefGrid[i - 1][j + _rows][1];
                     }
@@ -440,7 +442,7 @@ public class HexMapCreator : EditorWindow
                     var bottomLeftPos = hex.transform.position + new Vector3(-_3DMapSize * .5f, 0, -aConv * _a);
                     var bottomRightPos = hex.transform.position + new Vector3(_3DMapSize * .5f, 0, -aConv * _a);
                     var sectors = new SerializableTuple<SectorController, SectorController>(hex.GetComponent<SectorController>(), hexPrefabs[i][j + 1].GetComponent<SectorController>());
-                    SetupWalls(bottomLeftVertexJoint, bottomRightVertexJoint, bottomLeftPos, bottomRightPos, wallContainer.transform, sectors);
+                    SetupWalls(bottomLeftVertexJoint, bottomRightVertexJoint, bottomLeftPos, bottomRightPos, wallContainer.transform, jointContainer.transform, sectors);
                 }
 
                 if (AdjacentLowerRightSide(i, j, oddColumn))
@@ -450,7 +452,7 @@ public class HexMapCreator : EditorWindow
                     var bottomRightPos = hex.transform.position + new Vector3(_3DMapSize * .5f, 0, -aConv * _a);
                     var rightPos = hex.transform.position + new Vector3(_3DMapSize, 0, 0);
                     var sectors = new SerializableTuple<SectorController, SectorController>(hex.GetComponent<SectorController>(), (oddColumn ? hexPrefabs[i + 1][j - _rows + 1] : hexPrefabs[i][j + _rows]).GetComponent<SectorController>());
-                    SetupWalls(bottomRightVertexJoint, rightVertexJoint, bottomRightPos, rightPos, wallContainer.transform, sectors);
+                    SetupWalls(bottomRightVertexJoint, rightVertexJoint, bottomRightPos, rightPos, wallContainer.transform, jointContainer.transform, sectors);
                 }
 
                 if (AdjacentUpperRightSide(i, j, oddColumn))
@@ -464,7 +466,7 @@ public class HexMapCreator : EditorWindow
                     var rightPos = hex.transform.position + new Vector3(_3DMapSize, 0, 0);
                     var topRightPos = hex.transform.position + new Vector3(_3DMapSize * .5f, 0, aConv * _a);
                     var sectors = new SerializableTuple<SectorController, SectorController>(hex.GetComponent<SectorController>(), (oddColumn ? hexPrefabs[i + 1][j - _rows] : hexPrefabs[i][j + _rows - 1]).GetComponent<SectorController>());
-                    SetupWalls(rightVertexJoint, topRightVertexJoint, rightPos, topRightPos, wallContainer.transform, sectors);
+                    SetupWalls(rightVertexJoint, topRightVertexJoint, rightPos, topRightPos, wallContainer.transform, jointContainer.transform, sectors);
                 }
                 
                 jointRefGrid[i][j] = new WallJointController[2];
@@ -478,7 +480,7 @@ public class HexMapCreator : EditorWindow
         hexRef.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
-    private void SetupWalls(WallJointController firstJoint, WallJointController secondJoint, Vector3 firstPos, Vector3 secondPos, Transform container, SerializableTuple<SectorController, SectorController> sectors)
+    private void SetupWalls(WallJointController firstJoint, WallJointController secondJoint, Vector3 firstPos, Vector3 secondPos, Transform wallContainer, Transform jointContainer, SerializableTuple<SectorController, SectorController> sectors)
     {
         var wallSize = _wallPrefab.GetComponent<WallController>().DimensionsContainer.XDimensions;
         var connectorSize = _wallJointConnectorPrefab.GetComponent<WallJointConnectorController>().DimensionsContainer.XDimensions;
@@ -494,13 +496,12 @@ public class HexMapCreator : EditorWindow
             var wall = ((GameObject)PrefabUtility.InstantiatePrefab(_wallPrefab)).GetComponent<WallController>();
             wall.transform.position = firstPos + wallDirNorm * (wallSize / 2 + i * wallSize + connectorScaleTarget * connectorSize);
             wall.transform.right = wallDirection;
-            wall.transform.parent = container;
-            wall.GetComponent<SectorDivider>().SetSectors(sectors);
+            wall.transform.parent = wallContainer;
         }
 
-        var offset = wallDirNorm * connectorSize * connectorScaleTarget / 2;
-        SetupJoint(firstJoint, connectorScaleTarget, firstPos, firstPos + offset, wallDirNorm, container, false, sectors);
-        SetupJoint(secondJoint, connectorScaleTarget, secondPos, secondPos - offset, wallDirNorm, container, true, sectors);
+        var offset = wallDirNorm * (connectorSize * connectorScaleTarget / 2);
+        SetupJoint(firstJoint, connectorScaleTarget, firstPos, firstPos + offset, wallDirNorm, jointContainer, false, sectors);
+        SetupJoint(secondJoint, connectorScaleTarget, secondPos, secondPos - offset, wallDirNorm, jointContainer, true, sectors);
     }
 
     private void SetupJoint(WallJointController joint, float connectorScale, Vector3 jointPos, Vector3 connectPos, Vector3 dir, Transform container, bool negative, SerializableTuple<SectorController, SectorController> sectors)
@@ -512,7 +513,6 @@ public class HexMapCreator : EditorWindow
         connector.transform.localScale = new Vector3(connectorScale, 1, 1);
         connector.transform.right = dir;
         connector.transform.position = connectPos;
-        connector.GetComponent<SectorDivider>().SetSectors(sectors);
         joint.SetupMainConnector(connector.GetComponent<WallJointConnectorController>(), negative? -dir : dir);
     }
     #endregion

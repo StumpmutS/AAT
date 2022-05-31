@@ -5,14 +5,14 @@ namespace Utility.Scripts
 {
     public static class StumpDictionaryExtensions
     {
-        public static K MinKeyByValue<K, T2>(Dictionary<K, (float, T2)> dictionary)
+        public static K MinKeyByValue<K>(IDictionary<K, float> dictionary)
         {
             K key = default;
             var shortest = Mathf.Infinity;
             foreach (var kvp in dictionary)
             {
-                if (!(kvp.Value.Item1 < shortest)) continue;
-                shortest = kvp.Value.Item1;
+                if (!(kvp.Value < shortest)) continue;
+                shortest = kvp.Value;
                 key = kvp.Key;
             }
 

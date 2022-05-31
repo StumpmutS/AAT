@@ -1,12 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InteractableController : MonoBehaviour
+public abstract class InteractableController : MonoBehaviour //TODO: both sets up previews and handles interaction (bad)
 {
     [SerializeField] private EInteractableType interactableType;
     public EInteractableType InteractableType => interactableType;
+    [SerializeField] private float interactRange;
+    public float InteractRange => interactRange;
+    [SerializeField] private InteractionComponentState interactionComponentState;
     [SerializeField] private GameObject visualsPrefab;
     [SerializeField] private Vector3 visualsOffset;
     [SerializeField] protected SelectableController selectable;
@@ -15,7 +16,7 @@ public abstract class InteractableController : MonoBehaviour
     protected PoolingObject _preview;
     private bool _previewDisplayed;
 
-    public event Action<InteractableController> OnInteractableDestroyed = delegate {  };
+    public event Action<InteractableController> OnInteractableDestroyed = delegate { };
 
     protected virtual void Awake()
     {
@@ -58,15 +59,14 @@ public abstract class InteractableController : MonoBehaviour
         InteractableManager.Instance.RemoveHoveredInteractable(this);
     }
 
-    public virtual void SetupInteractions(List<UnitController> units)
+    public virtual void SetupInteraction(MovementInteractOverrideComponentState componentState)
     {
-        foreach (var unit in units)
-        {
-            unit.Interact(this, RequestAffection);
-        }
+        componentState.Interact(this, RequestAffection);
     }
 
-    protected abstract void RequestAffection(UnitController unit);
+    protected abstract void RequestAffection(InteractionComponentState componentState);
+
+    public InteractionComponentState RequestState() => interactionComponentState;
 
     public void CallDisplayPreview(PoolingObject previewObject, int unitAmount)
     {

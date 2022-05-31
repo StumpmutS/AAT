@@ -1,12 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UnitController : OutlineSelectableController
 {
-    [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
-    public UnitStatsModifierManager UnitStatsModifierManager => unitStatsModifierManager;
+    [FormerlySerializedAs("unitStatsModifierManager")] [SerializeField] private UnitStatsModifierManager stats;
+    public UnitStatsModifierManager Stats => stats;
     [SerializeField] private List<EInteractableType> interactableTypes;
     public List<EInteractableType> InteractableTypes => interactableTypes;
     [SerializeField] private UnitDeathController unitDeathController;
@@ -23,12 +23,14 @@ public class UnitController : OutlineSelectableController
     [SerializeField] private UnitManager unitManager;
 
     public UnitGroupController UnitGroup { get; private set; }
-    public SectorController SectorController { get; private set; }
+    public SectorController Sector { get; private set; }
     public bool IsDead { get; private set; }
 
-    public event Action<UnitController> OnDeath = delegate { };
-    public event Action OnInteractionFinished = delegate { };
+    [SerializeField] private LayerMask enemyLayer;
+    public LayerMask EnemyLayer => enemyLayer; //TODO: temp until networked
 
+    public event Action<UnitController> OnDeath = delegate { };
+    
     private void Awake()
     {
         unitDeathController.OnUnitDeath += UnitDeath;
@@ -39,14 +41,14 @@ public class UnitController : OutlineSelectableController
     private void UnitDeath()
     {
         CallDeselect();
-        if (SectorController != null) SectorController.RemoveUnit(this);
+        if (Sector != null) Sector.RemoveUnit(this);
         IsDead = true;
         OnDeath.Invoke(this);
     }
 
     public void ModifyStats(BaseUnitStatsData baseUnitStatsDataInfo, bool add = true)
     {
-        unitStatsModifierManager.ModifyStats(baseUnitStatsDataInfo, add);
+        stats.ModifyStats(baseUnitStatsDataInfo, add);
     }
 
     protected override void Select()
@@ -64,7 +66,7 @@ public class UnitController : OutlineSelectableController
     #region Setters
     public void SetSector(SectorController sector)
     {
-        SectorController = sector;
+        Sector = sector;
     }
 
     public void SetGroup(UnitGroupController group)
@@ -83,15 +85,4 @@ public class UnitController : OutlineSelectableController
         chaseState = value;
     }
     #endregion
-
-    public void Interact(InteractableController interactable, Action<UnitController> callback)
-    {
-        //TODO: walk to interactable
-        callback.Invoke(this);
-    }
-
-    public void FinishInteraction()
-    {
-        OnInteractionFinished.Invoke();
-    }
 }

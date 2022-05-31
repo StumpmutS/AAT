@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArmoredHealth : Health, IArmor
 {
-    private float baseArmorPercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.BaseArmorPercent];
-    private float maxArmorPercent => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MaxArmorPercent];
+    private float baseArmorPercent => unitDataManager.CurrentStats[EUnitFloatStats.BaseArmorPercent];
+    private float maxArmorPercent => unitDataManager.CurrentStats[EUnitFloatStats.MaxArmorPercent];
 
     private float currentArmorPercent;
 

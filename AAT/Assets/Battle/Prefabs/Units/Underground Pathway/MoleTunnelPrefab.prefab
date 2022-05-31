@@ -33,6 +33,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7202787641431280594}
   m_Father: {fileID: 0}
@@ -52,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamNumber: 0
   outline: {fileID: 7194832862651965249}
-  unitStatsModifierManager: {fileID: 5167471315293224069}
+  stats: {fileID: 5167471315293224069}
   interactableTypes: 
   unitDeathController: {fileID: 4711663701533172652}
   unitVisuals: {fileID: 0}
@@ -61,6 +62,9 @@ MonoBehaviour:
   _patrolPoints: []
   colliders: []
   unitManager: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6684075605916107545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,11 +148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 2
+  interactRange: 1
+  interactionComponentState: {fileID: 1441792891636174176, guid: 65999b460336d65498497a41b232c759, type: 3}
   visualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 1, z: 0}
   selectable: {fileID: 234317371117068412}
   exitPointOffset: {x: 0, y: 0, z: 1}
-  teleportTime: 1
+  teleportTime: 4
 --- !u!1001 &7241726971064396857
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class EnemySpawnPlotManager : MonoBehaviour
     [SerializeField] private List<UnitSpawnDataListList> wavesUnitSpawnData;
     public static List<EnemySpawnerPlotController> SpawnerPlots => instance.spawnerPlots;
 
-    private static List<EnemySpawnerPlotController> activeSpawnerPlots = new List<EnemySpawnerPlotController>();
+    private static List<EnemySpawnerPlotController> activeSpawnerPlots = new();
 
     public static event Action OnNextWave = delegate { };
 

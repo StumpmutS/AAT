@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Unit Data/Base/Unit Spawn Data")]
 public class UnitSpawnData : ScriptableObject

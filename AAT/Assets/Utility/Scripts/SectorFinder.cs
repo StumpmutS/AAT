@@ -8,7 +8,7 @@ namespace Utility.Scripts
         {
             Collider[] sectors = new Collider[10];
             Physics.OverlapSphereNonAlloc(point, searchRadius, sectors, searchLayers);
-            return DistanceCompare.FindClosestCollider(sectors, point).GetComponent<SectorController>();
+            return DistanceCompare.FindClosestThing(sectors, point).GetComponent<SectorController>();
         }
     }
 }

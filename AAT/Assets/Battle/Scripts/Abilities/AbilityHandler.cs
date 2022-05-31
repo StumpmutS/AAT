@@ -2,19 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility.Scripts;
 
 [RequireComponent(typeof(UnitController), typeof(UnitAnimationController))]
 public class AbilityHandler : MonoBehaviour
 {
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private List<UnitAbilityData> unitAbilityData;
     
-    private List<UnitAbilityDataInfo> _unitAbilityDataInfo = new List<UnitAbilityDataInfo>();
-    private Dictionary<UnitAbilityDataInfo, bool> _abilitiesByActiveState = new Dictionary<UnitAbilityDataInfo, bool>();
-    private HashSet<int> _abilityIndexesAwaitingInput = new HashSet<int>();
-    private bool _checkGroundSubscribed;
     private UnitController _unitController;
     private UnitAnimationController _unitAnimationController;
+
+    private List<UnitAbilityDataInfo> _unitAbilityDataInfo = new();
+    private Dictionary<UnitAbilityDataInfo, bool> _abilitiesByActiveState = new();
+    private HashSet<int> _abilityIndexesAwaitingInput = new();
+    private bool _checkGroundSubscribed;
 
     public event Action<bool> OnAbilityUsed = delegate { };
 
@@ -77,16 +78,14 @@ public class AbilityHandler : MonoBehaviour
     private void CheckGround()
     {
         if (StumpEventSystemManagerReference.Instance.OverUI()) return;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit, groundLayer))
+        Vector3 point = Vector3.zero;
+        if (!point.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer)) return;
+        foreach(var index in _abilityIndexesAwaitingInput)
         {
-            foreach(var index in _abilityIndexesAwaitingInput)
-            {
-                ActivateAbility(index, hit.point);
-                UnsubscribeCheckGround();
-            }
-            _abilityIndexesAwaitingInput.Clear();
+            ActivateAbility(index, point);
+            UnsubscribeCheckGround();
         }
+        _abilityIndexesAwaitingInput.Clear();
     }
 
     private void ActivateAbility(int abilityIndex, Vector3 point = default)

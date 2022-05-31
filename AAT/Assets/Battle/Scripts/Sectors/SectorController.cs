@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class SectorController : MonoBehaviour
 {
-    private HashSet<UnitController> _units = new HashSet<UnitController>();
+    private HashSet<UnitController> _units = new();
     public List<TeleportPoint> Teleporters { get; private set; }
 
     public event Action<SectorController, int> OnSectorPowerChanged = delegate { };

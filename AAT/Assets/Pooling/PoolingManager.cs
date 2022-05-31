@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +5,8 @@ public class PoolingManager : MonoBehaviour
 {
     public static PoolingManager Instance { get; private set; }
 
-    private Dictionary<string, List<PoolingObject>> inactivePoolingObjects = new Dictionary<string, List<PoolingObject>>();
-    private Dictionary<string, List<PoolingObject>> activePoolingObjects = new Dictionary<string, List<PoolingObject>>();
+    private Dictionary<string, List<PoolingObject>> inactivePoolingObjects = new();
+    private Dictionary<string, List<PoolingObject>> activePoolingObjects = new();
 
     private void Awake()
     {

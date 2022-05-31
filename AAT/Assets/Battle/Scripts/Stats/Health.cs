@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
-    private float maxHealth => unitDataManager.CurrentUnitStatsData[EUnitFloatStats.MaxHealth];
+    private float maxHealth => unitDataManager.CurrentStats[EUnitFloatStats.MaxHealth];
 
     public event Action<float> OnHealthChanged = delegate { };
     public event Action OnDie = delegate { };

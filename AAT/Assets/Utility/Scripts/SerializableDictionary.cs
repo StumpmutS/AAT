@@ -8,8 +8,8 @@ namespace Utility.Scripts
     [Serializable]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
     {
-        [SerializeField] private List<TKey> _keys = new List<TKey>();
-        [SerializeField] private List<TValue> _values = new List<TValue>();
+        [SerializeField] private List<TKey> _keys = new();
+        [SerializeField] private List<TValue> _values = new();
 
         public void OnBeforeSerialize()
         {

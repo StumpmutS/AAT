@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +6,8 @@ public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance { get; private set; }
 
-    public HashSet<UnitController> Units { get; private set; } = new HashSet<UnitController>();
-    public HashSet<UnitController> SelectedUnits { get; private set; } = new HashSet<UnitController>();
+    public HashSet<UnitController> Units { get; private set; } = new();
+    public HashSet<UnitController> SelectedUnits { get; private set; } = new();
 
     public event Action<UnitController> OnUnitSelected = delegate { };
     public event Action<UnitController> OnUnitDeselected = delegate { };

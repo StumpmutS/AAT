@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ public class SpawnPlotManager : MonoBehaviour
     public List<SpawnerPlotController> SpawnerPlots => spawnerPlots;
 
     private SpawnerPlotController _activeSpawnerPlot;
-    private List<int> _inactiveSpawnerPlotIndexes = new List<int>();
+    private List<int> _inactiveSpawnerPlotIndexes = new();
 
     private void Start()
     {
@@ -21,13 +19,13 @@ public class SpawnPlotManager : MonoBehaviour
             spawnerPlot.OnSpawnerPlotDeselect += RemoveButtons;
         }
 
-        InputManager.OnNumberKey1 += SelectSpawnerPlotByIndex;
-        InputManager.OnNumberKey2 += SelectSpawnerPlotByIndex;
-        InputManager.OnNumberKey3 += SelectSpawnerPlotByIndex;
-        InputManager.OnNumberKey4 += SelectSpawnerPlotByIndex;
-        InputManager.OnNumberKey5 += SelectSpawnerPlotByIndex;
-        InputManager.OnNumberKey6 += SelectSpawnerPlotByIndex;
-        InputManager.OnNumberKey7 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha1 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha2 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha3 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha4 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha5 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha6 += SelectSpawnerPlotByIndex;
+        InputManager.OnAlpha7 += SelectSpawnerPlotByIndex;
     }
 
     public void AddPlot(SpawnerPlotController plot)

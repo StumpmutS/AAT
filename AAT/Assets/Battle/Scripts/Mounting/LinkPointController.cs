@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LinkPointController : MonoBehaviour
 {
     [SerializeField] private UnitDeathController deathController;
-    [SerializeField] private bool startEnd;
-    public bool StartEnd => startEnd;
+    [FormerlySerializedAs("startEnd")] [SerializeField] private bool start;
+    public bool Start => start;
     
     public MountablePointLinkController Link { get; private set; }
     
@@ -19,7 +17,7 @@ public class LinkPointController : MonoBehaviour
     public void Setup(MountablePointLinkController link, bool start)
     {
         if (Link is { }) return;
-        startEnd = start;
+        this.start = start;
         Link = link;
     }
 

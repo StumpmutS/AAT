@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,13 +11,12 @@ public class WallPlacementManager : MonoBehaviour
     [SerializeField] private PlaceableWallController placeableWallPrefab;
     [SerializeField] private Vector3 wallOffset;
     [SerializeField] private LayerMask wallJointLayer;
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] [Tooltip("Must be greater than min distance ((Wall Dim+Joint Dim)*2+.01)")] private float snapRadius;
     [SerializeField] private float wallMinValidAngle;
 
     public static WallPlacementManager Instance { get; private set; }
     
-    private HashSet<WallJointController> _wallJoints = new HashSet<WallJointController>();
+    private HashSet<WallJointController> _wallJoints = new();
     private WallJointController _currentWallJoint;
     private Vector3 _currentJointPositionZeroY;
     private Collider _currentJointCollider;
@@ -62,7 +59,7 @@ public class WallPlacementManager : MonoBehaviour
         InputManager.OnRightClickDown += EndWallPlacement;
         InputManager.OnUpdate += MoveWallPreview;
         InputManager.OnLeftCLickUp += PlaceWall;
-        InputManager.OnMouseWheelScroll += ReversePreviewDirection;
+        InputManager.OnRPressed += ReversePreviewDirection;
         wallPlacementUI.gameObject.SetActive(true);
     }
 
@@ -80,13 +77,13 @@ public class WallPlacementManager : MonoBehaviour
         InputManager.OnRightClickDown -= EndWallPlacement;
         InputManager.OnUpdate -= MoveWallPreview;
         InputManager.OnLeftCLickUp -= PlaceWall;
-        InputManager.OnMouseWheelScroll -= ReversePreviewDirection;
+        InputManager.OnRPressed -= ReversePreviewDirection;
         wallPlacementUI.gameObject.SetActive(false);
     }
 
     #region WallPreview
     private bool _reverse;
-    private HashSet<PreviewPoolingObject> _wallPreviews = new HashSet<PreviewPoolingObject>();
+    private HashSet<PreviewPoolingObject> _wallPreviews = new();
     private PreviewPoolingObject _currentConnectorPreview;
     private PreviewPoolingObject _createdConnectorPreview;
     private PreviewPoolingObject _createdJointPreview;
@@ -95,21 +92,21 @@ public class WallPlacementManager : MonoBehaviour
 
     private void MoveWallPreview()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var groundHit, groundLayer))
+        var point = Vector3.zero;
+        if (point.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer))
         {
-            CreateWallPreviews(groundHit.point);
+            CreateWallPreviews(point);
         }
     }
 
-    private void ReversePreviewDirection(float notUsed) => _reverse = !_reverse;
+    private void ReversePreviewDirection() => _reverse = !_reverse;
 
     private void CreateWallPreviews(Vector3 point)
     {
         //SNAP
         var snap = false;
         var colliders = new Collider[10];
-        Physics.OverlapSphereNonAlloc(point, snapRadius, colliders, wallJointLayer);//TODO: make range not hardcoded
+        Physics.OverlapSphereNonAlloc(point, snapRadius, colliders, wallJointLayer);
         var minDistance = (placeableWallPrefab.DimensionsContainer.XDimensions + _currentWallJoint.ConnectorXDimensions) * 2 + .01f;
         var ignoreColliders = new Collider[10];
         Physics.OverlapSphereNonAlloc(_currentWallJoint.transform.position, minDistance, ignoreColliders, wallJointLayer);
@@ -127,7 +124,7 @@ public class WallPlacementManager : MonoBehaviour
                 colliders[i] = null;
             }
         }
-        var closest = DistanceCompare.FindClosestCollider(colliders, point, ignore:_currentJointCollider);
+        var closest = DistanceCompare.FindClosestThing(colliders, point, ignore:_currentJointCollider);
         if (closest != null)
         {
             point = closest.transform.position;
@@ -171,7 +168,7 @@ public class WallPlacementManager : MonoBehaviour
         createdJointPreview.transform.rotation = _currentWallJoint.transform.rotation;
         createdJointPreview.transform.position = new Vector3(point.x, wallOffset.y, point.z);
         var createdConnectorPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.ConnectorPrefab.ConnectorVisuals) as PreviewPoolingObject;
-        createdConnectorPreview.transform.position = createdJointPreview.transform.position - _normDirection * connectorSize * _currentWallJoint.ConnectorXDimensions / 2;
+        createdConnectorPreview.transform.position = createdJointPreview.transform.position - _normDirection * (connectorSize * _currentWallJoint.ConnectorXDimensions / 2);
         createdConnectorPreview.transform.rotation = currentWallConnector.transform.rotation;
         createdConnectorPreview.transform.localScale = currentWallConnector.transform.localScale;
         _createdJointPreview = createdJointPreview;
@@ -183,7 +180,7 @@ public class WallPlacementManager : MonoBehaviour
         }
         
         //VALID CHECKS
-        var obstacleSize = _normDirection * _currentWallJoint.DimensionsContainer.XDimensions * _currentWallJoint.transform.localScale.x * _currentWallJoint.Obstacle.radius;
+        var obstacleSize = _normDirection * (_currentWallJoint.DimensionsContainer.XDimensions * _currentWallJoint.transform.localScale.x * _currentWallJoint.Obstacle.radius);
         if (NavMesh.SamplePosition(_currentJointPositionZeroY + obstacleSize, out var hit, 6, -1))
         {
             var target = snap ? point - obstacleSize : point;
@@ -283,7 +280,7 @@ public class WallPlacementManager : MonoBehaviour
         {
             if (otherChain)
             {        
-                if (currentPoint.StartEnd && !endPoint.StartEnd)
+                if (currentPoint.Start && !endPoint.Start)
                 {
                     mountables.Reverse();
                     instantiatedLink.CreateLinkDouble(endPoint, currentPoint, mountables);

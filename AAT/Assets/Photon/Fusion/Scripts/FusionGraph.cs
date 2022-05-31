@@ -156,7 +156,7 @@ public class FusionGraph : FusionGraphBase {
   }
 #endif
 
-  List<int> DropdownLookup = new List<int>();
+  List<int> DropdownLookup = new();
 
   protected override bool TryConnect() {
 

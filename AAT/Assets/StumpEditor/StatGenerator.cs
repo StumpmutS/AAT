@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -7,7 +5,7 @@ using Utility.Scripts;
 
 public class StatGenerator : EditorWindow
 {
-    [SerializeField] private List<EUnitFloatStats> _stats = new List<EUnitFloatStats>()
+    [SerializeField] private List<EUnitFloatStats> _stats = new()
     {
         EUnitFloatStats.MaxHealth,
         EUnitFloatStats.BaseArmorPercent,
@@ -21,7 +19,7 @@ public class StatGenerator : EditorWindow
         EUnitFloatStats.AttackRange,
         EUnitFloatStats.ChaseSpeedPercentMultiplier
     };
-    [SerializeField] private List<float> _values = new List<float>();
+    [SerializeField] private List<float> _values = new();
     [SerializeField] private int _amount = 11;
 
     [SerializeField] private string _unitName;
@@ -68,7 +66,7 @@ public class StatGenerator : EditorWindow
         EditorGUILayout.BeginVertical();
         for (int i = 0; i < _amount; i++)
         {
-            _stats[i] = (EUnitFloatStats)EditorGUILayout.EnumFlagsField(_stats[i]);
+            _stats[i] = (EUnitFloatStats)EditorGUILayout.EnumPopup(_stats[i]);
         }
         EditorGUILayout.EndVertical();
         GUILayout.EndArea();

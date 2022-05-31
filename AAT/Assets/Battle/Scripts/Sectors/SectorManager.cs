@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,12 +5,10 @@ using Utility.Scripts;
 
 public class SectorManager : MonoBehaviour
 {
-    private Dictionary<SectorController, List<SectorController>> _sectorConnections =
-        new Dictionary<SectorController, List<SectorController>>();
-    private Dictionary<(SectorController, SectorController), (float, TeleportPoint)> _paths = 
-        new Dictionary<(SectorController, SectorController), (float, TeleportPoint)>();
+    private Dictionary<SectorController, List<SectorController>> _sectorConnections = new();
+    private Dictionary<(SectorController, SectorController), (float, TeleportPoint)> _paths = new();
 
-    private List<List<SectorController>> _connectedSectorGroups = new List<List<SectorController>>();
+    private List<List<SectorController>> _connectedSectorGroups = new();
 
 
     public static SectorManager Instance { get; private set; }
@@ -22,7 +18,7 @@ public class SectorManager : MonoBehaviour
         Instance = this;
     }
 
-    public bool PathBetween(SectorController from, SectorController target, out List<TeleportPoint> points)
+    public float PathBetween(Vector3 pos, float speed, SectorController from, SectorController target, out List<TeleportPoint> points)
     {
         points = null;
         List<SectorController> sectorGroup = null;
@@ -31,13 +27,13 @@ public class SectorManager : MonoBehaviour
             sectorGroup = group;
         }
 
-        if (sectorGroup is null) return false;
+        if (sectorGroup is null) return -1;
 
-        points = CalculateTeleporterPath(from, target, sectorGroup);
-        return points.Count > 0;
+        points = CalculateTeleporterPath(pos, speed, from, target, sectorGroup, out var moveTime);
+        return points.Sum(tp => tp.TeleportTime) + moveTime;
     }
 
-    private List<TeleportPoint> CalculateTeleporterPath(SectorController from, SectorController target, List<SectorController> group)
+    private List<TeleportPoint> CalculateTeleporterPath(Vector3 pos, float speed, SectorController from, SectorController target, List<SectorController> group, out float moveTime)
     {
         var dijkstraTable = new Dictionary<SectorController, (float, SectorController)>();
         foreach (var sector in group)
@@ -45,7 +41,7 @@ public class SectorManager : MonoBehaviour
             dijkstraTable[sector] = (Mathf.Infinity, null);
         }
         dijkstraTable[from] = (0, from);
-        SolveTable(dijkstraTable, from);
+        SolveTable(dijkstraTable);
         var points = new List<TeleportPoint>();
         var current = target;
         
@@ -55,16 +51,27 @@ public class SectorManager : MonoBehaviour
             current = dijkstraTable[current].Item2;
         }
 
+        moveTime = 0;
+        if (points.Count < 1) return points;
+        
+        moveTime += Vector3.Distance(pos, points[0].transform.position) / speed;
+        for (int i = 1; i < points.Count; i++)
+        {
+            moveTime += Vector3.Distance(points[i].transform.position,
+                         points[i - 1].OtherTeleportPoint.transform.position) / speed;
+        }
+
         return points;
     }
 
-    private void SolveTable(Dictionary<SectorController, (float, SectorController)> table, SectorController start)
+    //TODO: own class
+    private void SolveTable(IDictionary<SectorController, (float, SectorController)> table)
     {
         var visitedSectors = new HashSet<SectorController>();
         while (visitedSectors.Count < table.Count)
         {
             var currentSector = StumpDictionaryExtensions.MinKeyByValue(table.Where(kvp => 
-                !visitedSectors.Contains(kvp.Key)).ToDictionary(x => x.Key, x => x.Value));
+                !visitedSectors.Contains(kvp.Key)).ToDictionary(x => x.Key, x => x.Value.Item1));
             
             foreach (var sector in _sectorConnections[currentSector])
             {
@@ -91,15 +98,15 @@ public class SectorManager : MonoBehaviour
             if (group.Contains(fromSector)) fromGroup = group;
             if (group.Contains(toSector)) toGroup = group;
         }
-        if (toGroup != null && fromGroup is null)
+        if (toGroup != null && fromGroup == null)
         {
             toGroup.Add(fromSector);
         } 
-        else if (fromGroup != null && toGroup is null)
+        else if (fromGroup != null && toGroup == null)
         {
             fromGroup.Add(toSector);
         }
-        else if (fromGroup is null && toGroup is null)
+        else if (fromGroup == null && toGroup == null)
         {
             _connectedSectorGroups.Add(new List<SectorController>() {fromSector, toSector});
         }

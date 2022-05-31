@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class AOEDamageAbilityComponentData : AbilityComponent
     [SerializeField] private float damageRadius;
     [SerializeField] private float damage;
 
-    private Dictionary<UnitController, List<Collider>> damagedEnemies = new Dictionary<UnitController, List<Collider>>();
+    private Dictionary<UnitController, List<Collider>> damagedEnemies = new();
 
     public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {

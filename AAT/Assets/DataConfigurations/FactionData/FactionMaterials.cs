@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utility.Scripts;
 
@@ -7,7 +5,7 @@ using Utility.Scripts;
 public class FactionMaterials : ScriptableObject
 {
     public SerializableDictionary<EFaction, Material> FactionsByMaterial =
-        new SerializableDictionary<EFaction, Material>()
+        new()
         {
             { EFaction.None, null },
             { EFaction.Neutral, null },

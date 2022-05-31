@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +32,7 @@ public class UnitSpawnAbilityComponentData : AbilityComponent
         {
             var instantiatedUnit = Instantiate(unitPrefab, objTransform.position, objTransform.rotation);
             unitGroup.AddUnit(instantiatedUnit);
-            unit.SectorController.AddUnit(instantiatedUnit);
+            unit.Sector.AddUnit(instantiatedUnit);
             instantiatedUnit.transform.localPosition += objTransform.right * spawnOffsets[index].x
                                           + objTransform.up * spawnOffsets[index].y
                                           + objTransform.forward * spawnOffsets[index].z;

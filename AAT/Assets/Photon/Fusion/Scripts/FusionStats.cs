@@ -73,10 +73,10 @@ public class FusionStats : Fusion.Behaviour {
 
 
   // Lookup for all FusionStats associated with active runners.
-  static Dictionary<NetworkRunner, List<FusionStats>> _statsForRunnerLookup = new Dictionary<NetworkRunner, List<FusionStats>>();
+  static Dictionary<NetworkRunner, List<FusionStats>> _statsForRunnerLookup = new();
 
   // Record of active SimStats, used to prevent more than one _guid version from existing (in the case of SimStats existing in a scene that gets cloned in Multi-Peer).
-  static Dictionary<string, FusionStats> _activeGuids = new Dictionary<string, FusionStats>();
+  static Dictionary<string, FusionStats> _activeGuids = new();
 
   // Added to make calling by reflection cleaner internally. Used in RunnerVisibilityControls.
   internal static FusionStats CreateInternal(NetworkRunner runner = null, DefaultLayouts layout = DefaultLayouts.Left, Stats.NetStatFlags? netStatsMask = null, Stats.SimStatFlags? simStatsMask = null) {
@@ -247,7 +247,7 @@ public class FusionStats : Fusion.Behaviour {
   [SerializeField]
   [DrawIf(nameof(CanvasType), (long)StatCanvasTypes.GameObject, DrawIfHideType.Hide)]
   [NormalizedRect(aspectRatio: 1)]
-  Rect _gameObjectRect = new Rect(0.0f, 0.0f, 0.3f, 1.0f);
+  Rect _gameObjectRect = new(0.0f, 0.0f, 0.3f, 1.0f);
   public Rect GameObjectRect {
     get => _gameObjectRect;
     set {
@@ -265,7 +265,7 @@ public class FusionStats : Fusion.Behaviour {
   [SerializeField]
   [DrawIf(nameof(CanvasType), (long)StatCanvasTypes.Overlay, DrawIfHideType.Hide)]
   [NormalizedRect]
-  Rect _overlayRect = new Rect(0.0f, 0.0f, 0.3f, 1.0f);
+  Rect _overlayRect = new(0.0f, 0.0f, 0.3f, 1.0f);
   public Rect OverlayRect {
     get => _overlayRect;
     set {
@@ -586,7 +586,7 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _graphColorGood = new Color(0.1f, 0.5f, 0.1f, 0.9f);
+  Color _graphColorGood = new(0.1f, 0.5f, 0.1f, 0.9f);
 
   /// <summary>
   /// The color used for the telemetry graph data.
@@ -594,7 +594,7 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _graphColorWarn = new Color(0.75f, 0.75f, 0.2f, 0.9f);
+  Color _graphColorWarn = new(0.75f, 0.75f, 0.2f, 0.9f);
 
   /// <summary>
   /// The color used for the telemetry graph data.
@@ -602,7 +602,7 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _graphColorBad = new Color(0.9f, 0.2f, 0.2f, 0.9f);
+  Color _graphColorBad = new(0.9f, 0.2f, 0.2f, 0.9f);
 
   /// <summary>
   /// The color used for the telemetry graph data.
@@ -610,32 +610,32 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _graphColorFlag = new Color(0.8f, 0.75f, 0.0f, 1.0f);
+  Color _graphColorFlag = new(0.8f, 0.75f, 0.0f, 1.0f);
 
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _fontColor = new Color(1.0f, 1.0f, 1.0f, 1f);
+  Color _fontColor = new(1.0f, 1.0f, 1.0f, 1f);
 
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color PanelColor = new Color(0.3f, 0.3f, 0.3f, 0.9f);
+  Color PanelColor = new(0.3f, 0.3f, 0.3f, 0.9f);
 
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _simDataBackColor = new Color(0.1f, 0.08f, 0.08f, 1.0f);
+  Color _simDataBackColor = new(0.1f, 0.08f, 0.08f, 1.0f);
 
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _netDataBackColor = new Color(0.15f, 0.14f, 0.09f, 1.0f);
+  Color _netDataBackColor = new(0.15f, 0.14f, 0.09f, 1.0f);
 
   [InlineHelp]
   [SerializeField]
   [DrawIf(nameof(ShowColorControls), true, DrawIfHideType.Hide)]
-  Color _objDataBackColor = new Color(0.0f, 0.2f, 0.4f, 1.0f);
+  Color _objDataBackColor = new(0.0f, 0.2f, 0.4f, 1.0f);
 
   // IFusionStats interface requirements
   public Color FontColor        => _fontColor;

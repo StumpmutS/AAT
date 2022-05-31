@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,15 +6,14 @@ public class InteractableManager : MonoBehaviour
 {
     public static InteractableManager Instance { get; private set; }
 
-    private HashSet<InteractableController> _interactables = new HashSet<InteractableController>();
+    private HashSet<InteractableController> _interactables = new();
     private int _unitSelectedCount;
-    private InteractableController _hoveredInteractable;
     private PoolingObject _selectedUnitPreview;
+    private InteractableController _hoveredInteractable;
+    public InteractableController HoveredInteractable => _hoveredInteractable;
+    private Dictionary<UnitController, MovementInteractOverrideComponentState> _interactionStates = new();
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
 
     private void Start()
     {
@@ -36,6 +34,14 @@ public class InteractableManager : MonoBehaviour
             interactable.DisplayVisuals();
         }
 
+        if (!_interactionStates.ContainsKey(unit))
+        {
+            if (unit.TryGetComponent<MovementInteractOverrideComponentState>(out var state))
+            {
+                _interactionStates[unit] = state;
+            }
+        }
+
         _selectedUnitPreview = unit.UnitVisuals;
     }
 
@@ -48,13 +54,14 @@ public class InteractableManager : MonoBehaviour
             interactable.RemoveVisuals();
             interactable.RemovePreview();
         }
+
+        _interactionStates.Remove(unit);
     }
 
     public void SetHoveredInteractable(InteractableController interactable)
     {
         _hoveredInteractable = interactable;
         if (_unitSelectedCount <= 0) return;
-        AwaitInput();
         foreach (var Interactable in _interactables)
         {
             Interactable.RemovePreview();
@@ -67,26 +74,9 @@ public class InteractableManager : MonoBehaviour
     {
         if (_hoveredInteractable == interactable) _hoveredInteractable = null;
         if (_unitSelectedCount <= 0) return;
-        StopAwait();
         foreach (var Interactable in _interactables)
         {
             Interactable.RemovePreview();
         }
-    }
-
-    private void AwaitInput()
-    {
-        InputManager.OnRightClickDown += Interact;
-    }
-
-    private void StopAwait()
-    {
-        InputManager.OnRightClickDown -= Interact;
-    }
-
-    private void Interact()
-    {
-        if (_hoveredInteractable == null) return;
-        _hoveredInteractable.SetupInteractions(UnitManager.Instance.SelectedUnits.ToList());
     }
 }

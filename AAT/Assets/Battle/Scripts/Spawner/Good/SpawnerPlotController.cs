@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(SelectableController))]
 public class SpawnerPlotController : MonoBehaviour
@@ -23,10 +20,7 @@ public class SpawnerPlotController : MonoBehaviour
         _selectable.OnDeselect += Deselect;
     }
 
-    private void Select()
-    {
-        OnSpawnerPlotSelect.Invoke(this, faction);
-    }
+    private void Select() => OnSpawnerPlotSelect.Invoke(this, faction);
 
     private void Deselect() => OnSpawnerPlotDeselect.Invoke();
 

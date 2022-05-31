@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ public class ProjectileController : MonoBehaviour
 
     private void Start()
     {
-        _rigidBody.velocity = initialDirection * initialVelocity;
+        _rigidBody.velocity += initialDirection * initialVelocity;
     }
 
     private void FixedUpdate()
@@ -34,18 +33,16 @@ public class ProjectileController : MonoBehaviour
         MoveProjectile();
     }
 
-    protected virtual void MoveProjectile()
-    {
-        _rigidBody.velocity += _firerDirection * _firerSpeed * Time.deltaTime;
-    }
+    protected virtual void MoveProjectile() { }
 
     public void FireProjectile(float damage, Collider[] fromColliders, Vector3 firerDirection, float firerSpeed = 0)
     {
         _damage = damage;
         _origin = fromColliders;
-        _firerDirection = firerDirection;
+        _firerDirection = firerDirection.normalized;
         _firerSpeed = firerSpeed;
         _projectileFired = true;
+        _rigidBody.velocity += _firerDirection * _firerSpeed;
     }
 
     private void OnTriggerEnter(Collider hit)

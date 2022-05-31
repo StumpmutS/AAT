@@ -12,13 +12,13 @@ namespace Fusion {
 
   public abstract class NetworkSceneManagerBase : Fusion.Behaviour, INetworkSceneObjectProvider {
 
-    private static WeakReference<NetworkSceneManagerBase> s_currentlyLoading = new WeakReference<NetworkSceneManagerBase>(null);
+    private static WeakReference<NetworkSceneManagerBase> s_currentlyLoading = new(null);
 
     public bool ShowHierarchyWindowOverlay = true;
 
     private IEnumerator _runningCoroutine;
     private bool _currentSceneOutdated = false;
-    private Dictionary<Guid, NetworkObject> _sceneObjects = new Dictionary<Guid, NetworkObject>();
+    private Dictionary<Guid, NetworkObject> _sceneObjects = new();
     private SceneRef _currentScene;
 
     public NetworkRunner Runner { get; private set; }
@@ -255,7 +255,7 @@ namespace Fusion {
     }
 
 #if UNITY_EDITOR
-    private static Lazy<GUIStyle> s_hierarchyOverlayLabelStyle = new Lazy<GUIStyle>(() => {
+    private static Lazy<GUIStyle> s_hierarchyOverlayLabelStyle = new(() => {
       var result = new GUIStyle(UnityEditor.EditorStyles.miniButton);
       result.alignment = TextAnchor.MiddleCenter;
       result.fontSize = 9;
