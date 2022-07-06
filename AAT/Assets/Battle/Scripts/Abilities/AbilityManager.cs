@@ -25,13 +25,13 @@ public class AbilityManager : MonoBehaviour
         }
 
         Instance.abilityButtonsContainer.gameObject.SetActive(true);
-        InputManager.OnLeftCLickUp += Instance.RemoveAbilityButtonDisplay;
+        BaseInputManager.OnLeftCLickUp += Instance.RemoveAbilityButtonDisplay;
     }
 
     private void RemoveAbilityButtonDisplay()
     {
         if (StumpEventSystemManagerReference.Instance.OverUI()) return;
         abilityButtonsContainer.gameObject.SetActive(false);
-        InputManager.OnLeftCLickUp -= RemoveAbilityButtonDisplay;
+        BaseInputManager.OnLeftCLickUp -= RemoveAbilityButtonDisplay;
     }
 }

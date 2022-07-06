@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3552064615864931281}
   - {fileID: 8629088623518729804}
@@ -66,7 +67,7 @@ MonoBehaviour:
   maxMainWallValidAngle: 50
   wallPlacementManager: {fileID: 0}
   connectorPrefab: {fileID: 4682863212697215120, guid: 8e88dffff9ea2074c89047688a85da09, type: 3}
-  jointPreview: {fileID: 3686849663143091973, guid: 8b95295e380864f40a3b4b26f1ba7b75, type: 3}
+  jointPreview: {fileID: 7215198849420336731, guid: 8b95295e380864f40a3b4b26f1ba7b75, type: 3}
   dimensionsContainer: {fileID: 5843527107994311282}
   obstacle: {fileID: -7760469626715487477}
   _mainWallDirections: []
@@ -117,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathController: {fileID: 0}
-  startEnd: 0
+  start: 0
 --- !u!114 &3588384867715948105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNumber: 0
   outline: {fileID: 7217016201672214139}
 --- !u!1001 &3945661865104798778
 PrefabInstance:
@@ -282,11 +284,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
---- !u!4 &8629088623518729804 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5244064559998084736, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
-  m_PrefabInstance: {fileID: 4541324474793091276}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5843527107994311282 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7934892281646660286, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
@@ -298,3 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4134cf50b7b01464c88b385b8cf2425e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8629088623518729804 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5244064559998084736, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
+  m_PrefabInstance: {fileID: 4541324474793091276}
+  m_PrefabAsset: {fileID: 0}

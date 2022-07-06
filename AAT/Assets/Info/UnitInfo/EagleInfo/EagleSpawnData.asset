@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf701125b0bb7b4cac56b2c01584623, type: 3}
   m_Name: EagleSpawnData
   m_EditorClassIdentifier: 
-  Spawner: {fileID: 1018359427007933407, guid: f84023ff972981247b644d3f8cda3e0e, type: 3}
+  SpawnerPrefab:
+    RawGuidValue: f84023ff972981247b644d3f8cda3e0e
   SpawnGroupsAmount: 1
   UnitsPerGroupAmount: 1
   SpawnTime: 1
@@ -20,7 +21,8 @@ MonoBehaviour:
   MaxSpawnLocationUse: 1
   SpawnerOffset: {x: 0, y: 0, z: 0}
   SpawnerVisuals: {fileID: -5862317012690568444, guid: 4ab723db798d8bb4bab3c890c2ffa7bc, type: 3}
-  UnitPrefab: {fileID: 6461623584834916860, guid: b66acca69ba923f45908ded9d64c91f3, type: 3}
+  UnitPrefab:
+    RawGuidValue: b66acca69ba923f45908ded9d64c91f3
   UnitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
   baseUnitStatsData: {fileID: 11400000, guid: f2b505be318106b45b49bd3b026f2058, type: 2}
   UnitStatsUpgradeData: []

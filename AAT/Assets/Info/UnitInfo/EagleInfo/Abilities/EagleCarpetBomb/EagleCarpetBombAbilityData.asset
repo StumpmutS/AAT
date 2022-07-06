@@ -15,7 +15,8 @@ MonoBehaviour:
   UnitAbilityDataInfo:
     AbilityName: Carpet Bomb
     CooldownTime: 20
-    ActiveTime: 8
+    ActiveTime: 11.521865
+    TargetTimeOutTime: 0
     TransportUsage: 0
     AbilityComponents:
     - {fileID: 11400000, guid: dd10ee20cae68b043ad3cc38696d4e65, type: 2}

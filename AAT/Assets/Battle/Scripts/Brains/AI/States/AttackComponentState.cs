@@ -12,11 +12,11 @@ public class AttackComponentState : ComponentState
     protected bool _canAttack;
     protected Component _target;
     
-    protected float _damage => _unitStats.CurrentStats[EUnitFloatStats.Damage];
-    protected float _critChancePercent => _unitStats.CurrentStats[EUnitFloatStats.CritChancePercent];
-    protected float _critMultiplierPercent => _unitStats.CurrentStats[EUnitFloatStats.CritMultiplierPercent];
-    private float _attackSpeedPercent => _unitStats.CurrentStats[EUnitFloatStats.AttackSpeedPercent];
-    private float _attackRange => _unitStats.CurrentStats[EUnitFloatStats.AttackRange];
+    protected float _damage => _unitStats.GetStat(EUnitFloatStats.Damage);
+    protected float _critChancePercent => _unitStats.GetStat(EUnitFloatStats.CritChancePercent);
+    protected float _critMultiplierPercent => _unitStats.GetStat(EUnitFloatStats.CritMultiplierPercent);
+    private float _attackSpeedPercent => _unitStats.GetStat(EUnitFloatStats.AttackSpeedPercent);
+    private float _attackRange => _unitStats.GetStat(EUnitFloatStats.AttackRange);
 
     protected virtual void Awake()
     {

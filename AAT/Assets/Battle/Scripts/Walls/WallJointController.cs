@@ -11,8 +11,8 @@ public class WallJointController : MonoBehaviour
     [SerializeField] private WallPlacementManager wallPlacementManager;
     [SerializeField] private WallJointConnectorController connectorPrefab;
     public WallJointConnectorController ConnectorPrefab => connectorPrefab;
-    [SerializeField] private PreviewPoolingObject jointPreview;
-    public PreviewPoolingObject JointPreview => jointPreview;
+    [SerializeField] private BasePreviewPoolingObject jointPreview;
+    public BasePreviewPoolingObject JointPreview => jointPreview;
     [SerializeField] private DimensionsContainer dimensionsContainer;
     public DimensionsContainer DimensionsContainer => dimensionsContainer;
     [SerializeField] private NavMeshObstacle obstacle;
@@ -42,10 +42,10 @@ public class WallJointController : MonoBehaviour
         wallPlacementManager = manager;
     }
 
-    public PreviewPoolingObject SetupConnectorPreview(Vector3 normalizedDirection, bool reverse, float spaceToFill)
+    public BasePreviewPoolingObject SetupConnectorPreview(Vector3 normalizedDirection, bool reverse, float spaceToFill)
     {
         if (spaceToFill < 0) spaceToFill = ConnectorXDimensions;
-        var connectorPreview = PoolingManager.Instance.CreatePoolingObject(connectorPrefab.ConnectorVisuals) as PreviewPoolingObject;
+        var connectorPreview = PoolingManager.Instance.CreatePoolingObject(connectorPrefab.ConnectorVisuals) as BasePreviewPoolingObject;
         connectorPreview.transform.right = normalizedDirection;
         if (Vector3.Dot(connectorPreview.transform.forward, transform.forward) < 0)
         {

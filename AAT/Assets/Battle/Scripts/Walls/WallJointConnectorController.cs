@@ -4,6 +4,6 @@ public class WallJointConnectorController : MonoBehaviour
 {
     [SerializeField] private DimensionsContainer dimensionsContainer;
     public DimensionsContainer DimensionsContainer => dimensionsContainer;
-    [SerializeField] private PreviewPoolingObject connectorVisuals;
-    public PreviewPoolingObject ConnectorVisuals => connectorVisuals;
+    [SerializeField] private BasePreviewPoolingObject connectorVisuals;
+    public BasePreviewPoolingObject ConnectorVisuals => connectorVisuals;
 }

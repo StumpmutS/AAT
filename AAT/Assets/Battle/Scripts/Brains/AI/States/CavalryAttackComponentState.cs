@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CavalryAttackComponentState : AttackComponentState
 {
-    protected float _chaseSpeedPercent => _unitStats.CurrentStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
-    protected float _moveSpeed => _unitStats.CurrentStats[EUnitFloatStats.MovementSpeed];
-    private float _chargeEndDistance => _unitStats.CurrentStats[EUnitFloatStats.ChargeEndDistance];
+    protected float _chaseSpeedPercent => _unitStats.GetStat(EUnitFloatStats.ChaseSpeedPercentMultiplier);
+    protected float _moveSpeed => _unitStats.GetStat(EUnitFloatStats.MovementSpeed);
+    private float _chargeEndDistance => _unitStats.GetStat(EUnitFloatStats.ChargeEndDistance);
 
     private bool _charging;
     private float _chargeTime;

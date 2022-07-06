@@ -13,10 +13,10 @@ public class FlyingController : MonoBehaviour
     [SerializeField] private float maxVisualRotation;
 
     private UnitStatsModifierManager _stats;
-    private float _speed => _stats.CurrentStats[EUnitFloatStats.MovementSpeed];
-    private float _hoverSpeed => _stats.CurrentStats[EUnitFloatStats.HoverSpeed];
-    private float _turnSpeed => _stats.CurrentStats[EUnitFloatStats.TurnSpeed];
-    private float _upwardPitchCap => _stats.CurrentStats[EUnitFloatStats.UpwardPitchCap];
+    private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
+    private float _hoverSpeed => _stats.GetStat(EUnitFloatStats.HoverSpeed);
+    private float _turnSpeed => _stats.GetStat(EUnitFloatStats.TurnSpeed);
+    private float _upwardPitchCap => _stats.GetStat(EUnitFloatStats.UpwardPitchCap);
 
     private bool _flipping;
 

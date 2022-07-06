@@ -148,18 +148,16 @@ public class MountablePointLinkController : MonoBehaviour
     }
     #endregion
 
-    public List<BaseMountableController> PreviewedMountables { get; private set; } = new();
+    private List<BaseMountableController> _previewedMountables = new();
 
     public void BeginPreviewDisplayLink(BaseMountableController mountable, PoolingObject visuals, int unitAmount, bool up)
     {
-        if (!_active) return;
-        PreviewedMountables.Clear();
-        PreviewedMountables.Add(mountable);
+        if (!_active || mountablePoints.Count <= 1) return;
+        _previewedMountables.Clear();
+        _previewedMountables.Add(mountable);
         
         int index = mountablePoints.IndexOf(mountable);
         if (_loop) SendLoop(index, visuals, unitAmount, up);
-        else if (index == 0) SendThrough(visuals, unitAmount, true);
-        else if (index == mountablePoints.Count - 1) SendThrough(visuals, unitAmount, false);
         else SendAltering(index, visuals, unitAmount, up);
     }
 
@@ -177,14 +175,14 @@ public class MountablePointLinkController : MonoBehaviour
             if (upIndex == downIndex)
             {
                 mountablePoints[upIndex].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[upIndex]);
+                _previewedMountables.Add(mountablePoints[upIndex]);
                 Debug.Log("Link is full");
                 return;
             }
             if (up)
             {
                 mountablePoints[upIndex].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[upIndex]);
+                _previewedMountables.Add(mountablePoints[upIndex]);
                 upIndex++;
                 if (upIndex == mountCount) upIndex = 0;
                 up = false;
@@ -192,7 +190,7 @@ public class MountablePointLinkController : MonoBehaviour
             else
             {
                 mountablePoints[downIndex].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[downIndex]);
+                _previewedMountables.Add(mountablePoints[downIndex]);
                 downIndex--;
                 if (downIndex == -1) downIndex = mountCount - 1;
                 up = true;
@@ -202,23 +200,23 @@ public class MountablePointLinkController : MonoBehaviour
     
     private void SendAltering(int index, PoolingObject visuals, int unitAmount, bool up)
     {
+        int mountCount = mountablePoints.Count;
         int upIndex = index + 1;
         int downIndex = index - 1;
 
-        int mountCount = mountablePoints.Count;
         for (int i = 0; i < unitAmount; i++)
         {
             if (up && upIndex < mountCount)
             {
                 mountablePoints[upIndex].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[upIndex]);
+                _previewedMountables.Add(mountablePoints[upIndex]);
                 upIndex++;
                 if (downIndex >= 0) up = false;
             } 
             else if (downIndex >= 0)
             {
                 mountablePoints[downIndex].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[downIndex]);
+                _previewedMountables.Add(mountablePoints[downIndex]);
                 downIndex--;
                 if (upIndex < mountCount) up = true;
             }
@@ -229,35 +227,83 @@ public class MountablePointLinkController : MonoBehaviour
             }
         }
     }
-
-    private void SendThrough(PoolingObject visuals, int unitAmount, bool up)
-    {
-        if (up)
-        {
-            for (int i = 1; i < unitAmount + 1; i++)
-            {
-                if (i >= mountablePoints.Count) 
-                {
-                    Debug.Log("Link is full");
-                    break;
-                }
-                mountablePoints[i].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[i]);
-            }
-        }
-        else
-        {
-            for (int i = mountablePoints.Count - 2; i > mountablePoints.Count - (unitAmount + 2); i--)
-            {
-                if (i < 0)
-                {
-                    Debug.Log("Link is full");
-                    break;
-                }
-                mountablePoints[i].CallDisplayPreview(visuals, 1);
-                PreviewedMountables.Add(mountablePoints[i]);
-            }
-        }
-    }
     #endregion
+
+    public List<BaseMountableController> DetermineMountables(BaseMountableController mountable, int unitCount, bool up)
+    {
+        if (!_active || mountablePoints.Count <= 1) return new List<BaseMountableController>();
+        int index = mountablePoints.IndexOf(mountable);
+        var returnList = _loop ? DetermineLoop(index, unitCount, up) : DetermineAltering(index, unitCount, up);
+        returnList.Add(mountable);
+        return returnList;
+    }
+
+    private List<BaseMountableController> DetermineLoop(int index, int unitAmount, bool up)
+    {
+        List<BaseMountableController> mountables = new();
+        int mountCount = mountablePoints.Count;
+        int upIndex = index + 1;
+        if (upIndex == mountCount) upIndex = 0;
+        int downIndex = index - 1;
+        if (downIndex == -1) downIndex = mountCount - 1;
+        
+        for (int i = 0; i < unitAmount; i++)
+        {
+            if (upIndex == downIndex)
+            {
+                mountables.Add(mountablePoints[upIndex]);
+                Debug.Log("Link is full");
+                return mountables;
+            }
+            if (up)
+            {
+                mountables.Add(mountablePoints[upIndex]);
+                upIndex++;
+                if (upIndex == mountCount) upIndex = 0;
+                up = false;
+            } 
+            else
+            {
+                mountables.Add(mountablePoints[downIndex]);
+                downIndex--;
+                if (downIndex == -1) downIndex = mountCount - 1;
+                up = true;
+            }
+        }
+
+        return mountables;
+    }
+
+    private List<BaseMountableController> DetermineAltering(int index, int unitAmount, bool up)
+    {
+        List<BaseMountableController> mountables = new();
+        int mountCount = mountablePoints.Count;
+        int upIndex = index;
+        int downIndex = index;
+        if (up) upIndex += 1;
+        else downIndex -= 1;//TODO: test and also put in determineloop
+        
+        for (int i = 0; i < unitAmount; i++)
+        {
+            if (up && upIndex < mountCount)
+            {
+                mountables.Add(mountablePoints[upIndex]);
+                upIndex++;
+                if (downIndex >= 0) up = false;
+            } 
+            else if (downIndex >= 0)
+            {
+                mountables.Add(mountablePoints[downIndex]);
+                downIndex--;
+                if (upIndex < mountCount) up = true;
+            }
+            else
+            {
+                Debug.Log("Link is full");
+                return mountables;
+            }
+        }
+
+        return mountables;
+    }
 }

@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.65, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3590698476159233911}
   m_RootOrder: 3
@@ -39,8 +40,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3590698476159233911}
+  - component: {fileID: 6052971959446575061}
   - component: {fileID: 3590698476159233912}
   - component: {fileID: 8522117792386605611}
+  - component: {fileID: 7304020169774451607}
   - component: {fileID: 2012179468877392145}
   - component: {fileID: 3664096845654651921}
   - component: {fileID: 8682853159358298236}
@@ -65,6 +68,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4892348460993390557}
   - {fileID: 7044266196135619999}
@@ -75,6 +79,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6052971959446575061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3590698476159233914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: cba3ff0e5bad20841a9a77141158fd46
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8682853159358298236}
+  SimulationBehaviours:
+  - {fileID: 5582304018362055113}
 --- !u!65 &3590698476159233912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -106,6 +135,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &7304020169774451607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3590698476159233914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 8522117792386605611}
 --- !u!208 &2012179468877392145
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -147,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   unitStatsData: {fileID: 11400000, guid: 1c2dc171ba69c244b89dcf2f23e7cad2, type: 2}
 --- !u!114 &5582304018362055113
 MonoBehaviour:
@@ -160,15 +203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outline: {fileID: 8522117792386605611}
-  unitStatsModifierManager: {fileID: 8682853159358298236}
   interactableTypes: 
-  unitDeathController: {fileID: 72521647876881491}
-  unitVisuals: {fileID: 0}
   chaseState: 0
   patrolState: 0
   _patrolPoints: []
   colliders: []
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   unitManager: {fileID: 0}
 --- !u!114 &72521647876881491
 MonoBehaviour:
@@ -210,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dimensionsContainer: {fileID: 4161690664825125625}
-  wallVisuals: {fileID: 671767712744243321, guid: 3c8cf46d0233d87489f2ff3464bed769, type: 3}
+  wallVisuals: {fileID: 8462756324753497644, guid: 3c8cf46d0233d87489f2ff3464bed769, type: 3}
   mountable: {fileID: 6069708946403465422}
 --- !u!1 &3602493593668909367
 GameObject:
@@ -238,6 +280,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.65, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3590698476159233911}
   m_RootOrder: 2
@@ -270,6 +313,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.308, z: -0.145}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3590698476159233911}
   m_RootOrder: 1
@@ -300,9 +344,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 1
+  interactRange: 3
+  interactionComponentState: {fileID: 7770660718286933680, guid: 9d70c20b78c19454b8cc8c28fbcfac5f, type: 3}
   visualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 1, z: 0}
-  selectable: {fileID: 5582304018362055113}
+  selectable: {fileID: 7304020169774451607}
   mountData: {fileID: 11400000, guid: 8135d6063dc0fe344a1106b1c7756f9d, type: 2}
   mountablePointLink: {fileID: 0}
   unit: {fileID: 5582304018362055113}

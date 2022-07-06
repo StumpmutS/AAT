@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class TeleportPoint : InteractableController
 {
+    [SerializeField] private UnitController unit;
+    public UnitController Unit => unit;
     [SerializeField] private Vector3 exitPointOffset;
     [SerializeField] private float teleportTime;
     public float TeleportTime => teleportTime;
-
-    public UnitController Unit { get; private set; }
 
     private SectorController _sector;
     public TeleportPoint OtherTeleportPoint { get; private set; }
@@ -19,7 +19,6 @@ public class TeleportPoint : InteractableController
         base.Awake();
         selectable.OnSelect += SelectTeleporter;
         selectable.OnDeselect += DeselectTeleporter;
-        Unit = selectable as UnitController;
     }
 
     public void SetupPair(SectorController sector, TeleportPoint other, SectorController otherSector)
@@ -33,15 +32,15 @@ public class TeleportPoint : InteractableController
 
     private void SelectTeleporter()
     {
-        OtherTeleportPoint.Unit.CallSelect();
+        OtherTeleportPoint.Unit.OutlineSelectable.CallSelect();
     }
 
     private void DeselectTeleporter()
     {
-        OtherTeleportPoint.Unit.CallDeselect();
+        OtherTeleportPoint.Unit.OutlineSelectable.CallDeselect();
     }
 
-    protected override void RequestAffection(InteractionComponentState componentState)
+    public override void RequestAffection(InteractionComponentState componentState)
     {
         StartCoroutine(WarpInteractor(componentState));
     }

@@ -5,20 +5,19 @@ public class UnitGroupSelectionManager : MonoBehaviour
 {
     [SerializeField] private List<UnitDeterminedUI> unitGroupUI;
 
-    private bool unitGroupUIEnabled = false;
-    private HashSet<UnitGroupController> selectedUnitGroups = new();
-    private static UnitGroupSelectionManager instance;
-    public static UnitGroupSelectionManager Instance => instance;
+    private bool _unitGroupUIEnabled = false;
+    private HashSet<UnitGroupController> _selectedUnitGroups = new();
+    public static UnitGroupSelectionManager Instance { get; private set; }
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     public void AddUnitGroup(UnitGroupController unitGroup)
     {
-        selectedUnitGroups.Add(unitGroup);
-        if (unitGroupUIEnabled) return;
+        _selectedUnitGroups.Add(unitGroup);
+        if (_unitGroupUIEnabled) return;
         foreach (var UIElement in unitGroupUI)
         {
             UIElement.gameObject.SetActive(true);
@@ -28,8 +27,8 @@ public class UnitGroupSelectionManager : MonoBehaviour
 
     public void RemoveUnitGroup(UnitGroupController unitGroup)
     {
-        selectedUnitGroups.Remove(unitGroup);
-        if (selectedUnitGroups.Count != 0) return;
+        _selectedUnitGroups.Remove(unitGroup);
+        if (_selectedUnitGroups.Count != 0) return;
         foreach (var UIelement in unitGroupUI)
         {
             UIelement.gameObject.SetActive(false);
@@ -38,7 +37,7 @@ public class UnitGroupSelectionManager : MonoBehaviour
 
     public void SetChaseStates(bool value)
     {
-        foreach (var unitGroup in selectedUnitGroups)
+        foreach (var unitGroup in _selectedUnitGroups)
         {
             unitGroup.SetChaseStates(value);
         }

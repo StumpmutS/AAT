@@ -1,9 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(TransparentPreviewController))]
-public class PreviewPoolingObject : PoolingObject
+public abstract class BasePreviewPoolingObject : PoolingObject
 {
-    [SerializeField] private GameObject PreviewOfObject;
     public TransparentPreviewController Preview { get; private set; }
 
     private void Awake()
@@ -13,9 +12,11 @@ public class PreviewPoolingObject : PoolingObject
 
     public GameObject InitiateUsage(Transform parent = null)
     {
-        var instantiatedObject = Instantiate(PreviewOfObject, transform.position, transform.rotation);
+        var instantiatedObject = CreateObject();
         instantiatedObject.transform.parent = parent;
         instantiatedObject.transform.localScale = transform.localScale;
         return instantiatedObject;
     }
+
+    protected abstract GameObject CreateObject();
 }

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 652767908968553146}
   - component: {fileID: 4682863212697215120}
-  - component: {fileID: 8645506604730944137}
   m_Layer: 0
   m_Name: MainWallJointConnectorPrefab
   m_TagString: Untagged
@@ -28,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7400700049284007379}
   - {fileID: 4265186425158573067}
@@ -47,22 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dimensionsContainer: {fileID: 2155028390271909941}
-  connectorVisuals: {fileID: -2501494230765697671, guid: f89165cbe09febc42bfe63dff41291a3, type: 3}
---- !u!114 &8645506604730944137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592806553770498442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443ba076f28a72f469b6cfe8ef90babb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sectors:
-    Item1: {fileID: 0}
-    Item2: {fileID: 0}
+  connectorVisuals: {fileID: 3394341664486718731, guid: f89165cbe09febc42bfe63dff41291a3, type: 3}
 --- !u!1001 &7007082078759510584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,11 +199,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
---- !u!4 &4265186425158573067 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5244064559998084736, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
-  m_PrefabInstance: {fileID: 8355959180938689163}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2155028390271909941 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7934892281646660286, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
@@ -230,3 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4134cf50b7b01464c88b385b8cf2425e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4265186425158573067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5244064559998084736, guid: 7c427421a5cbf0549bd679195c831d56, type: 3}
+  m_PrefabInstance: {fileID: 8355959180938689163}
+  m_PrefabAsset: {fileID: 0}

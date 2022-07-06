@@ -3,17 +3,31 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [SerializeField] private NetworkPrefabRef playerPrefab;
+
+    public static StumpNetworkRunner Instance { get; private set; }
+    public NetworkRunner Runner { get; private set; }
+    private Dictionary<PlayerRef, NetworkObject> _spawnedPlayers = new();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
+        //_spawnedPlayers[player] = runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
+        //if (!_spawnedPlayers.TryGetValue(player, out var networkObject)) return;
+        //runner.Despawn(networkObject);
+        //_spawnedPlayers.Remove(player);
     }
 
     #region Input
@@ -160,5 +174,32 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner)
     {
         throw new NotImplementedException();
+    }
+
+    private void OnGUI()
+    {
+        if (Runner is not null) return;
+        if (GUI.Button(new Rect(0,0,200,40), "Host"))
+        {
+            StartGame(GameMode.Host);
+        }
+        if (GUI.Button(new Rect(0,40,200,40), "Join"))
+        {
+            StartGame(GameMode.Client);
+        }
+    }
+
+    private async void StartGame(GameMode gameMode)
+    {
+        Runner ??= gameObject.AddComponent<NetworkRunner>();
+        Runner.ProvideInput = true;
+
+        await Runner.StartGame(new StartGameArgs
+        {
+            GameMode = gameMode,
+            SessionName = "Test Session",
+            Scene = SceneManager.GetActiveScene().buildIndex,
+            SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+        });
     }
 }

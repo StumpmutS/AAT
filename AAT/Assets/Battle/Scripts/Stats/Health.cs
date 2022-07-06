@@ -5,13 +5,13 @@ using UnityEngine;
 public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
-    private float maxHealth => unitDataManager.CurrentStats[EUnitFloatStats.MaxHealth];
+    private float _maxHealth => unitDataManager.GetStat(EUnitFloatStats.MaxHealth);
 
     public event Action<float> OnHealthChanged = delegate { };
     public event Action OnDie = delegate { };
     
-    protected float currentHealth;
-    private float currentHealthPercent;
+    protected float _currentHealth;
+    private float _currentHealthPercent;
 
     protected virtual void Awake()
     {
@@ -20,8 +20,8 @@ public class Health : MonoBehaviour, IHealth
 
     protected virtual void Start()
     {
-        currentHealth = maxHealth;
-        currentHealthPercent = currentHealth / maxHealth;
+        _currentHealth = _maxHealth;
+        _currentHealthPercent = _currentHealth / _maxHealth;
     }
 
     public void ModifyHealth(float amount)
@@ -34,22 +34,22 @@ public class Health : MonoBehaviour, IHealth
         {
             TakeDamage(Mathf.Abs(amount));
         }
-        currentHealthPercent = currentHealth / maxHealth;
-        OnHealthChanged.Invoke(currentHealthPercent);
+        _currentHealthPercent = _currentHealth / _maxHealth;
+        OnHealthChanged.Invoke(_currentHealthPercent);
     }
 
     protected virtual void Heal(float amount)
     {
-        if (currentHealth + amount > maxHealth)
-            currentHealth = maxHealth;
+        if (_currentHealth + amount > _maxHealth)
+            _currentHealth = _maxHealth;
         else
-            currentHealth += amount;
+            _currentHealth += amount;
     }
 
     protected virtual void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        _currentHealth -= amount;
+        if (_currentHealth <= 0)
             Die();
     }
     
@@ -60,7 +60,7 @@ public class Health : MonoBehaviour, IHealth
 
     private void RefreshHealth()
     {
-        currentHealth = maxHealth * currentHealthPercent;
-        OnHealthChanged.Invoke(currentHealthPercent);
+        _currentHealth = _maxHealth * _currentHealthPercent;
+        OnHealthChanged.Invoke(_currentHealthPercent);
     }
 }

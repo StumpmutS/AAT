@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public abstract class BaseSpawnerController : MonoBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints;
-    [SerializeField] private UnitStatsModifierManager unitStatsModifierManager;
+    
+    private UnitStatsModifierManager _unitStatsModifierManager;
 
     protected int _spawnGroupsAmount;
     private int _unitsPerGroupAmount;
@@ -15,7 +17,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
     private int _maxSpawnLocationUse;
     private Vector3 _spawnerOffset;
     private SelectableController _spawnerVisuals;
-    protected UnitController _unitPrefab;
+    protected NetworkPrefabRef _unitPrefab;
     private UnitGroupController _unitGroupPrefab;
     protected GameObject _upgradesUIContainer;
     private List<UnitStatsUpgradeData> _upgrades;
@@ -39,6 +41,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
 
     private void Awake()
     {
+        _unitStatsModifierManager = GetComponent<UnitStatsModifierManager>();
         foreach (var spawnPoint in spawnPoints)
         {
             _spawnPointActiveGroups.Add(spawnPoint, -1);
@@ -60,7 +63,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         _upgrades = unitSpawnData.UnitStatsUpgradeData;
         _sectorController = sector;
 
-        unitStatsModifierManager.Init(unitSpawnData.baseUnitStatsData);
+        _unitStatsModifierManager.Init(unitSpawnData.baseUnitStatsData);
 
         for (int i = 0; i < _spawnGroupsAmount; i++)
         {
@@ -170,7 +173,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
         yield return new WaitForSeconds(spawnTime);
         for (int i = 0; i < _unitGroupNumbers[groupIndex]; i++)
         {
-            UnitController instantiatedUnit = Instantiate(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity);
+            UnitController instantiatedUnit = StumpNetworkRunner.Instance.Runner.Spawn(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity).GetComponent<UnitController>();
             _activeUnitGroups[groupIndex].AddUnit(instantiatedUnit);
             _sectorController.AddUnit(instantiatedUnit);
             for (int j = 0; j < _currentUpgradeIndex; j++)
@@ -229,7 +232,7 @@ public abstract class BaseSpawnerController : MonoBehaviour
 
         BaseUnitStatsData upgradeStats = _upgrades[_currentUpgradeIndex].baseUnitStatsDataInfo;
 
-        unitStatsModifierManager.ModifyStats(upgradeStats);
+        _unitStatsModifierManager.ModifyStats(upgradeStats);
         OnModifyStats.Invoke(upgradeStats);
         _currentUpgradeIndex++;
     }

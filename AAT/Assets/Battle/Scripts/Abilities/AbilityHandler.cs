@@ -23,7 +23,7 @@ public class AbilityHandler : MonoBehaviour
     {
         _unitController = GetComponent<UnitController>();
         _unitAnimationController = GetComponent<UnitAnimationController>();
-        _unitController.OnSelect += SendDisplayData;
+        _unitController.OutlineSelectable.OnSelect += SendDisplayData;
         foreach (var abilityData in unitAbilityData)
         {
             _unitAbilityDataInfo.Add(abilityData.UnitAbilityDataInfo);
@@ -64,14 +64,14 @@ public class AbilityHandler : MonoBehaviour
     private void SubscribeCheckGround()
     {
         if (_checkGroundSubscribed) return;
-        InputManager.OnLeftCLickUp += CheckGround;
+        BaseInputManager.OnLeftCLickUp += CheckGround;
         _checkGroundSubscribed = true;
     }
 
     private void UnsubscribeCheckGround()
     {
         if (!_checkGroundSubscribed) return;
-        InputManager.OnLeftCLickUp += CheckGround;
+        BaseInputManager.OnLeftCLickUp += CheckGround;
         _checkGroundSubscribed = false;
     }
 

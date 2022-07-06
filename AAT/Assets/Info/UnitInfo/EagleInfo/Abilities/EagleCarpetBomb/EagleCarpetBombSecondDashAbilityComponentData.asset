@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Repeat: 0
   RepeatIntervals: 0
-  ComponentDelay: 3.73678
-  ComponentDuration: 5.01
+  ComponentDelay: 3.72678
+  ComponentDuration: 5
   dashDistance: {x: 0, y: 0, z: 5}
   dashSpeed: 1
-  durationPadding: 0.01
+  durationPadding: 0

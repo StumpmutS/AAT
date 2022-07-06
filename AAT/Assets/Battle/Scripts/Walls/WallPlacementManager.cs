@@ -26,7 +26,7 @@ public class WallPlacementManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        InputManager.OnTPressed += ActivateWallPlacementInterface;
+        BaseInputManager.OnTPressed += ActivateWallPlacementInterface;
     }
 
     public void AddWallJoint(WallJointController wallJoint)
@@ -38,15 +38,15 @@ public class WallPlacementManager : MonoBehaviour
     private void ActivateWallPlacementInterface()
     {
         _wallPlacementActive = true;
-        InputManager.OnTPressed -= ActivateWallPlacementInterface;
-        InputManager.OnTPressed += DeactivateWallPlacementInterface;
+        BaseInputManager.OnTPressed -= ActivateWallPlacementInterface;
+        BaseInputManager.OnTPressed += DeactivateWallPlacementInterface;
     }
     
     private void DeactivateWallPlacementInterface()
     {
         _wallPlacementActive = false;
-        InputManager.OnTPressed -= DeactivateWallPlacementInterface;
-        InputManager.OnTPressed += ActivateWallPlacementInterface;
+        BaseInputManager.OnTPressed -= DeactivateWallPlacementInterface;
+        BaseInputManager.OnTPressed += ActivateWallPlacementInterface;
     }
 
     private void BeginWallPlacement(WallJointController wallJoint)
@@ -56,10 +56,10 @@ public class WallPlacementManager : MonoBehaviour
         _currentJointPositionZeroY = new Vector3(_currentWallJoint.transform.position.x, 0,
             _currentWallJoint.transform.position.z);
         _currentJointCollider = wallJoint.GetComponent<Collider>();
-        InputManager.OnRightClickDown += EndWallPlacement;
-        InputManager.OnUpdate += MoveWallPreview;
-        InputManager.OnLeftCLickUp += PlaceWall;
-        InputManager.OnRPressed += ReversePreviewDirection;
+        BaseInputManager.OnRightClickDown += EndWallPlacement;
+        BaseInputManager.OnUpdate += MoveWallPreview;
+        BaseInputManager.OnLeftCLickUp += PlaceWall;
+        BaseInputManager.OnRPressed += ReversePreviewDirection;
         wallPlacementUI.gameObject.SetActive(true);
     }
 
@@ -74,19 +74,19 @@ public class WallPlacementManager : MonoBehaviour
         _currentConnectorPreview.Deactivate();
         if (_createdConnectorPreview != null) _createdConnectorPreview.Deactivate();
         if (_createdJointPreview != null) _createdJointPreview.Deactivate();
-        InputManager.OnRightClickDown -= EndWallPlacement;
-        InputManager.OnUpdate -= MoveWallPreview;
-        InputManager.OnLeftCLickUp -= PlaceWall;
-        InputManager.OnRPressed -= ReversePreviewDirection;
+        BaseInputManager.OnRightClickDown -= EndWallPlacement;
+        BaseInputManager.OnUpdate -= MoveWallPreview;
+        BaseInputManager.OnLeftCLickUp -= PlaceWall;
+        BaseInputManager.OnRPressed -= ReversePreviewDirection;
         wallPlacementUI.gameObject.SetActive(false);
     }
 
     #region WallPreview
     private bool _reverse;
-    private HashSet<PreviewPoolingObject> _wallPreviews = new();
-    private PreviewPoolingObject _currentConnectorPreview;
-    private PreviewPoolingObject _createdConnectorPreview;
-    private PreviewPoolingObject _createdJointPreview;
+    private HashSet<BasePreviewPoolingObject> _wallPreviews = new();
+    private BasePreviewPoolingObject _currentConnectorPreview;
+    private BasePreviewPoolingObject _createdConnectorPreview;
+    private BasePreviewPoolingObject _createdJointPreview;
     private WallJointController _snapJoint;
     private Vector3 _normDirection;
 
@@ -153,7 +153,7 @@ public class WallPlacementManager : MonoBehaviour
         //SPAWN THE STUFF
         for (int i = 0; i < wallNumber; i++)
         {
-            var wallVisuals = PoolingManager.Instance.CreatePoolingObject(placeableWallPrefab.WallVisuals) as PreviewPoolingObject;
+            var wallVisuals = PoolingManager.Instance.CreatePoolingObject(placeableWallPrefab.WallVisuals) as BasePreviewPoolingObject;
             wallVisuals.transform.position = _normDirection * (i * placeableWallPrefab.DimensionsContainer.XDimensions) + jointConnectOffset;
             wallVisuals.transform.right = dragDirection;
             if (Vector3.Dot(wallVisuals.transform.forward, _currentWallJoint.transform.forward) < 0)
@@ -164,10 +164,10 @@ public class WallPlacementManager : MonoBehaviour
         }
         var currentWallConnector = _currentWallJoint.SetupConnectorPreview(_normDirection, _reverse, scaleFillAmount);
         _currentConnectorPreview = currentWallConnector;
-        var createdJointPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.JointPreview) as PreviewPoolingObject;
+        var createdJointPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.JointPreview) as BasePreviewPoolingObject;
         createdJointPreview.transform.rotation = _currentWallJoint.transform.rotation;
         createdJointPreview.transform.position = new Vector3(point.x, wallOffset.y, point.z);
-        var createdConnectorPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.ConnectorPrefab.ConnectorVisuals) as PreviewPoolingObject;
+        var createdConnectorPreview = PoolingManager.Instance.CreatePoolingObject(_currentWallJoint.ConnectorPrefab.ConnectorVisuals) as BasePreviewPoolingObject;
         createdConnectorPreview.transform.position = createdJointPreview.transform.position - _normDirection * (connectorSize * _currentWallJoint.ConnectorXDimensions / 2);
         createdConnectorPreview.transform.rotation = currentWallConnector.transform.rotation;
         createdConnectorPreview.transform.localScale = currentWallConnector.transform.localScale;

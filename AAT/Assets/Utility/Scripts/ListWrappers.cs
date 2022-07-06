@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Utility.Scripts
@@ -8,5 +9,11 @@ namespace Utility.Scripts
     public class ButtonListWrapper
     {
         public List<Button> List;
+    }
+    
+    [Serializable]
+    public class GameObjectListWrapper
+    {
+        public List<GameObject> List;
     }
 }

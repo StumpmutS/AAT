@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2096072149501911506}
   - component: {fileID: 606514812364976569}
-  - component: {fileID: 3686849663143091973}
+  - component: {fileID: 7215198849420336731}
   m_Layer: 0
   m_Name: WallJointVisualsPrefab
   m_TagString: Untagged
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7032580070086544531}
   m_Father: {fileID: 0}
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colors: {fileID: 11400000, guid: 7d2cade1f3e3bea4394d6237bc018215, type: 2}
   previewRenderer: {fileID: 8202060480259291132}
---- !u!114 &3686849663143091973
+--- !u!114 &7215198849420336731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,11 +57,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5936664882481720018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5544b166857d5bf47860b42a015dce55, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cb410a5c8197fe4a846f9156eb2d451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolingTag: WallJointVisualsPrefab
-  PreviewOfObject: {fileID: 7296653334839882568, guid: 7dd824e40346b8c40bf06bf404f6b298, type: 3}
+  actualPrefab: {fileID: 7296653334839882568, guid: 7dd824e40346b8c40bf06bf404f6b298, type: 3}
 --- !u!1001 &7354949032289856376
 PrefabInstance:
   m_ObjectHideFlags: 0

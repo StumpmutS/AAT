@@ -15,7 +15,7 @@ MonoBehaviour:
   Repeat: 1
   RepeatIntervals: 0
   ComponentDelay: 0.25
-  ComponentDuration: 0.01
-  dashDistance: {x: 0, y: 0, z: 0}
+  ComponentDuration: 0.4
+  dashDistance: {x: 0, y: 0, z: 2}
   dashSpeed: 5
-  durationPadding: 0.01
+  durationPadding: 0

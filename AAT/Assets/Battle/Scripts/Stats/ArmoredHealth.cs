@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ArmoredHealth : Health, IArmor
 {
-    private float baseArmorPercent => unitDataManager.CurrentStats[EUnitFloatStats.BaseArmorPercent];
-    private float maxArmorPercent => unitDataManager.CurrentStats[EUnitFloatStats.MaxArmorPercent];
+    private float baseArmorPercent => unitDataManager.GetStat(EUnitFloatStats.BaseArmorPercent);
+    private float maxArmorPercent => unitDataManager.GetStat(EUnitFloatStats.MaxArmorPercent);
 
     private float currentArmorPercent;
 
@@ -15,8 +15,8 @@ public class ArmoredHealth : Health, IArmor
 
     protected override void TakeDamage(float amount)
     {
-        currentHealth -= amount - (amount * (currentArmorPercent / 100));
-        if (currentHealth <= 0)
+        _currentHealth -= amount - (amount * (currentArmorPercent / 100));
+        if (_currentHealth <= 0)
             Die();
     }
 

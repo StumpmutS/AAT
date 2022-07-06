@@ -9,7 +9,7 @@ public class SpawnerManager : MonoBehaviour
     
     public static SpawnerManager Instance { get; private set; }
 
-    private List<BaseSpawnerController> spawners = new();
+    private List<BaseSpawnerController> _spawners = new();
     private int _nextIndex;
 
     private static BaseSpawnerController _activeSpawner;
@@ -17,22 +17,22 @@ public class SpawnerManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        spawners.Equalize(spawnPlotManager.SpawnerPlots.Count);
+        _spawners.Equalize(spawnPlotManager.SpawnerPlots.Count);
     }
 
     private void Start()
     {
-        InputManager.OnAlpha1 += SelectSpawnerByIndex;
-        InputManager.OnAlpha2 += SelectSpawnerByIndex;
-        InputManager.OnAlpha3 += SelectSpawnerByIndex;
-        InputManager.OnAlpha4 += SelectSpawnerByIndex;
-        InputManager.OnAlpha5 += SelectSpawnerByIndex;
-        InputManager.OnAlpha6 += SelectSpawnerByIndex;
+        /*BaseInputManager.OnAlpha1 += SelectSpawnerByIndex;
+        BaseInputManager.OnAlpha2 += SelectSpawnerByIndex;
+        BaseInputManager.OnAlpha3 += SelectSpawnerByIndex;
+        BaseInputManager.OnAlpha4 += SelectSpawnerByIndex;
+        BaseInputManager.OnAlpha5 += SelectSpawnerByIndex;
+        BaseInputManager.OnAlpha6 += SelectSpawnerByIndex;*/
     }
 
     public void AddSpawnerPlot(BaseSpawnerController spawner)
     {
-        spawners[_nextIndex] = spawner;
+        _spawners[_nextIndex] = spawner;
         spawner.OnSpawnerSelect += SetActiveSpawner;
     }
 
@@ -45,14 +45,14 @@ public class SpawnerManager : MonoBehaviour
 
     private void SelectSpawnerByIndex(int keyPressed)
     {
-        foreach (var spawner in spawners.Where(spawner => spawner != null))
+        foreach (var spawner in _spawners.Where(spawner => spawner != null))
         {
             spawner.CurrentSpawnerVisualsSelectable.CallDeselect();
         }
 
-        if (spawners[keyPressed - 1] != null)
+        if (_spawners[keyPressed - 1] != null)
         {
-            spawners[keyPressed - 1].CurrentSpawnerVisualsSelectable.CallSelect();
+            _spawners[keyPressed - 1].CurrentSpawnerVisualsSelectable.CallSelect();
 
         }
     }

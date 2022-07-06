@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class InteractableController : MonoBehaviour //TODO: both sets up previews and handles interaction (bad)
@@ -23,7 +24,7 @@ public abstract class InteractableController : MonoBehaviour //TODO: both sets u
         InteractableManager.Instance.AddInteractable(this);
         selectable.OnHover += HoverHandler;
         selectable.OnHoverStop += HoverStopHandler;
-        if (selectable is UnitController unit) unit.OnDeath += DestroyInteractable;
+        if (selectable.TryGetComponent<UnitController>(out var unit)) unit.OnDeath += DestroyInteractable;
     }
 
     private void DestroyInteractable(UnitController notNeeded)
@@ -59,14 +60,11 @@ public abstract class InteractableController : MonoBehaviour //TODO: both sets u
         InteractableManager.Instance.RemoveHoveredInteractable(this);
     }
 
-    public virtual void SetupInteraction(MovementInteractOverrideComponentState componentState)
-    {
-        componentState.Interact(this, RequestAffection);
-    }
-
-    protected abstract void RequestAffection(InteractionComponentState componentState);
+    public abstract void RequestAffection(InteractionComponentState componentState);
 
     public InteractionComponentState RequestState() => interactionComponentState;
+
+    public virtual InteractableController DetermineInteractable(UnitController _) => this;
 
     public void CallDisplayPreview(PoolingObject previewObject, int unitAmount)
     {

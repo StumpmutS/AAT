@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Unit Data/Base/Unit Spawn Data")]
 public class UnitSpawnData : ScriptableObject
 {
-    public SpawnerController Spawner;
+    public NetworkPrefabRef SpawnerPrefab;
     public int SpawnGroupsAmount;
     public int UnitsPerGroupAmount;
     public float SpawnTime;
@@ -13,7 +14,7 @@ public class UnitSpawnData : ScriptableObject
     public int MaxSpawnLocationUse;
     public Vector3 SpawnerOffset;
     public SelectableController SpawnerVisuals;
-    public UnitController UnitPrefab;
+    public NetworkPrefabRef UnitPrefab;
     public UnitGroupController UnitGroupPrefab;
     public BaseUnitStatsData baseUnitStatsData;
     public List<UnitStatsUpgradeData> UnitStatsUpgradeData;

@@ -5,7 +5,7 @@ public class AIBrain : Brain
         base.Start();
         var stats = GetComponent<UnitStatsModifierManager>();
         GetComponent<TargetFinder>().Init(
-            stats.CurrentStats[EUnitFloatStats.AttackRange], 
-            stats.CurrentStats[EUnitFloatStats.SightRange]);
+            stats.GetStat(EUnitFloatStats.AttackRange), 
+            stats.GetStat(EUnitFloatStats.SightRange));
     }
 }

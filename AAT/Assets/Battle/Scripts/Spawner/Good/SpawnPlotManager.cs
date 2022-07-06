@@ -19,13 +19,13 @@ public class SpawnPlotManager : MonoBehaviour
             spawnerPlot.OnSpawnerPlotDeselect += RemoveButtons;
         }
 
-        InputManager.OnAlpha1 += SelectSpawnerPlotByIndex;
-        InputManager.OnAlpha2 += SelectSpawnerPlotByIndex;
-        InputManager.OnAlpha3 += SelectSpawnerPlotByIndex;
-        InputManager.OnAlpha4 += SelectSpawnerPlotByIndex;
-        InputManager.OnAlpha5 += SelectSpawnerPlotByIndex;
-        InputManager.OnAlpha6 += SelectSpawnerPlotByIndex;
-        InputManager.OnAlpha7 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha1 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha2 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha3 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha4 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha5 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha6 += SelectSpawnerPlotByIndex;
+        BaseInputManager.OnAlpha7 += SelectSpawnerPlotByIndex;
     }
 
     public void AddPlot(SpawnerPlotController plot)

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4ae9af9b885ce439ed58fba092077c, type: 3}
   m_Name: PreviewColors
   m_EditorClassIdentifier: 
-  color1: {r: 0, g: 1, b: 0.052369833, a: 0.19607843}
-  color2: {r: 1, g: 0, b: 0, a: 0.19607843}
+  color1: {r: 0, g: 1, b: 0.44686317, a: 0.43137255}
+  color2: {r: 0.754717, g: 0.14070852, b: 0.10323961, a: 0.43137255}

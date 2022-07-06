@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Repeat: 1
   RepeatIntervals: 1
-  ComponentDelay: 3.73678
+  ComponentDelay: 3.72678
   ComponentDuration: 5
   unitPrefab: {fileID: -8066188088115171745, guid: b2b42c58d4c897d4288813b53f3178d1, type: 3}
   projectilesPerOffset: 1
   spawnOffsets:
   - {x: 0, y: -1, z: 0}
+  useMoveSpeed: 0
+  alternateSpeed: 1

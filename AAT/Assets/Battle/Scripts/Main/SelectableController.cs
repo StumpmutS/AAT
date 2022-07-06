@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-public class SelectableController : StumpTeamEntity
+public class SelectableController : MonoBehaviour
 {
     public event Action OnSelect = delegate { };
     public event Action OnDeselect = delegate { };
@@ -66,27 +67,27 @@ public class SelectableController : StumpTeamEntity
     {
         if (_selectSubscribed) return;
         _selectSubscribed = true;
-        InputManager.OnLeftCLickUp += CallSelect;
+        BaseInputManager.OnLeftCLickUp += CallSelect;
     }
 
     private void UnsubscribeSelect()
     {
         if (!_selectSubscribed) return;
         _selectSubscribed = false;
-        InputManager.OnLeftCLickUp -= CallSelect;
+        BaseInputManager.OnLeftCLickUp -= CallSelect;
     }
     
     private void SubscribeDeselect() 
     {
         if (_deselectSubscribed) return;
         _deselectSubscribed = true;
-        InputManager.OnLeftCLickUp += CallDeselect;
+        BaseInputManager.OnLeftCLickUp += CallDeselect;
     }
     
     private void UnsubscribeDeselect() 
     {
         if (!_deselectSubscribed) return;
         _deselectSubscribed = false;
-        InputManager.OnLeftCLickUp -= CallDeselect;
+        BaseInputManager.OnLeftCLickUp -= CallDeselect;
     }
 }

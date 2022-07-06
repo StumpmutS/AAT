@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1796195750225188245}
   - component: {fileID: 1005945339106400530}
-  - component: {fileID: -2501494230765697671}
+  - component: {fileID: 3394341664486718731}
   m_Layer: 0
   m_Name: TempConnectorVisuals
   m_TagString: Untagged
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5937546364805453138}
   m_Father: {fileID: 0}
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colors: {fileID: 11400000, guid: 7d2cade1f3e3bea4394d6237bc018215, type: 2}
   previewRenderer: {fileID: 4768549122485251645}
---- !u!114 &-2501494230765697671
+--- !u!114 &3394341664486718731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,11 +57,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8538384705294188002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5544b166857d5bf47860b42a015dce55, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cb410a5c8197fe4a846f9156eb2d451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolingTag: TempConnectorVisuals
-  PreviewOfObject: {fileID: 1592806553770498442, guid: 8e88dffff9ea2074c89047688a85da09, type: 3}
+  actualPrefab: {fileID: 1592806553770498442, guid: 3d57bb71029a00842935a5e16eaeeb57, type: 3}
 --- !u!1001 &6191569365773152953
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,13 +139,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 673722bc029efd2438e8151568921a26, type: 3}
---- !u!4 &5937546364805453138 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 673722bc029efd2438e8151568921a26, type: 3}
-  m_PrefabInstance: {fileID: 6191569365773152953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &4768549122485251645 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 673722bc029efd2438e8151568921a26, type: 3}
+  m_PrefabInstance: {fileID: 6191569365773152953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5937546364805453138 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 673722bc029efd2438e8151568921a26, type: 3}
   m_PrefabInstance: {fileID: 6191569365773152953}
   m_PrefabAsset: {fileID: 0}

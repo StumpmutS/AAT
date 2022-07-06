@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BearChargeDamageAbilityComponentData
   m_EditorClassIdentifier: 
   Repeat: 1
+  RepeatIntervals: 0
   ComponentDelay: 0.25
-  ComponentDuration: 0.5
+  ComponentDuration: 0.4
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

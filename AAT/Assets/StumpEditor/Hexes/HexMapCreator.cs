@@ -4,10 +4,12 @@ using Unity.AI.Navigation;
 using UnityEditor;
 using UnityEngine;
 using Utility.Scripts;
+using Random = UnityEngine.Random;
 
 public class HexMapCreator : EditorWindow
 {
     [SerializeField] private FactionColors _factionColors;
+    [SerializeField] private FactionHexPrefabs _factionHexPrefabs;
     [SerializeField] private GameObject _hexPrefab;
     [SerializeField] private GameObject _wallJointPrefab;
     [SerializeField] private GameObject _wallJointConnectorPrefab;
@@ -142,6 +144,7 @@ public class HexMapCreator : EditorWindow
         _manager = (GameObject)EditorGUILayout.ObjectField("Manager", _manager, typeof(GameObject), true);
         _upgradesUI = (GameObject) EditorGUILayout.ObjectField("Upgrades UI", _upgradesUI, typeof(GameObject), true);
         _spawnPlot = (GameObject) EditorGUILayout.ObjectField("Spawn Plot", _spawnPlot, typeof(GameObject), false);
+        _factionHexPrefabs = (FactionHexPrefabs) EditorGUILayout.ObjectField("Faction Hex Prefabs", _factionHexPrefabs, typeof(FactionHexPrefabs), false);
         EditorGUILayout.EndHorizontal();
         GUILayout.EndArea();
     }
@@ -381,11 +384,11 @@ public class HexMapCreator : EditorWindow
         {
             for (int j = 0; j < _factionGrid[i].Count; j++)
             {
-                if (_factionGrid[i][j] != EFaction.None)
-                {
-                    hexPrefabs[i][j] = ((GameObject)PrefabUtility.InstantiatePrefab(_hexPrefab)).GetComponent<HexController>();
-                    hexRef ??= hexPrefabs[i][j].gameObject; //need ref to just one
-                }
+                if (_factionGrid[i][j] == EFaction.None) continue;
+                var prefabOptions = _factionHexPrefabs.FactionsByHexPrefab[_factionGrid[i][j]].List;
+                var prefab = prefabOptions[Random.Range(0, prefabOptions.Count)];
+                hexPrefabs[i][j] = ((GameObject)PrefabUtility.InstantiatePrefab(prefab)).GetComponent<HexController>();
+                hexRef = hexPrefabs[i][j].gameObject; //need ref to just one
             }
         }
         
@@ -394,7 +397,7 @@ public class HexMapCreator : EditorWindow
         var wallContainer = (GameObject)PrefabUtility.InstantiatePrefab(_containerPrefab);
         wallContainer.name = "Wall Container";
         var jointContainer = (GameObject)PrefabUtility.InstantiatePrefab(_containerPrefab);
-        wallContainer.name = "Joint Container";
+        jointContainer.name = "Joint Container";
         var spawnPlotContainer = (GameObject)PrefabUtility.InstantiatePrefab(_containerPrefab);
         spawnPlotContainer.name = "Spawn Plot Container";
 
@@ -416,7 +419,7 @@ public class HexMapCreator : EditorWindow
                 hex.transform.localScale *= _3DMapSize;
                 hex.transform.parent = hexContainer.transform;
                 var spawnPlot = ((GameObject)PrefabUtility.InstantiatePrefab(_spawnPlot)).GetComponent<SpawnerPlotController>();
-                spawnPlot.transform.position = new Vector3(pos.x, hexRef.transform.localScale.y / 2, pos.y);
+                spawnPlot.transform.position = new Vector3(pos.x, 0, pos.y);
                 spawnPlot.Setup(_upgradesUI, hex.GetComponent<SectorController>(), _factionGrid[i][j]);
                 spawnPlot.transform.parent = spawnPlotContainer.transform;
                 _manager.GetComponent<SpawnPlotManager>().AddPlot(spawnPlot);
@@ -476,7 +479,6 @@ public class HexMapCreator : EditorWindow
         }
 
         if (hexRef is null) return;
-        wallContainer.transform.position += new Vector3(0, hexRef.transform.localScale.y / 2, 0);
         hexRef.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 

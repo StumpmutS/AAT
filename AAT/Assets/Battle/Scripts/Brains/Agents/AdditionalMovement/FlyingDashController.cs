@@ -5,7 +5,7 @@ using Utility.Scripts;
 public class FlyingDashController : DashController
 {
     private UnitStatsModifierManager _stats;
-    private float _turnSpeed => _stats.CurrentStats[EUnitFloatStats.TurnSpeed];
+    private float _turnSpeed => _stats.GetStat(EUnitFloatStats.TurnSpeed);
 
     private Vector3 _rotationTarget;
     

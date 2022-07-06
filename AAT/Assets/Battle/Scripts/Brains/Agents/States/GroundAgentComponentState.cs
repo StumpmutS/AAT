@@ -90,8 +90,8 @@ public class GroundAgentComponentState : ComponentState, IAgent
 
     public void SetSpeed(float speed)
     {
-        _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.CurrentStats[EUnitFloatStats.MovementSpeed] - speed);
-        _agent.speed = _stats.CurrentStats[EUnitFloatStats.MovementSpeed];
+        _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.GetStat(EUnitFloatStats.MovementSpeed) - speed);
+        _agent.speed = _stats.GetStat(EUnitFloatStats.MovementSpeed);
     }
 
     public float GetSpeed() => _agent.speed;

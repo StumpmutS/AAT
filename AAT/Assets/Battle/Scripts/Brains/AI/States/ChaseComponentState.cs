@@ -5,8 +5,8 @@ public class ChaseComponentState : ComponentState
     private IAgent _agent => _agentBrain.CurrentAgent;
     private UnitStatsModifierManager _unitStats;
     private UnitAnimationController _animation;
-    private float _moveSpeed => _unitStats.CurrentStats[EUnitFloatStats.MovementSpeed];
-    private float _chaseSpeedPercentMultiplier => _unitStats.CurrentStats[EUnitFloatStats.ChaseSpeedPercentMultiplier];
+    private float _moveSpeed => _unitStats.GetStat(EUnitFloatStats.MovementSpeed);
+    private float _chaseSpeedPercentMultiplier => _unitStats.GetStat(EUnitFloatStats.ChaseSpeedPercentMultiplier);
 
     private void Awake()
     {

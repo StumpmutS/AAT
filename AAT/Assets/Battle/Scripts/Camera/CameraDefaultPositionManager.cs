@@ -8,13 +8,13 @@ public class CameraDefaultPositionManager : MonoBehaviour
 
     private void Start()
     {
-        InputManager.OnAlpha0 += MoveCameraTo;
-        InputManager.OnAlpha1 += MoveCameraTo;
-        InputManager.OnAlpha2 += MoveCameraTo;
-        InputManager.OnAlpha3 += MoveCameraTo;
-        InputManager.OnAlpha4 += MoveCameraTo;
-        InputManager.OnAlpha5 += MoveCameraTo;
-        InputManager.OnAlpha6 += MoveCameraTo;
+        BaseInputManager.OnAlpha0 += MoveCameraTo;
+        BaseInputManager.OnAlpha1 += MoveCameraTo;
+        BaseInputManager.OnAlpha2 += MoveCameraTo;
+        BaseInputManager.OnAlpha3 += MoveCameraTo;
+        BaseInputManager.OnAlpha4 += MoveCameraTo;
+        BaseInputManager.OnAlpha5 += MoveCameraTo;
+        BaseInputManager.OnAlpha6 += MoveCameraTo;
     }
 
     private void MoveCameraTo(int cameraPositionIndex)

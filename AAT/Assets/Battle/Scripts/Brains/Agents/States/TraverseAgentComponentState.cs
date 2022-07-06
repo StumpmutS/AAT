@@ -7,7 +7,7 @@ public class TraverseAgentComponentState : ComponentState, IAgent
 {
     private UnitController _unit;
     private UnitStatsModifierManager _stats;
-    private float _speed => _stats.CurrentStats[EUnitFloatStats.MovementSpeed] * _stats.CurrentStats[EUnitFloatStats.TraverseSpeedPercentMultiplier] / 100;
+    private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed) * _stats.GetStat(EUnitFloatStats.TraverseSpeedPercentMultiplier) / 100;
 
     private bool _entered;
     private bool _activationReady;
@@ -113,7 +113,7 @@ public class TraverseAgentComponentState : ComponentState, IAgent
         _enabled = false;
     }
 
-    public void SetSpeed(float speed) => _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.CurrentStats[EUnitFloatStats.MovementSpeed] - speed);
+    public void SetSpeed(float speed) => _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.GetStat(EUnitFloatStats.MovementSpeed) - speed);
 
     public float GetSpeed() => _speed;
 

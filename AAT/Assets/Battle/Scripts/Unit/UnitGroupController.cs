@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class UnitGroupController : MonoBehaviour //TODO
 {
-    private List<UnitController> units = new();
-    public List<UnitController> Units => units;
+    public List<UnitController> Units { get; } = new();
 
     private Action<int> _unitDeathCallback;
     private int _groupIndex;
@@ -23,7 +22,7 @@ public class UnitGroupController : MonoBehaviour //TODO
     private void UnitDeathHandler(UnitController unit)
     {
         RemoveUnit(unit);
-        if (units.Count <= 0)
+        if (Units.Count <= 0)
         {
             _selected = false;
             _outlined = false;
@@ -33,21 +32,21 @@ public class UnitGroupController : MonoBehaviour //TODO
 
     public void AddUnit(UnitController unit)
     {
-        units.Add(unit);
+        Units.Add(unit);
         SetupUnit(unit);
         if (_selected)
         {
-            unit.CallSelect();
+            unit.OutlineSelectable.CallSelect();
         } 
         else if (_outlined)
         {
-            unit.Outline();
+            unit.OutlineSelectable.Outline();
         }
     }
     
     private void RemoveUnit(UnitController unit)
     {
-        units.Remove(unit);
+        Units.Remove(unit);
         UnSetupUnit(unit);
     }
 
@@ -55,9 +54,9 @@ public class UnitGroupController : MonoBehaviour //TODO
     {
         if (_selected) return;
         _selected = true;
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
-            unit.CallSelect();
+            unit.OutlineSelectable.CallSelect();
         }
         UnitGroupSelectionManager.Instance.AddUnitGroup(this);
     }
@@ -66,9 +65,9 @@ public class UnitGroupController : MonoBehaviour //TODO
     {
         if (!_selected) return;
         _selected = false;
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
-            unit.CallDeselect();
+            unit.OutlineSelectable.CallDeselect();
         }
         UnitGroupSelectionManager.Instance.RemoveUnitGroup(this);
     }
@@ -77,9 +76,9 @@ public class UnitGroupController : MonoBehaviour //TODO
     {
         if (_outlined) return;
         _outlined = true;
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
-            unit.Outline();
+            unit.OutlineSelectable.Outline();
         }
     }
 
@@ -87,34 +86,34 @@ public class UnitGroupController : MonoBehaviour //TODO
     {
         if (!_outlined) return;
         _outlined = false;
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
-            unit.RemoveOutline();
+            unit.OutlineSelectable.RemoveOutline();
         }
     }
 
     private void SetupUnit(UnitController unit)
     {
-        unit.SetGroup(this);
-        unit.OnSelect += SelectGroup;
-        unit.OnDeselect += DeselectGroup;
-        unit.OnOutline += OutlineGroup;
-        unit.OnRemoveOutline += RemoveGroupOutline;
+        unit.SetGroup(this, Units.IndexOf(unit));
+        unit.OutlineSelectable.OnSelect += SelectGroup;
+        unit.OutlineSelectable.OnDeselect += DeselectGroup;
+        unit.OutlineSelectable.OnOutline += OutlineGroup;
+        unit.OutlineSelectable.OnRemoveOutline += RemoveGroupOutline;
         unit.OnDeath += UnitDeathHandler;
     }
 
     private void UnSetupUnit(UnitController unit)
     {
-        unit.OnSelect -= SelectGroup;
-        unit.OnDeselect -= DeselectGroup;
-        unit.OnOutline -= OutlineGroup;
-        unit.OnRemoveOutline -= RemoveGroupOutline;
+        unit.OutlineSelectable.OnSelect -= SelectGroup;
+        unit.OutlineSelectable.OnDeselect -= DeselectGroup;
+        unit.OutlineSelectable.OnOutline -= OutlineGroup;
+        unit.OutlineSelectable.OnRemoveOutline -= RemoveGroupOutline;
         unit.OnDeath -= UnitDeathHandler;
     }
 
     private void ModifyUnitStats(BaseUnitStatsData baseUnitStatsDataInfo)
     {
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
             unit.ModifyStats(baseUnitStatsDataInfo);
         }
@@ -122,7 +121,7 @@ public class UnitGroupController : MonoBehaviour //TODO
 
     public void SetChaseStates(bool value)
     {
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
             unit.SetChaseState(value);
         }
@@ -131,12 +130,12 @@ public class UnitGroupController : MonoBehaviour //TODO
     public bool GetChaseStates()
     {
         int chaseStateCompare = 0;
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
             if (unit.ChaseState) chaseStateCompare++;
             else chaseStateCompare--;
         }
-        if (chaseStateCompare == units.Count) return chaseStateCompare >= 0 ? true : false;
-        else return false;
+        if (chaseStateCompare == Units.Count) return chaseStateCompare >= 0;
+        return false;
     }
 }

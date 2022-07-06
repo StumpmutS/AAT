@@ -10,7 +10,6 @@ public class InteractableManager : MonoBehaviour
     private int _unitSelectedCount;
     private PoolingObject _selectedUnitPreview;
     private InteractableController _hoveredInteractable;
-    public InteractableController HoveredInteractable => _hoveredInteractable;
     private Dictionary<UnitController, MovementInteractOverrideComponentState> _interactionStates = new();
 
     private void Awake() => Instance = this;
@@ -58,6 +57,11 @@ public class InteractableManager : MonoBehaviour
         _interactionStates.Remove(unit);
     }
 
+    public InteractableController GetHoveredInteractable(UnitController unit)
+    {
+        return _hoveredInteractable == null ? null : _hoveredInteractable.DetermineInteractable(unit);
+    }
+    
     public void SetHoveredInteractable(InteractableController interactable)
     {
         _hoveredInteractable = interactable;
@@ -67,7 +71,7 @@ public class InteractableManager : MonoBehaviour
             Interactable.RemovePreview();
         }
         if (_selectedUnitPreview == null) return;
-        interactable.CallDisplayPreview(_selectedUnitPreview, _unitSelectedCount);
+        interactable.CallDisplayPreview(_selectedUnitPreview, _unitSelectedCount);//TODO: CALL MOUNTABLE SETUP FORM HERE TOO, MOVE COUNT OF SELECTED UNITS TO PUBLIC STATIC IN UNITMANAGER
     }
 
     public void RemoveHoveredInteractable(InteractableController interactable)

@@ -12,7 +12,6 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
     private Queue<InteractableController> _queuedInteractables = new();
     public InteractableController CurrentInteractable { get; private set; }
     private InteractionComponentState _currentInteractionComponentState;
-    private Action<InteractionComponentState> _requestAffectionCallback;
     private bool _entered;
     private bool _base;
 
@@ -27,6 +26,7 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
     {
         _base = false;
         _entered = true;
+        CurrentInteractable = null;
         _agent.EnableAgent(this);
         ClearQueue();
         base.OnEnter();
@@ -35,14 +35,15 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
     protected override void SetDestination()
     {
         var fromSector = _unit.Sector;
-        var targetSector = SectorFinder.FindSector(InputManager.RightClickUpPosition, 3, LayerManager.Instance.GroundLayer);
-        CurrentInteractable ??= InteractableManager.Instance.HoveredInteractable;
+        var targetSector = SectorFinder.FindSector(BaseInputManager.RightClickUpPosition, 3, LayerManager.Instance.GroundLayer);
+        
+        SetDesiredInteractable(InteractableManager.Instance.GetHoveredInteractable(_unit));
         
         if (fromSector == targetSector)
         {
             if (CurrentInteractable != null)
             {
-                CurrentInteractable.SetupInteraction(this);
+                SetDesiredInteractable(CurrentInteractable);
                 _agent.SetDestination(CurrentInteractable.transform.position);
                 return;
             }
@@ -51,14 +52,15 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
             base.SetDestination();
         }
 
-        if (!_agent.CalculateTeleportPath(InputManager.RightClickUpPosition, out var points, out var finalDestination)) return;
+        if (!_agent.CalculateTeleportPath(BaseInputManager.RightClickUpPosition, out var points, out var finalDestination)) return;
         if (points == null || points.Count < 1)
         {
             _base = true;
             base.SetDestination();
             return;
         }
-        points[0].SetupInteraction(this);
+
+        SetDesiredInteractable(points[0]);
         for (int i = 1; i < points.Count; i++)
         {
             QueuePoint(Vector3.zero, points[i]);
@@ -66,11 +68,10 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
         QueuePoint(finalDestination, CurrentInteractable);
     }
 
-    public void Interact(InteractableController interactable, Action<InteractionComponentState> callback)
+    public void SetDesiredInteractable(InteractableController interactable)
     {
         if (!IsInterruptable && _entered && CurrentInteractable != null) return;
         CurrentInteractable = interactable;
-        _requestAffectionCallback = callback;
     }
 
     public override void Tick()
@@ -105,7 +106,7 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
     private void ReachInteractable()
     {
         _currentInteractionComponentState = (InteractionComponentState) _aiBrain.AddState(CurrentInteractable.RequestState());
-        _requestAffectionCallback.Invoke(_currentInteractionComponentState);
+        CurrentInteractable.RequestAffection(_currentInteractionComponentState);
         _currentInteractionComponentState.OnInteractionFinished += HandleInteractionComponentFinished;
         _currentInteractionComponentState.OnEnter();
     }
@@ -141,7 +142,7 @@ public class MovementInteractOverrideComponentState : MovementOverrideComponentS
     { 
         if (_queuedInteractables.Count > 0 && _queuedInteractables.Peek() != null)
         {
-            _queuedInteractables.Dequeue().SetupInteraction(this);
+            SetDesiredInteractable(_queuedInteractables.Dequeue());
             _queuedPoints.Dequeue();
             return;
         }

@@ -20,7 +20,7 @@ public class MovementOverrideComponentState : ComponentState
 
     protected virtual void SetDestination()
     {
-        _agent.SetDestination(InputManager.RightClickUpPosition);
+        _agent.SetDestination(BaseInputManager.RightClickUpPosition);
         _agent.OnPathFinished += Finish;
     }
 

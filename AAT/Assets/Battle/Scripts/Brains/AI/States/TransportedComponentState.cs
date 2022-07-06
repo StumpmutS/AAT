@@ -48,7 +48,7 @@ public class TransportedComponentState : InteractionComponentState
     public override void OnEnter()
     {
         _agent.DisableAgent(this);
-        InputManager.OnRightClickUp += Demount;
+        BaseInputManager.OnRightClickUp += Demount;
     }
 
     public override void Tick()
@@ -69,7 +69,7 @@ public class TransportedComponentState : InteractionComponentState
     public override void OnExit()
     {
         _agent.EnableAgent(this);
-        InputManager.OnRightClickUp -= Demount;
+        BaseInputManager.OnRightClickUp -= Demount;
     }
 
     private void Demount()

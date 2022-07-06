@@ -26,7 +26,7 @@ public class SpawnerPlotController : MonoBehaviour
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        SpawnerController instantiatedSpawner = Instantiate(spawnData.Spawner, transform.position, transform.rotation);
+        SpawnerController instantiatedSpawner = StumpNetworkRunner.Instance.Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation).GetComponent<SpawnerController>();
         SpawnerManager.Instance.AddSpawnerPlot(instantiatedSpawner);
         instantiatedSpawner.Setup(spawnData, sector, upgradesUIContainer);
         gameObject.SetActive(false);

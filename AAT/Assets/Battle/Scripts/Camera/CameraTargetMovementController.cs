@@ -21,19 +21,19 @@ public class CameraTargetMovementController : MonoBehaviour
 
     private void Awake()
     {
-        InputManager.OnVerticalAxis += MoveTargetVertical;
-        InputManager.OnHorizontalAxis += MoveTargetHorizontal;
+        BaseInputManager.OnVerticalAxis += MoveTargetVertical;
+        BaseInputManager.OnHorizontalAxis += MoveTargetHorizontal;
 
-        InputManager.OnMouseYChange += RotateTargetVertical;
-        InputManager.OnMouseXChange += RotateTargetHorizontal;
+        BaseInputManager.OnMouseYChange += RotateTargetVertical;
+        BaseInputManager.OnMouseXChange += RotateTargetHorizontal;
 
-        InputManager.OnLeftShiftPressed += ActivateBoost;
-        InputManager.OnLeftShiftEnd += DeactivateBoost;
+        BaseInputManager.OnLeftShiftPressed += ActivateBoost;
+        BaseInputManager.OnLeftShiftEnd += DeactivateBoost;
 
-        InputManager.OnMouseWheelDown += WheelDown;
-        InputManager.OnMouseWheelUp += WheelUp;
+        BaseInputManager.OnMouseWheelDown += WheelDown;
+        BaseInputManager.OnMouseWheelUp += WheelUp;
 
-        InputManager.OnMouseWheelScroll += MoveTargetUpDown;
+        BaseInputManager.OnMouseWheelScroll += MoveTargetUpDown;
     }
 
     private void MoveTargetVertical(float inputAmount)

@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class UnitController : OutlineSelectableController
+public class UnitController : SimulationBehaviour
 {
-    [FormerlySerializedAs("unitStatsModifierManager")] [SerializeField] private UnitStatsModifierManager stats;
-    public UnitStatsModifierManager Stats => stats;
+
     [SerializeField] private List<EInteractableType> interactableTypes;
     public List<EInteractableType> InteractableTypes => interactableTypes;
-    [SerializeField] private UnitDeathController unitDeathController;
-    [SerializeField] private PoolingObject unitVisuals;     
-    public PoolingObject UnitVisuals => unitVisuals;
+
     [SerializeField] private bool chaseState;
     public bool ChaseState => chaseState;
     [SerializeField] private bool patrolState;
@@ -20,27 +17,39 @@ public class UnitController : OutlineSelectableController
     public List<Vector3> PatrolPoints => _patrolPoints;
     [SerializeField] private Collider[] colliders;
     public Collider[] Colliders => colliders;
+    [SerializeField] private LayerMask enemyLayer;
+    public LayerMask EnemyLayer => enemyLayer; //TODO: temp until networked
     [SerializeField] private UnitManager unitManager;
 
+    public OutlineSelectableController OutlineSelectable { get; private set; }
+    public UnitStatsModifierManager Stats { get; private set; }
+    public PoolingObject UnitVisuals { get; private set; }
     public UnitGroupController UnitGroup { get; private set; }
+    public int GroupIndex { get; private set; }
     public SectorController Sector { get; private set; }
     public bool IsDead { get; private set; }
 
-    [SerializeField] private LayerMask enemyLayer;
-    public LayerMask EnemyLayer => enemyLayer; //TODO: temp until networked
-
+    private UnitDeathController _unitDeathController;
+    
     public event Action<UnitController> OnDeath = delegate { };
     
     private void Awake()
     {
-        unitDeathController.OnUnitDeath += UnitDeath;
+        OutlineSelectable = GetComponent<OutlineSelectableController>();
+        OutlineSelectable.OnSelect += Select;
+        OutlineSelectable.OnDeselect += Deselect;
+        
+        Stats = GetComponent<UnitStatsModifierManager>();
+        _unitDeathController = GetComponent<UnitDeathController>();
+        _unitDeathController.OnUnitDeath += UnitDeath;
+        UnitVisuals = GetComponent<PoolingObject>();
         if (unitManager == null) unitManager = UnitManager.Instance;
         unitManager.AddUnit(this);
     }
 
     private void UnitDeath()
     {
-        CallDeselect();
+        OutlineSelectable.CallDeselect();
         if (Sector != null) Sector.RemoveUnit(this);
         IsDead = true;
         OnDeath.Invoke(this);
@@ -48,20 +57,12 @@ public class UnitController : OutlineSelectableController
 
     public void ModifyStats(BaseUnitStatsData baseUnitStatsDataInfo, bool add = true)
     {
-        stats.ModifyStats(baseUnitStatsDataInfo, add);
+        Stats.ModifyStats(baseUnitStatsDataInfo, add);
     }
 
-    protected override void Select()
-    {
-        base.Select();
-        UnitManager.Instance.AddSelectedUnit(this);
-    }
+    private void Select() => UnitManager.Instance.AddSelectedUnit(this);
 
-    protected override void Deselect()
-    {
-        base.Deselect();
-        UnitManager.Instance.RemoveSelectedUnit(this);
-    }
+    private void Deselect() => UnitManager.Instance.RemoveSelectedUnit(this);
 
     #region Setters
     public void SetSector(SectorController sector)
@@ -69,9 +70,10 @@ public class UnitController : OutlineSelectableController
         Sector = sector;
     }
 
-    public void SetGroup(UnitGroupController group)
+    public void SetGroup(UnitGroupController group, int index)
     {
         UnitGroup = group;
+        GroupIndex = index;
     }
 
     public void SetPatrolPoints(List<Vector3> patrolPoints)

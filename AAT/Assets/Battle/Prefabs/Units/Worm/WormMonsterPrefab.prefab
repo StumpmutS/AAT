@@ -9,8 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 365871463607527221}
+  - component: {fileID: 6446763324144287975}
+  - component: {fileID: 6637224423672478836}
   - component: {fileID: -414675012893956818}
   - component: {fileID: 7874722875170080878}
+  - component: {fileID: -8140759891618353156}
   - component: {fileID: 4195062066824775773}
   - component: {fileID: 1009455223053489981}
   - component: {fileID: 7759547417561286659}
@@ -46,6 +49,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6446763324144287975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134256236068135605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 5cddf8ae4971e3940b89e05ffc357644
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 6637224423672478836}
+  - {fileID: 140843128394030074}
+  SimulationBehaviours:
+  - {fileID: 4195062066824775773}
+--- !u!114 &6637224423672478836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134256236068135605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 3849869326503819456}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
 --- !u!65 &-414675012893956818
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -77,6 +132,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &-8140759891618353156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134256236068135605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 7874722875170080878}
 --- !u!114 &4195062066824775773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,20 +157,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 0
-  outline: {fileID: 7874722875170080878}
-  stats: {fileID: 140843128394030074}
   interactableTypes: 
-  unitDeathController: {fileID: 7759547417561286659}
-  unitVisuals: {fileID: 0}
   chaseState: 1
   patrolState: 1
   _patrolPoints: []
   colliders: []
-  unitManager: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
+  unitManager: {fileID: 0}
 --- !u!114 &1009455223053489981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcd940c0b28854daf546d52b9733b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   unitStatsData: {fileID: 11400000, guid: 2aea3513024fbac4183838d4eef3fce6, type: 2}
 --- !u!114 &6096733332104545417
 MonoBehaviour:
@@ -344,7 +408,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2449d629bd4f75a47a31750fe3043a76, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

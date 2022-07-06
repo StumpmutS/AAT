@@ -1,8 +1,9 @@
 using System;
+using Fusion;
 using UnityEngine;
 using Utility.Scripts;
 
-public class InputManager : MonoBehaviour
+public class BaseInputManager : MonoBehaviour
 {
     public static Vector3 RightClickUpPosition;
     
@@ -49,12 +50,10 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         OnUpdate.Invoke();
-
-        //if (GetInput(out NetworkedInputData input))
-        //{
-            CheckMouseButtons();
-            //CheckNumbers();
-        //}
+        
+        CheckMouseButtons();
+        
+        //CheckNumbers();
 
         CheckMouseMovement();
 
@@ -86,7 +85,7 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(1))
         {
-            RightClickUpPosition.SetToCursorToWorldPosition();
+            RightClickUpPosition.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer);
             OnRightClickUp.Invoke();
         }
         if (Input.GetMouseButtonDown(2))
