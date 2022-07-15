@@ -1,32 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fusion;
 using UnityEngine;
 
-public class SectorController : MonoBehaviour
+public class SectorController : NetworkBehaviour
 {
-    private HashSet<UnitController> _units = new();
-    public List<TeleportPoint> Teleporters { get; private set; }
+    [Networked(OnChanged = nameof(OnChange))]
+    public int SectorPower { get; set; }
 
-    public event Action<SectorController, int> OnSectorPowerChanged = delegate { };
+    public event Action<SectorController> OnSectorPowerChanged = delegate { };
 
-    public int GetSectorPower() => _units.Sum(CalculateSectorPower);
-
-    private int CalculateSectorPower(UnitController unit)
+    public static void OnChange(Changed<SectorController> changed)
     {
-        return 1;
+        changed.Behaviour.OnSectorPowerChanged.Invoke(changed.Behaviour);
     }
 
-    public void AddUnit(UnitController unit)
+    public void ModifySectorPower(int amount)
     {
-        _units.Add(unit);
-        unit.SetSector(this);
-        OnSectorPowerChanged.Invoke(this, GetSectorPower());
-    }
-
-    public void RemoveUnit(UnitController unit)
-    {
-        _units.Remove(unit);
-        OnSectorPowerChanged.Invoke(this, GetSectorPower());
+        SectorPower += amount;
     }
 }

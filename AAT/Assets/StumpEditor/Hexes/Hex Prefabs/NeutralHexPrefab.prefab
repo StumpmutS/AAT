@@ -51,6 +51,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5097266839304928581, guid: 9b05d179318cdb34cbc7d9ef4e676421, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: -814809642405217979
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097266839304928581, guid: 9b05d179318cdb34cbc7d9ef4e676421, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
+      value: 7434491525631877834
+      objectReference: {fileID: 0}
     - target: {fileID: 8177904448213047333, guid: 9b05d179318cdb34cbc7d9ef4e676421, type: 3}
       propertyPath: m_Name
       value: NeutralHexPrefab

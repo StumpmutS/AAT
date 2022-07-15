@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3364718749716590333}
   - component: {fileID: 1018359427007933407}
   - component: {fileID: 2900944847849565942}
+  - component: {fileID: 6333206137162579167}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -60,7 +61,8 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 2900944847849565942}
-  SimulationBehaviours: []
+  SimulationBehaviours:
+  - {fileID: 1018359427007933407}
 --- !u!114 &1018359427007933407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +79,6 @@ MonoBehaviour:
   - {fileID: 6965836579041190632}
   - {fileID: 6965836579306941754}
   - {fileID: 6965836579907396213}
-  unitStatsModifierManager: {fileID: 2900944847849565942}
 --- !u!114 &2900944847849565942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,8 +93,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   unitStatsData: {fileID: 0}
-  _CurrentStats:
-    _items: []
+--- !u!114 &6333206137162579167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6965836578903922021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamNumber: 0
+  layersToChange: []
 --- !u!1 &6965836579041190633
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,10 +17,9 @@ public class UnitController : SimulationBehaviour
     public List<Vector3> PatrolPoints => _patrolPoints;
     [SerializeField] private Collider[] colliders;
     public Collider[] Colliders => colliders;
-    [SerializeField] private LayerMask enemyLayer;
-    public LayerMask EnemyLayer => enemyLayer; //TODO: temp until networked
     [SerializeField] private UnitManager unitManager;
 
+    public TeamController Team { get; private set; }
     public OutlineSelectableController OutlineSelectable { get; private set; }
     public UnitStatsModifierManager Stats { get; private set; }
     public PoolingObject UnitVisuals { get; private set; }
@@ -30,11 +29,12 @@ public class UnitController : SimulationBehaviour
     public bool IsDead { get; private set; }
 
     private UnitDeathController _unitDeathController;
-    
+
     public event Action<UnitController> OnDeath = delegate { };
     
     private void Awake()
     {
+        Team = GetComponent<TeamController>();
         OutlineSelectable = GetComponent<OutlineSelectableController>();
         OutlineSelectable.OnSelect += Select;
         OutlineSelectable.OnDeselect += Deselect;
@@ -50,7 +50,7 @@ public class UnitController : SimulationBehaviour
     private void UnitDeath()
     {
         OutlineSelectable.CallDeselect();
-        if (Sector != null) Sector.RemoveUnit(this);
+        if (Sector != null) Sector.ModifySectorPower(-Stats.CalculatePower());
         IsDead = true;
         OnDeath.Invoke(this);
     }

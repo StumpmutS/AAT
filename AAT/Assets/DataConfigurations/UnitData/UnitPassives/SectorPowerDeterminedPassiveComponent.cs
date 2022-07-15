@@ -1,12 +1,12 @@
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
 {
     [SerializeField] private List<int> sectorPowerThresholds;
     private Dictionary<SectorController, int> _currentThresholdIndexesBySector = new();
-    protected Dictionary<SectorController, HashSet<UnitController>> _unitsBySector =
-        new();
+    protected Dictionary<SectorController, HashSet<UnitController>> _unitsBySector = new();
 
     public override void ActivateComponent(UnitController unit)
     {
@@ -18,7 +18,7 @@ public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
         
         _unitsBySector[unit.Sector].Add(unit);
         
-        var thresholdIndex = DetermineThreshold(unit.Sector.GetSectorPower());
+        var thresholdIndex = DetermineThreshold(unit.Sector.SectorPower);
         if (thresholdIndex > -1)
         {
             _currentThresholdIndexesBySector[unit.Sector] = thresholdIndex;
@@ -35,8 +35,10 @@ public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
         return -1;
     }
 
-    private void RedetermineThreshold(SectorController sector, int newPower)
+    private void RedetermineThreshold(SectorController sector)
     {
+        var newPower = sector.SectorPower;
+        
         if (_currentThresholdIndexesBySector.ContainsKey(sector))
         {
             if (newPower == sectorPowerThresholds[_currentThresholdIndexesBySector[sector]]) return;

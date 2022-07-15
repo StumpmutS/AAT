@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public abstract class BaseSpawnerController : MonoBehaviour
+public abstract class BaseSpawnerController : SimulationBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints;
     
@@ -140,11 +140,10 @@ public abstract class BaseSpawnerController : MonoBehaviour
 
         IEnumerator spawnUnitsCoroutine = SpawnUnitsCoroutine(spawnTime, groupIndex);
         _unitGroupCoroutines[groupIndex] = spawnUnitsCoroutine;
-        StartCoroutine(spawnUnitsCoroutine);
-
         UnitGroupController unitGroup = _activeUnitGroups[groupIndex];
         unitGroup.transform.position = spawnPoints[spawnPointIndex].position;
-
+        
+        StartCoroutine(spawnUnitsCoroutine);
         yield return new WaitForSeconds(spawnTime);
         
         if (_unitGroupNumbers[groupIndex] != unitsPerGroup && _unitGroupNumbers[groupIndex] >= _unitsPerGroupAmount || !_unitGroupCoroutines.ContainsKey(groupIndex)) yield break;
@@ -173,9 +172,10 @@ public abstract class BaseSpawnerController : MonoBehaviour
         yield return new WaitForSeconds(spawnTime);
         for (int i = 0; i < _unitGroupNumbers[groupIndex]; i++)
         {
-            UnitController instantiatedUnit = StumpNetworkRunner.Instance.Runner.Spawn(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity).GetComponent<UnitController>();
+            UnitController instantiatedUnit = Runner.Spawn(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity).GetComponent<UnitController>();
             _activeUnitGroups[groupIndex].AddUnit(instantiatedUnit);
-            _sectorController.AddUnit(instantiatedUnit);
+            _sectorController.ModifySectorPower(instantiatedUnit.Stats.CalculatePower());
+            instantiatedUnit.SetSector(_sectorController);
             for (int j = 0; j < _currentUpgradeIndex; j++)
             {
                 instantiatedUnit.ModifyStats(_upgrades[j].baseUnitStatsDataInfo);

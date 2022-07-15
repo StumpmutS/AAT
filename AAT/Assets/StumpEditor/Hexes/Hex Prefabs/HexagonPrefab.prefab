@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3808429973266876233}
+  - component: {fileID: 5097266839304928581}
   - component: {fileID: 6102666387203735069}
   - component: {fileID: 8621478794371243036}
   - component: {fileID: 5865957823630470180}
@@ -36,6 +37,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5097266839304928581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8177904448213047333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 9b05d179318cdb34cbc7d9ef4e676421
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5865957823630470180}
+  SimulationBehaviours: []
 --- !u!114 &6102666387203735069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f307e50af2600a45858ffb4a8d7d9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!64 &7308451230332527225
 MeshCollider:
   m_ObjectHideFlags: 0

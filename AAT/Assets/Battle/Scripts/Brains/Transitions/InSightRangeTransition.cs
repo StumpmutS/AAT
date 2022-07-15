@@ -6,6 +6,6 @@ public class InSightRangeTransition : Transition
     public override bool Decision(UnitController unit)
     {
         return Physics.CheckSphere(unit.transform.position,
-            unit.Stats.GetStat(EUnitFloatStats.SightRange), unit.EnemyLayer);
+            unit.Stats.GetStat(EUnitFloatStats.SightRange), TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber()));
     }
 }

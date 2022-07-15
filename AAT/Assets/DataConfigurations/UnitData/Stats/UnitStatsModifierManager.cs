@@ -8,13 +8,18 @@ public class UnitStatsModifierManager : NetworkBehaviour
 {
     [SerializeField] private BaseUnitStatsData unitStatsData;
 
-    [Networked(nameof(OnRefreshStats)), Capacity(32)] //TODO: test if could invoke refreshStats onchanged?
+    [Networked(nameof(OnChange)), Capacity(32)] //TODO: test if could invoke refreshStats onchanged?
     private NetworkDictionary<EUnitFloatStats, float> _currentStats => default;
 
     private Dictionary<EUnitFloatStats, float> _startingStats = new();
 
-    public event Action OnRefreshStats = delegate { };
+    public event Action<UnitStatsModifierManager> OnRefreshStats = delegate { };
 
+    private void OnChange(Changed<UnitStatsModifierManager> changed)
+    {
+        changed.Behaviour.OnRefreshStats.Invoke(changed.Behaviour);
+    }
+    
     private void Awake()
     {
         if (unitStatsData == null) return;
@@ -56,8 +61,6 @@ public class UnitStatsModifierManager : NetworkBehaviour
     {
         if (add) AddFloatStats(stats);
         else SubtractFloatStats(stats);
-
-        //OnRefreshStats.Invoke();
     }
 
     private void AddFloatStats(BaseUnitStatsData stats)
@@ -80,6 +83,10 @@ public class UnitStatsModifierManager : NetworkBehaviour
     {
         if (!_currentStats.ContainsKey(statType)) return;
         _currentStats.Set(statType, GetStat(statType) + amount);
-        //OnRefreshStats.Invoke();
+    }
+
+    public int CalculatePower()
+    {
+        return 1;
     }
 }

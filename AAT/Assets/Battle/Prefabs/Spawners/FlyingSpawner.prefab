@@ -60,7 +60,8 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 2900944847849565942}
-  SimulationBehaviours: []
+  SimulationBehaviours:
+  - {fileID: 1018359427007933407}
 --- !u!114 &1018359427007933407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +78,6 @@ MonoBehaviour:
   - {fileID: 6965836579041190632}
   - {fileID: 6965836579306941754}
   - {fileID: 6965836579907396213}
-  unitStatsModifierManager: {fileID: 2900944847849565942}
 --- !u!114 &2900944847849565942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,8 +92,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   unitStatsData: {fileID: 0}
-  _CurrentStats:
-    _items: []
 --- !u!1 &6965836579041190633
 GameObject:
   m_ObjectHideFlags: 0

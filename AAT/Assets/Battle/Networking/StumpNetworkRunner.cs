@@ -7,27 +7,53 @@ using UnityEngine.SceneManagement;
 
 public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    [SerializeField] private NetworkPrefabRef playerPrefab;
+    [SerializeField] private Player playerPrefab;
+    [SerializeField] private List<SectorController> _startSectors = new();
 
     public static StumpNetworkRunner Instance { get; private set; }
     public NetworkRunner Runner { get; private set; }
-    private Dictionary<PlayerRef, NetworkObject> _spawnedPlayers = new();
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
     {
-        //_spawnedPlayers[player] = runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
+        var playerSectors = DetermineSectors(runner, playerRef);
+        var player = runner.Spawn(playerPrefab, onBeforeSpawned: (_, o) => o.GetComponent<Player>().Init(playerSectors));
+        runner.SetPlayerObject(playerRef, player.Object);
+    }
+
+    private List<SectorController> DetermineSectors(NetworkRunner runner, PlayerRef newPlayer)
+    {
+        foreach (var sector in _startSectors)
+        {
+            if (!SectorAvailable(runner, newPlayer, sector)) continue;
+            return new List<SectorController>() { sector };
+        }
+        
+        Debug.LogError("No sectors available");
+        return null;
+    }
+
+    private bool SectorAvailable(NetworkRunner runner, PlayerRef newPlayer, SectorController sector)
+    {
+        foreach (var player in Runner.ActivePlayers)
+        {
+            if (player == newPlayer) continue;
+            if (Runner.GetPlayerObject(player).GetComponent<Player>().OwnedSectors.Contains(sector))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        //if (!_spawnedPlayers.TryGetValue(player, out var networkObject)) return;
-        //runner.Despawn(networkObject);
-        //_spawnedPlayers.Remove(player);
+        throw new NotImplementedException();
     }
 
     #region Input

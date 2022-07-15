@@ -29,9 +29,10 @@ public class EnemySpawnerController : BaseSpawnerController
         yield return new WaitForSeconds(spawnTime);
         for (int i = 0; i < _unitGroupNumbers[groupIndex]; i++)
         {
-            UnitController instantiatedUnit = StumpNetworkRunner.Instance.Runner.Spawn(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity).GetComponent<UnitController>();
+            UnitController instantiatedUnit = Runner.Spawn(_unitPrefab, _activeUnitGroups[groupIndex].transform.position, Quaternion.identity).GetComponent<UnitController>();
             _activeUnitGroups[groupIndex].AddUnit(instantiatedUnit);
-            _sectorController.AddUnit(instantiatedUnit);
+            _sectorController.ModifySectorPower(instantiatedUnit.Stats.CalculatePower());
+            instantiatedUnit.SetSector(_sectorController);
             if (_patrolPoints != null) instantiatedUnit.SetPatrolPoints(_patrolPoints);
         }
     }

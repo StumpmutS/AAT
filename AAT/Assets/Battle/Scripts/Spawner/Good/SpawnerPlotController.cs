@@ -1,8 +1,9 @@
 using System;
+using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(SelectableController))]
-public class SpawnerPlotController : MonoBehaviour
+public class SpawnerPlotController : SimulationBehaviour
 {
     [SerializeField] private GameObject upgradesUIContainer;
     [SerializeField] private SectorController sector;
@@ -20,16 +21,22 @@ public class SpawnerPlotController : MonoBehaviour
         _selectable.OnDeselect += Deselect;
     }
 
-    private void Select() => OnSpawnerPlotSelect.Invoke(this, faction);
+    private void Select()
+    {
+        var p = Object.Runner.LocalPlayer;
+        var playerr = Object.Runner.GetPlayerObject(p).GetComponent<Player>();
+        if (!playerr.OwnedSectors.Contains(sector)) return;
+        OnSpawnerPlotSelect.Invoke(this, faction);
+    }
 
     private void Deselect() => OnSpawnerPlotDeselect.Invoke();
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        SpawnerController instantiatedSpawner = StumpNetworkRunner.Instance.Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation).GetComponent<SpawnerController>();
+        SpawnerController instantiatedSpawner = Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation).GetComponent<SpawnerController>();
         SpawnerManager.Instance.AddSpawnerPlot(instantiatedSpawner);
         instantiatedSpawner.Setup(spawnData, sector, upgradesUIContainer);
-        gameObject.SetActive(false);
+        Runner.Despawn(this.Object);
     }
 
     public void Setup(GameObject upgradesUI, SectorController sector, EFaction faction)

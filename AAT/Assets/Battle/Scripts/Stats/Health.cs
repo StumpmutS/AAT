@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IHealth
@@ -58,8 +59,8 @@ public class Health : MonoBehaviour, IHealth
         OnDie.Invoke();
     }
 
-    private void RefreshHealth()
-    {
+    private void RefreshHealth(UnitStatsModifierManager stats)
+    {//todo: needed?
         _currentHealth = _maxHealth * _currentHealthPercent;
         OnHealthChanged.Invoke(_currentHealthPercent);
     }
