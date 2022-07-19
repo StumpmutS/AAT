@@ -11,7 +11,7 @@ public class TeamManager : MonoBehaviour
     
     public static TeamManager Instance { get; private set; }
 
-    private List<int> _teamNumbers = new();
+    [Networked, Capacity(16)] private NetworkArray<NetworkBool> _teamNumbers => default;
 
     private void Awake()
     {
@@ -22,29 +22,29 @@ public class TeamManager : MonoBehaviour
     {
         HashSet<string> layerNames = new();
 
-        foreach (var number in _teamNumbers)
+        for (int i = 0; i < _teamNumbers.Length; i++)
         {
-            if (number == teamNumber) continue;
-            layerNames.Add($"Team{number}");
+            if (i + 1 == teamNumber || !_teamNumbers[i]) continue;
+            layerNames.Add($"Team{i + 1}");
         }
-        
+
         return LayerMask.GetMask(layerNames.ToArray());
     }
 
     public void SetupWithTeam(TeamController teamController, int desiredTeamNumber = 0)
     {
-        if (_teamNumbers.Contains(desiredTeamNumber))
+        if (_teamNumbers.Get(desiredTeamNumber))
         {
             teamController.SetTeamNumber(desiredTeamNumber);
             return;
         }
 
-        for (int i = 1; i <= maxTeams; i++)
+        for (int i = 0; i < maxTeams; i++)
         {
-            if (_teamNumbers.Contains(i)) continue;
+            if (_teamNumbers.Get(i) == false) continue;
             
-            _teamNumbers.Add(i);
-            teamController.SetTeamNumber(i);
+            _teamNumbers.Set(i, true);
+            teamController.SetTeamNumber(i + 1);
             return;
         }
         

@@ -21,8 +21,15 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
     {
         var playerSectors = DetermineSectors(runner, playerRef);
-        var player = runner.Spawn(playerPrefab, onBeforeSpawned: (_, o) => o.GetComponent<Player>().Init(playerSectors));
-        runner.SetPlayerObject(playerRef, player.Object);
+        var playerObject = runner.Spawn(playerPrefab, onBeforeSpawned: SetupPlayer);
+        runner.SetPlayerObject(playerRef, playerObject.Object);
+
+        void SetupPlayer(NetworkRunner _, NetworkObject o)
+        {
+            var player = o.GetComponent<Player>();
+            player.AddSectors(playerSectors);
+            TeamManager.Instance.SetupWithTeam(player.GetComponent<TeamController>());
+        }
     }
 
     private List<SectorController> DetermineSectors(NetworkRunner runner, PlayerRef newPlayer)

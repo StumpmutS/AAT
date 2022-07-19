@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TeamController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class TeamController : MonoBehaviour
     }
     
     public int GetTeamNumber() => teamNumber;
+    
     public void SetTeamNumber(int number)
     {
         teamNumber = number;

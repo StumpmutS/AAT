@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6263232762520809411}
   - component: {fileID: 6682084209964842572}
   - component: {fileID: -6088711996257138729}
+  - component: {fileID: -4881453222245122294}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -70,3 +71,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+--- !u!114 &-4881453222245122294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3928634057808431251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamNumber: 0
+  layersToChange: []

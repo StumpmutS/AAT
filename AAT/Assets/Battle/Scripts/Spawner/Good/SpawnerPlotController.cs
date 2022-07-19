@@ -9,6 +9,7 @@ public class SpawnerPlotController : SimulationBehaviour
     [SerializeField] private SectorController sector;
     [SerializeField] private EFaction faction;
 
+    private TeamController _team;
     private SelectableController _selectable;
     
     public event Action<SpawnerPlotController, EFaction> OnSpawnerPlotSelect = delegate { };
@@ -16,6 +17,7 @@ public class SpawnerPlotController : SimulationBehaviour
 
     private void Awake()
     {
+        _team = GetComponent<TeamController>();
         _selectable = GetComponent<SelectableController>();
         _selectable.OnSelect += Select;
         _selectable.OnDeselect += Deselect;
@@ -23,9 +25,8 @@ public class SpawnerPlotController : SimulationBehaviour
 
     private void Select()
     {
-        var p = Object.Runner.LocalPlayer;
-        var playerr = Object.Runner.GetPlayerObject(p).GetComponent<Player>();
-        if (!playerr.OwnedSectors.Contains(sector)) return;
+        var player = Object.Runner.GetPlayerObject(Object.Runner.LocalPlayer).GetComponent<Player>();
+        if (!player.OwnedSectors.Contains(sector)) return;
         OnSpawnerPlotSelect.Invoke(this, faction);
     }
 
@@ -33,7 +34,10 @@ public class SpawnerPlotController : SimulationBehaviour
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        SpawnerController instantiatedSpawner = Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation).GetComponent<SpawnerController>();
+        SpawnerController instantiatedSpawner = Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation, 
+            onBeforeSpawned: (_, o) => 
+                TeamManager.Instance.SetupWithTeam(o.GetComponent<TeamController>(), _team.GetTeamNumber())).GetComponent<SpawnerController>();
+        
         SpawnerManager.Instance.AddSpawnerPlot(instantiatedSpawner);
         instantiatedSpawner.Setup(spawnData, sector, upgradesUIContainer);
         Runner.Despawn(this.Object);
