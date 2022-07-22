@@ -1006,6 +1006,7 @@ GameObject:
   - component: {fileID: 5216957091026161492}
   - component: {fileID: 2169859571365998175}
   - component: {fileID: 2938147814150407566}
+  - component: {fileID: 4783939069287381247}
   - component: {fileID: 5759228335420568728}
   - component: {fileID: 5759228335420568730}
   - component: {fileID: 2451953952989807274}
@@ -1070,6 +1071,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 2938147814150407566}
+  - {fileID: 4783939069287381247}
   - {fileID: 430060796365761778}
   SimulationBehaviours:
   - {fileID: -8213272441465151675}
@@ -1099,6 +1101,21 @@ MonoBehaviour:
     RotBlendStart: 0.1
     RotBlendEnd: 0.5
     RotTeleportRadians: 1.5
+--- !u!114 &4783939069287381247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840677430842725870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  layersToChange:
+  - {fileID: 4840677430842725870}
 --- !u!65 &5759228335420568728
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1142,7 +1159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 0
   outline: {fileID: 5759228335420568730}
 --- !u!114 &-8213272441465151675
 MonoBehaviour:
@@ -1161,9 +1177,6 @@ MonoBehaviour:
   patrolState: 1
   _patrolPoints: []
   colliders: []
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   unitManager: {fileID: 0}
 --- !u!114 &3161474669248493944
 MonoBehaviour:

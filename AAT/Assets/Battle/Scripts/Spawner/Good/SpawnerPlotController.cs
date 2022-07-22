@@ -25,6 +25,8 @@ public class SpawnerPlotController : SimulationBehaviour
 
     private void Select()
     {
+        if (Object == null) return;
+        
         var player = Object.Runner.GetPlayerObject(Object.Runner.LocalPlayer).GetComponent<Player>();
         if (!player.OwnedSectors.Contains(sector)) return;
         OnSpawnerPlotSelect.Invoke(this, faction);
@@ -34,13 +36,23 @@ public class SpawnerPlotController : SimulationBehaviour
 
     public void SetupSpawner(UnitSpawnData spawnData)
     {
-        SpawnerController instantiatedSpawner = Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation, 
-            onBeforeSpawned: (_, o) => 
-                TeamManager.Instance.SetupWithTeam(o.GetComponent<TeamController>(), _team.GetTeamNumber())).GetComponent<SpawnerController>();
+        //TODO: null ref as client, TRY MAKING SPAWNPLOTMANAGER SIMULATIONBEHAVIOR
+        var prefab = spawnData.SpawnerPrefab;
+        var networkObject = Runner.Spawn(prefab, transform.position, transform.rotation, onBeforeSpawned: SetSpawnerTeam); 
+        //^this returns null, ensure all calls run on simulationBehavior from simulation loop.
+        //If still nothing, ensure this method is called on server as well, as it could be problem with Spawn call on clients not actually doing anything <- MOST LIKELY
         
+        var instantiatedSpawner = networkObject.GetComponent<SpawnerController>();
+
         SpawnerManager.Instance.AddSpawnerPlot(instantiatedSpawner);
         instantiatedSpawner.Setup(spawnData, sector, upgradesUIContainer);
-        Runner.Despawn(this.Object);
+        Runner.Despawn(Object);
+
+        void SetSpawnerTeam(NetworkRunner _, NetworkObject o)
+        {
+            var team = o.GetComponent<TeamController>();
+            TeamManager.Instance.SetupWithTeam(team, _team.GetTeamNumber());
+        }
     }
 
     public void Setup(GameObject upgradesUI, SectorController sector, EFaction faction)

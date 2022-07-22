@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: fe61ff2d3b01e9c42b74981f1b80611e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - _factionColors: {fileID: 11400000, guid: ae6282163b779334a90bf1d12950c1ef, type: 2}
+  - _factionHexPrefabs: {fileID: 11400000, guid: 24ba8644bdba83a469f199a9438a3c58, type: 2}
+  - _hexPrefab: {fileID: 2817621752177884696, guid: b8f96328ca46a054a8107e11c1957a6d, type: 3}
+  - _wallJointPrefab: {fileID: 7296653334839882568, guid: 7dd824e40346b8c40bf06bf404f6b298, type: 3}
+  - _wallJointConnectorPrefab: {fileID: 1592806553770498442, guid: 3d57bb71029a00842935a5e16eaeeb57, type: 3}
+  - _wallPrefab: {fileID: 3652001650753114011, guid: cae3dd0c630084541a8b1d28baf252b6, type: 3}
+  - _containerPrefab: {fileID: 1218343978534208347, guid: e1c123ae388f27f4081ffc5b3c8fee59, type: 3}
+  - _manager: {instanceID: 0}
+  - _upgradesUI: {instanceID: 0}
+  - _spawnPlot: {fileID: 90829029774520669, guid: 36f5cae20e0953c4dbeb76ed0b324647, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

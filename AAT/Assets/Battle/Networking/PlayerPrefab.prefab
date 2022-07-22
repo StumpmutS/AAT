@@ -57,6 +57,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -6088711996257138729}
+  - {fileID: -4881453222245122294}
   SimulationBehaviours: []
 --- !u!114 &-6088711996257138729
 MonoBehaviour:
@@ -71,6 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _OwnedSectors: []
 --- !u!114 &-4881453222245122294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,5 +85,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 0
+  _interpolationDataSource: 0
+  _teamNumber: 0
   layersToChange: []

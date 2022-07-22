@@ -20,6 +20,8 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
     {
+        if (!runner.IsServer) return;
+        
         var playerSectors = DetermineSectors(runner, playerRef);
         var playerObject = runner.Spawn(playerPrefab, onBeforeSpawned: SetupPlayer);
         runner.SetPlayerObject(playerRef, playerObject.Object);
@@ -46,10 +48,10 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     private bool SectorAvailable(NetworkRunner runner, PlayerRef newPlayer, SectorController sector)
     {
-        foreach (var player in Runner.ActivePlayers)
+        foreach (var player in runner.ActivePlayers)
         {
             if (player == newPlayer) continue;
-            if (Runner.GetPlayerObject(player).GetComponent<Player>().OwnedSectors.Contains(sector))
+            if (runner.GetPlayerObject(player).GetComponent<Player>().OwnedSectors.Contains(sector))
             {
                 return false;
             }
@@ -60,7 +62,6 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
     }
 
     #region Input
@@ -101,7 +102,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new NetworkedInputData { MousePosition = Input.mousePosition };
+        /*var data = new NetworkedInputData { MousePosition = Input.mousePosition };
 
         if (_mouse0Down) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON0_DOWN;
         if (_mouse0Up) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON0_UP;
@@ -121,7 +122,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
         ResetInputs();
 
-        input.Set(data);
+        input.Set(data);*/
     }
 
     private void ResetInputs()
@@ -146,67 +147,54 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
     
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        throw new NotImplementedException();
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        throw new NotImplementedException();
     }
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
     }
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
     {
-        throw new NotImplementedException();
     }
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        throw new NotImplementedException();
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
-        throw new NotImplementedException();
     }
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        throw new NotImplementedException();
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
     {
-        throw new NotImplementedException();
     }
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
-        throw new NotImplementedException();
     }
 
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
     {
-        throw new NotImplementedException();
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        throw new NotImplementedException();
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        throw new NotImplementedException();
     }
 
     private void OnGUI()
@@ -224,7 +212,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     private async void StartGame(GameMode gameMode)
     {
-        Runner ??= gameObject.AddComponent<NetworkRunner>();
+        Runner = gameObject.AddComponent<NetworkRunner>();
         Runner.ProvideInput = true;
 
         await Runner.StartGame(new StartGameArgs

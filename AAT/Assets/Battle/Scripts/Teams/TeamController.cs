@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TeamController : MonoBehaviour
+public class TeamController : NetworkBehaviour
 {
-    [Tooltip("Team numbers start at 1, 0 is no team")] [SerializeField] private int teamNumber;
+    [Networked] private int teamNumber { get; set; }
+    
     [SerializeField] private List<GameObject> layersToChange;
     
     private void Start()
@@ -23,6 +25,8 @@ public class TeamController : MonoBehaviour
 
     private void SetLayers()
     {
+        if (Object == null) return;
+        
         foreach (var gObject in layersToChange)
         {
             gObject.layer = LayerMask.NameToLayer($"Team{teamNumber}");

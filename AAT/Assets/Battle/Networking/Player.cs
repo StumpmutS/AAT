@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Player : NetworkBehaviour
 {
-    public List<SectorController> OwnedSectors { get; private set; } = new();
+    [Networked, Capacity(128)] public NetworkLinkedList<SectorController> OwnedSectors => default;
 
     public void AddSectors(IEnumerable<SectorController> sectors)
     {
-        OwnedSectors.AddRange(sectors);
+        foreach (var sector in sectors)
+        {
+            OwnedSectors.Add(sector);
+        }
     }
 }

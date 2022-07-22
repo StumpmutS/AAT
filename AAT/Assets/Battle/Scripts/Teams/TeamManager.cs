@@ -5,7 +5,7 @@ using System.Linq;
 using Fusion;
 using UnityEngine;
 
-public class TeamManager : MonoBehaviour
+public class TeamManager : NetworkBehaviour
 {
     [SerializeField] private int maxTeams;
     
@@ -33,7 +33,7 @@ public class TeamManager : MonoBehaviour
 
     public void SetupWithTeam(TeamController teamController, int desiredTeamNumber = 0)
     {
-        if (_teamNumbers.Get(desiredTeamNumber))
+        if (desiredTeamNumber > 0 && _teamNumbers.Get(desiredTeamNumber - 1))
         {
             teamController.SetTeamNumber(desiredTeamNumber);
             return;
@@ -41,7 +41,7 @@ public class TeamManager : MonoBehaviour
 
         for (int i = 0; i < maxTeams; i++)
         {
-            if (_teamNumbers.Get(i) == false) continue;
+            if (_teamNumbers.Get(i)) continue;
             
             _teamNumbers.Set(i, true);
             teamController.SetTeamNumber(i + 1);
