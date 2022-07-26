@@ -155,7 +155,7 @@ public class BaseInputManager : MonoBehaviour
     }
 
     private void CheckNumbers(NetworkedInputData input)
-    {
+    {/*
         if ((input.Buttons & NetworkedInputMapping.ALPHA0_DOWN) != 0)
         {
             OnAlpha0.Invoke(0);
@@ -195,7 +195,7 @@ public class BaseInputManager : MonoBehaviour
         if ((input.Buttons & NetworkedInputMapping.ALPHA9_DOWN) != 0)
         {
             OnAlpha9.Invoke(9);
-        }
+        }*/
     }
 
     private void CheckAlphabetKeys()

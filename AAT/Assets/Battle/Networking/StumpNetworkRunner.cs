@@ -23,6 +23,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         if (!runner.IsServer) return;
         
         var playerSectors = DetermineSectors(runner, playerRef);
+        //todo: sector spawner dictionary, get spawner by sector, set spawner input authority to playerref, maybe sector too?
         var playerObject = runner.Spawn(playerPrefab, onBeforeSpawned: SetupPlayer);
         runner.SetPlayerObject(playerRef, playerObject.Object);
 

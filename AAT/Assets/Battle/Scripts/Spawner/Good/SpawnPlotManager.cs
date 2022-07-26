@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using Utility.Scripts;
 
 public class SpawnPlotManager : MonoBehaviour
 {
@@ -53,7 +55,7 @@ public class SpawnPlotManager : MonoBehaviour
 
         DeselectAllPlots();
         RemoveButtons();
-        _activeSpawnerPlot.SetupSpawner(unitSpawnData);
+        _activeSpawnerPlot.RpcSetupSpawner(unitSpawnData.GetResourcePath());
     }
 
     private void SelectSpawnerPlotByIndex(int keyPressed)

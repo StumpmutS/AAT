@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f50f987308b5d24c8eddecbbd91386b, type: 3}
+  m_Name: EagleCarpetBombProjectileSpawnComponentData
+  m_EditorClassIdentifier: 
+  Repeat: 1
+  RepeatIntervals: 1
+  ComponentDelay: 3.72678
+  ComponentDuration: 5
+  unitPrefab: {fileID: -8066188088115171745, guid: b2b42c58d4c897d4288813b53f3178d1, type: 3}
+  projectilesPerOffset: 1
+  spawnOffsets:
+  - {x: 0, y: -1, z: 0}
+  useMoveSpeed: 0
+  alternateSpeed: 1

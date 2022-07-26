@@ -60,9 +60,9 @@ MonoBehaviour:
     RawGuidValue: 36f5cae20e0953c4dbeb76ed0b324647
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 2692978027617971225}
-  SimulationBehaviours:
   - {fileID: 90829029774520661}
+  - {fileID: 2692978027617971225}
+  SimulationBehaviours: []
 --- !u!114 &90829029774520668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a11cf4e1991544bb2c589c573ecf1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   upgradesUIContainer: {fileID: 0}
   sector: {fileID: 0}
   faction: 0
@@ -135,7 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _teamNumber: 0
   layersToChange:
   - {fileID: 90829029774520669}
 --- !u!1 &8644135515492929957

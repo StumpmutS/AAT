@@ -41,6 +41,7 @@ public abstract class BaseSpawnerController : SimulationBehaviour
 
     private void Awake()
     {
+        if (Object.HasInputAuthority) SpawnerManager.Instance.AddSpawnerPlot(this);
         _unitStatsModifierManager = GetComponent<UnitStatsModifierManager>();
         foreach (var spawnPoint in spawnPoints)
         {

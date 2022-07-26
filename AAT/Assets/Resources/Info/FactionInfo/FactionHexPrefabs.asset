@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e135c5eb8c1a66b43bed34e5986fa3fa, type: 3}
+  m_Name: FactionHexPrefabs
+  m_EditorClassIdentifier: 
+  FactionsByHexPrefab:
+    _keys: 00000000010000000200000003000000
+    _values:
+    - List: []
+    - List:
+      - {fileID: 813833528033551613, guid: 45b9df80f236b1f4caa2f026a79e2c67, type: 3}
+    - List:
+      - {fileID: 2817621752177884696, guid: b8f96328ca46a054a8107e11c1957a6d, type: 3}
+      - {fileID: 2817621752177884696, guid: e2cbf07bb74b37545a2b6f33a5d2a7a0, type: 3}
+    - List:
+      - {fileID: 813833528033551613, guid: 6b041ef6bb508784abeaefe99779d49a, type: 3}

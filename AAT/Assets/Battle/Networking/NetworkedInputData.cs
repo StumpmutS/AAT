@@ -3,8 +3,6 @@ using UnityEngine;
 
 public struct NetworkedInputData : INetworkInput
 {
-    public Vector2 MousePosition;
-    public int Buttons;
 }
 
 public static class NetworkedInputMapping

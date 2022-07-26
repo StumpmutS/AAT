@@ -3,7 +3,7 @@ using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(SelectableController))]
-public class SpawnerPlotController : SimulationBehaviour
+public class SpawnerPlotController : NetworkBehaviour
 {
     [SerializeField] private GameObject upgradesUIContainer;
     [SerializeField] private SectorController sector;
@@ -28,23 +28,20 @@ public class SpawnerPlotController : SimulationBehaviour
         if (Object == null) return;
         
         var player = Object.Runner.GetPlayerObject(Object.Runner.LocalPlayer).GetComponent<Player>();
-        if (!player.OwnedSectors.Contains(sector)) return;
+        if (!player.OwnedSectors.Contains(sector.Id)) return;
         OnSpawnerPlotSelect.Invoke(this, faction);
     }
 
     private void Deselect() => OnSpawnerPlotDeselect.Invoke();
 
-    public void SetupSpawner(UnitSpawnData spawnData)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcSetupSpawner(string spawnDataPath)
     {
-        //TODO: null ref as client, TRY MAKING SPAWNPLOTMANAGER SIMULATIONBEHAVIOR
-        var prefab = spawnData.SpawnerPrefab;
-        var networkObject = Runner.Spawn(prefab, transform.position, transform.rotation, onBeforeSpawned: SetSpawnerTeam); 
-        //^this returns null, ensure all calls run on simulationBehavior from simulation loop.
-        //If still nothing, ensure this method is called on server as well, as it could be problem with Spawn call on clients not actually doing anything <- MOST LIKELY
+        if (!Object.HasStateAuthority) return;
         
-        var instantiatedSpawner = networkObject.GetComponent<SpawnerController>();
+        var spawnData = (UnitSpawnData) Resources.Load(spawnDataPath);
+        var instantiatedSpawner = Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation, Object.InputAuthority, onBeforeSpawned: SetSpawnerTeam).GetComponent<SpawnerController>();
 
-        SpawnerManager.Instance.AddSpawnerPlot(instantiatedSpawner);
         instantiatedSpawner.Setup(spawnData, sector, upgradesUIContainer);
         Runner.Despawn(Object);
 

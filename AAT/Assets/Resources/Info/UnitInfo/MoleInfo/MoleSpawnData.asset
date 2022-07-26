@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf701125b0bb7b4cac56b2c01584623, type: 3}
+  m_Name: MoleSpawnData
+  m_EditorClassIdentifier: 
+  SpawnerPrefab:
+    RawGuidValue: 61062c37331a604499efb655cd98a5f2
+  SpawnGroupsAmount: 1
+  UnitsPerGroupAmount: 1
+  SpawnTime: 1
+  RespawnTime: 60
+  MaxSpawnLocationUse: 1
+  SpawnerOffset: {x: 0, y: 0, z: 0}
+  SpawnerVisuals: {fileID: 7625194758283331549, guid: 4885a016cd420564ab45029b93d7214b, type: 3}
+  UnitPrefab:
+    RawGuidValue: 48bfab4c394c61f4c836689890d23a14
+  UnitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
+  baseUnitStatsData: {fileID: 11400000, guid: 706b52d4db22f494b94959ff37d61a5b, type: 2}
+  UnitStatsUpgradeData: []

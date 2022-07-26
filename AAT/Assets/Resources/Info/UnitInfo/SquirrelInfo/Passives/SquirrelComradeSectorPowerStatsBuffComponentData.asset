@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f62016e1848ab74a997a0ca8bc811a6, type: 3}
+  m_Name: SquirrelComradeSectorPowerStatsBuffComponentData
+  m_EditorClassIdentifier: 
+  sectorPowerThresholds: 0d0000000f00000010000000
+  unitStatsUpgradeData:
+  - {fileID: 11400000, guid: 8c82acdf703d2a8499cec311e3a54ffe, type: 2}
+  - {fileID: 11400000, guid: 068f0c240aa675d47bdfbf456ba8fc5c, type: 2}
+  - {fileID: 11400000, guid: d1dfe29c72f54c2418f8f103899fce11, type: 2}
