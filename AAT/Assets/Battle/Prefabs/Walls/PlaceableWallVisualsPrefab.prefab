@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6579836655423476627}
   - component: {fileID: 7616874113723984891}
-  - component: {fileID: 8462756324753497644}
+  - component: {fileID: -1072309703487702400}
   m_Layer: 0
   m_Name: PlaceableWallVisualsPrefab
   m_TagString: Untagged
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colors: {fileID: 11400000, guid: 7d2cade1f3e3bea4394d6237bc018215, type: 2}
   previewRenderer: {fileID: 8197668890696034595}
---- !u!114 &8462756324753497644
+--- !u!114 &-1072309703487702400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,12 +57,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5711552438985596864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cfdb5061420684aa2af8e34856fe89, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cb410a5c8197fe4a846f9156eb2d451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolingTag: PlaceableWallVisualsPrefab
-  actualPrefab:
-    RawGuidValue: cba3ff0e5bad20841a9a77141158fd46
+  actualPrefab: {fileID: 3590698476159233914, guid: cba3ff0e5bad20841a9a77141158fd46, type: 3}
 --- !u!1001 &7350558271651427751
 PrefabInstance:
   m_ObjectHideFlags: 0

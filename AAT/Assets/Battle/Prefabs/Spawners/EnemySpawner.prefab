@@ -90,9 +90,9 @@ MonoBehaviour:
     RawGuidValue: 48d4885d88f9f004e8b3abcd4fa5e331
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 8870985917171706658}
-  SimulationBehaviours:
   - {fileID: 6160271919592233120}
+  - {fileID: 8870985917171706658}
+  SimulationBehaviours: []
 --- !u!114 &6160271919592233120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774b6d1cb7ea78547bc2a995ce53e4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   spawnPoints:
   - {fileID: 3744096846171973436}
   - {fileID: 3744096845900720366}

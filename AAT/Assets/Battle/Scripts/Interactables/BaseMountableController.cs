@@ -8,8 +8,7 @@ public class BaseMountableController : InteractableController
     [SerializeField] private SelfOtherStatsData mountData;
     public SelfOtherStatsData MountData => mountData;
     [SerializeField] private MountablePointLinkController mountablePointLink;
-    [SerializeField] private UnitController unit;
-    public UnitController Unit => unit;
+    public UnitController Unit => unitController;
     
     private InteractionComponentState _mounted;
     private int _previewIndex;
@@ -27,38 +26,42 @@ public class BaseMountableController : InteractableController
 
     public override InteractableController DetermineInteractable(UnitController unit)
     {
-        //TODO: CHANGE TRUE TO BE BASED OFF MOUSE POSITION IN RELATION TO COLLIDER
-        var mountables = mountablePointLink.DetermineMountables(this, unit.UnitGroup.Units.Count, true);
-        return mountables[unit.GroupIndex];
+        var mountables = mountablePointLink.DetermineMountables(this, unit, true);
+        //return mountables[unit.SelectedIndex]; todo
+        return null;
     }
 
-    protected override void DisplayPreview(PoolingObject transportableUnitPreview, int unitAmount)
+    protected override void DisplayPreview(UnitController unit)
     {
-        base.DisplayPreview(transportableUnitPreview, unitAmount);
+        base.DisplayPreview(unit);
         var previewTransform = _preview.transform;
         previewTransform.position = transform.position;
         previewTransform.rotation = transform.rotation;
         previewTransform.SetParent(transform);
 
-        if (unitAmount > 1)
+        if (unit.UnitGroup.Units.Count > 1)
         {
-            //TODO: CHANGE TRUE TO BE BASED OFF MOUSE POSITION IN RELATION TO COLLIDER
-            mountablePointLink.BeginPreviewDisplayLink(this, transportableUnitPreview, unitAmount - 1, true);
+            mountablePointLink.BeginPreviewDisplayLink(this, unit, true);
         }
+    }
+
+    protected override void RemovePreview()
+    {
+        mountablePointLink.RemovePreviewDisplay();
     }
 
     public void ActivateMounted(BaseUnitStatsData stats)
     {
-        if (unit == null) return;
-        unit.ModifyStats(stats);
-        unit.ModifyStats(mountData.SelfModifier);
+        if (unitController == null) return;
+        unitController.ModifyStats(stats);
+        unitController.ModifyStats(mountData.SelfModifier);
     }
 
     public void DeactivateMounted(BaseUnitStatsData stats) //TODO: will never be called because interaction states dont know when exit
     {
-        if (unit == null) return;
-        unit.ModifyStats(stats, false);
-        unit.ModifyStats(mountData.SelfModifier, false);
+        if (unitController == null) return;
+        unitController.ModifyStats(stats, false);
+        unitController.ModifyStats(mountData.SelfModifier, false);
         _mounted.FinishInteraction();
         _mounted = null;
     }

@@ -9,7 +9,7 @@ public class InteractionComponentState : ComponentState//TODO: consider differen
         OnInteractionFinished.Invoke();
     }
 
-    public override void OnEnter() { }
+    protected override void OnEnter() { }
 
     public override void OnExit() { }
 }

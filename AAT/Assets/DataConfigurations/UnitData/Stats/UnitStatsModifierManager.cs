@@ -6,20 +6,19 @@ using UnityEngine;
 
 public class UnitStatsModifierManager : NetworkBehaviour
 {
-    [SerializeField] private BaseUnitStatsData unitStatsData;
-
-    [Networked(nameof(OnChange)), Capacity(32)] //TODO: test if could invoke refreshStats onchanged?
+    [Networked(nameof(OnChange)), Capacity(32)]
     private NetworkDictionary<EUnitFloatStats, float> _currentStats => default;
-
-    private Dictionary<EUnitFloatStats, float> _startingStats = new();
-
-    public event Action<UnitStatsModifierManager> OnRefreshStats = delegate { };
-
     private void OnChange(Changed<UnitStatsModifierManager> changed)
     {
         changed.Behaviour.OnRefreshStats.Invoke(changed.Behaviour);
     }
     
+    [SerializeField] private BaseUnitStatsData unitStatsData;
+
+    private Dictionary<EUnitFloatStats, float> _startingStats = new();
+
+    public event Action<UnitStatsModifierManager> OnRefreshStats = delegate { };
+
     private void Awake()
     {
         if (unitStatsData == null) return;
@@ -30,7 +29,7 @@ public class UnitStatsModifierManager : NetworkBehaviour
         }
     }
 
-    private void Start()
+    public override void Spawned()
     {
         if (unitStatsData == null) return;
         Init(unitStatsData);

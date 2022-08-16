@@ -28,7 +28,7 @@ public class ComponentStateMachine
         _transitions.TryGetValue(componentState, out _currentTransitions);
         _currentTransitions ??= _emptyList;
         
-        componentState.OnEnter();
+        componentState.TryOnEnter();
     }
 
     public void Exit(ComponentState from, ComponentState to = null)

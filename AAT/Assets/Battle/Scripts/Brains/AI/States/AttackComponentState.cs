@@ -1,8 +1,21 @@
 using System.Collections;
+using Fusion;
 using UnityEngine;
 
 public class AttackComponentState : ComponentState
 {
+    [Networked(OnChanged = nameof(OnAttack))] private NetworkBool _attack { get; set; }
+    public static void OnAttack(Changed<AttackComponentState> changed)
+    {
+        changed.Behaviour._animation.SetAttack(true);
+    }
+    
+    [Networked(OnChanged = nameof(OnCrit))] private NetworkBool _crit { get; set; }
+    public static void OnCrit(Changed<AttackComponentState> changed)
+    {
+        changed.Behaviour._animation.SetCrit(true);
+    }
+    
     protected TargetFinder _targetFinder;
     protected UnitStatsModifierManager _unitStats;
     private AgentBrain _agentBrain;
@@ -16,24 +29,26 @@ public class AttackComponentState : ComponentState
     protected float _critChancePercent => _unitStats.GetStat(EUnitFloatStats.CritChancePercent);
     protected float _critMultiplierPercent => _unitStats.GetStat(EUnitFloatStats.CritMultiplierPercent);
     private float _attackSpeedPercent => _unitStats.GetStat(EUnitFloatStats.AttackSpeedPercent);
-    private float _attackRange => _unitStats.GetStat(EUnitFloatStats.AttackRange);
 
-    protected virtual void Awake()
+    public override void Spawned()
     {
+        _animation = Container.GetComponent<UnitAnimationController>();
+        
+        if (!Runner.IsServer) return;
+
         _canAttack = true;
-        _targetFinder = GetComponent<TargetFinder>();
-        _unitStats = GetComponent<UnitStatsModifierManager>();
-        _agentBrain = GetComponent<AgentBrain>();
-        _animation = GetComponent<UnitAnimationController>();
+        _targetFinder = Container.GetComponent<TargetFinder>();
+        _unitStats = Container.GetComponent<UnitStatsModifierManager>();
+        _agentBrain = Container.GetComponent<AgentBrain>();
     }
 
     public override void Tick()
     {
         base.Tick();
-        if (CheckTargetBad())
+        if (_target == null)
         {
-            _target = _targetFinder.Target;
-            if (CheckTargetBad())
+            _target = _targetFinder.AttackTarget;
+            if (_target == null)
             {
                 _componentStateMachine.Exit(this);
                 return;
@@ -41,8 +56,6 @@ public class AttackComponentState : ComponentState
         }
         CallAttack(_target);
     }
-
-    private bool CheckTargetBad() => _target == null || Vector3.Distance(_target.transform.position, transform.position) > _attackRange;
 
     public virtual void CallAttack(Component target)
     {
@@ -74,18 +87,18 @@ public class AttackComponentState : ComponentState
     protected void BaseAttack(Component target)
     {
         target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage));
-        _animation?.SetAttack(true);
+        _attack = !_attack;
     }
 
     protected void CritAttack(Component target)
     {
         target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100));
-        _animation?.SetCrit(true);
+        _crit = !_crit;
     }
 
-    public override void OnEnter()
+    protected override void OnEnter()
     {
-        _target = _targetFinder.Target;
+        _target = _targetFinder.SightTarget;
         _agent.EnableAgent(this);
         _agent.ClearDestination();
     }

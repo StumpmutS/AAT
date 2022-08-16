@@ -45,11 +45,11 @@ public class UnitAnimationController : MonoBehaviour
         ResetBool(critBoolName);
     }
 
-    public void SetAbility(int index)
+    public void SetAbilityBool(string abilityName)
     {
         StopRandomIdle();
-        animator.SetInteger(abilityIntName, index);
-        ResetInt(abilityIntName);
+        animator.SetBool(abilityName, true);
+        ResetBool(abilityName);
     }
     #endregion
 

@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IHealth
+public class Health : NetworkBehaviour, IHealth
 {
+    [Networked(OnChanged = nameof(OnHealthPercentChange))] 
+    private float _currentHealthPercent { get; set; }
+    public static void OnHealthPercentChange(Changed<Health> changed)
+    {
+        changed.Behaviour.OnHealthPercentChanged.Invoke(changed.Behaviour._currentHealthPercent);
+    }
+    
     [SerializeField] protected UnitStatsModifierManager unitDataManager;
-    private float _maxHealth => unitDataManager.GetStat(EUnitFloatStats.MaxHealth);
-
-    public event Action<float> OnHealthChanged = delegate { };
-    public event Action OnDie = delegate { };
+    public float MaxHealth => unitDataManager.GetStat(EUnitFloatStats.MaxHealth);
     
     protected float _currentHealth;
-    private float _currentHealthPercent;
+    
+    public event Action<float> OnHealthPercentChanged = delegate { };
+    public event Action OnDie = delegate { };
 
     protected virtual void Awake()
     {
@@ -21,12 +27,14 @@ public class Health : MonoBehaviour, IHealth
 
     protected virtual void Start()
     {
-        _currentHealth = _maxHealth;
-        _currentHealthPercent = _currentHealth / _maxHealth;
+        _currentHealth = MaxHealth;
+        _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
     public void ModifyHealth(float amount)
     {
+        if (!Runner.IsServer) return;
+        
         if (amount > 0)
         {
             Heal(amount);
@@ -35,14 +43,13 @@ public class Health : MonoBehaviour, IHealth
         {
             TakeDamage(Mathf.Abs(amount));
         }
-        _currentHealthPercent = _currentHealth / _maxHealth;
-        OnHealthChanged.Invoke(_currentHealthPercent);
+        _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
     protected virtual void Heal(float amount)
     {
-        if (_currentHealth + amount > _maxHealth)
-            _currentHealth = _maxHealth;
+        if (_currentHealth + amount > MaxHealth)
+            _currentHealth = MaxHealth;
         else
             _currentHealth += amount;
     }
@@ -60,8 +67,7 @@ public class Health : MonoBehaviour, IHealth
     }
 
     private void RefreshHealth(UnitStatsModifierManager stats)
-    {//todo: needed?
-        _currentHealth = _maxHealth * _currentHealthPercent;
-        OnHealthChanged.Invoke(_currentHealthPercent);
+    {
+        _currentHealth = MaxHealth * _currentHealthPercent;
     }
 }

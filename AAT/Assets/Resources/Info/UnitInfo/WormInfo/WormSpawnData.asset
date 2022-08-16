@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf701125b0bb7b4cac56b2c01584623, type: 3}
   m_Name: WormSpawnData
   m_EditorClassIdentifier: 
-  SpawnerPrefab:
-    RawGuidValue: 61062c37331a604499efb655cd98a5f2
+  SpawnerPrefab: {fileID: 5075726232169910457, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
   SpawnGroupsAmount: 1
   UnitsPerGroupAmount: 1
   SpawnTime: 1
   RespawnTime: 60
   MaxSpawnLocationUse: 3
   SpawnerOffset: {x: 0, y: 0, z: 1}
-  SpawnerVisuals: {fileID: -5862317012690568444, guid: 4ab723db798d8bb4bab3c890c2ffa7bc, type: 3}
-  UnitPrefab:
-    RawGuidValue: 5cddf8ae4971e3940b89e05ffc357644
+  SpawnerVisuals:
+    RawGuidValue: 4ab723db798d8bb4bab3c890c2ffa7bc
+  UnitPrefab: {fileID: 4195062066824775773, guid: 5cddf8ae4971e3940b89e05ffc357644, type: 3}
   UnitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
   baseUnitStatsData: {fileID: 11400000, guid: 2aea3513024fbac4183838d4eef3fce6, type: 2}
   UnitStatsUpgradeData: []

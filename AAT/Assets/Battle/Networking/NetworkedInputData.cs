@@ -3,6 +3,10 @@ using UnityEngine;
 
 public struct NetworkedInputData : INetworkInput
 {
+    public Vector3 RightClickPosition;
+    public Vector3 RightClickDirection;
+    public Vector3 LeftClickPosition;
+    public Vector3 LeftClickDirection;
 }
 
 public static class NetworkedInputMapping

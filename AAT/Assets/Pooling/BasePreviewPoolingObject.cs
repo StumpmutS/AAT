@@ -13,6 +13,8 @@ public abstract class BasePreviewPoolingObject : PoolingObject
     public GameObject InitiateUsage(Transform parent = null)
     {
         var instantiatedObject = CreateObject();
+        if (instantiatedObject == null) return null;
+        
         instantiatedObject.transform.parent = parent;
         instantiatedObject.transform.localScale = transform.localScale;
         return instantiatedObject;

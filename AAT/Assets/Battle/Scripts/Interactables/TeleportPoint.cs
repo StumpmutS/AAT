@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class TeleportPoint : InteractableController
 {
-    [SerializeField] private UnitController unit;
-    public UnitController Unit => unit;
+    public UnitController Unit => unitController;
     [SerializeField] private Vector3 exitPointOffset;
     [SerializeField] private float teleportTime;
     public float TeleportTime => teleportTime;
@@ -48,8 +47,16 @@ public class TeleportPoint : InteractableController
     private IEnumerator WarpInteractor(InteractionComponentState componentState)
     {
         yield return new WaitForSeconds(teleportTime);
-        componentState.GetComponent<AgentBrain>().CurrentAgent.Warp(OtherTeleportPoint.transform.position + OtherTeleportPoint.exitPointOffset);
-        componentState.GetComponent<UnitController>().SetSector(OtherTeleportPoint._sector);
+        if (componentState == null) yield break;
+        
+        componentState.Container.GetComponent<AgentBrain>().CurrentAgent.Warp(OtherTeleportPoint.transform.position + OtherTeleportPoint.exitPointOffset);
+        componentState.Container.GetComponent<UnitController>().SetSector(OtherTeleportPoint._sector);
         componentState.FinishInteraction();
+    }
+
+    protected override void DisplayPreview(UnitController unit)
+    {
+        base.DisplayPreview(unit);
+        _preview.transform.position = OtherTeleportPoint.transform.position;
     }
 }

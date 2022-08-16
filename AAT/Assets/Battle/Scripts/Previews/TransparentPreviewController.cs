@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class TransparentPreviewController : MonoBehaviour
 {
-    [SerializeField] private TwoColorsData colors;
+    [SerializeField] private ColorsData colors;
     [SerializeField] private Renderer previewRenderer;
 
     public void SetValid()
     {
         foreach (var mat in previewRenderer.materials)
         {
-            mat.color = colors.Color1;
+            mat.color = colors.Colors[0];
         }
     }
 
@@ -17,7 +17,7 @@ public class TransparentPreviewController : MonoBehaviour
     {
         foreach (var mat in previewRenderer.materials)
         {
-            mat.color = colors.Color2;
+            mat.color = colors.Colors[1];
         }
     }
 }

@@ -1,41 +1,57 @@
+using Fusion;
+
 public class ChaseComponentState : ComponentState
 {
+    [Networked(OnChanged = nameof(OnCurrentSpeedChange))] public NetworkBool Chasing { get; set; }
+    public static void OnCurrentSpeedChange(Changed<ChaseComponentState> changed)
+    {
+        if (!changed.Behaviour.Runner.IsServer) return;
+        changed.Behaviour._animation.SetChase(changed.Behaviour.Chasing);
+    }
+
     private TargetFinder _targetFinder;
     private AgentBrain _agentBrain;
     private IAgent _agent => _agentBrain.CurrentAgent;
-    private UnitStatsModifierManager _unitStats;
     private UnitAnimationController _animation;
-    private float _moveSpeed => _unitStats.GetStat(EUnitFloatStats.MovementSpeed);
+    private UnitStatsModifierManager _unitStats;
     private float _chaseSpeedPercentMultiplier => _unitStats.GetStat(EUnitFloatStats.ChaseSpeedPercentMultiplier);
 
-    private void Awake()
+    public override void Spawned()
     {
-        _targetFinder = GetComponent<TargetFinder>();
-        _agentBrain = GetComponent<AgentBrain>();
-        _unitStats = GetComponent<UnitStatsModifierManager>();
-        _animation = GetComponent<UnitAnimationController>();
+        if (!Runner.IsServer) return;
+
+        _targetFinder = Container.GetComponent<TargetFinder>();
+        _agentBrain = Container.GetComponent<AgentBrain>();
+        _unitStats = Container.GetComponent<UnitStatsModifierManager>();
+        _animation = Container.GetComponent<UnitAnimationController>();
     }
 
-    public override void OnEnter()
+    protected override void OnEnter()
     {
+        if (!Runner.IsServer) return;
+
         _agent.EnableAgent(this);
-        _agent.SetDestination(_targetFinder.Target.transform.position);
-        _agent.SetSpeed(_moveSpeed * _chaseSpeedPercentMultiplier / 100);
-        _animation?.SetChase(true);
+        if (_targetFinder.SightTarget != null) _agent.SetDestination(_targetFinder.SightTarget.transform.position);
+        _agent.SetSpeedMultiplier(_chaseSpeedPercentMultiplier / 100);
+        Chasing = true;
     }
 
     public override void Tick()
     {
         base.Tick();
-        if (_targetFinder.Target is not null)
+        if (_targetFinder.SightTarget != null)
         {
-            _agent.SetDestination(_targetFinder.Target.transform.position);
+            _agent.SetDestination(_targetFinder.SightTarget.transform.position);
+        }
+        else
+        {
+            _componentStateMachine.Exit(this);
         }
     }
 
     public override void OnExit()
     {
-        _agent.SetSpeed(_moveSpeed);
-        _animation?.SetChase(false);
+        _agent.SetSpeedMultiplier(1);
+        Chasing = false;
     }
 }

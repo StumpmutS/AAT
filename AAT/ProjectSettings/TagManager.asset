@@ -4,9 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Good
-  - Bad
-  - Neutral
+  - UpgradesUI
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,7 @@ public class TraverseAgentComponentState : ComponentState, IAgent
     private UnitController _unit;
     private UnitStatsModifierManager _stats;
     private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed) * _stats.GetStat(EUnitFloatStats.TraverseSpeedPercentMultiplier) / 100;
+    private float _speedMultiplier;
 
     private bool _entered;
     private bool _activationReady;
@@ -20,13 +21,15 @@ public class TraverseAgentComponentState : ComponentState, IAgent
 
     public event Action OnPathFinished = delegate { };
 
-    private void Awake()
+    public override void Spawned()
     {
-        _unit = GetComponent<UnitController>();
+        if (!Runner.IsServer) return;
+
+        _unit = Container.GetComponent<UnitController>();
         _stats = _unit.Stats;
     }
 
-    public override void OnEnter()
+    protected override void OnEnter()
     {
         _entered = true;
         _activationReady = false;
@@ -37,15 +40,15 @@ public class TraverseAgentComponentState : ComponentState, IAgent
         base.Tick();
         if (!_enabled || !_moving) return;
         Traverse();
-        CheckSector(transform.position);
+        CheckSector(Container.transform.position);
     }
 
     private void Traverse()
     {
-        var newPos = Vector3.MoveTowards(transform.position, _destination, _speed * Time.deltaTime);
-        if ((newPos - _startPosition).sqrMagnitude < _targetDistanceSqr) EndTraverse();
-        transform.LookAt(newPos);
-        transform.position = newPos;
+        var newPos = Vector3.MoveTowards(Container.transform.position, _destination, _speed * Runner.DeltaTime);
+        if ((newPos - _startPosition).sqrMagnitude >= _targetDistanceSqr) EndTraverse();
+        Container.transform.LookAt(newPos);
+        Container.transform.position = newPos;
     }
     
     private void EndTraverse()
@@ -82,17 +85,17 @@ public class TraverseAgentComponentState : ComponentState, IAgent
         finalDestination = destination;
         var targetSector = SectorFinder.FindSector(destination, 3, LayerManager.Instance.GroundLayer);
 
-        var totalTime = SectorManager.Instance.PathBetween(transform.position, _speed, _unit.Sector, targetSector, out var teleportPoints);
-        if (totalTime < 0 || totalTime > Vector3.Distance(transform.position, destination) / _speed) return true;
+        var totalTime = SectorManager.Instance.PathBetween(Container.transform.position, _speed, _unit.Sector, targetSector, out var teleportPoints);
+        if (totalTime < 0 || totalTime > Vector3.Distance(Container.transform.position, destination) / _speed) return true;
         points = teleportPoints;
         return true;
     }
 
     public void SetDestination(Vector3 destination)
     {
-        destination.y = transform.position.y;
+        destination.y = Container.transform.position.y;
         _destination = destination;
-        _startPosition = transform.position;
+        _startPosition = Container.transform.position;
         _targetDistanceSqr = (_destination - _startPosition).sqrMagnitude;
         _moving = true;
     }
@@ -113,9 +116,12 @@ public class TraverseAgentComponentState : ComponentState, IAgent
         _enabled = false;
     }
 
-    public void SetSpeed(float speed) => _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.GetStat(EUnitFloatStats.MovementSpeed) - speed);
+    public void SetSpeedMultiplier(float speedMultiplier)
+    {
+        _speedMultiplier = speedMultiplier;
+    }
 
-    public float GetSpeed() => _speed;
+    public float GetSpeed() => _speed * _speedMultiplier;
 
-    public void Warp(Vector3 position) => transform.position = new Vector3(position.x, transform.position.y, position.z);
+    public void Warp(Vector3 position) => Container.transform.position = new Vector3(position.x, Container.transform.position.y, position.z);
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Fusion;
 using UnityEngine;
 using Utility.Scripts;
 
@@ -17,23 +18,33 @@ public class UnitTeleporterSpawnAbilityComponent : AbilityComponent
 
     private IEnumerator Activate(UnitController unit, Vector3 point)
     {
-        var instantiatedUnitGroup = Instantiate(unitGroupController);
-        var instantiatedOriginTeleporter = StumpNetworkRunner.Instance.Runner.Spawn(teleportPointUnit, unit.transform.position + originOffset, Quaternion.identity).GetComponent<TeleportPoint>();
-        instantiatedUnitGroup.AddUnit(instantiatedOriginTeleporter.Unit);
-        instantiatedOriginTeleporter.Unit.SetSector(unit.Sector);
+        if (!unit.Runner.IsServer) yield break;
+        
+        var instantiatedOriginTeleporter = unit.Runner.Spawn(teleportPointUnit, unit.transform.position + originOffset, Quaternion.identity, unit.Object.InputAuthority,
+            (_, o) =>
+            {
+                var teleportPoint = o.GetComponent<TeleportPoint>();
+                TeamManager.Instance.SetupWithTeam(teleportPoint.Unit.Team, unit.Team.GetTeamNumber());
+                teleportPoint.Unit.SetSector(unit.Sector);
+            }).GetComponent<TeleportPoint>();
         yield return new WaitForSeconds(timeForOtherPoint);
         //TODO: UNIT DEAD?
-        
+
         var otherSector = SectorFinder.FindSector(point, 5, LayerManager.Instance.GroundLayer);
-        var instantiatedDestinationTeleporter = StumpNetworkRunner.Instance.Runner.Spawn(teleportPointUnit, point + destinationOffset, Quaternion.identity).GetComponent<TeleportPoint>();
-        instantiatedUnitGroup.AddUnit(instantiatedDestinationTeleporter.Unit);
-        instantiatedDestinationTeleporter.Unit.SetSector(otherSector);
+        var instantiatedDestinationTeleporter = unit.Runner.Spawn(teleportPointUnit, point + destinationOffset, Quaternion.identity, unit.Object.InputAuthority,
+            (_, o) =>
+            {
+                var teleportPoint = o.GetComponent<TeleportPoint>();
+                TeamManager.Instance.SetupWithTeam(teleportPoint.Unit.Team, unit.Team.GetTeamNumber());
+                teleportPoint.Unit.SetSector(otherSector);
+                
+            }).GetComponent<TeleportPoint>();
         instantiatedOriginTeleporter.SetupPair(unit.Sector, instantiatedDestinationTeleporter, otherSector);
-        
-        if (unit.TryGetComponent<MovementInteractOverrideComponentState>(out var state))
-            state.SetDesiredInteractable(instantiatedOriginTeleporter);
+
+        if (unit.TryGetComponent<InteractingController>(out var interactingController))
+            interactingController.InteractWith(instantiatedOriginTeleporter);
         else
-            Debug.LogWarning("This unit does not have an interaction state");
+            Debug.LogWarning("This unit does not have an interacting controller");
 
         var destinationRenderer = instantiatedDestinationTeleporter.GetComponentInChildren<Renderer>();
         destinationRenderer.enabled = false;

@@ -7,6 +7,7 @@ public class FlyingAgentComponentState : ComponentState, IAgent
     private FlyingController _flyingController;
     private UnitStatsModifierManager _stats;
     private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
+    private float _speedMultiplier = 1;
     
     private bool _entered;
     private bool _activationReady;
@@ -18,18 +19,25 @@ public class FlyingAgentComponentState : ComponentState, IAgent
     
     public event Action OnPathFinished = delegate { };
 
-    private void Awake()
+    public override void Spawned()
     {
-        _stats = GetComponent<UnitStatsModifierManager>();
-        _flyingController = GetComponent<FlyingController>();
+        if (!Runner.IsServer) return;
+
+        _stats = Container.GetComponent<UnitStatsModifierManager>();
+        _flyingController = Container.GetComponent<FlyingController>();
         _flyingController.OnArrival += FinishPath;
     }
 
     private void FinishPath() => OnPathFinished.Invoke();
 
-    private void Start() => _origY = transform.position.y;
+    private void Start()
+    {
+        if (!Runner.IsServer) return;
 
-    public override void OnEnter()
+        _origY = transform.position.y;
+    }
+
+    protected override void OnEnter()
     {
         _activationReady = false;
         _entered = true;
@@ -88,9 +96,9 @@ public class FlyingAgentComponentState : ComponentState, IAgent
         ClearDestination();
     }
 
-    public void SetSpeed(float speed) => _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.GetStat(EUnitFloatStats.MovementSpeed) - speed);
+    public void SetSpeedMultiplier(float speedMultiplier) => _speedMultiplier = speedMultiplier;
 
-    public float GetSpeed() => _speed;
+    public float GetSpeed() => _speed * _speedMultiplier;
 
     public void Warp(Vector3 position) => transform.position = new Vector3(position.x, _origY + position.y, position.z);
 }

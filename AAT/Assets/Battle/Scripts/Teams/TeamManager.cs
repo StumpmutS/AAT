@@ -12,6 +12,7 @@ public class TeamManager : NetworkBehaviour
     public static TeamManager Instance { get; private set; }
 
     [Networked, Capacity(16)] private NetworkArray<NetworkBool> _teamNumbers => default;
+    [Networked, Capacity(16)] private NetworkDictionary<int, PlayerRef> _playersByTeamNumber => default;
 
     private void Awake()
     {
@@ -30,6 +31,15 @@ public class TeamManager : NetworkBehaviour
 
         return LayerMask.GetMask(layerNames.ToArray());
     }
+
+    public void SetPlayerForTeam(int teamNumber, PlayerRef player)
+    {
+        if (!Runner.IsServer) return;
+        
+        _playersByTeamNumber.Set(teamNumber, player);
+    }
+    
+    public PlayerRef GetPlayerForTeam(int teamNumber) => _playersByTeamNumber.Get(teamNumber);
 
     public void SetupWithTeam(TeamController teamController, int desiredTeamNumber = 0)
     {

@@ -19,24 +19,32 @@ public class UnitManager : MonoBehaviour
 
     public void AddUnit(UnitController unit)
     {
+        if (!unit.Runner.IsServer) return;
+        
         unit.OnDeath += RemoveUnit;
         Units.Add(unit);
     }
 
     private void RemoveUnit(UnitController unit)
     {
+        if (!unit.Runner.IsServer) return;
+        
         unit.OnDeath -= RemoveUnit;
         Units.Remove(unit);
     }
 
     public void AddSelectedUnit(UnitController unit)
     {
+        if (!unit.Runner.IsServer) return;
+        
         SelectedUnits.Add(unit);
         OnUnitSelected.Invoke(unit);
     }
 
     public void RemoveSelectedUnit(UnitController unit)
     {
+        if (!unit.Runner.IsServer) return;
+        
         SelectedUnits.Remove(unit);
         OnUnitDeselected.Invoke(unit);
     }

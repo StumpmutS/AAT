@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da61ebe6b0a0bab4da4c13e6cc425ab0, type: 3}
   m_Name: MoleTraverseSpeedB
   m_EditorClassIdentifier: 
-  Stat: 13
-  Value: 5
+  Stat: 12
+  Value: 300

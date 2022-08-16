@@ -14,7 +14,7 @@ public interface IAgent
     public void ClearDestination();
     public void EnableAgent(object caller);
     public void DisableAgent(object caller);
-    public void SetSpeed(float speed);
+    public void SetSpeedMultiplier(float speedMultiplier);
     public float GetSpeed();
     public void Warp(Vector3 position);
 }

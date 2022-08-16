@@ -16,5 +16,9 @@ public class UnitAbilityDataInfo
     public float ActiveTime;
     public float TargetTimeOutTime;
     public bool TransportUsage;
+    public bool CanBeCastOver;
+    [ShowIf(nameof(CanBeCastOver), true)]
+    public float AllowCastOverTimer;
     public List<AbilityComponent> AbilityComponents;
+    public List<VisualComponent> VisualComponents;
 }

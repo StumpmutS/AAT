@@ -8,7 +8,7 @@ public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
     private Dictionary<SectorController, int> _currentThresholdIndexesBySector = new();
     protected Dictionary<SectorController, HashSet<UnitController>> _unitsBySector = new();
 
-    public override void ActivateComponent(UnitController unit)
+    public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         if (!_unitsBySector.ContainsKey(unit.Sector))
         {
@@ -24,6 +24,11 @@ public abstract class SectorPowerDeterminedPassiveComponent : PassiveComponent
             _currentThresholdIndexesBySector[unit.Sector] = thresholdIndex;
             ActivateThresholdIndex(unit.Sector, thresholdIndex);
         }
+    }
+
+    public override void DeactivateComponent(UnitController unit)
+    {
+        _unitsBySector[unit.Sector].Remove(unit);
     }
 
     private int DetermineThreshold(float sectorPower)

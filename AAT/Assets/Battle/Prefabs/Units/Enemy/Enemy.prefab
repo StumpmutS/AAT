@@ -392,9 +392,13 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 8253979460464806656}
+  - {fileID: 4331704148283514323}
+  - {fileID: 4331704148283514321}
+  - {fileID: 4331704148283514320}
   - {fileID: 4331704148283514328}
   SimulationBehaviours:
-  - {fileID: 4331704148283514321}
+  - {fileID: 4331704148283514335}
+  - {fileID: 8718211337999981390}
 --- !u!114 &8253979460464806656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,6 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224acc55b1311784f9c4f30b353fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   unitDataManager: {fileID: 4331704148283514328}
 --- !u!114 &4331704148283514322
 MonoBehaviour:
@@ -513,15 +518,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _IsDead:
+    _value: 0
+  _Selected:
+    _value: 0
   interactableTypes: 
   chaseState: 1
   patrolState: 1
   _patrolPoints: []
   colliders: []
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  unitVisuals: {fileID: 0}
   unitManager: {fileID: 0}
+  OnInit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4331704148283514320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0616b5d409331d948877c2675794efc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   unitCarcass: {fileID: 0}
 --- !u!114 &4331704148283514335
 MonoBehaviour:
@@ -547,6 +559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e505fa7b256f94998a890bbf47d183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 0}
   defaultTransition: {fileID: 11400000, guid: 6e582736bd4a9c340ada0c512ec964e5, type: 2}
   transitions:
   - {fileID: 11400000, guid: f021c97c43cd4e14d8a89618ed2d1898, type: 2}
@@ -591,9 +604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da483d87a0a66ef498be39127194c908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &8718211337999981390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,6 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5996bf8498342d84198a888301fe5cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 0}
   defaultTransition: {fileID: 11400000, guid: e8ef0570b98f02c46a463f8d098d1b3f, type: 2}
   transitions: []
 --- !u!1 &7649439222116658263

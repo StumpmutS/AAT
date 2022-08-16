@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
 using Utility.Scripts;
@@ -279,7 +280,7 @@ public class WallPlacementManager : MonoBehaviour
         if (currentChain)
         {
             if (otherChain)
-            {        
+            {
                 if (currentPoint.Start && !endPoint.Start)
                 {
                     mountables.Reverse();

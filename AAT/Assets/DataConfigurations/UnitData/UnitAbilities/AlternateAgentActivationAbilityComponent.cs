@@ -17,8 +17,19 @@ public class AlternateAgentActivationAbilityComponent : AbilityComponent
 
     private bool TryActivate(UnitController unit, ComponentState agent)
     {
-        if (!unit.TryGetComponent(agent.GetType(), out var agentComponent)) return false;
-        var iAgent = (IAgent) agentComponent;
+        if (!unit.TryGetComponent<NetworkStateComponentContainer>(out var container))
+        {
+            Debug.LogError("unit does not have a network component state container");
+            return false;
+        }
+        
+        if (!container.TryGetComponentState(agent, out var foundState))
+        {
+            Debug.LogError($"unit does not have an agent of type {agent.GetType().Name}");
+            return false;
+        }
+        
+        var iAgent = (IAgent) foundState;
         if (iAgent.IsActive()) return false;
         iAgent.Activate();
         return true;

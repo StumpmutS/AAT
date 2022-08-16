@@ -7,14 +7,18 @@ public class IdleComponentState : ComponentState
     private IAgent _agent => _agentBrain.CurrentAgent;
     private UnitAnimationController _animation;
 
-    private void Awake()
+    public override void Spawned()
     {
-        _agentBrain = GetComponent<AgentBrain>();
-        _animation = GetComponent<UnitAnimationController>();
+        if (!Runner.IsServer) return;
+
+        _agentBrain = Container.GetComponent<AgentBrain>();
+        _animation = Container.GetComponent<UnitAnimationController>();
     }
 
-    public override void OnEnter()
+    protected override void OnEnter()
     {
+        if (!Runner.IsServer) return;
+        
         _agent.EnableAgent(this);
         _animation?.SetMovement(0);
         _agent.ClearDestination();

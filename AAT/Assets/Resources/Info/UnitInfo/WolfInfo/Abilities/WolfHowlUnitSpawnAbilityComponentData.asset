@@ -17,11 +17,11 @@ MonoBehaviour:
   ComponentDelay: 0.5
   ComponentDuration: 0
   useCurrentGroup: 1
-  unitGroupPrefab: {fileID: 0}
-  unitPrefab: {fileID: 744993545796701531, guid: 8466f78ec9093a545aa414edcb590c83, type: 3}
+  unitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
+  unitPrefab: {fileID: 7906236025071273489, guid: 3942b916256e8b34daad4008a28ce4d5, type: 3}
   unitsPerOffset: 1
   spawnOffsets:
-  - {x: -6, y: 0, z: 0}
-  - {x: -3, y: 0, z: 0}
-  - {x: 3, y: 0, z: 0}
-  - {x: 6, y: 0, z: 0}
+  - {x: -6, y: 0, z: -4}
+  - {x: -3, y: 0, z: -2}
+  - {x: 3, y: 0, z: -2}
+  - {x: 6, y: 0, z: -4}

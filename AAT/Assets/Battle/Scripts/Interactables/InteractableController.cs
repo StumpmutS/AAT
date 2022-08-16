@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public abstract class InteractableController : MonoBehaviour //TODO: both sets up previews and handles interaction (bad)
+public abstract class InteractableController : SimulationBehaviour, IDespawned //TODO: both sets up previews and handles interaction (bad)
 {
     [SerializeField] private EInteractableType interactableType;
-    public EInteractableType InteractableType => interactableType;
     [SerializeField] private float interactRange;
     public float InteractRange => interactRange;
     [SerializeField] private InteractionComponentState interactionComponentState;
     [SerializeField] private GameObject visualsPrefab;
     [SerializeField] private Vector3 visualsOffset;
+    [SerializeField] protected UnitController unitController;
     [SerializeField] protected SelectableController selectable;
 
     private GameObject _visuals;
@@ -21,13 +22,12 @@ public abstract class InteractableController : MonoBehaviour //TODO: both sets u
 
     protected virtual void Awake()
     {
-        InteractableManager.Instance.AddInteractable(this);
-        selectable.OnHover += HoverHandler;
-        selectable.OnHoverStop += HoverStopHandler;
-        if (selectable.TryGetComponent<UnitController>(out var unit)) unit.OnDeath += DestroyInteractable;
+        unitController.OnDeath += DestroyInteractable;
+        selectable.OnHover += HandleHover;
+        selectable.OnHoverStop += HandleHoverStop;
     }
 
-    private void DestroyInteractable(UnitController notNeeded)
+    private void DestroyInteractable(UnitController _)
     {
         OnInteractableDestroyed.Invoke(this);
     }
@@ -38,50 +38,75 @@ public abstract class InteractableController : MonoBehaviour //TODO: both sets u
         instantiatedVisuals.transform.position += visualsOffset;
         instantiatedVisuals.gameObject.SetActive(false);
         _visuals = instantiatedVisuals;
+        UnitManager.Instance.OnUnitSelected += HandleUnitSelected;
+        UnitManager.Instance.OnUnitDeselected += HandleUnitDeselected;
     }
 
-    public void DisplayVisuals()
+    private void DisplayVisuals()
     {
         _visuals.SetActive(true);
     }
 
-    public void RemoveVisuals()
+    private void RemoveVisuals()
     {
         if (_visuals != null) _visuals.SetActive(false);
     }
 
-    private void HoverHandler()
-    {
-        InteractableManager.Instance.SetHoveredInteractable(this);
-    }
-
-    private void HoverStopHandler()
-    {
-        InteractableManager.Instance.RemoveHoveredInteractable(this);
-    }
-
     public abstract void RequestAffection(InteractionComponentState componentState);
 
-    public InteractionComponentState RequestState() => interactionComponentState;
+    public InteractionComponentState RequestInteractionState() => interactionComponentState;
 
     public virtual InteractableController DetermineInteractable(UnitController _) => this;
 
-    public void CallDisplayPreview(PoolingObject previewObject, int unitAmount)
+    public void TryDisplayPreview(UnitController unit)
     {
-        if (_previewDisplayed) return;
+        if (_previewDisplayed || !unit.InteractableTypes.Contains(interactableType) || TargetHelper.TargetRelation(unit.Team, unitController.Team, ETargetRelation.Enemy)) return;
         _previewDisplayed = true;
-        DisplayPreview(previewObject, unitAmount);
+        DisplayPreview(unit);
     }
 
-    protected virtual void DisplayPreview(PoolingObject previewObject, int unitAmount)
+    protected virtual void DisplayPreview(UnitController unit)
     {
-        _preview = PoolingManager.Instance.CreatePoolingObject(previewObject);
+        _preview = PoolingManager.Instance.CreatePoolingObject(unit.UnitVisuals);
+        _preview.transform.position = transform.position;
     }
 
-    public void RemovePreview()
+    public void TryRemovePreview()
     {
         if (!_previewDisplayed) return;
         _previewDisplayed = false;
+        RemovePreview();
+    }
+
+    protected virtual void RemovePreview()
+    {
         _preview.Deactivate();
+    }
+
+    private void HandleUnitSelected(UnitController unit)
+    {
+        if (unit.InteractableTypes.Contains(interactableType) && !TargetHelper.TargetRelation(unit.Team, unitController.Team, ETargetRelation.Enemy)) DisplayVisuals();
+        else RemoveVisuals();
+    }
+
+    private void HandleUnitDeselected(UnitController unit)
+    {
+        RemoveVisuals();
+    }
+
+    private void HandleHover()
+    {
+        foreach (var selectedUnit in UnitManager.Instance.SelectedUnits)
+        {
+            TryDisplayPreview(selectedUnit);
+            return;
+        }
+    }
+
+    private void HandleHoverStop() => TryRemovePreview();
+    public void Despawned(NetworkRunner runner, bool hasState)
+    {
+        UnitManager.Instance.OnUnitSelected -= HandleUnitSelected;
+        UnitManager.Instance.OnUnitDeselected -= HandleUnitDeselected;
     }
 }

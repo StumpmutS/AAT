@@ -1,22 +1,32 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
+using Utility.Scripts;
 
 [RequireComponent(typeof(UnitController))]
-public class Brain : MonoBehaviour
+public class Brain : SimulationBehaviour, ISpawned
 {
+    [SerializeField] private NetworkStateComponentContainer container;
     [SerializeField] private Transition defaultTransition;
     [SerializeField] private List<Transition> transitions;
 
     protected ComponentStateMachine ComponentStateMachine;
 
-    protected  virtual void Awake()
+    public void Spawned()
     {
+        if (!Runner.IsServer) return;
+
         ComponentStateMachine = new ComponentStateMachine(GetComponent<UnitController>());
         AddTransitions();
     }
 
-    protected virtual void Start() => ComponentStateMachine.ActivateDefault();
+    protected virtual void Start()
+    {
+        if (!Runner.IsServer) return;
+        
+        ComponentStateMachine.ActivateDefault();
+    }
 
     private void AddTransitions()
     {
@@ -30,46 +40,42 @@ public class Brain : MonoBehaviour
 
     private void SetupTransition(Transition transition, bool isDefault = false)
     {
-        if (!TryGetComponent(transition.To.GetType(), out var to))
-            to = gameObject.AddComponent(transition.To.GetType());
-        ((ComponentState) to).SetValuesFrom(transition.To);
+        var to = container.AddOrGetComponentState(transition.To, ComponentStateMachine);
+        to.SetValuesFrom(transition.To);
         
         if (transition.Any)
         {
-            AddAnyTransition(to as ComponentState, transition.Decision, isDefault);
+            AddAnyTransition(to, transition.Decision, isDefault);
             return;
         }
         
-        if (!TryGetComponent(transition.From.GetType(), out var from))
-            from = gameObject.AddComponent(transition.From.GetType());
-        ((ComponentState) from).SetValuesFrom(transition.From);
-        AddTransition(from as ComponentState, to as ComponentState, transition.Decision, isDefault);
+        var from = container.AddOrGetComponentState(transition.From, ComponentStateMachine);
+        from.SetValuesFrom(transition.From);
+        
+        AddTransition(from, to, transition.Decision, isDefault);
     }
 
     private void AddAnyTransition(ComponentState to, Func<UnitController, bool> decision, bool isDefault)
     {
         ComponentStateMachine.AddAnyTransition(to, decision, isDefault);
-        to.SetStateMachine(ComponentStateMachine);
     }
 
     private void AddTransition(ComponentState from, ComponentState to, Func<UnitController, bool> decision, bool isDefault)
     {
         ComponentStateMachine.AddTransition(from, to, decision, isDefault);
-        from.SetStateMachine(ComponentStateMachine);
-        to.SetStateMachine(ComponentStateMachine);
     }
 
-    private void Update() => ComponentStateMachine.Tick();
-
-    public ComponentState AddState(ComponentState componentState)
+    public override void FixedUpdateNetwork()
     {
-        if (!TryGetComponent(componentState.GetType(), out var component))
-        {
-            component = gameObject.AddComponent(componentState.GetType());
-            ((ComponentState) component).SetValuesFrom(componentState);
-        }
-        var returnState = (ComponentState) component;
-        returnState.SetStateMachine(ComponentStateMachine);
-        return returnState;
+        if (!Runner.IsServer) return;
+        
+        ComponentStateMachine.Tick();
+    }
+
+    public ComponentState AddOrGetState(ComponentState componentState)
+    {
+        var component = container.AddOrGetComponentState(componentState, ComponentStateMachine);
+        component.SetValuesFrom(componentState);
+        return component;
     }
 }

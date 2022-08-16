@@ -28,8 +28,8 @@ public class CavalryAttackComponentState : AttackComponentState
     private void Charge()
     {
         if (!_charging) return;
-        _target = _targetFinder.Target;
-        _chargeTime += Time.deltaTime;
+        _target = _targetFinder.SightTarget;
+        _chargeTime += Runner.DeltaTime;
         AddSpeed();
         _agent.SetDestination(_target.transform.position);
         if (Vector3.Distance(transform.position, _target.transform.position) < _chargeEndDistance || _target == null)
@@ -40,7 +40,7 @@ public class CavalryAttackComponentState : AttackComponentState
 
     protected virtual void AddSpeed()
     {
-        float addSpeed =  (_moveSpeed * _chaseSpeedPercent / 100 - _moveSpeed) * Time.deltaTime;
+        float addSpeed =  (_moveSpeed * _chaseSpeedPercent / 100 - _moveSpeed) * Runner.DeltaTime;
         _unitStats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, addSpeed);
         _chargeSpeedChange += addSpeed;
     }

@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  upgradesUIContainer: {fileID: 0}
+  spawnPlotUI: {fileID: 0}
   sector: {fileID: 0}
   faction: 0
 --- !u!114 &7475270637012255309
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionType: 3
   outline: {fileID: 90829029774520668}
 --- !u!65 &2961489553521289926
 BoxCollider:

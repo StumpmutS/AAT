@@ -1,16 +1,17 @@
+using Fusion;
 using UnityEngine;
 
 public class ArmoredHealth : Health, IArmor
 {
-    private float baseArmorPercent => unitDataManager.GetStat(EUnitFloatStats.BaseArmorPercent);
-    private float maxArmorPercent => unitDataManager.GetStat(EUnitFloatStats.MaxArmorPercent);
-
-    private float currentArmorPercent;
+    [Networked] private float currentArmorPercent { get; set; }
+    
+    private float _baseArmorPercent => unitDataManager.GetStat(EUnitFloatStats.BaseArmorPercent);
+    private float _maxArmorPercent => unitDataManager.GetStat(EUnitFloatStats.MaxArmorPercent);
 
     protected override void Start()
     {
         base.Start();
-        currentArmorPercent = baseArmorPercent;
+        currentArmorPercent = _baseArmorPercent;
     }
 
     protected override void TakeDamage(float amount)
@@ -22,6 +23,8 @@ public class ArmoredHealth : Health, IArmor
 
     public void ModifyArmor(float amount)
     {
+        if (!Runner.IsServer) return;
+
         if (amount > 0)
         {
             AddArmor(amount);
@@ -34,8 +37,8 @@ public class ArmoredHealth : Health, IArmor
 
     private void AddArmor(float amount)
     {
-        if (currentArmorPercent + amount >= maxArmorPercent)
-            currentArmorPercent = maxArmorPercent;
+        if (currentArmorPercent + amount >= _maxArmorPercent)
+            currentArmorPercent = _maxArmorPercent;
         else
             currentArmorPercent += amount;
     }

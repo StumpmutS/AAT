@@ -1,47 +1,78 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using Utility.Scripts;
 
 [RequireComponent(typeof(UnitController), typeof(UnitAnimationController))]
-public class AbilityHandler : MonoBehaviour
+public class AbilityHandler : NetworkBehaviour
 {
-    [SerializeField] private List<UnitAbilityData> unitAbilityData;
-    
-    private UnitController _unitController;
-    private UnitAnimationController _unitAnimationController;
+    [Networked(OnChanged = nameof(OnAbilityIndexChanged))]
+    public int AbilityIndex { get; set; } = -1;
+    public static void OnAbilityIndexChanged(Changed<AbilityHandler> changed)
+    {
+        var abilityHandler = changed.Behaviour;
+        if (abilityHandler.AbilityIndex < 0) return;
+        var ability = abilityHandler._unitAbilityDataInfo[abilityHandler.AbilityIndex];
 
+        abilityHandler._visualsHandler.ActivateVisuals(ability.VisualComponents);
+    }
+    
+    [SerializeField] private List<UnitAbilityData> unitAbilityData;
+
+    private UnitController _unit;
+    private VisualsHandler _visualsHandler;
+    
     private List<UnitAbilityDataInfo> _unitAbilityDataInfo = new();
-    private Dictionary<UnitAbilityDataInfo, bool> _abilitiesByActiveState = new();
+    private HashSet<UnitAbilityDataInfo> _abilitiesOnCooldown = new();
+    public HashSet<UnitAbilityDataInfo> ActiveAbilities { get; private set; } = new();
+    private HashSet<UnitAbilityDataInfo> _abilitiesCanBeCastOver = new();
     private HashSet<int> _abilityIndexesAwaitingInput = new();
-    private bool _checkGroundSubscribed;
+    private bool _checkInput;
 
     public event Action<bool> OnAbilityUsed = delegate { };
 
     private void Awake()
     {
-        _unitController = GetComponent<UnitController>();
-        _unitAnimationController = GetComponent<UnitAnimationController>();
-        _unitController.OutlineSelectable.OnSelect += SendDisplayData;
+        _unit = GetComponent<UnitController>();
+        _unit.OutlineSelectable.OnSelect += SendDisplayData;
+        _unit.OutlineSelectable.OnDeselect += HandleDeselect;
+        _visualsHandler = GetComponent<VisualsHandler>();
         foreach (var abilityData in unitAbilityData)
         {
             _unitAbilityDataInfo.Add(abilityData.UnitAbilityDataInfo);
         }
     }
 
-    public void AddAbility(UnitAbilityData unitAbility)
+    public override void FixedUpdateNetwork()
     {
-        unitAbilityData.Add(unitAbility);
+        if (!_checkInput || !Runner.IsServer) return;
+        if (!GetInput<NetworkedInputData>(out var input)) return;
+        if (input.LeftClickPosition == default) return;
+        
+        foreach(var index in _abilityIndexesAwaitingInput)
+        {
+            ActivateAbility(index, input.LeftClickPosition);
+            _checkInput = false;
+        }
+        _abilityIndexesAwaitingInput.Clear();
     }
 
-    private void AwaitAbilityInput(int abilityIndex)
+    private void TryAwaitAbilityInput(int abilityIndex)
     {
+        if (Object.HasInputAuthority) RpcAwaitAbilityInput(abilityIndex);
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RpcAwaitAbilityInput(int abilityIndex)
+    {
+        if (!Runner.IsServer) return;
+        
         var info = _unitAbilityDataInfo[abilityIndex];
 
-        if (info.TargetTimeOutTime > 0)
+        if (info.TargetTimeOutTime > 0.1)
         {
-            SubscribeCheckGround();
             _abilityIndexesAwaitingInput.Add(abilityIndex);
             StartCoroutine(TargetedTimeOutTimer(info.TargetTimeOutTime, abilityIndex));
         }
@@ -53,53 +84,29 @@ public class AbilityHandler : MonoBehaviour
 
     private IEnumerator TargetedTimeOutTimer(float waitTime, int index)
     {
+        _checkInput = true;
         yield return new WaitForSeconds(waitTime);
         if (_abilityIndexesAwaitingInput.Contains(index))
         {
-            UnsubscribeCheckGround();
+            _checkInput = false;
             _abilityIndexesAwaitingInput.Remove(index);
         }
-    }
-
-    private void SubscribeCheckGround()
-    {
-        if (_checkGroundSubscribed) return;
-        BaseInputManager.OnLeftCLickUp += CheckGround;
-        _checkGroundSubscribed = true;
-    }
-
-    private void UnsubscribeCheckGround()
-    {
-        if (!_checkGroundSubscribed) return;
-        BaseInputManager.OnLeftCLickUp += CheckGround;
-        _checkGroundSubscribed = false;
-    }
-
-    private void CheckGround()
-    {
-        if (StumpEventSystemManagerReference.Instance.OverUI()) return;
-        Vector3 point = Vector3.zero;
-        if (!point.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer)) return;
-        foreach(var index in _abilityIndexesAwaitingInput)
-        {
-            ActivateAbility(index, point);
-            UnsubscribeCheckGround();
-        }
-        _abilityIndexesAwaitingInput.Clear();
     }
 
     private void ActivateAbility(int abilityIndex, Vector3 point = default)
     {
         var info = _unitAbilityDataInfo[abilityIndex];
-        if (_abilitiesByActiveState.ContainsKey(info))
-            if (_abilitiesByActiveState[info]) return;
-        StartCooldown(info);
+        if (_abilitiesOnCooldown.Contains(info) || CastingUninterruptable()) return;
+        
+        AbilityIndex = abilityIndex;
+        StartAbilityTimers(info);
         foreach (var abilityComponent in info.AbilityComponents)
         {
             StartCoroutine(DelayComponentCoroutine(abilityComponent, point));
         }
-        _unitAnimationController.SetAbility(abilityIndex);
     }
+
+    private bool CastingUninterruptable() => _abilitiesCanBeCastOver.Count < ActiveAbilities.Count;
 
     private IEnumerator DelayComponentCoroutine(AbilityComponent abilityComponent, Vector3 point = default)
     {
@@ -110,12 +117,12 @@ public class AbilityHandler : MonoBehaviour
             StartCoroutine(repeatCoroutine);
             yield return new WaitForSeconds(abilityComponent.ComponentDuration);
             StopCoroutine(repeatCoroutine);
-            abilityComponent.DeactivateComponent(_unitController);
+            abilityComponent.DeactivateComponent(_unit);
         } 
         else 
         {
-            abilityComponent.ActivateComponent(_unitController, point);
-            abilityComponent.DeactivateComponent(_unitController);
+            abilityComponent.ActivateComponent(_unit, point);
+            abilityComponent.DeactivateComponent(_unit);
         }
     }
 
@@ -123,33 +130,60 @@ public class AbilityHandler : MonoBehaviour
     {
         while (gameObject.activeSelf)
         {
-            abilityComponent.ActivateComponent(_unitController, point);
+            abilityComponent.ActivateComponent(_unit, point);
             yield return new WaitForSeconds(abilityComponent.RepeatIntervals);
         }
     }
 
-    private void StartCooldown(UnitAbilityDataInfo ability)
+    private void StartAbilityTimers(UnitAbilityDataInfo ability)
     {
-        StartCoroutine(StartCooldownCoroutine(ability));
-        StartCoroutine(StartActiveTimeCoroutine(ability));
+        StartCoroutine(CoStartCooldown(ability));
+        StartCoroutine(CoStartActiveTime(ability));
+        if (ability.CanBeCastOver) StartCoroutine(CoStartCastOverTime(ability));
     }
 
-    private IEnumerator StartCooldownCoroutine(UnitAbilityDataInfo ability)
+    private IEnumerator CoStartCooldown(UnitAbilityDataInfo ability)
     {
-        _abilitiesByActiveState[ability] = true;
+        _abilitiesOnCooldown.Add(ability);
         yield return new WaitForSeconds(ability.CooldownTime);
-        _abilitiesByActiveState[ability] = false;
+        _abilitiesOnCooldown.Remove(ability);
     }
 
-    private IEnumerator StartActiveTimeCoroutine(UnitAbilityDataInfo ability)
+    private IEnumerator CoStartActiveTime(UnitAbilityDataInfo ability)
     {
+        ActiveAbilities.Add(ability);
         OnAbilityUsed.Invoke(true);
         yield return new WaitForSeconds(ability.ActiveTime);
+        ActiveAbilities.Remove(ability);
+        _abilitiesCanBeCastOver.Remove(ability);
         OnAbilityUsed.Invoke(false);
+        if (ActiveAbilities.Count < 1) AbilityIndex = -1;
+    }
+
+    private IEnumerator CoStartCastOverTime(UnitAbilityDataInfo ability)
+    {
+        yield return new WaitForSeconds(ability.AllowCastOverTimer);
+        _abilitiesCanBeCastOver.Add(ability);
+    }
+
+    public void RequestDisplay()
+    {
+        SendDisplayData();
     }
 
     private void SendDisplayData()
     {
-        AbilityManager.Instance.DisplayAbilityButtons(_unitAbilityDataInfo, AwaitAbilityInput);
+        AbilityButtonManager.Instance.DisplayAbilityButtons(this, _unitAbilityDataInfo, TryAwaitAbilityInput);
+    }
+
+    private void HandleDeselect()
+    {
+        AbilityButtonManager.Instance.RemoveDisplayData(this);
+    }
+
+    private void OnDestroy()
+    {
+        if (_unit != null) _unit.OutlineSelectable.OnSelect -= SendDisplayData;
+        if (_unit != null) _unit.OutlineSelectable.OnDeselect -= HandleDeselect;
     }
 }

@@ -9,20 +9,26 @@ public class AbilityComponentState : ComponentState
     
     private bool _abilityUsed;
 
-    private void Awake()
+    public override void Spawned()
     {
-        _abilityHandler = GetComponent<AbilityHandler>();
+        if (!Runner.IsServer) return;
+
+        _abilityHandler = Container.GetComponent<AbilityHandler>();
         _abilityHandler.OnAbilityUsed += AbilityUsed;
-        _agentBrain = GetComponent<AgentBrain>();
-        _unitAnimation = GetComponent<UnitAnimationController>();
+        _agentBrain = Container.GetComponent<AgentBrain>();
+        _unitAnimation = Container.GetComponent<UnitAnimationController>();
     }
 
-    private void AbilityUsed(bool used) => _abilityUsed = used;
+    private void AbilityUsed(bool used)
+    {
+        if (used) _abilityUsed = true;
+    }
 
     public override bool Decision() => _abilityUsed;
 
-    public override void OnEnter()
+    protected override void OnEnter()
     {
+        _abilityUsed = false;
         _agent.ClearDestination();
         _agent.DisableAgent(this);
         _unitAnimation.SetMovement(0);
@@ -31,12 +37,11 @@ public class AbilityComponentState : ComponentState
     public override void Tick()
     {
         base.Tick();
-        if (!_abilityUsed) _componentStateMachine.Exit(this);
+        if (_abilityHandler.ActiveAbilities.Count < 1) _componentStateMachine.Exit(this);
     }
 
     public override void OnExit()
     {
-        _abilityUsed = false;
         _agent.EnableAgent(this);
     }
 }

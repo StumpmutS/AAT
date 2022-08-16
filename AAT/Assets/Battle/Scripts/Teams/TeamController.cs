@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TeamController : NetworkBehaviour
 {
-    [Networked] private int teamNumber { get; set; }
+    [Networked] private int TeamNumber { get; set; }
     
     [SerializeField] private List<GameObject> layersToChange;
     
@@ -15,11 +15,11 @@ public class TeamController : NetworkBehaviour
         SetLayers();
     }
     
-    public int GetTeamNumber() => teamNumber;
+    public int GetTeamNumber() => TeamNumber;
     
     public void SetTeamNumber(int number)
     {
-        teamNumber = number;
+        TeamNumber = number;
         SetLayers();
     }
 
@@ -29,7 +29,7 @@ public class TeamController : NetworkBehaviour
         
         foreach (var gObject in layersToChange)
         {
-            gObject.layer = LayerMask.NameToLayer($"Team{teamNumber}");
+            gObject.layer = LayerMask.NameToLayer($"Team{TeamNumber}");
         }
     }
 }

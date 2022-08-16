@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WormSightRangeB
   m_EditorClassIdentifier: 
   Stat: 8
-  Value: 12
+  Value: 25

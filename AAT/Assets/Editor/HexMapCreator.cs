@@ -418,11 +418,11 @@ public class HexMapCreator : EditorWindow
                 hex.transform.position = new Vector3(pos.x, 0, pos.y);
                 hex.transform.localScale *= _3DMapSize;
                 hex.transform.parent = hexContainer.transform;
-                var spawnPlot = ((GameObject)PrefabUtility.InstantiatePrefab(_spawnPlot)).GetComponent<SpawnerPlotController>();
+                var spawnPlot = ((GameObject)PrefabUtility.InstantiatePrefab(_spawnPlot)).GetComponent<SpawnPlotController>();
                 spawnPlot.transform.position = new Vector3(pos.x, 0, pos.y);
-                spawnPlot.Setup(_upgradesUI, hex.GetComponent<SectorController>(), _factionGrid[i][j]);
+                spawnPlot.transform.LookAt(Vector3.zero);
+                spawnPlot.Setup(hex.GetComponent<SectorController>(), _factionGrid[i][j]);
                 spawnPlot.transform.parent = spawnPlotContainer.transform;
-                _manager.GetComponent<SpawnPlotManager>().AddPlot(spawnPlot);
                 
                 WallJointController bottomLeftVertexJoint = null;
                 WallJointController bottomRightVertexJoint = null;

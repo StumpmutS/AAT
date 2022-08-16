@@ -14,17 +14,24 @@ public class TransportedComponentState : InteractionComponentState
     private BaseMountableController _mount;
     private bool _checkGroundSubscribed;
     
-    private void Awake()
+    public override void Spawned()
     {
-        _stats = GetComponent<UnitStatsModifierManager>();
-        _targetFinder = GetComponent<TargetFinder>();
-        _agentBrain = GetComponent<AgentBrain>();
-        _death = GetComponent<UnitDeathController>();
-        _selectable = GetComponent<SelectableController>();
-        _transportableData = GetComponent<TransportableData>().SelfOtherStatsData;
+        if (!Runner.IsServer) return;
+
+        _stats = Container.GetComponent<UnitStatsModifierManager>();
+        _targetFinder = Container.GetComponent<TargetFinder>();
+        _agentBrain = Container.GetComponent<AgentBrain>();
+        _death = Container.GetComponent<UnitDeathController>();
+        _selectable = Container.GetComponent<SelectableController>();
+        _transportableData = Container.GetComponent<TransportableData>().SelfOtherStatsData;
     }
 
-    private void Start() => _attackComponentState = GetComponent<AttackComponentState>();
+    private void Start()
+    {
+        if (!Runner.IsServer) return;
+
+        _attackComponentState = Container.GetComponent<AttackComponentState>();
+    }
 
     public void Mount(BaseMountableController mount)
     {
@@ -45,10 +52,10 @@ public class TransportedComponentState : InteractionComponentState
         _death.Die();
     }
 
-    public override void OnEnter()
+    protected override void OnEnter()
     {
         _agent.DisableAgent(this);
-        BaseInputManager.OnRightClickUp += Demount;
+        BaseInputManager.OnRightClickUp += Demount; //todo get player hit and demount unless enemy in range clicked
     }
 
     public override void Tick()
@@ -60,9 +67,9 @@ public class TransportedComponentState : InteractionComponentState
 
     private void CheckAttack()
     {
-        if (_targetFinder.Target is not null && _attackComponentState is not null)
+        if (_targetFinder.SightTarget is not null && _attackComponentState is not null)
         {
-            _attackComponentState.CallAttack(_targetFinder.Target);
+            _attackComponentState.CallAttack(_targetFinder.SightTarget);
         }
     }
 

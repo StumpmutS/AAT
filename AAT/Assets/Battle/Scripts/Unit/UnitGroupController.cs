@@ -1,40 +1,62 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Fusion;
 using UnityEngine;
 
-public class UnitGroupController : MonoBehaviour //TODO
+public class UnitGroupController : NetworkBehaviour
 {
-    public List<UnitController> Units { get; } = new();
+    [Networked(OnChanged = nameof(OnUnitsChanged)), Capacity(16)] public NetworkLinkedList<UnitController> Units => default;
+    public static void OnUnitsChanged(Changed<UnitGroupController> changed)
+    {
+        var group = changed.Behaviour;
+        foreach (var unit in group.Units)
+        {
+            if (!group._localSetup.Contains(unit))
+            {
+                group.SetupUnit(unit);
+            }
+        }
 
-    private Action<int> _unitDeathCallback;
-    private int _groupIndex;
+        var unitsToRemove = group._localSetup.Where(u => !group.Units.Contains(u)).ToHashSet();
+        foreach (var unit in unitsToRemove)
+        {
+            group.UnSetupUnit(unit);
+        }
+    }
 
-    private bool _selected; 
+    private HashSet<UnitController> _localSetup = new();
+
+    private SpawnerController _spawner;
     private bool _outlined;
 
-    public void Setup(Action<int> deathCallback, BaseSpawnerController spawner, int groupIndex)
+    public void Setup(SpawnerController spawner, int groupIndex)
     {
-        spawner.OnModifyStats += ModifyUnitStats;
-        _unitDeathCallback = deathCallback;
-        _groupIndex = groupIndex;
+        //spawner.OnModifyStats += ModifyUnitStats;
+    }
+
+    public void Die()
+    {
+        if (!Runner.IsServer) return;
+
+        foreach (var unit in Units)
+        {
+            unit.GetComponent<UnitDeathController>().Die();
+        }
+        
+        Runner.Despawn(Object);
     }
 
     private void UnitDeathHandler(UnitController unit)
     {
         RemoveUnit(unit);
-        if (Units.Count <= 0)
-        {
-            _selected = false;
-            _outlined = false;
-        }
-        _unitDeathCallback?.Invoke(_groupIndex);
+        if (_spawner != null) _spawner.QueueUnitGroup(this);
     }
 
     public void AddUnit(UnitController unit)
     {
         Units.Add(unit);
-        SetupUnit(unit);
-        if (_selected)
+        if (Units.Any(u => u.NetworkSelected))
         {
             unit.OutlineSelectable.CallSelect();
         } 
@@ -44,32 +66,30 @@ public class UnitGroupController : MonoBehaviour //TODO
         }
     }
     
-    private void RemoveUnit(UnitController unit)
+    public void RemoveUnit(UnitController unit)
     {
         Units.Remove(unit);
-        UnSetupUnit(unit);
+        
+        if (Units.Count <= 0)
+        {
+            _outlined = false;
+        }
     }
 
     public void SelectGroup()
     {
-        if (_selected) return;
-        _selected = true;
         foreach (var unit in Units)
         {
             unit.OutlineSelectable.CallSelect();
         }
-        UnitGroupSelectionManager.Instance.AddUnitGroup(this);
     }
 
     public void DeselectGroup()
     {
-        if (!_selected) return;
-        _selected = false;
         foreach (var unit in Units)
         {
             unit.OutlineSelectable.CallDeselect();
         }
-        UnitGroupSelectionManager.Instance.RemoveUnitGroup(this);
     }
 
     private void OutlineGroup()
@@ -94,9 +114,9 @@ public class UnitGroupController : MonoBehaviour //TODO
 
     private void SetupUnit(UnitController unit)
     {
-        unit.SetGroup(this, Units.IndexOf(unit));
+        if (!_localSetup.Add(unit)) return;
+        
         unit.OutlineSelectable.OnSelect += SelectGroup;
-        unit.OutlineSelectable.OnDeselect += DeselectGroup;
         unit.OutlineSelectable.OnOutline += OutlineGroup;
         unit.OutlineSelectable.OnRemoveOutline += RemoveGroupOutline;
         unit.OnDeath += UnitDeathHandler;
@@ -104,8 +124,9 @@ public class UnitGroupController : MonoBehaviour //TODO
 
     private void UnSetupUnit(UnitController unit)
     {
+        if (!_localSetup.Remove(unit)) return;
+        
         unit.OutlineSelectable.OnSelect -= SelectGroup;
-        unit.OutlineSelectable.OnDeselect -= DeselectGroup;
         unit.OutlineSelectable.OnOutline -= OutlineGroup;
         unit.OutlineSelectable.OnRemoveOutline -= RemoveGroupOutline;
         unit.OnDeath -= UnitDeathHandler;

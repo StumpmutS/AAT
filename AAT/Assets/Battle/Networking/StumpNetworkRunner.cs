@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private Player playerPrefab;
-    [SerializeField] private List<SectorController> _startSectors = new();
+    [SerializeField] private SerializableDictionary<SectorController, SpawnPlotController> startSpawnersBySector = new();
 
     public static StumpNetworkRunner Instance { get; private set; }
     public NetworkRunner Runner { get; private set; }
@@ -23,9 +23,16 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         if (!runner.IsServer) return;
         
         var playerSectors = DetermineSectors(runner, playerRef);
-        //todo: sector spawner dictionary, get spawner by sector, set spawner input authority to playerref, maybe sector too?
-        var playerObject = runner.Spawn(playerPrefab, onBeforeSpawned: SetupPlayer);
+        var playerObject = runner.Spawn(playerPrefab, inputAuthority: playerRef, onBeforeSpawned: SetupPlayer);
         runner.SetPlayerObject(playerRef, playerObject.Object);
+        int playerTeamNum = playerObject.GetComponent<TeamController>().GetTeamNumber();
+        
+        foreach (var sector in playerSectors)
+        {
+            sector.Init(playerRef);
+            startSpawnersBySector[sector].Object.AssignInputAuthority(playerRef);
+            startSpawnersBySector[sector].GetComponent<TeamController>().SetTeamNumber(playerTeamNum);
+        }
 
         void SetupPlayer(NetworkRunner _, NetworkObject o)
         {
@@ -37,7 +44,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     private List<SectorController> DetermineSectors(NetworkRunner runner, PlayerRef newPlayer)
     {
-        foreach (var sector in _startSectors)
+        foreach (var sector in startSpawnersBySector.Keys)
         {
             if (!SectorAvailable(runner, newPlayer, sector)) continue;
             return new List<SectorController>() { sector };
@@ -52,7 +59,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         foreach (var player in runner.ActivePlayers)
         {
             if (player == newPlayer) continue;
-            if (runner.GetPlayerObject(player).GetComponent<Player>().OwnedSectors.Contains(sector))
+            if (runner.GetPlayerObject(player).GetComponent<Player>().OwnedSectorIds.Contains(sector.Object.Id))
             {
                 return false;
             }
@@ -82,6 +89,9 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
     private bool _alpha8Down;
     private bool _alpha9Down;
 
+    private Vector3 _prevRightClickPosition;
+    private Vector3 _prevLeftClickPosition;
+
     private void Update()
     {
         _mouse0Down |= Input.GetMouseButtonDown(0);
@@ -103,9 +113,19 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        /*var data = new NetworkedInputData { MousePosition = Input.mousePosition };
+        var rightPos = BaseInputManager.RightClickPosition == _prevRightClickPosition ? default : BaseInputManager.RightClickPosition;
+        _prevRightClickPosition = BaseInputManager.RightClickPosition;
+        var leftPos = BaseInputManager.LeftClickPosition == _prevLeftClickPosition ? default : BaseInputManager.LeftClickPosition;
+        _prevLeftClickPosition = BaseInputManager.LeftClickPosition;
+        var data = new NetworkedInputData
+        {
+            RightClickPosition = rightPos,
+            RightClickDirection = BaseInputManager.RightClickDirection,
+            LeftClickPosition = leftPos,
+            LeftClickDirection = BaseInputManager.LeftClickDirection
+        };
 
-        if (_mouse0Down) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON0_DOWN;
+        /*if (_mouse0Down) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON0_DOWN;
         if (_mouse0Up) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON0_UP;
         if (_mouse1Down) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON1_DOWN;
         if (_mouse1Up) data.Buttons |= NetworkedInputMapping.MOUSEBUTTON1_UP;
@@ -121,9 +141,9 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         if (_alpha8Down) data.Buttons |= NetworkedInputMapping.ALPHA8_DOWN;
         if (_alpha9Down) data.Buttons |= NetworkedInputMapping.ALPHA9_DOWN;
 
-        ResetInputs();
-
-        input.Set(data);*/
+        ResetInputs();*/
+        
+        input.Set(data);
     }
 
     private void ResetInputs()

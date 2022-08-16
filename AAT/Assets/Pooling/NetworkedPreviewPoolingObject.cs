@@ -9,6 +9,8 @@ public class NetworkedPreviewPoolingObject : BasePreviewPoolingObject
     
     protected override GameObject CreateObject()
     {
+        if (!StumpNetworkRunner.Instance.Runner.IsServer) return null;
+
         return StumpNetworkRunner.Instance.Runner.Spawn(actualPrefab, transform.position, transform.rotation).gameObject;
     }
 }

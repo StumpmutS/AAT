@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class AbilityButtonController : MonoBehaviour
 {
     [SerializeField] private TMP_Text abilityNameText;
+    [SerializeField] private SpringController activationSpring;
 
     private Button button;
 
-    private Action<int> _abiilityActivationCallback;
+    private Action<int> _abilityActivationCallback;
     private int _abilityIndex;
 
     private void Awake()
@@ -21,13 +22,23 @@ public class AbilityButtonController : MonoBehaviour
 
     public void Setup(UnitAbilityDataInfo info, Action<int> callback, int abilityIndex)
     {
-        _abiilityActivationCallback = callback;
+        _abilityActivationCallback = callback;
         _abilityIndex = abilityIndex;
         abilityNameText.text = info.AbilityName;
     }
 
     private void ActivateAbility()
     {
-        _abiilityActivationCallback.Invoke(_abilityIndex);
+        _abilityActivationCallback?.Invoke(_abilityIndex);
+    }
+
+    public void ActivateButton()
+    {
+        activationSpring.SetTarget(0);
+    }
+
+    public void DeactivateButton()
+    {
+        activationSpring.SetTarget(1);
     }
 }

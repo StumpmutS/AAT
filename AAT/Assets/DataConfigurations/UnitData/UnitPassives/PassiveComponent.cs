@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class PassiveComponent : ScriptableObject
+public abstract class PassiveComponent : StumpComponent
 {
-    public abstract void ActivateComponent(UnitController unit);
+    
 }

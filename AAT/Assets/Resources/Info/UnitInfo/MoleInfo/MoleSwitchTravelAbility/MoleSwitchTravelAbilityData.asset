@@ -18,5 +18,9 @@ MonoBehaviour:
     ActiveTime: 2.2
     TargetTimeOutTime: 0
     TransportUsage: 0
+    CanBeCastOver: 0
+    AllowCastOverTimer: 0
     AbilityComponents:
     - {fileID: 11400000, guid: 197de5594fa93554ca199de3d9d53594, type: 2}
+    VisualComponents:
+    - {fileID: 11400000, guid: 59ba1c3cc2f3aff48b8e3620916d9689, type: 2}

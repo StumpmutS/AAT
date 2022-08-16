@@ -101,9 +101,12 @@ MonoBehaviour:
     RawGuidValue: cba3ff0e5bad20841a9a77141158fd46
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 3664096845654651921}
   - {fileID: 8682853159358298236}
-  SimulationBehaviours:
   - {fileID: 5582304018362055113}
+  - {fileID: 72521647876881491}
+  SimulationBehaviours:
+  - {fileID: 6069708946403465422}
 --- !u!65 &3590698476159233912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -176,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224acc55b1311784f9c4f30b353fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   unitDataManager: {fileID: 8682853159358298236}
 --- !u!114 &8682853159358298236
 MonoBehaviour:
@@ -203,14 +207,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abf95c8db67a14eb2165c6e6a80a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _IsDead:
+    _value: 0
   interactableTypes: 
   chaseState: 0
   patrolState: 0
   _patrolPoints: []
   colliders: []
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  unitVisuals: {fileID: 0}
   unitManager: {fileID: 0}
 --- !u!114 &72521647876881491
 MonoBehaviour:
@@ -224,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0616b5d409331d948877c2675794efc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   unitCarcass: {fileID: 0}
 --- !u!114 &9053593053243552477
 MonoBehaviour:
@@ -237,8 +243,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ef3c7f3cb803749bd03313380aee30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1218229115027806618}
-  healthBarPercentText: {fileID: 2316549375153280513}
+  health: {fileID: 0}
+  healthBar: {fileID: 0}
+  healthBarFill: {fileID: 0}
+  healthBarLazyFill: {fileID: 0}
+  spring: {fileID: 0}
+  alphaResetTime: 0
+  lazySpeed: 0
+  healthScaleMultiplier: 0
 --- !u!114 &848566928144526897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dimensionsContainer: {fileID: 4161690664825125625}
-  wallVisuals: {fileID: 8462756324753497644, guid: 3c8cf46d0233d87489f2ff3464bed769, type: 3}
+  wallVisuals: {fileID: -1072309703487702400, guid: 3c8cf46d0233d87489f2ff3464bed769, type: 3}
   mountable: {fileID: 6069708946403465422}
 --- !u!1 &3602493593668909367
 GameObject:
@@ -348,10 +360,10 @@ MonoBehaviour:
   interactionComponentState: {fileID: 7770660718286933680, guid: 9d70c20b78c19454b8cc8c28fbcfac5f, type: 3}
   visualsPrefab: {fileID: 4874522706055179882, guid: b766bc1788e638544a0005ea131fd306, type: 3}
   visualsOffset: {x: 0, y: 1, z: 0}
+  unitController: {fileID: 0}
   selectable: {fileID: 7304020169774451607}
   mountData: {fileID: 11400000, guid: 8135d6063dc0fe344a1106b1c7756f9d, type: 2}
   mountablePointLink: {fileID: 0}
-  unit: {fileID: 5582304018362055113}
 --- !u!1001 &4931340970958372918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -544,28 +556,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6698576768188862901, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
   m_PrefabInstance: {fileID: 5895578873443114001}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1218229115027806618 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4699868307650151819, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
-  m_PrefabInstance: {fileID: 5895578873443114001}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2316549375153280513 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8212108164774349328, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
-  m_PrefabInstance: {fileID: 5895578873443114001}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6331830047367512135
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,14 +10,18 @@ public class PatrolComponentState : ComponentState
     private List<Vector3> _patrolPoints = new();
     private int _currentPatrolPointIndex;
 
-    private void Awake()
+    public override void Spawned()
     {
-        _unit = GetComponent<UnitController>();
-        _agentBrain = GetComponent<AgentBrain>();
+        if (!Runner.IsServer) return;
+
+        _unit = Container.GetComponent<UnitController>();
+        _agentBrain = Container.GetComponent<AgentBrain>();
     }
-    
-    public override void OnEnter()
+
+    protected override void OnEnter()
     {
+        if (!Runner.IsServer) return;
+
         _agent.EnableAgent(this);
         _agent.OnPathFinished += NextPatrolPoint;
         _patrolPoints = _unit.PatrolPoints;

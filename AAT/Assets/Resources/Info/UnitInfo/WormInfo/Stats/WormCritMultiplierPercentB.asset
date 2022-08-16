@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WormCritMultiplierPercentB
   m_EditorClassIdentifier: 
   Stat: 4
-  Value: 200
+  Value: 300

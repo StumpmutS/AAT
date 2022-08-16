@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State Machine/Transitions/In Between Range")]
@@ -5,7 +7,14 @@ public class InBetweenRangeTransition : Transition
 {
     public override bool Decision(UnitController unit)
     {
-        return !Physics.CheckSphere(unit.transform.position, unit.Stats.GetStat(EUnitFloatStats.AttackRange), TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber())) 
-               && Physics.CheckSphere(unit.transform.position, unit.Stats.GetStat(EUnitFloatStats.SightRange), TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber()));
+        Debug.LogError("DONT USE"); //todo
+        return false;
+
+        /*return unit.Runner.LagCompensation.OverlapSphere(unit.transform.position,
+                   unit.Stats.GetStat(EUnitFloatStats.AttackRange), unit.Object.InputAuthority, 
+                   new List<LagCompensatedHit>(), TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber())) < 1
+               && unit.Runner.LagCompensation.OverlapSphere(unit.transform.position,
+                   unit.Stats.GetStat(EUnitFloatStats.SightRange), unit.Object.InputAuthority, 
+                   new List<LagCompensatedHit>(), TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber())) > 0;*/
     }
 }

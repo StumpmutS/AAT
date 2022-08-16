@@ -7,8 +7,10 @@ using Utility.Scripts;
 public class GroundAgentComponentState : ComponentState, IAgent
 {
     private UnitController _unit;
-    private UnitStatsModifierManager _stats;
     private NavMeshAgent _agent;
+    private UnitStatsModifierManager _stats;
+    private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
+    private float _speedMultiplier = 1;
 
     private bool _activationReady;
     private bool _enabled;
@@ -18,14 +20,16 @@ public class GroundAgentComponentState : ComponentState, IAgent
     
     public event Action OnPathFinished = delegate { };
     
-    private void Awake()
+    public override void Spawned()
     {
-        _unit = GetComponent<UnitController>();
+        if (!Runner.IsServer) return;
+
+        _unit = Container.GetComponent<UnitController>();
         _stats = _unit.Stats;
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = Container.GetComponent<NavMeshAgent>();
     }
-    
-    public override void OnEnter()
+
+    protected override void OnEnter()
     {
         _enabled = true;
         EnableAgent(this);
@@ -59,10 +63,9 @@ public class GroundAgentComponentState : ComponentState, IAgent
     {
         points = null;
         finalDestination = destination;
-        var fromSector = _unit.Sector;
         var targetSector = SectorFinder.FindSector(destination, 3, LayerManager.Instance.GroundLayer);
 
-        return SectorManager.Instance.PathBetween(transform.position, _agent.speed, fromSector, targetSector, out points) >= 0;
+        return SectorManager.Instance.PathBetween(Container.transform.position, _agent.speed, _unit.Sector, targetSector, out points) > -1;
     }
 
     public void SetDestination(Vector3 destination)
@@ -71,7 +74,7 @@ public class GroundAgentComponentState : ComponentState, IAgent
         var targetSector = SectorFinder.FindSector(destination, 3, LayerManager.Instance.GroundLayer);
         if (fromSector != targetSector) return;
         _pathSet = false;
-        _agent.SetDestination(new Vector3(destination.x, transform.position.y, destination.z));
+        _agent.SetDestination(new Vector3(destination.x, Container.transform.position.y, destination.z));
     }
 
     public Vector3 GetDestination() => _destination;
@@ -88,13 +91,13 @@ public class GroundAgentComponentState : ComponentState, IAgent
         _agent.ResetPath();
     }
 
-    public void SetSpeed(float speed)
+    public void SetSpeedMultiplier(float speedMultiplier)
     {
-        _stats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, _stats.GetStat(EUnitFloatStats.MovementSpeed) - speed);
-        _agent.speed = _stats.GetStat(EUnitFloatStats.MovementSpeed);
+        _speedMultiplier = speedMultiplier;
+        _agent.speed = _stats.GetStat(EUnitFloatStats.MovementSpeed) * _speedMultiplier;
     }
 
-    public float GetSpeed() => _agent.speed;
+    public float GetSpeed() => _speed * _speedMultiplier;
 
     public void EnableAgent(object caller)
     {
@@ -116,6 +119,6 @@ public class GroundAgentComponentState : ComponentState, IAgent
             return;
         }
 
-        transform.position = new Vector3(desiredPos.x, transform.position.y, desiredPos.z);
+        Container.transform.position = new Vector3(desiredPos.x, transform.position.y, desiredPos.z);
     }
 }

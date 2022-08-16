@@ -16,6 +16,11 @@ MonoBehaviour:
     AbilityName: Howl
     CooldownTime: 10
     ActiveTime: 2
+    TargetTimeOutTime: 0
     TransportUsage: 0
+    CanBeCastOver: 0
+    AllowCastOverTimer: 0
     AbilityComponents:
     - {fileID: 11400000, guid: 12d8dfe6a2ff29042b95a941f16219c7, type: 2}
+    VisualComponents:
+    - {fileID: 11400000, guid: 30b3b6e579baff941b8adb72709d0089, type: 2}

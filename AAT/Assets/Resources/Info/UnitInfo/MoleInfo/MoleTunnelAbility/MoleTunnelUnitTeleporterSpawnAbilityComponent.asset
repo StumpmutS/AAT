@@ -16,11 +16,8 @@ MonoBehaviour:
   RepeatIntervals: 0
   ComponentDelay: 0
   ComponentDuration: 4
-  teleportPoint: {fileID: 3081515647219320983, guid: e6be833d49b077b468c1857279ae930e, type: 3}
+  teleportPointUnit: {fileID: 234317371117068412, guid: e6be833d49b077b468c1857279ae930e, type: 3}
   timeForOtherPoint: 2.9
   originOffset: {x: 0, y: 0, z: 1}
   destinationOffset: {x: 0, y: 0, z: 0}
   unitGroupController: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
-  ground:
-    serializedVersion: 2
-    m_Bits: 2048

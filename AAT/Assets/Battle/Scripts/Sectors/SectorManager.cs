@@ -9,8 +9,7 @@ public class SectorManager : MonoBehaviour
     private Dictionary<(SectorController, SectorController), (float, TeleportPoint)> _paths = new();
 
     private List<List<SectorController>> _connectedSectorGroups = new();
-
-
+    
     public static SectorManager Instance { get; private set; }
 
     private void Awake()

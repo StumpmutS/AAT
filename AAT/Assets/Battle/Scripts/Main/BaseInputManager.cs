@@ -5,7 +5,26 @@ using Utility.Scripts;
 
 public class BaseInputManager : MonoBehaviour
 {
-    public static Vector3 RightClickUpPosition;
+    #region Clicks
+    public static Vector3 RightClickPosition;
+    public static Vector3 RightClickDirection;
+    public static Vector3 LeftClickPosition;
+    public static Vector3 LeftClickDirection;
+
+    private void SetRightClick()
+    {
+        RightClickPosition.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer);
+        var ray = MainCameraRef.Cam.ScreenPointToRay(Input.mousePosition);
+        RightClickDirection = ray.direction;
+    }
+
+    private void SetLeftClick()
+    {
+        LeftClickPosition.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer);
+        var ray = MainCameraRef.Cam.ScreenPointToRay(Input.mousePosition);
+        LeftClickDirection = ray.direction;
+    }
+    #endregion
     
     private bool _leftShiftDown;
 
@@ -46,7 +65,7 @@ public class BaseInputManager : MonoBehaviour
 
     public static event Action OnPlus = delegate { };
     public static event Action OnMinus = delegate { };
-
+    
     private void Update()
     {
         OnUpdate.Invoke();
@@ -71,21 +90,34 @@ public class BaseInputManager : MonoBehaviour
     #region Check Methods
     private void CheckMouseButtons()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!UIHoveredReference.Instance.OverUI())
         {
-            OnLeftClickDown.Invoke();
+            if (Input.GetMouseButtonDown(0))
+            {
+                SetLeftClick();
+                OnLeftClickDown.Invoke();
+            }
+            if (Input.GetMouseButton(0))
+            {
+                SetLeftClick();
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                OnLeftCLickUp.Invoke();
+            }
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            OnLeftCLickUp.Invoke();
-        }
+
         if (Input.GetMouseButtonDown(1))
         {
+            SetRightClick();
             OnRightClickDown.Invoke();
+        }
+        if (Input.GetMouseButton(1))
+        {
+            SetRightClick();
         }
         if (Input.GetMouseButtonUp(1))
         {
-            RightClickUpPosition.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer);
             OnRightClickUp.Invoke();
         }
         if (Input.GetMouseButtonDown(2))

@@ -2,10 +2,18 @@ using System;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class UnitController : SimulationBehaviour
+public class UnitController : NetworkBehaviour
 {
-
+    [Networked(OnChanged = nameof(OnSectorChange))] public NetworkId SectorId { get; set; }
+    public static void OnSectorChange(Changed<UnitController> changed)
+    {
+        changed.Behaviour.Sector = changed.Behaviour.Runner.FindObject(changed.Behaviour.SectorId).GetComponent<SectorController>();
+    }
+    public SectorController Sector { get; private set; }
+    [Networked] public NetworkBool IsDead { get; set; }
+    
     [SerializeField] private List<EInteractableType> interactableTypes;
     public List<EInteractableType> InteractableTypes => interactableTypes;
 
@@ -17,19 +25,18 @@ public class UnitController : SimulationBehaviour
     public List<Vector3> PatrolPoints => _patrolPoints;
     [SerializeField] private Collider[] colliders;
     public Collider[] Colliders => colliders;
+    [SerializeField] private PoolingObject unitVisuals;
+    public PoolingObject UnitVisuals => unitVisuals;
     [SerializeField] private UnitManager unitManager;
-
+    
     public TeamController Team { get; private set; }
+    public bool NetworkSelected { get; private set; }
     public OutlineSelectableController OutlineSelectable { get; private set; }
     public UnitStatsModifierManager Stats { get; private set; }
-    public PoolingObject UnitVisuals { get; private set; }
     public UnitGroupController UnitGroup { get; private set; }
-    public int GroupIndex { get; private set; }
-    public SectorController Sector { get; private set; }
-    public bool IsDead { get; private set; }
 
     private UnitDeathController _unitDeathController;
-
+    
     public event Action<UnitController> OnDeath = delegate { };
     
     private void Awake()
@@ -42,15 +49,27 @@ public class UnitController : SimulationBehaviour
         Stats = GetComponent<UnitStatsModifierManager>();
         _unitDeathController = GetComponent<UnitDeathController>();
         _unitDeathController.OnUnitDeath += UnitDeath;
-        UnitVisuals = GetComponent<PoolingObject>();
+    }
+
+    private void Start()
+    {
         if (unitManager == null) unitManager = UnitManager.Instance;
         unitManager.AddUnit(this);
+    }
+
+    public void Init(int teamNumber, SectorController sector, UnitGroupController group)
+    {
+        Team.SetTeamNumber(teamNumber);
+        SetSector(sector);
+        SetGroup(group);
     }
 
     private void UnitDeath()
     {
         OutlineSelectable.CallDeselect();
-        if (Sector != null) Sector.ModifySectorPower(-Stats.CalculatePower());
+        if (!Runner.IsServer) return;
+        
+        if (Sector != null) Sector.RemoveUnit(this);
         IsDead = true;
         OnDeath.Invoke(this);
     }
@@ -60,20 +79,47 @@ public class UnitController : SimulationBehaviour
         Stats.ModifyStats(baseUnitStatsDataInfo, add);
     }
 
-    private void Select() => UnitManager.Instance.AddSelectedUnit(this);
+    private void Select()
+    {
+        if (!Object.HasInputAuthority) return;
+        RpcSetSelected();
+        UnitManager.Instance.AddSelectedUnit(this);
+    }
 
-    private void Deselect() => UnitManager.Instance.RemoveSelectedUnit(this);
+    private void Deselect()
+    {
+        if (!Object.HasInputAuthority) return;
+        RpcSetDeselected();
+        UnitManager.Instance.RemoveSelectedUnit(this);
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RpcSetSelected()
+    {
+        NetworkSelected = true;
+    }
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RpcSetDeselected()
+    {
+        NetworkSelected = false;
+    }
 
     #region Setters
     public void SetSector(SectorController sector)
     {
+        if (sector == Sector) return;
+        if (Sector != null) Sector.RemoveUnit(this);
         Sector = sector;
+        SectorId = sector.Object.Id;
+        Sector.AddUnit(this);
     }
 
-    public void SetGroup(UnitGroupController group, int index)
+    public void SetGroup(UnitGroupController group)
     {
+        if (UnitGroup != null) UnitGroup.RemoveUnit(this);
         UnitGroup = group;
-        GroupIndex = index;
+        UnitGroup.AddUnit(this);
     }
 
     public void SetPatrolPoints(List<Vector3> patrolPoints)
