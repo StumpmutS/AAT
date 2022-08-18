@@ -8,13 +8,20 @@ public abstract class ComponentState : NetworkBehaviour
 
     protected ComponentStateMachine _componentStateMachine;
     public NetworkStateComponentContainer Container;
+    
+    public event Action OnTick = delegate { };
+    
     public void Init(ComponentStateMachine componentStateMachine, NetworkStateComponentContainer container)
     {
         _componentStateMachine = componentStateMachine;
         Container = container;
     }
-    
-    public event Action OnTick = delegate { };
+
+    public override void Spawned()
+    {
+        //TODO: network transform does not track parent, need custom implementation
+        if (Container == null) Container = GetComponentInParent<NetworkStateComponentContainer>();
+    }
 
     public virtual bool Decision() => true;
 

@@ -54,8 +54,8 @@ public class FlyingController : MonoBehaviour
         Flip(destination);
         if (_flipping) return;
        
-        transform.RotateTowardsOnY(destination, _turnSpeed, out var yAnglesTurned);
-        transform.RotateTowardsOnX(destination, _turnSpeed, out var xAnglesTurned);
+        transform.RotateTowardsOnY(destination, _turnSpeed, out _);
+        transform.RotateTowardsOnX(destination, _turnSpeed, out _);
         CheckXAngleLimits();
         
         transform.position += transform.forward * _speed * Time.deltaTime;

@@ -1,37 +1,39 @@
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Unit Data/Abilities/AOE/Damage Ability Component")]
 public class AOEDamageAbilityComponentData : AbilityComponent
 {
-    [SerializeField] LayerMask enemyLayer;
     [SerializeField] private float damageRadius;
     [SerializeField] private float damage;
 
-    private Dictionary<UnitController, List<Collider>> damagedEnemies = new();
+    private Dictionary<UnitController, HashSet<LagCompensatedHit>> _damagedEnemies = new();
 
     public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
         damage = -Mathf.Abs(damage);
-        Collider[] enemyCollidersHit = new Collider[25];
-        Physics.OverlapSphereNonAlloc(unit.transform.position, damageRadius, enemyCollidersHit, enemyLayer);
-        foreach (var enemyCollider in enemyCollidersHit)
+        var enemyLayer = TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber());
+        List<LagCompensatedHit> hits = new ();
+        unit.Runner.LagCompensation.OverlapSphere(unit.transform.position, damageRadius, unit.Object.InputAuthority, hits, enemyLayer);
+        
+        foreach (var hit in hits)
         {
-            if (enemyCollider == null) continue;
-            if (damagedEnemies.ContainsKey(unit))
+            if (hit.GameObject == null) continue;
+            if (_damagedEnemies.ContainsKey(unit))
             {
-                if (damagedEnemies[unit].Contains(enemyCollider)) continue;
+                if (_damagedEnemies[unit].Contains(hit)) continue;
             }
-            else damagedEnemies[unit] = new List<Collider>();
+            else _damagedEnemies[unit] = new HashSet<LagCompensatedHit>();
 
-            enemyCollider.GetComponent<IHealth>().ModifyHealth(damage);
-            damagedEnemies[unit].Add(enemyCollider);
+            hit.GameObject.GetComponent<IHealth>().ModifyHealth(damage, null, new AttackDecalInfo());
+            _damagedEnemies[unit].Add(hit);
         }
     }
 
     public override void DeactivateComponent(UnitController unit)
     {
-        if (damagedEnemies.ContainsKey(unit))
-            damagedEnemies[unit].Clear();
+        if (_damagedEnemies.ContainsKey(unit))
+            _damagedEnemies[unit].Clear();
     }
 }

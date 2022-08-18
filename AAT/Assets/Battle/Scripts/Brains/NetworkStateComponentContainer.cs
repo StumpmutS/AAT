@@ -37,4 +37,16 @@ public class NetworkStateComponentContainer : SimulationBehaviour
         foundState = default;
         return false;
     }
+
+    public bool TryGetComponentState(Type componentType, out ComponentState foundState)
+    {
+        if (_componentStates.ContainsKey(componentType))
+        {
+            foundState = _componentStates[componentType];
+            return true;
+        }
+
+        foundState = default;
+        return false;
+    }
 }

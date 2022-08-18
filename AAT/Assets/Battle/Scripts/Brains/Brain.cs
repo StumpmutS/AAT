@@ -8,6 +8,7 @@ using Utility.Scripts;
 public class Brain : SimulationBehaviour, ISpawned
 {
     [SerializeField] private NetworkStateComponentContainer container;
+    public NetworkStateComponentContainer Container => container;
     [SerializeField] private Transition defaultTransition;
     [SerializeField] private List<Transition> transitions;
 

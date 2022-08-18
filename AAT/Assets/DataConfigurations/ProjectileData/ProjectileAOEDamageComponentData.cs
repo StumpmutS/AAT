@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Projectile Data/AOE Damage Component")]
@@ -6,14 +8,15 @@ public class ProjectileAOEDamageComponentData : ProjectileComponentData
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] private float damageRadius;
 
-    public override void ActivateComponent(GameObject from, GameObject hit, float damage)
+    public override void ActivateComponent(ProjectileController from, GameObject _, float damage)
     {
         damage = -Mathf.Abs(damage);
-        Collider[] enemyCollidersHit = new Collider[25];
-        Physics.OverlapSphereNonAlloc(from.transform.position, damageRadius, enemyCollidersHit, enemyLayer);
-        foreach (var enemyCollider in enemyCollidersHit)
+        var enemyLayer = TeamManager.Instance.GetEnemyLayer(from.Team.GetTeamNumber());
+        List<LagCompensatedHit> hits = new();
+        from.Runner.LagCompensation.OverlapSphere(from.transform.position, damageRadius, from.Object.InputAuthority, hits, enemyLayer);
+        foreach (var hit in hits)
         {
-            if (enemyCollider != null) enemyCollider.GetComponent<IHealth>().ModifyHealth(damage);
+            if (hit.GameObject != null) hit.GameObject.GetComponent<IHealth>().ModifyHealth(damage, null, new AttackDecalInfo());
         }
     }
 }

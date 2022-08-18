@@ -9,10 +9,12 @@ public class IdleComponentState : ComponentState
 
     public override void Spawned()
     {
+        base.Spawned();
+        _animation = Container.GetComponent<UnitAnimationController>();
+        
         if (!Runner.IsServer) return;
 
         _agentBrain = Container.GetComponent<AgentBrain>();
-        _animation = Container.GetComponent<UnitAnimationController>();
     }
 
     protected override void OnEnter()

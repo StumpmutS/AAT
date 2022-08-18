@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ProjectileController : MonoBehaviour
+public class ProjectileController : NetworkBehaviour
 {
     [SerializeField] protected Vector3 initialDirection;
     [SerializeField] private float initialVelocity;
     [SerializeField] private List<ProjectileComponentData> projectileComponents;
 
+    public TeamController Team { get; private set; }
+    
     protected Rigidbody _rigidBody;
     private float _damage;
     private Collider[] _origin;
@@ -51,7 +54,7 @@ public class ProjectileController : MonoBehaviour
         var hitGameObject = hit.gameObject;
         foreach (var component in projectileComponents)
         {
-            component.ActivateComponent(gameObject, hitGameObject, _damage);
+            component.ActivateComponent(this, hitGameObject, _damage);
             StartCoroutine(DeactivateComponentCoroutine(component, hitGameObject));
         }
         gameObject.SetActive(false);

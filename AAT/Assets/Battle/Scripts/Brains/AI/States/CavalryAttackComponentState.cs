@@ -10,25 +10,23 @@ public class CavalryAttackComponentState : AttackComponentState
     private float _chargeTime;
     protected float _chargeSpeedChange;
 
-    public override void CallAttack(Component target)
+    public override void CallAttack(Component target = null)
     {
         if (!_canAttack || _charging) return;
         _charging = true;
         _chargeTime = 0;
-        _target = target;
         ExecuteStartAttackTimer();
     }
 
     public override void Tick()
     {
-        base.Tick();
+        if (!_charging) base.Tick();
         Charge();
     }
 
     private void Charge()
     {
         if (!_charging) return;
-        _target = _targetFinder.SightTarget;
         _chargeTime += Runner.DeltaTime;
         AddSpeed();
         _agent.SetDestination(_target.transform.position);
@@ -48,7 +46,7 @@ public class CavalryAttackComponentState : AttackComponentState
     protected virtual void EndCharge()
     {
         _charging = false;
-        CheckCrit(_target);
+        CheckCrit();
         _target = null;
         _unitStats.ModifyFloatStat(EUnitFloatStats.MovementSpeed, -_chargeSpeedChange);
         _chargeSpeedChange = 0;
@@ -59,11 +57,15 @@ public class CavalryAttackComponentState : AttackComponentState
         StartCoroutine(StartAttackTimer());
     }
 
-    private void CheckCrit(Component target)
+    protected override void CheckCrit()
     {
         if (_chargeTime > (100 - _critChancePercent) / 10)
-            CritAttack(target);
+        {
+            AnimateCrit();
+        }
         else
-            BaseAttack(target);
+        {
+            AnimateAttack();
+        }
     }
 }

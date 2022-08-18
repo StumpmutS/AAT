@@ -62,6 +62,7 @@ public class BaseInputManager : MonoBehaviour
 
     public static event Action OnTPressed = delegate { };
     public static event Action OnRPressed = delegate { };
+    public static event Action OnPPressed = delegate { };
 
     public static event Action OnPlus = delegate { };
     public static event Action OnMinus = delegate { };
@@ -240,6 +241,11 @@ public class BaseInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             OnRPressed.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnPPressed.Invoke();
         }
     }
 

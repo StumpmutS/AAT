@@ -118,6 +118,7 @@ public class UnitController : NetworkBehaviour
     public void SetGroup(UnitGroupController group)
     {
         if (UnitGroup != null) UnitGroup.RemoveUnit(this);
+        if (group == null) return;
         UnitGroup = group;
         UnitGroup.AddUnit(this);
     }

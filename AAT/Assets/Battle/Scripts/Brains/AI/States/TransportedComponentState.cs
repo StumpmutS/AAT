@@ -67,7 +67,7 @@ public class TransportedComponentState : InteractionComponentState
 
     private void CheckAttack()
     {
-        if (_targetFinder.SightTarget is not null && _attackComponentState is not null)
+        if (_targetFinder.SightTarget != null && _attackComponentState != null)
         {
             _attackComponentState.CallAttack(_targetFinder.SightTarget);
         }

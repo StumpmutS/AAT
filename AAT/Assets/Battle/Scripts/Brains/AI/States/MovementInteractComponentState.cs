@@ -24,6 +24,7 @@ public class MovementInteractComponentState : ComponentState
 
     public override void Spawned()
     {
+        base.Spawned();
         _animation = Container.GetComponent<UnitAnimationController>();
         
         if (!Runner.IsServer) return;

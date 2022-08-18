@@ -1,9 +1,10 @@
+using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Unit Data/Abilities/AOE/Knockback Ability Component")]
 public class AOEKnockbackAbilityComponentData : AbilityComponent
 {
-    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float knockbackRadius;
     [SerializeField] private float knockbackDistance;
     [SerializeField] private float knockbackSpeed;
@@ -11,12 +12,13 @@ public class AOEKnockbackAbilityComponentData : AbilityComponent
 
     public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
-        Collider[] enemyCollidersHit = new Collider[25];
-        Physics.OverlapSphereNonAlloc(unit.transform.position, knockbackRadius, enemyCollidersHit, enemyLayer);
-        foreach (var enemyCollider in enemyCollidersHit)
+        var enemyLayer = TeamManager.Instance.GetEnemyLayer(unit.Team.GetTeamNumber());
+        List<LagCompensatedHit> enemyCollidersHit = new();
+        unit.Runner.LagCompensation.OverlapSphere(unit.transform.position, knockbackRadius, unit.Object.InputAuthority, enemyCollidersHit, enemyLayer);
+        foreach (var hit in enemyCollidersHit)
         {
-            if (enemyCollider == null) continue;
-            Transform enemyTransform = enemyCollider.transform;
+            if (hit.GameObject == null) continue;
+            Transform enemyTransform = hit.GameObject.transform;
             var direction = (enemyTransform.position - unit.transform.position);
             KnockbackManager.Instance.AddKnockback(enemyTransform, direction, knockbackDistance, knockbackSpeed, knockbackLerpEndPercent);
         }

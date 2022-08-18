@@ -9,7 +9,7 @@ public class ProjectileKnockbackComponentData : ProjectileComponentData
     [SerializeField] private float knockbackSpeed;
     [SerializeField] private float knockbackLerpEndPercent;
 
-    public override void ActivateComponent(GameObject from, GameObject hit, float damage)
+    public override void ActivateComponent(ProjectileController @from, GameObject hit, float damage)
     {
         Collider[] enemyCollidersHit = new Collider[25];
         Physics.OverlapSphereNonAlloc(from.transform.position, knockbackRadius, enemyCollidersHit, enemyLayer);

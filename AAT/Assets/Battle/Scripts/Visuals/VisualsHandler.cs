@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class VisualsHandler : MonoBehaviour
 {
+    [SerializeField] private DecalImage attackDecal;
+    
     private UnitController _unit;
 
     private void Awake()

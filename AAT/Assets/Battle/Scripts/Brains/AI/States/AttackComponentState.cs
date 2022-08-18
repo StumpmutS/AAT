@@ -1,6 +1,7 @@
 using System.Collections;
 using Fusion;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttackComponentState : ComponentState
 {
@@ -15,7 +16,10 @@ public class AttackComponentState : ComponentState
     {
         changed.Behaviour._animation.SetCrit(true);
     }
-    
+
+    [SerializeField] private DecalImage decalImage;
+    [SerializeField] private ColorsData decalColors;
+
     protected TargetFinder _targetFinder;
     protected UnitStatsModifierManager _unitStats;
     private AgentBrain _agentBrain;
@@ -32,6 +36,7 @@ public class AttackComponentState : ComponentState
 
     public override void Spawned()
     {
+        base.Spawned();
         _animation = Container.GetComponent<UnitAnimationController>();
         
         if (!Runner.IsServer) return;
@@ -45,24 +50,26 @@ public class AttackComponentState : ComponentState
     public override void Tick()
     {
         base.Tick();
-        if (_target == null)
-        {
-            _target = _targetFinder.AttackTarget;
-            if (_target == null)
-            {
-                _componentStateMachine.Exit(this);
-                return;
-            }
-        }
-        CallAttack(_target);
+        CallAttack();
     }
 
-    public virtual void CallAttack(Component target)
+    public virtual void CallAttack(Component target = null)
     {
-        transform.LookAt(target.transform);
+        _target = _targetFinder.AttackTarget;
+        if (target != null) _target = target;
+        bool hasTarget = _target != null;
+        if (hasTarget)
+        {
+            Container.transform.LookAt(_target.transform);
+        }
         if (!_canAttack) return;
-        CheckCrit(target);
-        StartCoroutine(StartAttackTimer());
+        
+        if (!hasTarget)
+        {
+            _componentStateMachine.Exit(this);
+            return;
+        }
+        CheckCrit();
     }
 
     protected IEnumerator StartAttackTimer()
@@ -72,28 +79,39 @@ public class AttackComponentState : ComponentState
         _canAttack = true;
     }
 
-    private void CheckCrit(Component target)
+    protected virtual void CheckCrit()
     {
         if (Random.Range(0f, 100f) <= _critChancePercent)
         {
-            CritAttack(target);
+            AnimateCrit();
         }
         else
         {
-            BaseAttack(target);
+            AnimateAttack();
         }
+        StartCoroutine(StartAttackTimer());
     }
 
-    protected void BaseAttack(Component target)
+    protected void AnimateAttack()
     {
-        target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage));
         _attack = !_attack;
     }
 
-    protected void CritAttack(Component target)
+    protected void AnimateCrit()
     {
-        target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100));
         _crit = !_crit;
+    }
+
+    public void AnimationTriggeredAttack()
+    {
+        //var info = new AttackDecalInfo(decalColors.Colors[0], decalImage.MaxSeverity, _target.transform.position - Container.transform.position);
+        _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage), decalImage, default);
+    }
+
+    public void AnimationTriggeredCrit()
+    {
+        var info = new AttackDecalInfo(decalColors.Colors[1], decalImage.MaxSeverity, _target.transform.position - Container.transform.position);
+        _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100), decalImage, info);
     }
 
     protected override void OnEnter()

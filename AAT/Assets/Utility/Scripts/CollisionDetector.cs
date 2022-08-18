@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Utility.Scripts
 {
-    public static class ColliderDetector
+    public static class CollisionDetector
     {
         public static bool CheckRadius(Vector3 pos, float range, LayerMask layerMask, out Collider target, int maxHits = 50, Collider returnIfPresent = null, Collider ignore = null)
         {

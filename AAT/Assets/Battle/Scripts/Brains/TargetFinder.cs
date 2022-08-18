@@ -27,7 +27,7 @@ public class TargetFinder : MonoBehaviour
     private void Update()
     {
         var targetLayer = TeamManager.Instance.GetEnemyLayer(_team.GetTeamNumber());
-        ColliderDetector.CheckRadius(transform.position, _innerRange, targetLayer, out _attackTarget, returnIfPresent: _attackTarget);
-        ColliderDetector.CheckRadius(transform.position, _outerRange, targetLayer, out _sightTarget);
+        CollisionDetector.CheckRadius(transform.position, _innerRange, targetLayer, out _attackTarget, returnIfPresent: _attackTarget);
+        CollisionDetector.CheckRadius(transform.position, _outerRange, targetLayer, out _sightTarget);
     }
 }

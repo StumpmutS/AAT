@@ -2,7 +2,7 @@ using Fusion;
 
 public class ChaseComponentState : ComponentState
 {
-    [Networked(OnChanged = nameof(OnCurrentSpeedChange))] public NetworkBool Chasing { get; set; }
+    [Networked(OnChanged = nameof(OnCurrentSpeedChange))] private NetworkBool Chasing { get; set; }
     public static void OnCurrentSpeedChange(Changed<ChaseComponentState> changed)
     {
         if (!changed.Behaviour.Runner.IsServer) return;
@@ -18,12 +18,14 @@ public class ChaseComponentState : ComponentState
 
     public override void Spawned()
     {
+        base.Spawned();
+        _animation = Container.GetComponent<UnitAnimationController>();
+        
         if (!Runner.IsServer) return;
 
         _targetFinder = Container.GetComponent<TargetFinder>();
         _agentBrain = Container.GetComponent<AgentBrain>();
         _unitStats = Container.GetComponent<UnitStatsModifierManager>();
-        _animation = Container.GetComponent<UnitAnimationController>();
     }
 
     protected override void OnEnter()

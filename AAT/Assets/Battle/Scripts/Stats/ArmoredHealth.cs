@@ -14,7 +14,7 @@ public class ArmoredHealth : Health, IArmor
         currentArmorPercent = _baseArmorPercent;
     }
 
-    protected override void TakeDamage(float amount)
+    protected override void TakeDamage(float amount, DecalImage decal, AttackDecalInfo info)
     {
         _currentHealth -= amount - (amount * (currentArmorPercent / 100));
         if (_currentHealth <= 0)

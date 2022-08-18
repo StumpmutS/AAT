@@ -4,5 +4,5 @@ public interface IHealth
 {
     event Action<float> OnHealthPercentChanged;
     event Action OnDie;
-    void ModifyHealth(float amount);
+    void ModifyHealth(float amount, DecalImage decal, AttackDecalInfo info);
 }

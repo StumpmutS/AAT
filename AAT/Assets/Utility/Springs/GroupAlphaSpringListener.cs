@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GroupAlphaSpringListener : FloatSpringListener
+public class GroupAlphaSpringListener : FloatSpringListener, ISerializationCallbackReceiver
 {
     [SerializeField] private ERangeContainment rangeContainType;
     [SerializeField] private List<Image> images;
 
     protected override float GetOrig()
     {
-        return 1;
+        return images.First().color.a;
     }
 
     protected override void ChangeValue(float value)
@@ -28,11 +29,14 @@ public class GroupAlphaSpringListener : FloatSpringListener
         if (value < 0) value = 0;
         return value;
     }
-}
 
-public enum ERangeContainment
-{
-    None,
-    AbsoluteValue,
-    ClampZero
+    public void OnBeforeSerialize()
+    {
+        useSetValue = true;
+    }
+
+    public void OnAfterDeserialize()
+    {
+        useSetValue = true;
+    }
 }

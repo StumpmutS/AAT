@@ -333,6 +333,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 086021ad9deddbc44912d0ccce2dba6f, type: 2}
   - {fileID: 11400000, guid: d157ef62e1ba5f0418e416937a5d53f3, type: 2}
   - {fileID: 11400000, guid: 96f95a8afc32e584596f2eb68f563336, type: 2}
+  - {fileID: 11400000, guid: f2b0a31d902fc2842a37d898ed2b166a, type: 2}
 --- !u!114 &3414608235696329203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +533,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8290474670434299650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725708562345243960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06031d6059255824f97be1c0174bb6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brain: {fileID: 4431227335216123300}
+--- !u!114 &9032917034255507967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725708562345243960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cded7aa132f13418257b38972f1e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brain: {fileID: 4431227335216123300}
 --- !u!4 &2069723332999147394 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7385cab2a561b3e498e1cea423410149, type: 3}

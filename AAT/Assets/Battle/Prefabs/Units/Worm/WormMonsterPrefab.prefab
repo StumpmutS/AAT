@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 7759547417561286659}
   - component: {fileID: 140843128394030074}
   - component: {fileID: 6096733332104545417}
-  - component: {fileID: 6765338914663577565}
   - component: {fileID: 6450276685902235152}
   - component: {fileID: 4692925445078932745}
   - component: {fileID: 9081296286098889832}
@@ -291,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDecal: {fileID: 0}
 --- !u!114 &1009455223053489981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,26 +358,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   unitDataManager: {fileID: 140843128394030074}
---- !u!114 &6765338914663577565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9134256236068135605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19ef3c7f3cb803749bd03313380aee30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 0}
-  healthBar: {fileID: 0}
-  healthBarFill: {fileID: 0}
-  healthBarLazyFill: {fileID: 0}
-  spring: {fileID: 0}
-  alphaResetTime: 0
-  lazySpeed: 0
-  healthScaleMultiplier: 0
 --- !u!114 &6450276685902235152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +576,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4912998449499155978}
     m_Modifications:
+    - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 6096733332104545417}
     - target: {fileID: 2623836181658933370, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas

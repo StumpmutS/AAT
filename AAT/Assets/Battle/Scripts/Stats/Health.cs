@@ -31,22 +31,22 @@ public class Health : NetworkBehaviour, IHealth
         _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
-    public void ModifyHealth(float amount)
+    public void ModifyHealth(float amount, DecalImage decal, AttackDecalInfo info)
     {
         if (!Runner.IsServer) return;
         
         if (amount > 0)
         {
-            Heal(amount);
+            Heal(amount, decal, info);
         }
         else
         {
-            TakeDamage(Mathf.Abs(amount));
+            TakeDamage(Mathf.Abs(amount), decal, info);
         }
         _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
-    protected virtual void Heal(float amount)
+    protected virtual void Heal(float amount, DecalImage decal, AttackDecalInfo info)
     {
         if (_currentHealth + amount > MaxHealth)
             _currentHealth = MaxHealth;
@@ -54,7 +54,7 @@ public class Health : NetworkBehaviour, IHealth
             _currentHealth += amount;
     }
 
-    protected virtual void TakeDamage(float amount)
+    protected virtual void TakeDamage(float amount, DecalImage decal, AttackDecalInfo info)
     {
         _currentHealth -= amount;
         if (_currentHealth <= 0)

@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 4723412625336821999}
   - component: {fileID: 3397298655619451056}
   - component: {fileID: 99471962510876565}
-  - component: {fileID: 2174785785430805230}
   - component: {fileID: 7780789463355274341}
   - component: {fileID: 8810187672018438484}
   - component: {fileID: 1313720593225335696}
@@ -292,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDecal: {fileID: 0}
 --- !u!114 &6764052497972657542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,26 +359,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   unitDataManager: {fileID: 3397298655619451056}
---- !u!114 &2174785785430805230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5095719261047417336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19ef3c7f3cb803749bd03313380aee30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 0}
-  healthBar: {fileID: 0}
-  healthBarFill: {fileID: 0}
-  healthBarLazyFill: {fileID: 0}
-  spring: {fileID: 0}
-  alphaResetTime: 0
-  lazySpeed: 0
-  healthScaleMultiplier: 1
 --- !u!114 &7780789463355274341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +382,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 086021ad9deddbc44912d0ccce2dba6f, type: 2}
   - {fileID: 11400000, guid: d157ef62e1ba5f0418e416937a5d53f3, type: 2}
   - {fileID: 11400000, guid: 96f95a8afc32e584596f2eb68f563336, type: 2}
+  - {fileID: 11400000, guid: f2b0a31d902fc2842a37d898ed2b166a, type: 2}
 --- !u!114 &8810187672018438484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,6 +494,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3363157405806272755}
     m_Modifications:
+    - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 99471962510876565}
     - target: {fileID: 2623836181658933370, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas
@@ -695,3 +680,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4987192094074096227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5237188068671684151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cded7aa132f13418257b38972f1e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brain: {fileID: 7780789463355274341}
