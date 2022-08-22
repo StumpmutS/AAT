@@ -11,12 +11,13 @@ public class AbilityComponentState : ComponentState
 
     public override void Spawned()
     {
+        base.Spawned();
+        _unitAnimation = Container.GetComponent<UnitAnimationController>();
         if (!Runner.IsServer) return;
-
+        
         _abilityHandler = Container.GetComponent<AbilityHandler>();
         _abilityHandler.OnAbilityUsed += AbilityUsed;
         _agentBrain = Container.GetComponent<AgentBrain>();
-        _unitAnimation = Container.GetComponent<UnitAnimationController>();
     }
 
     private void AbilityUsed(bool used)

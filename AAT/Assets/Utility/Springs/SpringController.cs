@@ -14,7 +14,7 @@ public class SpringController : MonoBehaviour
 
     public UnityEvent<float, float> OnSpringValueChanged;
     
-    private void Update()
+    public void Update()
     {
         SpringMotion.CalcDampedSimpleHarmonicMotion(ref _currentValue, ref _currentVelocity, 
             _targetValue, Time.deltaTime, frequency, damping);

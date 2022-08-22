@@ -58,7 +58,7 @@ public class UnitGroupController : NetworkBehaviour
         Units.Add(unit);
         if (Units.Any(u => u.NetworkSelected))
         {
-            unit.OutlineSelectable.CallSelect();
+            unit.OutlineSelectable.CallSelectOverrideUICheck();
         } 
         else if (_outlined)
         {

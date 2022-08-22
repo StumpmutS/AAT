@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: a6711598e1e49394088df553c746b989
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - baseOutlineShader: {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
+  - interactedOutlineShader: {fileID: 4800000, guid: 66bed5437a242694bbac340872db7189, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

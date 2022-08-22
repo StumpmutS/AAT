@@ -16,12 +16,14 @@ public class Health : NetworkBehaviour, IHealth
     public float MaxHealth => unitDataManager.GetStat(EUnitFloatStats.MaxHealth);
     
     protected float _currentHealth;
+    protected VisualsHandler _visualsHandler;
     
     public event Action<float> OnHealthPercentChanged = delegate { };
     public event Action OnDie = delegate { };
 
     protected virtual void Awake()
     {
+        _visualsHandler = GetComponent<VisualsHandler>();
         unitDataManager.OnRefreshStats += RefreshHealth;
     }
 
@@ -56,6 +58,7 @@ public class Health : NetworkBehaviour, IHealth
 
     protected virtual void TakeDamage(float amount, DecalImage decal, AttackDecalInfo info)
     {
+        _visualsHandler.CreateDecal(decal, info);
         _currentHealth -= amount;
         if (_currentHealth <= 0)
             Die();

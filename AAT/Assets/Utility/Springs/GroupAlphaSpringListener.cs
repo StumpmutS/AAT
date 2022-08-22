@@ -11,10 +11,10 @@ public class GroupAlphaSpringListener : FloatSpringListener, ISerializationCallb
 
     protected override float GetOrig()
     {
-        return images.First().color.a;
+        return origValue;
     }
 
-    protected override void ChangeValue(float value)
+    protected override void ChangeValue(float value, float _)
     {
         foreach (var image in images)
         {

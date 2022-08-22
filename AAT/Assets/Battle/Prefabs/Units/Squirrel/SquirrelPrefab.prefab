@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 2095659757287464629}
   - component: {fileID: 4783939069287381247}
   - component: {fileID: 5759228335420568728}
-  - component: {fileID: 5759228335420568730}
+  - component: {fileID: 4524593936887259795}
   - component: {fileID: 2451953952989807274}
   - component: {fileID: 343670919627495436}
   - component: {fileID: -8213272441465151675}
@@ -1177,24 +1177,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.6, z: 1}
   m_Center: {x: 0, y: 0.2, z: 0}
---- !u!114 &5759228335420568730
+--- !u!114 &4524593936887259795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4840677430842725870}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: a6711598e1e49394088df553c746b989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 1, b: 0.1882353, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
+  shaderInfo:
+  - outlineDefaults: {fileID: 11400000, guid: ea81beff36d12284196c33b7e0f627d1, type: 2}
+    defaultColor: {r: 1, g: 1, b: 1, a: 1}
+    interactedColorChange: 1
+    baseShader: {fileID: 4800000, guid: f5d2271a394f94e409bc65e58888e0d2, type: 3}
+    interactedShader: {fileID: 4800000, guid: c74f4cdfb7d5c824bb597aa3e3445a58, type: 3}
+    outlineMatIndex: 0
+  renderers:
+  - {fileID: 8761741692965329682}
 --- !u!114 &2451953952989807274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,7 +1211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionType: 1
-  outline: {fileID: 5759228335420568730}
+  outline: {fileID: 4524593936887259795}
 --- !u!114 &343670919627495436
 MonoBehaviour:
   m_ObjectHideFlags: 0

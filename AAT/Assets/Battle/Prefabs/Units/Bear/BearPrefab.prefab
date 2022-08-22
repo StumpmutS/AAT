@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6170817501420068529}
   - component: {fileID: 8195833320202272114}
   - component: {fileID: 3386622847060953701}
-  - component: {fileID: 636180067387719803}
+  - component: {fileID: 2664238772079662634}
   - component: {fileID: 6292293335476419695}
   - component: {fileID: 3643916926788448563}
   - component: {fileID: 2654164613639485816}
@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 4425282573941339854}
   - component: {fileID: 5301970439137932500}
   - component: {fileID: 2227916921653355390}
-  - component: {fileID: 5195817743977918581}
   - component: {fileID: 5952590020996530221}
+  - component: {fileID: 7771566112979102090}
   - component: {fileID: 17649242043059551}
   - component: {fileID: 248841225070311842}
   - component: {fileID: 1148616975678108151}
@@ -92,6 +92,7 @@ MonoBehaviour:
   - {fileID: 248841225070311842}
   SimulationBehaviours:
   - {fileID: 5952590020996530221}
+  - {fileID: 7771566112979102090}
   - {fileID: 1148616975678108151}
 --- !u!114 &5416436261731483037
 MonoBehaviour:
@@ -184,24 +185,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 4, z: 6.5}
   m_Center: {x: 0, y: 1.8, z: 0.7}
---- !u!114 &636180067387719803
+--- !u!114 &2664238772079662634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9003117018386545755}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: a6711598e1e49394088df553c746b989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 1, b: 0.1882353, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
+  shaderInfo:
+  - outlineDefaults: {fileID: 11400000, guid: ea81beff36d12284196c33b7e0f627d1, type: 2}
+    defaultColor: {r: 1, g: 1, b: 1, a: 1}
+    interactedColorChange: 1
+    baseShader: {fileID: 4800000, guid: f5d2271a394f94e409bc65e58888e0d2, type: 3}
+    interactedShader: {fileID: 4800000, guid: c74f4cdfb7d5c824bb597aa3e3445a58, type: 3}
+    outlineMatIndex: 0
+  renderers:
+  - {fileID: 8401394248781852486}
 --- !u!114 &6292293335476419695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionType: 1
-  outline: {fileID: 636180067387719803}
+  outline: {fileID: 2664238772079662634}
 --- !u!114 &3643916926788448563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDecal: {fileID: 0}
 --- !u!114 &3385312414236435768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,26 +335,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   unitDataManager: {fileID: 5301970439137932500}
---- !u!114 &5195817743977918581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9003117018386545755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19ef3c7f3cb803749bd03313380aee30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 0}
-  healthBar: {fileID: 0}
-  healthBarFill: {fileID: 0}
-  healthBarLazyFill: {fileID: 0}
-  spring: {fileID: 0}
-  alphaResetTime: 0
-  lazySpeed: 0
-  healthScaleMultiplier: 1
 --- !u!114 &5952590020996530221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e505fa7b256f94998a890bbf47d183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
+  container: {fileID: 7771566112979102090}
   defaultTransition: {fileID: 11400000, guid: 6e582736bd4a9c340ada0c512ec964e5, type: 2}
   transitions:
   - {fileID: 11400000, guid: 4b7ef9cbb8e3dfa44a9e3c2b32b50a93, type: 2}
@@ -373,6 +358,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 086021ad9deddbc44912d0ccce2dba6f, type: 2}
   - {fileID: 11400000, guid: d157ef62e1ba5f0418e416937a5d53f3, type: 2}
   - {fileID: 11400000, guid: 6f7e643b63e392542abfd1e3f189ed85, type: 2}
+--- !u!114 &7771566112979102090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003117018386545755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4b93d4b306a5147a336c542c9a523a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &17649242043059551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5996bf8498342d84198a888301fe5cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
+  container: {fileID: 7771566112979102090}
   defaultTransition: {fileID: 11400000, guid: c7401c1006b380c4788f60796bbe6e37, type: 2}
   transitions: []
 --- !u!195 &1445497032552763354
@@ -679,6 +676,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!137 &8401394248781852486 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6048934323355050828, guid: 4ab0255a600be77439841d93bc60f809, type: 3}
+  m_PrefabInstance: {fileID: 2838849109481753610}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5237622072995456663
 PrefabInstance:
   m_ObjectHideFlags: 0

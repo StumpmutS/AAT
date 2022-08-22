@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AnimatorCrit : MonoBehaviour
 {
-    [SerializeField] private Brain brain;
+    [SerializeField] private NetworkStateComponentContainer container;
 
     private AttackComponentState _attackState;
 
     private void Start()
     {
-        if (brain.Container.TryGetComponentState(typeof(AttackComponentState), out var state))
+        if (container.TryGetComponentState(typeof(AttackComponentState), out var state))
         {
             _attackState = (AttackComponentState) state;
         }

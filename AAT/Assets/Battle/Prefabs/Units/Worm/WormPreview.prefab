@@ -97,6 +97,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1469127211873437645, guid: 41d124b0bf33cd144a10ae8cb0703d7e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41d124b0bf33cd144a10ae8cb0703d7e, type: 3}
       propertyPath: m_Name
       value: WormMonsterEnemy
@@ -104,11 +108,11 @@ PrefabInstance:
     - target: {fileID: 2651329495332028148, guid: 41d124b0bf33cd144a10ae8cb0703d7e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cd9df0c3337cc0c43842fdb67e9c2112, type: 2}
+      objectReference: {fileID: 2100000, guid: 04e5e07899c4c584db33eb3d4ee4c7fb, type: 2}
     - target: {fileID: 2651329495332028148, guid: 41d124b0bf33cd144a10ae8cb0703d7e, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: cd9df0c3337cc0c43842fdb67e9c2112, type: 2}
+      objectReference: {fileID: 2100000, guid: 807ceee8e508613438b20fac8c4668b0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41d124b0bf33cd144a10ae8cb0703d7e, type: 3}
 --- !u!4 &5065052912991391411 stripped

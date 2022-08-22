@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class VisualComponent : StumpComponent
 {
-    public float ComponentDelay;
-    public float ComponentDuration;
+    [SerializeField] private float delay;
+    public float Delay => delay;
+    [SerializeField] private float duration;
+    public float Duration => duration;
 }

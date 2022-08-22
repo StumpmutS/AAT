@@ -16,6 +16,7 @@ public class ArmoredHealth : Health, IArmor
 
     protected override void TakeDamage(float amount, DecalImage decal, AttackDecalInfo info)
     {
+        _visualsHandler.CreateDecal(decal, info);
         _currentHealth -= amount - (amount * (currentArmorPercent / 100));
         if (_currentHealth <= 0)
             Die();

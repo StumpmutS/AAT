@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,21 +6,19 @@ using UnityEngine.UI;
 
 public class DecalImage : MonoBehaviour
 {
-    //TODO: claws fade in, fill from top, set target to 1.2ish, nudge after a little, fade out, deactivate, reset target
-    
+    [SerializeField] private Vector3 offset;
+    [SerializeField] private ColorSpringListener colorSpring;
     [SerializeField] private List<DecalComponent> decalComponents;
     [SerializeField] private List<Image> images;
     public int MaxSeverity => images.Count;
 
-    public void Configure(AttackDecalInfo info)
+    public void Activate(AttackDecalInfo info)
     {
+        transform.position += offset;
         DeactivateImages();
 
-        foreach (var image in images)
-        {
-            image.color = info.Color;
-        }
-        
+        colorSpring.SetMaxColor(info.Color);
+
         ActivateImages(info.Severity);
     }
 
@@ -52,7 +51,8 @@ public class DecalImage : MonoBehaviour
     private IEnumerator CoAnimateDecalComponent(DecalComponent component)
     {
         yield return new WaitForSeconds(component.Delay);
-
         component.Activate();
+        yield return new WaitForSeconds(component.Duration);
+        component.Deactivate();
     }
 }

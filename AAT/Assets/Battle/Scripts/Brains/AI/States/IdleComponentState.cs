@@ -22,7 +22,7 @@ public class IdleComponentState : ComponentState
         if (!Runner.IsServer) return;
         
         _agent.EnableAgent(this);
-        _animation?.SetMovement(0);
+        _animation.SetMovement(0);
         _agent.ClearDestination();
     }
 

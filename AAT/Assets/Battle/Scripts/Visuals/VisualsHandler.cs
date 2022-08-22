@@ -24,9 +24,15 @@ public class VisualsHandler : MonoBehaviour
 
     private IEnumerator CoActivateVisualComponent(VisualComponent visualComponent)
     {
-        yield return new WaitForSeconds(visualComponent.ComponentDelay);
+        yield return new WaitForSeconds(visualComponent.Delay);
         visualComponent.ActivateComponent(_unit);
-        yield return new WaitForSeconds(visualComponent.ComponentDuration);
+        yield return new WaitForSeconds(visualComponent.Duration);
         visualComponent.DeactivateComponent(_unit);
+    }
+
+    public void CreateDecal(DecalImage image, AttackDecalInfo info)
+    {
+        var decal = Instantiate(image, transform.position, Quaternion.identity);
+        decal.Activate(info);
     }
 }

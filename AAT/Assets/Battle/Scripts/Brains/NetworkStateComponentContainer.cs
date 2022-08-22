@@ -14,6 +14,13 @@ public class NetworkStateComponentContainer : SimulationBehaviour
         
         var type = state.GetType();
         if (_componentStates.ContainsKey(type)) return _componentStates[type];
+        var childState = GetComponentInChildren(type);
+        if (childState != null)
+        {
+            _componentStates[type] = (ComponentState) childState;
+            _componentStates[type].Init(machine, this);
+            return _componentStates[type];
+        }
         
         var spawnedState = Runner.Spawn(state, transform.position, Quaternion.identity, Object.InputAuthority, InitState);
         _componentStates[type] = spawnedState;

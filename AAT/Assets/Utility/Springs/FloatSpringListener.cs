@@ -1,15 +1,17 @@
+using UnityEngine;
+
 public abstract class FloatSpringListener : SpringListener
 {
-    private float _minValue;
-    private float _maxValue;
-    
+    [SerializeField, ShowIf(nameof(useSetValue), true)] protected float minValue, origValue, maxValue;
+
     private float _origValue;
     
     private void Start()
     {
         _origValue = GetOrig();
-        _minValue = _origValue * minMultiplier;
-        _maxValue = _origValue * maxMultiplier;
+        if (useSetValue) return;
+        minValue = _origValue * minMultiplier;
+        maxValue = _origValue * maxMultiplier;
     }
 
     protected abstract float GetOrig();
@@ -19,13 +21,13 @@ public abstract class FloatSpringListener : SpringListener
         switch (amount)
         {
             case > 0:
-                ChangeValue(_origValue + (_maxValue - _origValue) * amount);
+                ChangeValue(_origValue + (maxValue - _origValue) * amount, target);
                 break;
             case < 0:
-                ChangeValue(_origValue + (_origValue - _minValue) * amount);
+                ChangeValue(_origValue + (_origValue - minValue) * amount, target);
                 break;
         }
     }
 
-    protected abstract void ChangeValue(float value);
+    protected abstract void ChangeValue(float value, float target);
 }

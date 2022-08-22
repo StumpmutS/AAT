@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 6773764935066251734}
   - component: {fileID: 8925548945823735576}
   - component: {fileID: -2651904812243836706}
-  - component: {fileID: 7217016201672214139}
   - component: {fileID: -7760469626715487477}
   - component: {fileID: 8466840135182997050}
+  - component: {fileID: 5411538509049099973}
   - component: {fileID: 3588384867715948105}
+  - component: {fileID: 723671959496017241}
   m_Layer: 10
   m_Name: WallJointPrefab
   m_TagString: Untagged
@@ -71,24 +72,6 @@ MonoBehaviour:
   dimensionsContainer: {fileID: 5843527107994311282}
   obstacle: {fileID: -7760469626715487477}
   _mainWallDirections: []
---- !u!114 &7217016201672214139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7296653334839882568}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 1, b: 0.016950846, a: 1}
-  outlineWidth: 5
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!208 &-7760469626715487477
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -119,6 +102,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathController: {fileID: 0}
   start: 0
+--- !u!114 &5411538509049099973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296653334839882568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6711598e1e49394088df553c746b989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderInfo:
+  - outlineDefaults: {fileID: 11400000, guid: ea81beff36d12284196c33b7e0f627d1, type: 2}
+    defaultColor: {r: 0.27450982, g: 0.15294118, b: 0, a: 1}
+    interactedColorChange: 0
+    baseShader: {fileID: 4800000, guid: f5d2271a394f94e409bc65e58888e0d2, type: 3}
+    interactedShader: {fileID: 4800000, guid: c74f4cdfb7d5c824bb597aa3e3445a58, type: 3}
+    outlineMatIndex: 0
+  - outlineDefaults: {fileID: 11400000, guid: ea81beff36d12284196c33b7e0f627d1, type: 2}
+    defaultColor: {r: 0, g: 0, b: 0, a: 1}
+    interactedColorChange: 1
+    baseShader: {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
+    interactedShader: {fileID: 4800000, guid: 66bed5437a242694bbac340872db7189, type: 3}
+    outlineMatIndex: 1
+  renderers:
+  - {fileID: 2378000858051963070}
 --- !u!114 &3588384867715948105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,8 +141,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 0
-  outline: {fileID: 7217016201672214139}
+  selectionType: 0
+  outline: {fileID: 5411538509049099973}
+--- !u!114 &723671959496017241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296653334839882568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaffac7d09f5c419b780fb9da33f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineColors: {fileID: 11400000, guid: 16a4d8e41dfaa2c43aead7d30fc59b42, type: 2}
 --- !u!1001 &3945661865104798778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -202,6 +225,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9f2e7be8a0254a499f3d068b633ae03, type: 3}
+--- !u!23 &2378000858051963070 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: a9f2e7be8a0254a499f3d068b633ae03, type: 3}
+  m_PrefabInstance: {fileID: 3945661865104798778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3552064615864931281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9f2e7be8a0254a499f3d068b633ae03, type: 3}

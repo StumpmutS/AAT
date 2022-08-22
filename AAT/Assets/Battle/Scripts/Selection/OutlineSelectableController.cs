@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class OutlineSelectableController : SelectableController
 {
-    [SerializeField] private Outline outline;
+    [SerializeField] private OutlineController outline;
 
     public event Action OnOutline = delegate { };
     public event Action OnRemoveOutline = delegate { };
     
-    private bool outlined = false;
+    private bool _outlined;
     
     protected override void OnMouseEnter()
     {
@@ -36,18 +36,18 @@ public class OutlineSelectableController : SelectableController
     
     public void Outline()
     {
-        if (outlined) return;
-        outlined = true;
-        outline.enabled = true;
+        if (_outlined) return;
+        _outlined = true;
+        outline.Activate();
         OnOutline.Invoke();
     }
     
     public void RemoveOutline()
     {
-        if (Selected || !outlined) return;
+        if (Selected || !_outlined) return;
 
-        outlined = false;
-        outline.enabled = false;
+        _outlined = false;
+        outline.Deactivate();
         OnRemoveOutline.Invoke();
     }
 }

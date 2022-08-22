@@ -104,13 +104,13 @@ public class AttackComponentState : ComponentState
 
     public void AnimationTriggeredAttack()
     {
-        //var info = new AttackDecalInfo(decalColors.Colors[0], decalImage.MaxSeverity, _target.transform.position - Container.transform.position);
-        _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage), decalImage, default);
+        var info = new AttackDecalInfo(decalColors.Colors[0], decalImage.MaxSeverity, _target.transform.position - Container.transform.position, _target.transform.position);
+        _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage), decalImage, info);
     }
 
     public void AnimationTriggeredCrit()
     {
-        var info = new AttackDecalInfo(decalColors.Colors[1], decalImage.MaxSeverity, _target.transform.position - Container.transform.position);
+        var info = new AttackDecalInfo(decalColors.Colors[1], decalImage.MaxSeverity, _target.transform.position - Container.transform.position, _target.transform.position);
         _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100), decalImage, info);
     }
 
