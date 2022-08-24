@@ -21,8 +21,7 @@ public class FlyingAgentComponentState : ComponentState, IAgent
 
     public override void Spawned()
     {
-        if (!Runner.IsServer) return;
-
+        base.Spawned();
         _stats = Container.GetComponent<UnitStatsModifierManager>();
         _flyingController = Container.GetComponent<FlyingController>();
         _flyingController.OnArrival += FinishPath;
@@ -32,8 +31,6 @@ public class FlyingAgentComponentState : ComponentState, IAgent
 
     private void Start()
     {
-        if (!Runner.IsServer) return;
-
         _origY = transform.position.y;
     }
 
@@ -46,8 +43,6 @@ public class FlyingAgentComponentState : ComponentState, IAgent
     public override void Tick()
     {
         base.Tick();
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0);
-        if (Input.GetKeyDown(KeyCode.R)) SetDestination(transform.position);
         if (!_enabled || !_moving) return;
         _flyingController.Fly(_destination);
     }
@@ -73,7 +68,7 @@ public class FlyingAgentComponentState : ComponentState, IAgent
 
     public void SetDestination(Vector3 destination)
     {
-        destination.y += _origY;
+        destination.y = _origY;
         if (_destination != destination) 
             _moving = true;
         _destination = destination;
@@ -100,5 +95,5 @@ public class FlyingAgentComponentState : ComponentState, IAgent
 
     public float GetSpeed() => _speed * _speedMultiplier;
 
-    public void Warp(Vector3 position) => transform.position = new Vector3(position.x, _origY + position.y, position.z);
+    public void Warp(Vector3 position) => transform.position = new Vector3(position.x, position.y, position.z);
 }

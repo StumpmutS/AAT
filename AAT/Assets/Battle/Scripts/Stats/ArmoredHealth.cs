@@ -14,12 +14,17 @@ public class ArmoredHealth : Health, IArmor
         currentArmorPercent = _baseArmorPercent;
     }
 
-    protected override void TakeDamage(float amount, DecalImage decal, AttackDecalInfo info)
+    protected override void TakeDamage(float amount)
     {
-        _visualsHandler.CreateDecal(decal, info);
         _currentHealth -= amount - (amount * (currentArmorPercent / 100));
         if (_currentHealth <= 0)
             Die();
+    }
+
+    protected override void DamagedDecal(float amount, DecalImage decal, AttackDecalInfo info)
+    {
+        info.Severity = Mathf.CeilToInt(info.Severity * (1 - currentArmorPercent / 100));
+        base.DamagedDecal(amount, decal, info);
     }
 
     public void ModifyArmor(float amount)

@@ -16,7 +16,7 @@ Shader "Toon/ToonMasked"
 
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
+        Tags {  "RenderQueue" = "AlphaTest" "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
         
         Pass
         {
@@ -27,7 +27,7 @@ Shader "Toon/ToonMasked"
             
             Stencil 
             {
-                Ref 1
+                Ref 2
                 Comp Always
                 Pass Replace
             }

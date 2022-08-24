@@ -22,8 +22,7 @@ public class GroundAgentComponentState : ComponentState, IAgent
     
     public override void Spawned()
     {
-        if (!Runner.IsServer) return;
-
+        base.Spawned();
         _unit = Container.GetComponent<UnitController>();
         _stats = _unit.Stats;
         _agent = Container.GetComponent<NavMeshAgent>();

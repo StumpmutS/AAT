@@ -1082,12 +1082,13 @@ MonoBehaviour:
   - {fileID: -3991292208228322283}
   - {fileID: 430060796365761778}
   - {fileID: 5759228335420568727}
+  - {fileID: 6165724156703658041}
   - {fileID: 4743278742500954077}
   SimulationBehaviours:
   - {fileID: 6519343231381679187}
   - {fileID: 577412520234061269}
-  - {fileID: 6165724156703658041}
   - {fileID: 5916904727556164928}
+  - {fileID: 572899336159934267}
   - {fileID: 5433636808581576493}
 --- !u!114 &2938147814150407566
 MonoBehaviour:
@@ -1259,7 +1260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDecal: {fileID: 0}
+  decalDirectionMultiplier: 2
+  decalOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &3161474669248493944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,6 +1379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4b93d4b306a5147a336c542c9a523a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &5916904727556164928
 MonoBehaviour:
   m_ObjectHideFlags: 0

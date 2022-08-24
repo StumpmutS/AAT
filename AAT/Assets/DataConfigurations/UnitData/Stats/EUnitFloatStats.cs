@@ -17,7 +17,7 @@ public enum EUnitFloatStats
     //Traverse
     TraverseSpeedPercentMultiplier,
     //Flying
-    HoverSpeed,
+    HoverSpeedPercentMultiplier,
     TurnSpeed,
     UpwardPitchCap
 }

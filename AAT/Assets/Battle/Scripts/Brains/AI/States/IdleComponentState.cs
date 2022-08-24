@@ -11,9 +11,6 @@ public class IdleComponentState : ComponentState
     {
         base.Spawned();
         _animation = Container.GetComponent<UnitAnimationController>();
-        
-        if (!Runner.IsServer) return;
-
         _agentBrain = Container.GetComponent<AgentBrain>();
     }
 

@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1601503828526119002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4537362823102718212}
+  m_Layer: 6
+  m_Name: VisualsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4537362823102718212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601503828526119002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2069723332999147394}
+  - {fileID: 7820770115694094219}
+  m_Father: {fileID: 5134251858104299139}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3333148748072315802
 GameObject:
   m_ObjectHideFlags: 0
@@ -51,8 +84,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2069723332999147394}
-  - {fileID: 7820770115694094219}
+  - {fileID: 4537362823102718212}
   - {fileID: 7883288330435980133}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,12 +118,13 @@ MonoBehaviour:
   - {fileID: 589332596698672781}
   - {fileID: 2289227302551243074}
   - {fileID: 1726361164340146014}
+  - {fileID: 3414608235696329203}
   - {fileID: 3017257209817583751}
   - {fileID: -7521254227078783764}
   SimulationBehaviours:
   - {fileID: 4431227335216123300}
-  - {fileID: 3414608235696329203}
   - {fileID: 1948621282047850429}
+  - {fileID: 631842473991660619}
   - {fileID: 5747234870401002117}
 --- !u!114 &2571697896766768632
 MonoBehaviour:
@@ -107,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   InterpolationSpace: 0
-  InterpolationTarget: {fileID: 2069723332999147394}
+  InterpolationTarget: {fileID: 4537362823102718212}
   InterpolateErrorCorrection: 1
   InterpolatedErrorCorrectionSettings:
     MinRate: 3.3
@@ -282,7 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDecal: {fileID: 0}
+  decalDirectionMultiplier: 2
+  decalOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &5993545401423962512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4b93d4b306a5147a336c542c9a523a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &1948621282047850429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +531,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5134251858104299139}
+    m_TransformParent: {fileID: 4537362823102718212}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7385cab2a561b3e498e1cea423410149, type: 3}
       propertyPath: m_RootOrder
@@ -754,7 +789,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5134251858104299139}
+    m_TransformParent: {fileID: 4537362823102718212}
     m_Modifications:
     - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
       propertyPath: health
@@ -884,7 +919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1149110960122787035, guid: 37935d830a3ff1141937f907d1869de0, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1149110960122787035, guid: 37935d830a3ff1141937f907d1869de0, type: 3}
       propertyPath: m_LocalPosition.x

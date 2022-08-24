@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -5,14 +6,15 @@ namespace Utility.Scripts
 {
     public static class DistanceCompare
     {
-        public static T FindClosestThing<T>(T[] things, Vector3 fromPoint, T returnIfPresent = default, T ignore = default) where T: Component
+        public static T FindClosestThing<T>(IEnumerable<T> things, Vector3 fromPoint, T returnIfPresent = default, T ignore = default) where T: Component
         {
+            var components = things as T[] ?? things.ToArray();
             if (returnIfPresent != default)
-                if (things.Contains(returnIfPresent)) return returnIfPresent;
+                if (components.Contains(returnIfPresent)) return returnIfPresent;
             
             T target = default;
             var targetDistanceSquared = Mathf.Infinity;
-            foreach(var thing in things)
+            foreach(var thing in components)
             {
                 if (thing is null || thing.Equals(ignore)) continue;
 

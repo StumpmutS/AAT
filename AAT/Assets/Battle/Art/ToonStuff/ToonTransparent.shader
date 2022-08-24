@@ -14,6 +14,12 @@ Shader "Toon/ToonTransparent"
 
         Pass
         {
+            ZWrite On
+            ColorMask 0
+        }
+        
+        Pass
+        {
             Tags { "LightMode" = "UniversalForward" }
             
             CGPROGRAM

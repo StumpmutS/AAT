@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b81eb9366d85b640b57e722eb2d33ce, type: 3}
-  m_Name: BearFirstUpgradeData
+  m_Script: {fileID: 11500000, guid: 43502a7ce1ec831489ed3b4dc1c0031f, type: 3}
+  m_Name: BearU1Stats
   m_EditorClassIdentifier: 
-  baseUnitStatsDataInfo: {fileID: 11400000, guid: 467db97d4f0e830438caf20a32ef3f1b, type: 2}
+  Stats:
+  - {fileID: 11400000, guid: 7a17b37ffb0bfbd4692f9fb7f7635acf, type: 2}
+  - {fileID: 11400000, guid: 0dd95f60a1fa533429206ae00e29a64f, type: 2}

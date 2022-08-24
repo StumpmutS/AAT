@@ -398,6 +398,7 @@ MonoBehaviour:
   - {fileID: 4331704148283514328}
   SimulationBehaviours:
   - {fileID: 4331704148283514335}
+  - {fileID: -6995454650477655699}
   - {fileID: 8718211337999981390}
 --- !u!114 &8253979460464806656
 MonoBehaviour:
@@ -486,8 +487,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ef3c7f3cb803749bd03313380aee30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 4331704147617901145}
-  healthBarPercentText: {fileID: 4331704147969220664}
+  health: {fileID: 0}
+  healthBar: {fileID: 0}
+  healthBarFill: {fileID: 0}
+  healthBarLazyFill: {fileID: 0}
+  spring: {fileID: 0}
+  alphaResetTime: 0
+  lazySpeed: 0
+  healthScaleMultiplier: 0
 --- !u!114 &4331704148283514334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,8 +528,6 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _IsDead:
     _value: 0
-  _Selected:
-    _value: 0
   interactableTypes: 
   chaseState: 1
   patrolState: 1
@@ -530,9 +535,6 @@ MonoBehaviour:
   colliders: []
   unitVisuals: {fileID: 0}
   unitManager: {fileID: 0}
-  OnInit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &4331704148283514320
 MonoBehaviour:
   m_ObjectHideFlags: 0

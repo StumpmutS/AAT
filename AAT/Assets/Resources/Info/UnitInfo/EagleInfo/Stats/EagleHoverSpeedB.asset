@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EagleHoverSpeedB
   m_EditorClassIdentifier: 
   Stat: 13
-  Value: 2
+  Value: 50

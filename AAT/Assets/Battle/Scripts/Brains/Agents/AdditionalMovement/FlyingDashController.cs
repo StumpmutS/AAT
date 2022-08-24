@@ -32,7 +32,7 @@ public class FlyingDashController : DashController
     protected override void SetPosition(Vector3 pos)
     {
         base.SetPosition(pos);
-        transform.RotateTowardsOnX(_rotationTarget, _turnSpeed, out _);
-        transform.RotateTowardsOnY(_rotationTarget, _turnSpeed, out _);
+        transform.RotateTowardsOnX(_rotationTarget, _turnSpeed, Runner.DeltaTime, out _);
+        transform.RotateTowardsOnY(_rotationTarget, _turnSpeed, Runner.DeltaTime, out _);
     }
 }

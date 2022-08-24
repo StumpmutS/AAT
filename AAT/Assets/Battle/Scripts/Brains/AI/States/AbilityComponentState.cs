@@ -13,8 +13,6 @@ public class AbilityComponentState : ComponentState
     {
         base.Spawned();
         _unitAnimation = Container.GetComponent<UnitAnimationController>();
-        if (!Runner.IsServer) return;
-        
         _abilityHandler = Container.GetComponent<AbilityHandler>();
         _abilityHandler.OnAbilityUsed += AbilityUsed;
         _agentBrain = Container.GetComponent<AgentBrain>();

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ResourcePathGatherer : AssetPostprocessor
 {
-    private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+    public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
         BuildResourceReference.StaticSOResourcePaths.Clear();
         

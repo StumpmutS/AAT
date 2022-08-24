@@ -12,3 +12,337 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e425af3a4950bd4eb8c0dbc5bc80990, type: 3}
   m_Name: Build Resource Reference
   m_EditorClassIdentifier: 
+  SOResourcePaths:
+    _items:
+    - Key: {fileID: 11400000, guid: ae6282163b779334a90bf1d12950c1ef, type: 2}
+      Value: Info/FactionInfo/FactionColors
+    - Key: {fileID: 11400000, guid: 24ba8644bdba83a469f199a9438a3c58, type: 2}
+      Value: Info/FactionInfo/FactionHexPrefabs
+    - Key: {fileID: 11400000, guid: 153e4207f1346fe43b479e802e2fcace, type: 2}
+      Value: Info/FactionInfo/FactionMaterials
+    - Key: {fileID: 11400000, guid: cbedc6defdf790045bb570b1e3039103, type: 2}
+      Value: Info/ProjectileInfo/Egg/EggProjectileAOEDamageComponent
+    - Key: {fileID: 11400000, guid: 888ddc6858d238f418cc308a2492497c, type: 2}
+      Value: Info/ProjectileInfo/Egg/EggProjectileAOEKnockbackComponent
+    - Key: {fileID: 11400000, guid: e0cf7d913becd6448ba0dcc19d6c0436, type: 2}
+      Value: Info/ProjectileInfo/Egg/EggProjectileDamageComponentData
+    - Key: {fileID: 11400000, guid: ed204fdd1d1a78441998b754c02b59bb, type: 2}
+      Value: Info/UnitInfo/BearInfo/Abilities/BearChargeAbility/BearChargeAbilityData
+    - Key: {fileID: 11400000, guid: 6605e3e3fe53cbd40b69c81922d1fd89, type: 2}
+      Value: Info/UnitInfo/BearInfo/Abilities/BearChargeAbility/BearChargeAnimation
+    - Key: {fileID: 11400000, guid: 040c008b2ce85874582fb0ce1cbd8384, type: 2}
+      Value: Info/UnitInfo/BearInfo/Abilities/BearChargeAbility/BearChargeDamageAbilityComponentData
+    - Key: {fileID: 11400000, guid: 2e6b4edd972df354988737b38abf2a8e, type: 2}
+      Value: Info/UnitInfo/BearInfo/Abilities/BearChargeAbility/BearChargeDashAbilityComponentData
+    - Key: {fileID: 11400000, guid: 81ed1d54ad525f84281b9c9bbf4871ee, type: 2}
+      Value: Info/UnitInfo/BearInfo/Abilities/BearChargeAbility/BearChargeKnockbackAbilityComponentData
+    - Key: {fileID: 11400000, guid: cbed0a91cfbd666439de3385869d619d, type: 2}
+      Value: Info/UnitInfo/BearInfo/BearSpawnData
+    - Key: {fileID: 11400000, guid: 9fa4db7675ac191479750230bb2545aa, type: 2}
+      Value: Info/UnitInfo/BearInfo/Mountable/BearHealthMS
+    - Key: {fileID: 11400000, guid: 6bc5c8f6a2170474db50e85cb79615df, type: 2}
+      Value: Info/UnitInfo/BearInfo/Mountable/BearMountData
+    - Key: {fileID: 11400000, guid: aca52821693780c44b4b9cee668a6d53, type: 2}
+      Value: Info/UnitInfo/BearInfo/Mountable/BearMountOther
+    - Key: {fileID: 11400000, guid: fb5d677a407793149b4aa88585ca7e7c, type: 2}
+      Value: Info/UnitInfo/BearInfo/Mountable/BearMountSelf
+    - Key: {fileID: 11400000, guid: 2a04a56c5e676b747b19770aa5c04cf8, type: 2}
+      Value: Info/UnitInfo/BearInfo/Mountable/BearRangeMO
+    - Key: {fileID: 11400000, guid: d9cfc6113b6b226408e93b1693973080, type: 2}
+      Value: Info/UnitInfo/BearInfo/Mountable/BearSpeedMS
+    - Key: {fileID: 11400000, guid: 23bf5005d66db0c4987598cb3d45940f, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearAttackRangeB
+    - Key: {fileID: 11400000, guid: 0074066785a0d56439b6c3f21ebc2f83, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 7bc2138172663d04cb887d354c7d0442, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: 9c386e2800be02d4c931d135ac1d10b4, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: c74935d60a178e1418824c9842ac5cb0, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearCritChancePercentB
+    - Key: {fileID: 11400000, guid: 55975e073c254a34d8616faeee81d897, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: fbf35e3552323f6469f07721020881b5, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearDamageB
+    - Key: {fileID: 11400000, guid: 92f4150b0047dde4a8d1a18e10490c62, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 302b9c41921c0374cb64ff94c465066a, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearMaxHealthB
+    - Key: {fileID: 11400000, guid: ef430ad5f034efd43975c9cc0ccb4085, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearMovementSpeedB
+    - Key: {fileID: 11400000, guid: b0e795162b4f5f844a4537db1bd0876d, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearSightRangeB
+    - Key: {fileID: 11400000, guid: 0363c69a2acb54542b91e84601a07503, type: 2}
+      Value: Info/UnitInfo/BearInfo/Stats/BearStatsData
+    - Key: {fileID: 11400000, guid: 7a17b37ffb0bfbd4692f9fb7f7635acf, type: 2}
+      Value: Info/UnitInfo/BearInfo/Upgrades/BearDamageU1
+    - Key: {fileID: 11400000, guid: 21a1102ac1d51ba4188bd16f8d56acd1, type: 2}
+      Value: Info/UnitInfo/BearInfo/Upgrades/BearFirstUpgradeData
+    - Key: {fileID: 11400000, guid: 467db97d4f0e830438caf20a32ef3f1b, type: 2}
+      Value: Info/UnitInfo/BearInfo/Upgrades/BearFirstUpgradeStats
+    - Key: {fileID: 11400000, guid: 0dd95f60a1fa533429206ae00e29a64f, type: 2}
+      Value: Info/UnitInfo/BearInfo/Upgrades/BearHealthU1
+    - Key: {fileID: 11400000, guid: 841baf884280793478d1801ea19d0c78, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Abilities/EagleCarpetBomb/EagleCarpetBombAbilityData
+    - Key: {fileID: 11400000, guid: dd10ee20cae68b043ad3cc38696d4e65, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Abilities/EagleCarpetBomb/EagleCarpetBombFirstDashAbilityComponentData
+    - Key: {fileID: 11400000, guid: 4ffe2ee8ac66481428f9e8ba77dfa5c1, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Abilities/EagleCarpetBomb/EagleCarpetBombProjectileSpawnComponentData
+    - Key: {fileID: 11400000, guid: 607d02c3df71465499239ab61463b2da, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Abilities/EagleCarpetBomb/EagleCarpetBombSecondDashAbilityComponentData
+    - Key: {fileID: 11400000, guid: 95cc97577a2090e4487b80af2fe243ae, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Abilities/EagleCarpetBomb/EagleCarpetBombThirdDashAbilityComponentData
+    - Key: {fileID: 11400000, guid: 1ed0bf6d5e8920843bc1e40656b110db, type: 2}
+      Value: Info/UnitInfo/EagleInfo/EagleSpawnData
+    - Key: {fileID: 11400000, guid: 582e188b0bb106a4a8388959441985c7, type: 2}
+      Value: Info/UnitInfo/EagleInfo/MountableData/EagleAttackRangeMO
+    - Key: {fileID: 11400000, guid: 01418e2a2b70a6245bea380ba85df0fd, type: 2}
+      Value: Info/UnitInfo/EagleInfo/MountableData/EagleMountData
+    - Key: {fileID: 11400000, guid: 604d3c5491e27704f8ee512398e3e0d1, type: 2}
+      Value: Info/UnitInfo/EagleInfo/MountableData/EagleMountOther
+    - Key: {fileID: 11400000, guid: e2766cfabc93ba84192d4eebf7d2ed4c, type: 2}
+      Value: Info/UnitInfo/EagleInfo/MountableData/EagleMountSelf
+    - Key: {fileID: 11400000, guid: e6785afcf3c3ef24eab02e9c9abb5e14, type: 2}
+      Value: Info/UnitInfo/EagleInfo/MountableData/EagleMovementSpeedMS
+    - Key: {fileID: 11400000, guid: 1ab75e0ac60995647aad8e4f0d9f34f4, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleAttackRangeB
+    - Key: {fileID: 11400000, guid: 59adafcacc76d8045a6e8a6bbcc46824, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 08d0d6d6ea90b864b8f8850b9195104e, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: d639c5f5dcfe62241829598d10925260, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: c919cd743acfa5a4ea23f684ce562b2d, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleCritChancePercentB
+    - Key: {fileID: 11400000, guid: 1ddfb20892d061347b357ffc497813ed, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: 0462e929e1459184089e4468e839c35e, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleDamageB
+    - Key: {fileID: 11400000, guid: fd1ffd18485544341b76955516330d32, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleHoverSpeedB
+    - Key: {fileID: 11400000, guid: df6ca76c0293ef143a776f03290dd208, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 740a43f65b435e74697c88a835ad6cab, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleMaxHealthB
+    - Key: {fileID: 11400000, guid: a2ee025f9da4b5e49b2c4d5bb4076d59, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleMovementSpeedB
+    - Key: {fileID: 11400000, guid: 6e588305c71c4484b8845abe4459d329, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleSightRangeB
+    - Key: {fileID: 11400000, guid: f2b505be318106b45b49bd3b026f2058, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleStatsData
+    - Key: {fileID: 11400000, guid: bc1392d15ad78d84d9ae8de82202145c, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleTurnSpeedB
+    - Key: {fileID: 11400000, guid: 7f19d586d65057e448072a207466084f, type: 2}
+      Value: Info/UnitInfo/EagleInfo/Stats/EagleUpwardPitchCapB
+    - Key: {fileID: 11400000, guid: aa225325b995fc74e8452383cade163d, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/EnemySpawnData
+    - Key: {fileID: 11400000, guid: d2fa682e75cf4e34391d47566bcaffbc, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyAttackRangeB
+    - Key: {fileID: 11400000, guid: b944b8faf3842844092ddf1527dd5c3d, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 52d05a662d0c39b44a9f271cea62d317, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: 719435ca1fe403f449280071df80e78d, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: e83325f3191b06e4d8cbe3f251844440, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyCritChancePercentB
+    - Key: {fileID: 11400000, guid: b1549032ee7b5d04d9c035942cf65f78, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: 82e6f3c6c11123f498f242f34fc3cbc6, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyDamageB
+    - Key: {fileID: 11400000, guid: 38c0aeccfdac4bf499a94db692a6e063, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 8330caeff62039741bfb2f780ea694b7, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyMaxHealthB
+    - Key: {fileID: 11400000, guid: 53e8f95ff35590a4683ff0f9442ea0aa, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyMovementSpeedB
+    - Key: {fileID: 11400000, guid: 9c6ccfac399325744a38aaf2204434f1, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemySightRangeB
+    - Key: {fileID: 11400000, guid: 1e5ddec3ec4aef74096b1816522b4478, type: 2}
+      Value: Info/UnitInfo/EnemyInfo/Stats/EnemyStatsData
+    - Key: {fileID: 11400000, guid: 199ba8e52692e914996efca862f0ce10, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleSpawnData
+    - Key: {fileID: 11400000, guid: 90bde616ecff72e4db1a4781d7282dce, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleSwitchTravelAbility/MoleSwitchTravelAbilityData
+    - Key: {fileID: 11400000, guid: 197de5594fa93554ca199de3d9d53594, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleSwitchTravelAbility/MoleSwitchTravelAgentActivationAbilityComponent
+    - Key: {fileID: 11400000, guid: 59ba1c3cc2f3aff48b8e3620916d9689, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleSwitchTravelAbility/MoleSwitchTravelAnimationComponent
+    - Key: {fileID: 11400000, guid: 039b2ac39620e7547b9411f13b7b943a, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleTunnelAbility/MoleTunnelAbilityData
+    - Key: {fileID: 11400000, guid: 51fe9a6a6dbfbc84a9d858b88f39a8e3, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleTunnelAbility/MoleTunnelAnimationComponent
+    - Key: {fileID: 11400000, guid: 1467fd439466612489399d41d94cab3f, type: 2}
+      Value: Info/UnitInfo/MoleInfo/MoleTunnelAbility/MoleTunnelUnitTeleporterSpawnAbilityComponent
+    - Key: {fileID: 11400000, guid: 8b2153e7bb4129c4e926a9ea250b3a00, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleAttackRangeB
+    - Key: {fileID: 11400000, guid: d8ef836e45c51c04b93288145e7a156c, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 549890a8fba3e75419f7cc8455e0a9e0, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: a2cc51be81189564fbb2b1cdf7214ee4, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: f6667a4ebc31a034f93d3c408b6e876f, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleCritChancePercentB
+    - Key: {fileID: 11400000, guid: b224490571b2ce94daae3255f0285f96, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: 21da9bb889619ca4790e3824c24da744, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleDamageB
+    - Key: {fileID: 11400000, guid: 56a42f3a39799ad4ea25424f7be9247c, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 2ae81b3ca106a26429a212330a4284ca, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleMaxHealthB
+    - Key: {fileID: 11400000, guid: 2f8fae93356bb044f90119068009af4f, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleMovementSpeedB
+    - Key: {fileID: 11400000, guid: 1af15e65fd3411a459f308cb88beecf8, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleSightRangeB
+    - Key: {fileID: 11400000, guid: 706b52d4db22f494b94959ff37d61a5b, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleStatsData
+    - Key: {fileID: 11400000, guid: cf3d8c7ae89ee614a8180d9db629d4c3, type: 2}
+      Value: Info/UnitInfo/MoleInfo/Stats/MoleTraverseSpeedB
+    - Key: {fileID: 11400000, guid: 2f75f7fd7ad195947b58e391cdbbaf08, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelAttackSpeedPercentP1
+    - Key: {fileID: 11400000, guid: c28f91f7d489db24392a437b0f0d34b7, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelAttackSpeedPercentP2
+    - Key: {fileID: 11400000, guid: 9395358466676ff4c8494729006bc593, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelAttackSpeedPercentP3
+    - Key: {fileID: 11400000, guid: e2159fca4418f04489207cbe213ef3e8, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelComradeSectorPowerStatsBuffComponentData
+    - Key: {fileID: 11400000, guid: 7b4eeba6c8af763488b0ba5df672aabc, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelComradesPassiveData
+    - Key: {fileID: 11400000, guid: 8c82acdf703d2a8499cec311e3a54ffe, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelComradeThreshold1
+    - Key: {fileID: 11400000, guid: 068f0c240aa675d47bdfbf456ba8fc5c, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelComradeThreshold2
+    - Key: {fileID: 11400000, guid: d1dfe29c72f54c2418f8f103899fce11, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Passives/SquirrelComradeThreshold3
+    - Key: {fileID: 11400000, guid: 7b44d46da0987ad438a422fd4d4c0a3c, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/SquirrelSpawnData
+    - Key: {fileID: 11400000, guid: 49262a8d13fcd75429860d0c9cf7b1e2, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelAttackRangeB
+    - Key: {fileID: 11400000, guid: 5860cfdfcc2dbe34591edc63eb94107a, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 68f319b69e18de044a4c318a0705a3ab, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: 3d6b6bca892a9364db2dacfb86aac31a, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: 3b2eae5e888450b40b58c27ea86c1320, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelCritChancePercentB
+    - Key: {fileID: 11400000, guid: f9a648723bc5a9e43b542598b1300a9a, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: 5f8ed5a2430b71f489d5ed0cf2cb0ab7, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelDamageB
+    - Key: {fileID: 11400000, guid: 6d1ab5d26e35fcd45a9d3bcc4aac7839, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 6f0751265567c694bb9210955cfce59e, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelMaxHealthB
+    - Key: {fileID: 11400000, guid: d704c85ef510cb94b88abb6f24e4e0f7, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelMovementSpeedB
+    - Key: {fileID: 11400000, guid: 199b32ea6ec8a694385a54d108c3a2e6, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelSightRangeB
+    - Key: {fileID: 11400000, guid: b04ddbae02d8e51468f9f710a9cbfa7f, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Stats/SquirrelStatsData
+    - Key: {fileID: 11400000, guid: da3654aadc71ccb4e9a0742bfabb6162, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/TransportableData/SquirrelAttackSpeedPercentTS
+    - Key: {fileID: 11400000, guid: 77913816bf718d742bb666f85773b987, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/TransportableData/SquirrelBaseArmorPercentTO
+    - Key: {fileID: 11400000, guid: 69fa5709f77a7814bbb4b96fe2caf155, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/TransportableData/SquirrelMaxArmorPercentTO
+    - Key: {fileID: 11400000, guid: 5938ae9176b298643898fab0c0d8c2d4, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/TransportableData/SquirrelTransportableData
+    - Key: {fileID: 11400000, guid: 2f9768b2ad960b7479ef307d40cb546c, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/TransportableData/SquirrelTransportOther
+    - Key: {fileID: 11400000, guid: ca560638aa7064443b1a0741fb611e9a, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/TransportableData/SquirrelTransportSelf
+    - Key: {fileID: 11400000, guid: a0523e290fbb6444b9700e5b2716599d, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Upgrades/FirstUpgradeStats
+    - Key: {fileID: 11400000, guid: 20715c124d506ec46baaaa7bed4de486, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Upgrades/SquirrelFirstUpgradeData
+    - Key: {fileID: 11400000, guid: a138a4c5f7b46c940a3cac6f80818bd6, type: 2}
+      Value: Info/UnitInfo/SquirrelInfo/Upgrades/SquirrelMovementSpeedU1
+    - Key: {fileID: 11400000, guid: 1e41e6b06d8bedc449181880cfe6b947, type: 2}
+      Value: Info/UnitInfo/UndergroundPathwayInfo/UndergroundPathwayBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: d0e243c513a64af4d841a737a3db2b4e, type: 2}
+      Value: Info/UnitInfo/UndergroundPathwayInfo/UndergroundPathwayMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 1be2eb0fe162f124bbacf18a904b59bb, type: 2}
+      Value: Info/UnitInfo/UndergroundPathwayInfo/UndergroundPathwayMaxHealthB
+    - Key: {fileID: 11400000, guid: 701d76477edbd814aa919f39952a7c04, type: 2}
+      Value: Info/UnitInfo/UndergroundPathwayInfo/UndergroundPathwayStatsData
+    - Key: {fileID: 11400000, guid: ae0d786fa4115d447b104b0698bd934a, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Abilities/WolfHowlAbilityData
+    - Key: {fileID: 11400000, guid: 30b3b6e579baff941b8adb72709d0089, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Abilities/WolfHowlAnimationComponent
+    - Key: {fileID: 11400000, guid: 12d8dfe6a2ff29042b95a941f16219c7, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Abilities/WolfHowlUnitSpawnAbilityComponentData
+    - Key: {fileID: 11400000, guid: c5ca6629e1562184c9d6f6de1643edc9, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfAttackRangeB
+    - Key: {fileID: 11400000, guid: 1a2a637922804d04fbead767c089504e, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 4defde1fb160c6d4598f40e3c91e8a46, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: d1e79b96c09c9b045a053a59281312c0, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: c4737dcc52583fc4b9ca6c7a2f0fdaf6, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfCritChancePercentB
+    - Key: {fileID: 11400000, guid: 6b721a1d17af68249a014c8f88142d40, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: fd1b4d13606b6244e9660366202a1400, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfDamageB
+    - Key: {fileID: 11400000, guid: 243e59ef4e71bc34c891caaec1a8aa3c, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: 0f57b83a9689d654d8c89d2d942dbb13, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfMaxHealthB
+    - Key: {fileID: 11400000, guid: ea86574ac9fa29e45b461da36e0a22a6, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfMovementSpeedB
+    - Key: {fileID: 11400000, guid: ef2e038dd2c0f1c4cb62479b0fb7397f, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfSightRangeB
+    - Key: {fileID: 11400000, guid: 33e21373a9078784c8af0296898a3ec1, type: 2}
+      Value: Info/UnitInfo/WolfInfo/Stats/WolfStatsData
+    - Key: {fileID: 11400000, guid: 8d539ec922724c84084cfbb0e9fd6236, type: 2}
+      Value: Info/UnitInfo/WolfInfo/WolfSpawnData
+    - Key: {fileID: 11400000, guid: f3e98ad430f0a1941bb72e9b77cc263f, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormAttackRangeB
+    - Key: {fileID: 11400000, guid: 5b068bafdd86d62449c86ecdf0a1969b, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormAttackSpeedPercentB
+    - Key: {fileID: 11400000, guid: 61adb97d592962c42bc6eaace3c6cabd, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: 510560b58d5a59f4893fc6874dc520b3, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormChaseSpeedPercentMultiplierB
+    - Key: {fileID: 11400000, guid: 5c2e0eb45fc399a45bdcbbf3838d7cb3, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormCritChancePercentB
+    - Key: {fileID: 11400000, guid: 25a0912d59bc00549affd4d9849e74b2, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormCritMultiplierPercentB
+    - Key: {fileID: 11400000, guid: dcf804b3fbc8e1a4d82e26019972e6a9, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormDamageB
+    - Key: {fileID: 11400000, guid: 5a4bdc5699172cc42a67a7f1c51607fd, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: ea9b13c20f6f40742a15bb578192dda7, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormMaxHealthB
+    - Key: {fileID: 11400000, guid: f259458f48eae03498f25811e227a07f, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormMovementSpeedB
+    - Key: {fileID: 11400000, guid: 6c24aaa6703a8fe45ae573f20a24da1e, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormSightRangeB
+    - Key: {fileID: 11400000, guid: 2aea3513024fbac4183838d4eef3fce6, type: 2}
+      Value: Info/UnitInfo/WormInfo/Stats/WormStatsData
+    - Key: {fileID: 11400000, guid: 71e9778bcc1468b419ffaf2ee0788a81, type: 2}
+      Value: Info/UnitInfo/WormInfo/WormSpawnData
+    - Key: {fileID: 11400000, guid: ff03bbae6a743d346ab81334481758ee, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/MountableWall/PlaceabaleWallOtherStatsData
+    - Key: {fileID: 11400000, guid: 18a767cbba0ed5144a8d053192b54b51, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/MountableWall/PlaceabaleWallSelfStatsData
+    - Key: {fileID: 11400000, guid: 9b95e74811019ba42b52e397f8d75ae0, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/MountableWall/PlaceableWallAttackRangeMO
+    - Key: {fileID: 11400000, guid: 338f96f244b23d841aee3c423857017a, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/MountableWall/PlaceableWallAttackSpeedPercentMO
+    - Key: {fileID: 11400000, guid: af0b3058092591d45952b705a834a906, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/MountableWall/PlaceableWallMaxHealthMS
+    - Key: {fileID: 11400000, guid: 8135d6063dc0fe344a1106b1c7756f9d, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/MountableWall/PlaceableWallSelfOtherStatsData
+    - Key: {fileID: 11400000, guid: 57d890da3892efc4783bcb4110e2d3f4, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/Stats/PlaceableWallBaseArmorPercentB
+    - Key: {fileID: 11400000, guid: f4c31e040a440054db6c91e1875764c2, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/Stats/PlaceableWallMaxArmorPercentB
+    - Key: {fileID: 11400000, guid: d2925533fb90a324181935e271035481, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/Stats/PlaceableWallMaxHealthB
+    - Key: {fileID: 11400000, guid: 1c2dc171ba69c244b89dcf2f23e7cad2, type: 2}
+      Value: Info/WallInfo/PlaceableWallInfo/Stats/PlaceableWallUnitStatsData

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -4243860230719574032}
   - component: {fileID: 2669565850763971669}
   - component: {fileID: 234317371117068412}
+  - component: {fileID: 1916168420325683077}
   - component: {fileID: 5167471315293224069}
   - component: {fileID: 6684075605916107545}
   - component: {fileID: 4711663701533172652}
@@ -241,6 +242,20 @@ MonoBehaviour:
   colliders: []
   unitVisuals: {fileID: 0}
   unitManager: {fileID: 0}
+--- !u!114 &1916168420325683077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880642761709956856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decalDirectionMultiplier: 1
+  decalOffset: {x: 0, y: 1, z: 0}
 --- !u!114 &5167471315293224069
 MonoBehaviour:
   m_ObjectHideFlags: 0

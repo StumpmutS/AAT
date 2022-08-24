@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PoolingObject : MonoBehaviour
 {
+    [SerializeField] private float destroyTime = 30;
+    public float DestroyTime => destroyTime;
     [HideInInspector] [SerializeField] private string poolingTag;
     public string PoolingTag => poolingTag;
     

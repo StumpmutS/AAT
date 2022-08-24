@@ -16,7 +16,6 @@ public class GroupFillSpringListener : FloatSpringListener, ISerializationCallba
 
     protected override void ChangeValue(float value, float target)
     {
-        print(value);
         foreach (var image in images)
         {
             image.fillAmount = rangeContainType == ERangeContainment.ClampZero ? ClampZero(value) : Mathf.Abs(value);

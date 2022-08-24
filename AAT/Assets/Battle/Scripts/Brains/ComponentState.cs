@@ -20,6 +20,7 @@ public abstract class ComponentState : NetworkBehaviour
     {
         _componentStateMachine = componentStateMachine;
         Container = container;
+        containerId = container.Id;
     }
 
     public override void Spawned()

@@ -12,6 +12,12 @@ Shader "Toon/ToonTransparentMasked"
         Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
         ZWrite Off
+
+        Pass
+        {
+            ZWrite On
+            ColorMask 0
+        }
         
         Pass
         {
@@ -22,7 +28,7 @@ Shader "Toon/ToonTransparentMasked"
             
             Stencil 
             {
-                Ref 1
+                Ref 2
                 Comp Always
                 Pass Replace
             }

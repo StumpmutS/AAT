@@ -35,20 +35,23 @@ public class Health : NetworkBehaviour, IHealth
 
     public void ModifyHealth(float amount, DecalImage decal, AttackDecalInfo info)
     {
-        if (!Runner.IsServer) return;
-        
         if (amount > 0)
         {
-            Heal(amount, decal, info);
+            HealDecal(Mathf.Abs(amount), decal, info);
+            if (!Runner.IsServer) return;
+            Heal(amount);
         }
         else
         {
-            TakeDamage(Mathf.Abs(amount), decal, info);
+            DamagedDecal(Mathf.Abs(amount), decal, info);
+            if (!Runner.IsServer) return;
+            TakeDamage(Mathf.Abs(amount));
         }
+        
         _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
-    protected virtual void Heal(float amount, DecalImage decal, AttackDecalInfo info)
+    protected virtual void Heal(float amount)
     {
         if (_currentHealth + amount > MaxHealth)
             _currentHealth = MaxHealth;
@@ -56,12 +59,21 @@ public class Health : NetworkBehaviour, IHealth
             _currentHealth += amount;
     }
 
-    protected virtual void TakeDamage(float amount, DecalImage decal, AttackDecalInfo info)
+    protected virtual void TakeDamage(float amount)
     {
-        _visualsHandler.CreateDecal(decal, info);
         _currentHealth -= amount;
         if (_currentHealth <= 0)
             Die();
+    }
+
+    protected virtual void DamagedDecal(float amount, DecalImage decal, AttackDecalInfo info)
+    {
+        if (decal != null) _visualsHandler.CreateDecal(decal, info);
+    }
+
+    protected virtual void HealDecal(float amount, DecalImage decal, AttackDecalInfo info)
+    {
+        if (decal != null) _visualsHandler.CreateDecal(decal, info);
     }
     
     protected virtual void Die()

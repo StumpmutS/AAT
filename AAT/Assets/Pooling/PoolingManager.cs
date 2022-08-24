@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,41 +6,71 @@ public class PoolingManager : MonoBehaviour
 {
     public static PoolingManager Instance { get; private set; }
 
-    private Dictionary<string, List<PoolingObject>> inactivePoolingObjects = new();
-    private Dictionary<string, List<PoolingObject>> activePoolingObjects = new();
+    private Dictionary<string, Stack<PoolingObject>> _inactivePoolingObjects = new();
+    private Dictionary<string, HashSet<PoolingObject>> _activePoolingObjects = new();
+    private Dictionary<PoolingObject, Coroutine> _destroyCoroutines = new();
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
 
     public PoolingObject CreatePoolingObject(PoolingObject poolingObject)
     {
         string id = poolingObject.PoolingTag;
-        if (!activePoolingObjects.ContainsKey(id)) activePoolingObjects[id] = new List<PoolingObject>();
-        if (!inactivePoolingObjects.ContainsKey(id)) inactivePoolingObjects[id] = new List<PoolingObject>();
+        if (!_inactivePoolingObjects.ContainsKey(id)) _inactivePoolingObjects[id] = new Stack<PoolingObject>();
+        if (!_activePoolingObjects.ContainsKey(id)) _activePoolingObjects[id] = new HashSet<PoolingObject>();
 
-        if (inactivePoolingObjects[id].Count > 0)
+        if (TryGetInactive(id, out var inactive))
         {
-            var poolObj = inactivePoolingObjects[id][0];
-            activePoolingObjects[id].Add(poolObj);
-            inactivePoolingObjects[id].Remove(poolObj);
-            poolObj.Activate();
-            return poolObj;
+            SetActive(id, inactive);
+            return inactive;
         }
 
         var poolObject = Instantiate(poolingObject);
-        activePoolingObjects[id].Add(poolObject);
+        _activePoolingObjects[id].Add(poolObject);
         poolObject.OnDeactivate += SetInactive;
         return poolObject;
     }
 
-    private void SetInactive(PoolingObject poolingObject)
+    private bool TryGetInactive(string id, out PoolingObject poolObj)
     {
-        string id = poolingObject.PoolingTag;
-        if (activePoolingObjects[id].Remove(poolingObject))
+        while (_inactivePoolingObjects[id].Count > 0)
         {
-            inactivePoolingObjects[id].Add(poolingObject);
+            poolObj = _inactivePoolingObjects[id].Pop();
+            if (poolObj != null) return poolObj;
         }
+
+        poolObj = null;
+        return false;
+    }
+
+    private void SetActive(string id, PoolingObject poolObj)
+    {
+        _activePoolingObjects[id].Add(poolObj);
+        if (_destroyCoroutines.ContainsKey(poolObj))
+        {
+            StopCoroutine(_destroyCoroutines[poolObj]);
+            _destroyCoroutines.Remove(poolObj);
+        }
+        poolObj.Activate();
+    }
+
+    private void SetInactive(PoolingObject poolObj)
+    {
+        string id = poolObj.PoolingTag;
+        if (!_activePoolingObjects[id].Remove(poolObj)) return;
+        
+        _inactivePoolingObjects[id].Push(poolObj);
+        _destroyCoroutines[poolObj] = StartCoroutine(CoDestroyPoolObj(poolObj));
+    }
+
+    private IEnumerator CoDestroyPoolObj(PoolingObject poolObj)
+    {
+        yield return new WaitForSeconds(poolObj.DestroyTime);
+        if (poolObj == null) yield break;
+        if (_destroyCoroutines.ContainsKey(poolObj))
+        {
+            StopCoroutine(_destroyCoroutines[poolObj]);
+            _destroyCoroutines.Remove(poolObj);
+        }
+        Destroy(poolObj.gameObject);
     }
 }

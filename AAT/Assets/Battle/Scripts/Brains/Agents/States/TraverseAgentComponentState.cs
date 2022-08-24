@@ -23,8 +23,7 @@ public class TraverseAgentComponentState : ComponentState, IAgent
 
     public override void Spawned()
     {
-        if (!Runner.IsServer) return;
-
+        base.Spawned();
         _unit = Container.GetComponent<UnitController>();
         _stats = _unit.Stats;
     }

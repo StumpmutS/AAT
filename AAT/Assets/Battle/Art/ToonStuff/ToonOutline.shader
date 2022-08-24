@@ -8,7 +8,7 @@ Shader "Toon/ToonOutline"
     
     SubShader
     {
-        Tags { "Queue" = "Transparent+20" "RenderType" = "Transparent" }
+        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
         
         Pass
         {
@@ -19,7 +19,7 @@ Shader "Toon/ToonOutline"
             
             Stencil
             {
-                Ref 1
+                Ref 2
                 Comp NotEqual
             }
             

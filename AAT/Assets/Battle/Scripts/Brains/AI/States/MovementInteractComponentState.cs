@@ -26,9 +26,6 @@ public class MovementInteractComponentState : ComponentState
     {
         base.Spawned();
         _animation = Container.GetComponent<UnitAnimationController>();
-        
-        if (!Runner.IsServer) return;
-
         _agentBrain = Container.GetComponent<AgentBrain>();
         _unit = Container.GetComponent<UnitController>();
         _interactingController = Container.GetComponent<InteractingController>();
@@ -123,8 +120,8 @@ public class MovementInteractComponentState : ComponentState
     private void ReachInteractable()
     {
         _interacting = true;
-        _interactingController.InteractWith(_currentTarget.Item2);
         _interactingController.OnInteractionFinished += HandleInteractionComponentFinished;
+        _interactingController.InteractWith(_currentTarget.Item2);
     }
 
     private void HandleInteractionComponentFinished()
@@ -138,6 +135,7 @@ public class MovementInteractComponentState : ComponentState
 
     private void HandleAgentPathFinished()
     {
+        if (_interacting) return;
         _agent.OnPathFinished -= HandleAgentPathFinished;
         CheckQueue();
     }

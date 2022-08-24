@@ -57,12 +57,12 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7391536541666651470
 MonoBehaviour:
@@ -251,8 +251,52 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6698576768188862901}
     m_Modifications:
+    - target: {fileID: 736368292170928362, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.b
+      value: 0.047169805
+      objectReference: {fileID: 0}
+    - target: {fileID: 736368292170928362, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.g
+      value: 0.024038455
+      objectReference: {fileID: 0}
+    - target: {fileID: 736368292170928362, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.r
+      value: 0.011792451
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077399487209538547, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077399487209538547, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077399487209538547, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896132199541949085, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896132199541949085, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896132199541949085, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896132199541949085, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1896132199541949085, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
       propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063325337829014281, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2559829612589199852, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
@@ -355,6 +399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LazyFillmask
       objectReference: {fileID: 0}
+    - target: {fileID: 3155817914275473458, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3585386600588028561, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -376,8 +424,20 @@ PrefabInstance:
       value: HealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 6943428041912230479, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
-      propertyPath: m_FillAmount
+      propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943428041912230479, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943428041912230479, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943428041912230479, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7327932883193674295, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
       propertyPath: m_Color.b
@@ -394,6 +454,10 @@ PrefabInstance:
     - target: {fileID: 9026649207971629195, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
       propertyPath: m_Name
       value: MainFillMask
+      objectReference: {fileID: 0}
+    - target: {fileID: 9026649207971629195, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4936a2c4903033409b4bccfa655f870, type: 3}
@@ -586,6 +650,9 @@ MonoBehaviour:
   useSetValue: 1
   minMultiplier: 0
   maxMultiplier: 1
+  minValue: 0
+  origValue: 0
+  maxValue: 0
   rangeContainType: 2
   images:
   - {fileID: 1167808131875683852}

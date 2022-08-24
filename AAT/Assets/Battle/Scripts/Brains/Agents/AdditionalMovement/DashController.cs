@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class DashController : MonoBehaviour
+public class DashController : SimulationBehaviour
 {
     private AgentBrain _agentBrain;
     private ComponentState _currentAgent;
@@ -32,7 +33,7 @@ public class DashController : MonoBehaviour
     private void PerformDash()
     {
         var newPos = Vector3.MoveTowards(transform.position, transform.position + transform.forward * _dashSpeed,
-            _dashSpeed * Time.deltaTime);
+            _dashSpeed * Runner.DeltaTime);
         _distanceDashed += Vector3.Distance(transform.position, newPos);
         if (_distanceDashed >= _dashTargetDistance)
         {

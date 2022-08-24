@@ -12,16 +12,13 @@ public class PatrolComponentState : ComponentState
 
     public override void Spawned()
     {
-        if (!Runner.IsServer) return;
-
+        base.Spawned();
         _unit = Container.GetComponent<UnitController>();
         _agentBrain = Container.GetComponent<AgentBrain>();
     }
 
     protected override void OnEnter()
     {
-        if (!Runner.IsServer) return;
-
         _agent.EnableAgent(this);
         _agent.OnPathFinished += NextPatrolPoint;
         _patrolPoints = _unit.PatrolPoints;

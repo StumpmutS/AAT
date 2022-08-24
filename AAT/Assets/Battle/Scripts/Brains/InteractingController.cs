@@ -1,6 +1,7 @@
 using System;
 using Fusion;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractingController : SimulationBehaviour
 {

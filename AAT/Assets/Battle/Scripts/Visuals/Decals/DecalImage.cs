@@ -3,18 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility.Scripts;
 
+[RequireComponent(typeof(PoolingObject))]
 public class DecalImage : MonoBehaviour
 {
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private PoolingObject poolingObj;
+    public PoolingObject PoolingObj => poolingObj;
     [SerializeField] private ColorSpringListener colorSpring;
     [SerializeField] private List<DecalComponent> decalComponents;
     [SerializeField] private List<Image> images;
     public int MaxSeverity => images.Count;
 
+    private int _unfinishedComponentCount;
+
     public void Activate(AttackDecalInfo info)
     {
-        transform.position += offset;
         DeactivateImages();
 
         colorSpring.SetMaxColor(info.Color);
@@ -54,5 +58,12 @@ public class DecalImage : MonoBehaviour
         component.Activate();
         yield return new WaitForSeconds(component.Duration);
         component.Deactivate();
+        _unfinishedComponentCount--;
+        if (_unfinishedComponentCount <= 0) poolingObj.Deactivate();
+    }
+
+    private void LateUpdate()
+    {
+        transform.LookAt(MainCameraRef.Cam.transform.position);
     }
 }

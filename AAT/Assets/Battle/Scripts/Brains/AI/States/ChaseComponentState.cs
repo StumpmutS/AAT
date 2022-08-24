@@ -20,9 +20,6 @@ public class ChaseComponentState : ComponentState
     {
         base.Spawned();
         _animation = Container.GetComponent<UnitAnimationController>();
-        
-        if (!Runner.IsServer) return;
-
         _targetFinder = Container.GetComponent<TargetFinder>();
         _agentBrain = Container.GetComponent<AgentBrain>();
         _unitStats = Container.GetComponent<UnitStatsModifierManager>();

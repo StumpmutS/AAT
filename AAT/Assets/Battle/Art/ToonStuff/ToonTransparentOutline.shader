@@ -8,7 +8,7 @@ Shader "Toon/ToonTransparentOutline"
     SubShader
     {
         Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
-        ZWrite Off
+        ZWrite On
         
         Pass
         {

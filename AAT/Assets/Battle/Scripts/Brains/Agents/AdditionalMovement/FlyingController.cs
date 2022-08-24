@@ -1,20 +1,21 @@
 using System;
 using System.Collections;
+using Fusion;
 using UnityEngine;
 using Utility.Scripts;
 
-public class FlyingController : MonoBehaviour
+public class FlyingController : SimulationBehaviour
 {
     [SerializeField] private float haltDistance;
     [SerializeField] private float haltSpeed;
     [SerializeField] private float haltTime;
     [SerializeField] private float haltLerpPercent;
     [SerializeField] private GameObject visuals;
-    [SerializeField] private float maxVisualRotation;
+    [SerializeField] private SpringController rotationSpring;
 
     private UnitStatsModifierManager _stats;
     private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
-    private float _hoverSpeed => _stats.GetStat(EUnitFloatStats.HoverSpeed);
+    private float _hoverSpeedPerc => _stats.GetStat(EUnitFloatStats.HoverSpeedPercentMultiplier);
     private float _turnSpeed => _stats.GetStat(EUnitFloatStats.TurnSpeed);
     private float _upwardPitchCap => _stats.GetStat(EUnitFloatStats.UpwardPitchCap);
 
@@ -54,11 +55,11 @@ public class FlyingController : MonoBehaviour
         Flip(destination);
         if (_flipping) return;
        
-        transform.RotateTowardsOnY(destination, _turnSpeed, out _);
-        transform.RotateTowardsOnX(destination, _turnSpeed, out _);
+        transform.RotateTowardsOnY(destination, _turnSpeed, Runner.DeltaTime, out _);
+        transform.RotateTowardsOnX(destination, _turnSpeed, Runner.DeltaTime, out _);
         CheckXAngleLimits();
         
-        transform.position += transform.forward * _speed * Time.deltaTime;
+        transform.position += transform.forward * _speed * Runner.DeltaTime;
     }
 
     private bool CheckXAngleLimits()
@@ -93,8 +94,8 @@ public class FlyingController : MonoBehaviour
         }
 
         _flipping = true;
-        var yDone = transform.RotateTowardsOnY(destination, _turnSpeed, out _); //TODO: parameters
-        var xDone = transform.RotateTowardsOnX(destination, _turnSpeed, out _); //TODO: parameters
+        var yDone = transform.RotateTowardsOnY(destination, _turnSpeed, Runner.DeltaTime, out _); //TODO: parameters
+        var xDone = transform.RotateTowardsOnX(destination, _turnSpeed, Runner.DeltaTime, out _); //TODO: parameters
         if ((CheckXAngleLimits() || xDone) && yDone) _flipping = false;
     }
 
@@ -106,10 +107,10 @@ public class FlyingController : MonoBehaviour
             return;
         }
         var destinationDirection = destination - transform.position;
-        var newPos = transform.position + destinationDirection.normalized * (_hoverSpeed * Time.deltaTime);
+        var newPos = transform.position + destinationDirection.normalized * (_hoverSpeedPerc / 100 * Runner.DeltaTime);
         var forward = transform.forward;
         forward.y = 0;
-        var finishedRotation = transform.RotateTowardsOnX(destination, _turnSpeed, out _);
+        var finishedRotation = transform.RotateTowardsOnX(destination, _turnSpeed, Runner.DeltaTime, out _);
         CheckXAngleLimits();
         
         if ((newPos - transform.position).magnitude >= destinationDirection.magnitude)

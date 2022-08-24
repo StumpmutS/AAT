@@ -6,7 +6,7 @@ namespace Utility.Scripts
     {
         //returns true if reached rotation direction on desired axis
         
-        public static bool RotateTowardsOnY(this Transform transform, Vector3 destination, float speed, out float anglesTurned)
+        public static bool RotateTowardsOnY(this Transform transform, Vector3 destination, float speed, float deltaTime, out float anglesTurned)
         {
             var direction = destination - transform.position;
             direction.y = 0;
@@ -14,7 +14,7 @@ namespace Utility.Scripts
             
             if (Vector3.Dot(transform.right, direction) > 0)
             {
-                transform.Rotate(Vector3.up, speed * Time.deltaTime, Space.World);
+                transform.Rotate(Vector3.up, speed * deltaTime, Space.World);
                 anglesTurned = transform.eulerAngles.y - startYAngle;
                 
                 if (Vector3.Dot(transform.right, direction) > 0) return false;
@@ -26,7 +26,7 @@ namespace Utility.Scripts
                 return true;
             }
         
-            transform.Rotate(Vector3.up, -speed * Time.deltaTime, Space.World);
+            transform.Rotate(Vector3.up, -speed * deltaTime, Space.World);
             anglesTurned = transform.eulerAngles.y - startYAngle;
             
             if (Vector3.Dot(transform.right, direction) < 0) return false;
@@ -38,7 +38,7 @@ namespace Utility.Scripts
             return true;
         }
         
-        public static bool RotateTowardsOnX(this Transform transform, Vector3 destination, float speed, out float anglesTurned)
+        public static bool RotateTowardsOnX(this Transform transform, Vector3 destination, float speed, float deltaTime, out float anglesTurned)
         {
             var direction = destination - transform.position;
             var direction0y = new Vector3(direction.x, 0, direction.z);
@@ -55,7 +55,7 @@ namespace Utility.Scripts
             
             if (Vector3.Dot(transform.up, direction) > 0)
             {
-                transform.Rotate(Vector3.right, -speed * Time.deltaTime, Space.Self);
+                transform.Rotate(Vector3.right, -speed * deltaTime, Space.Self);
                 anglesTurned = transform.eulerAngles.x - startXAngle;
 
                 if (Vector3.Dot(transform.up, direction) > 0) return false;
@@ -67,7 +67,7 @@ namespace Utility.Scripts
                 return true;
             }
             
-            transform.Rotate(Vector3.right, speed * Time.deltaTime, Space.Self);
+            transform.Rotate(Vector3.right, speed * deltaTime, Space.Self);
             anglesTurned = transform.eulerAngles.x - startXAngle;
 
             if (Vector3.Dot(transform.up, direction) < 0) return false;

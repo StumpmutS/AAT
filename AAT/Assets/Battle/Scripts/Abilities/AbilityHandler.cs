@@ -9,7 +9,7 @@ using Utility.Scripts;
 public class AbilityHandler : NetworkBehaviour
 {
     [Networked(OnChanged = nameof(OnAbilityIndexChanged))]
-    public int AbilityIndex { get; set; } = -1;
+    private int AbilityIndex { get; set; } = -1;
     public static void OnAbilityIndexChanged(Changed<AbilityHandler> changed)
     {
         var abilityHandler = changed.Behaviour;
@@ -29,6 +29,7 @@ public class AbilityHandler : NetworkBehaviour
     public HashSet<UnitAbilityDataInfo> ActiveAbilities { get; private set; } = new();
     private HashSet<UnitAbilityDataInfo> _abilitiesCanBeCastOver = new();
     private HashSet<int> _abilityIndexesAwaitingInput = new();
+    private HashSet<IntervalEventTimer<Tuple<AbilityComponent, Vector3>>> _repeatingTimers = new();
     private bool _checkInput;
 
     public event Action<bool> OnAbilityUsed = delegate { };
@@ -47,6 +48,11 @@ public class AbilityHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        foreach (var timer in _repeatingTimers)
+        {
+            timer.Tick(Runner.DeltaTime);
+        }
+        
         if (!_checkInput || !Runner.IsServer) return;
         if (!GetInput<NetworkedInputData>(out var input)) return;
         if (input.LeftClickPosition == default) return;
@@ -113,10 +119,11 @@ public class AbilityHandler : NetworkBehaviour
         yield return new WaitForSeconds(abilityComponent.ComponentDelay);
         if (abilityComponent.Repeat)
         {
-            var repeatCoroutine = RepeatComponentActivationCoroutine(abilityComponent, point);
-            StartCoroutine(repeatCoroutine);
+            var timer = new IntervalEventTimer<Tuple<AbilityComponent, Vector3>>(abilityComponent.RepeatIntervals,
+                new Tuple<AbilityComponent, Vector3>(abilityComponent, point), ActivateComponent); //can pool if needed but should be fine
+            _repeatingTimers.Add(timer);
             yield return new WaitForSeconds(abilityComponent.ComponentDuration);
-            StopCoroutine(repeatCoroutine);
+            _repeatingTimers.Remove(timer);
             abilityComponent.DeactivateComponent(_unit);
         } 
         else 
@@ -126,9 +133,14 @@ public class AbilityHandler : NetworkBehaviour
         }
     }
 
+    private void ActivateComponent(Tuple<AbilityComponent, Vector3> tuple)
+    {
+        tuple.Item1.ActivateComponent(_unit, tuple.Item2);
+    }
+
     private IEnumerator RepeatComponentActivationCoroutine(AbilityComponent abilityComponent, Vector3 point = default)
     {
-        while (gameObject.activeSelf)
+        while (gameObject != null && gameObject.activeSelf)
         {
             abilityComponent.ActivateComponent(_unit, point);
             yield return new WaitForSeconds(abilityComponent.RepeatIntervals);

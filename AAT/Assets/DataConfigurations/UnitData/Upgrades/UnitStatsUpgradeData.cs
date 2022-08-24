@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Data/Base/Unit Upgrade Data")]
+[CreateAssetMenu(menuName = "Unit Data/Upgrades/Unit Upgrade Data")]
 public class UnitStatsUpgradeData : ScriptableObject
 {
     [SerializeField] private List<UnitUpgradeComponent> upgradeComponents;

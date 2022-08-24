@@ -4,26 +4,46 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class NetworkStateComponentContainer : SimulationBehaviour
+public class NetworkStateComponentContainer : NetworkBehaviour
 {
+    [Networked, Capacity(32)] NetworkLinkedList<NetworkBehaviourId> nStates => default;
+    
     private Dictionary<Type, ComponentState> _componentStates = new();
 
     public ComponentState AddOrGetComponentState(ComponentState state, ComponentStateMachine machine)
     {
-        if (!Runner.IsServer) return null;
-        
         var type = state.GetType();
+        
+        if (!Runner.IsServer)
+        {
+            foreach (var nState in nStates)
+            {
+                if (Runner.TryFindBehaviour(nState, out var behaviour) && behaviour.GetType() == type)
+                {
+                    var foundState = (ComponentState) behaviour.GetComponent(type);
+                    _componentStates[type] = foundState;
+                    foundState.Init(machine, this);
+                    return foundState;
+                }
+            }
+            
+            Debug.LogError("State has not been spawned or does not exist");
+            return null;
+        }
+        
         if (_componentStates.ContainsKey(type)) return _componentStates[type];
         var childState = GetComponentInChildren(type);
         if (childState != null)
         {
             _componentStates[type] = (ComponentState) childState;
             _componentStates[type].Init(machine, this);
+            nStates.Add(_componentStates[type].Id);
             return _componentStates[type];
         }
         
         var spawnedState = Runner.Spawn(state, transform.position, Quaternion.identity, Object.InputAuthority, InitState);
         _componentStates[type] = spawnedState;
+        nStates.Add(spawnedState.Id);
         return spawnedState;
 
         void InitState(NetworkRunner _, NetworkObject o)

@@ -19,6 +19,7 @@ public class AttackComponentState : ComponentState
 
     [SerializeField] private DecalImage decalImage;
     [SerializeField] private ColorsData decalColors;
+    [SerializeField] private float decalRandomRange = .5f;
 
     protected TargetFinder _targetFinder;
     protected UnitStatsModifierManager _unitStats;
@@ -28,6 +29,7 @@ public class AttackComponentState : ComponentState
     
     protected bool _canAttack;
     protected Component _target;
+    private Component _animTarget;
     
     protected float _damage => _unitStats.GetStat(EUnitFloatStats.Damage);
     protected float _critChancePercent => _unitStats.GetStat(EUnitFloatStats.CritChancePercent);
@@ -38,9 +40,6 @@ public class AttackComponentState : ComponentState
     {
         base.Spawned();
         _animation = Container.GetComponent<UnitAnimationController>();
-        
-        if (!Runner.IsServer) return;
-
         _canAttack = true;
         _targetFinder = Container.GetComponent<TargetFinder>();
         _unitStats = Container.GetComponent<UnitStatsModifierManager>();
@@ -94,24 +93,28 @@ public class AttackComponentState : ComponentState
 
     protected void AnimateAttack()
     {
+        _animTarget = _target;
         _attack = !_attack;
     }
 
     protected void AnimateCrit()
     {
+        _animTarget = _target;
         _crit = !_crit;
     }
 
     public void AnimationTriggeredAttack()
     {
-        var info = new AttackDecalInfo(decalColors.Colors[0], decalImage.MaxSeverity, _target.transform.position - Container.transform.position, _target.transform.position);
-        _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage), decalImage, info);
+        if (_animTarget == null) return;
+        var info = new AttackDecalInfo(decalColors.Colors[0], decalImage.MaxSeverity, _animTarget.transform.position - Container.transform.position, _animTarget.transform.position, decalRandomRange);
+        _animTarget.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage), decalImage, info);
     }
 
     public void AnimationTriggeredCrit()
     {
-        var info = new AttackDecalInfo(decalColors.Colors[1], decalImage.MaxSeverity, _target.transform.position - Container.transform.position, _target.transform.position);
-        _target.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100), decalImage, info);
+        if (_animTarget == null) return;
+        var info = new AttackDecalInfo(decalColors.Colors[1], decalImage.MaxSeverity, _animTarget.transform.position - Container.transform.position, _animTarget.transform.position, decalRandomRange);
+        _animTarget.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100), decalImage, info);
     }
 
     protected override void OnEnter()

@@ -16,8 +16,7 @@ public class TransportedComponentState : InteractionComponentState
     
     public override void Spawned()
     {
-        if (!Runner.IsServer) return;
-
+        base.Spawned();
         _stats = Container.GetComponent<UnitStatsModifierManager>();
         _targetFinder = Container.GetComponent<TargetFinder>();
         _agentBrain = Container.GetComponent<AgentBrain>();
@@ -28,8 +27,6 @@ public class TransportedComponentState : InteractionComponentState
 
     private void Start()
     {
-        if (!Runner.IsServer) return;
-
         _attackComponentState = Container.GetComponent<AttackComponentState>();
     }
 
