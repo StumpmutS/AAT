@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a75eedd0ae935458596daf340764be, type: 3}
+  m_Name: EagleCarpetBombDashData
+  m_EditorClassIdentifier: 
+  Repeat: 0
+  RepeatIntervals: 0
+  ComponentDelay: 0
+  ComponentDuration: 10.099999
+  dashPoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -3.88, z: 3.59}
+  - {x: 0, y: -4.8, z: 35.25}
+  - {x: 0, y: -0.83, z: 20.48}
+  - {x: 0, y: 0, z: 30}
+  dashLerpSpeed: 0.1
+  durationPadding: 0.1

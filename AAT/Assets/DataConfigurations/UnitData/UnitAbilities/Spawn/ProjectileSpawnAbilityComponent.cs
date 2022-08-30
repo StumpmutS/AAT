@@ -18,7 +18,8 @@ public class ProjectileSpawnAbilityComponent : AbilityComponent
         {
             for (int j = 0; j < projectilesPerOffset; j++)
             {
-                var instantiatedProjectile = Instantiate(unitPrefab, firerTransform.position, firerTransform.rotation);
+                var instantiatedProjectile = unit.Runner.Spawn(unitPrefab, firerTransform.position, firerTransform.rotation, unit.Object.InputAuthority);
+                instantiatedProjectile.Init(unit.Team.GetTeamNumber());
                 instantiatedProjectile.transform.position += firerTransform.right * spawnOffsets[j].x
                                               + firerTransform.up * spawnOffsets[j].y
                                               + firerTransform.forward * spawnOffsets[j].z;

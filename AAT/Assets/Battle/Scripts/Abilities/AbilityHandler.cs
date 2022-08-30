@@ -129,6 +129,7 @@ public class AbilityHandler : NetworkBehaviour
         else 
         {
             abilityComponent.ActivateComponent(_unit, point);
+            yield return new WaitForSeconds(abilityComponent.ComponentDuration);
             abilityComponent.DeactivateComponent(_unit);
         }
     }

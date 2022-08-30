@@ -30,12 +30,10 @@ public class SpawnPlotController : NetworkBehaviour
 
     private void HandleSectorCapture(PlayerRef player, int amount)
     {
-        if (amount > 99.999f && player != Object.InputAuthority && player != default)
-        {
-            Object.AssignInputAuthority(player);
-            var playerTeam = Runner.GetPlayerObject(player).GetComponent<TeamController>();
-            _team.SetTeamNumber(playerTeam.GetTeamNumber());
-        }
+        if (amount < 99.999f || player == Object.InputAuthority || player == default) return;
+        Object.AssignInputAuthority(player);
+        var playerTeam = Runner.GetPlayerObject(player).GetComponent<TeamController>();
+        _team.SetTeamNumber(playerTeam.GetTeamNumber());
     }
 
     private void Select()

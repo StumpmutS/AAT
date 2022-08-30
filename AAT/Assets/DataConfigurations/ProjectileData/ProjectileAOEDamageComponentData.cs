@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Projectile Data/AOE Damage Component")]
 public class ProjectileAOEDamageComponentData : ProjectileComponentData
 {
-    [SerializeField] LayerMask enemyLayer;
     [SerializeField] private float damageRadius;
 
     public override void ActivateComponent(ProjectileController from, GameObject _, float damage)

@@ -1,4 +1,4 @@
-using System.Collections;
+using  System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Fusion;
@@ -9,7 +9,11 @@ public class ProjectileController : NetworkBehaviour
 {
     [SerializeField] protected Vector3 initialDirection;
     [SerializeField] private float initialVelocity;
+    [SerializeField] private Vector3 initialAngularVelocity;
+    [SerializeField] protected bool randomRotation;
+    [SerializeField, ShowIf(nameof(randomRotation), true)] private float randomRange;
     [SerializeField] private List<ProjectileComponentData> projectileComponents;
+    [SerializeField] private List<VisualComponent> visualComponents;
 
     public TeamController Team { get; private set; }
     
@@ -23,6 +27,12 @@ public class ProjectileController : NetworkBehaviour
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
+        Team = GetComponent<TeamController>();
+    }
+
+    public void Init(int teamNumber)
+    {
+        Team.SetTeamNumber(teamNumber);
     }
 
     private void Start()
@@ -30,9 +40,9 @@ public class ProjectileController : NetworkBehaviour
         _rigidBody.velocity += initialDirection * initialVelocity;
     }
 
-    private void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
-        if (!_projectileFired) return;
+        if (!Runner.IsServer || !_projectileFired) return;
         MoveProjectile();
     }
 
@@ -46,11 +56,23 @@ public class ProjectileController : NetworkBehaviour
         _firerSpeed = firerSpeed;
         _projectileFired = true;
         _rigidBody.velocity += _firerDirection * _firerSpeed;
+        _rigidBody.angularVelocity += initialAngularVelocity;
+        if (randomRotation)
+        {
+            _rigidBody.angularVelocity += new Vector3(Random.Range(0, randomRange), Random.Range(0, randomRange), Random.Range(0, randomRange));
+        }
     }
 
     private void OnTriggerEnter(Collider hit)
     {
         if (_origin.Contains(hit)) return;
+
+        foreach (var component in visualComponents)
+        {
+            component.ActivateComponent(null, transform.position);
+        }
+        
+        if (!Runner.IsServer) return;
         var hitGameObject = hit.gameObject;
         foreach (var component in projectileComponents)
         {

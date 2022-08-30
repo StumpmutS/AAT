@@ -52,11 +52,12 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 0
+  Flags: 2305
   NetworkGuid:
-    RawGuidValue: 00000000000000000000000000000000
+    RawGuidValue: d854da22cc567514cbb8ea1477d23bd2
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 5070302048662949412}
   SimulationBehaviours: []
 --- !u!54 &485345486272020506
 Rigidbody:
@@ -89,6 +90,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   initialDirection: {x: 0, y: -1, z: 0}
   initialVelocity: 1
+  initialAngularVelocity: {x: 0, y: 0, z: 0}
   projectileComponents: []
   acceleration: 9.8
 --- !u!1001 &2524279724460205363

@@ -1,52 +1,49 @@
-using Fusion;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Utility.Scripts;
 
-public class DashController : SimulationBehaviour
+public class DashController : MonoBehaviour
 {
     private AgentBrain _agentBrain;
     private ComponentState _currentAgent;
-    
-    private float _dashTargetDistance;
-    private float _dashSpeed;
-    private float _distanceDashed;
+
+    private List<Vector3> _dashPoints = new();
+    private Vector3 _origPosition;
+    private float _dashLerpSpeed;
+    private float _currentBezierValue;
 
     protected virtual void Awake()
     {
         _agentBrain = GetComponent<AgentBrain>();
     }
 
-    public virtual void Dash(Vector3 distance, float speed)
+    public virtual void Configure(IEnumerable<Vector3> points, float dashSpeed)
     {
-        _dashTargetDistance = distance.magnitude;
-        _dashSpeed = speed;
-        Reset();
+        EndDash();
+        _dashPoints = points.Select(p => p.x * transform.right + p.y * transform.up + p.z * transform.forward).ToList();
+        _currentBezierValue = 0;
+        _dashLerpSpeed = dashSpeed;
         _currentAgent = (ComponentState) _agentBrain.CurrentAgent;
-        _currentAgent.OnTick += PerformDash;
+        _origPosition = transform.position;
+        _currentAgent.OnTick += Dash;
     }
 
-    private void Reset()
+    private void Dash()
     {
-        if (_currentAgent != null) _currentAgent.OnTick -= PerformDash;
-        _distanceDashed = 0;
+        _currentBezierValue += _dashLerpSpeed * _currentAgent.Runner.DeltaTime;
+        transform.position = _origPosition + StumpBezierHelpers.SamplePoint(_dashPoints, _currentBezierValue);
+        transform.forward = StumpBezierHelpers.SampleTangent(_dashPoints, _currentBezierValue);
+        if (_currentBezierValue >= 1) EndDash();
     }
 
-    private void PerformDash()
+    public void EndDash()
     {
-        var newPos = Vector3.MoveTowards(transform.position, transform.position + transform.forward * _dashSpeed,
-            _dashSpeed * Runner.DeltaTime);
-        _distanceDashed += Vector3.Distance(transform.position, newPos);
-        if (_distanceDashed >= _dashTargetDistance)
-        {
-            transform.position += (_distanceDashed - _dashTargetDistance) * transform.forward;
-            Reset();
-            return;
-        }
-        
-        SetPosition(newPos);
+        if (_currentAgent != null) _currentAgent.OnTick -= Dash;
     }
 
-    protected virtual void SetPosition(Vector3 pos)
+    private void OnDestroy()
     {
-        transform.position = pos;
+        EndDash();
     }
 }

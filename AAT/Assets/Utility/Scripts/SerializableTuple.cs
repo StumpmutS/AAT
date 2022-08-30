@@ -14,7 +14,6 @@ namespace Utility.Scripts
             Item2 = item2;
         }
 
-        //doesnt follow hashcode rule
         public override bool Equals(object obj)
         {
             if (obj is Tuple<T1, T2> tuple)

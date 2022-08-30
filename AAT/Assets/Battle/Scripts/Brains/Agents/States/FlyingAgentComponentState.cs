@@ -44,7 +44,7 @@ public class FlyingAgentComponentState : ComponentState, IAgent
     {
         base.Tick();
         if (!_enabled || !_moving) return;
-        _flyingController.Fly(_destination);
+        _flyingController.Move();
     }
 
     public override void OnExit() 
@@ -72,6 +72,7 @@ public class FlyingAgentComponentState : ComponentState, IAgent
         if (_destination != destination) 
             _moving = true;
         _destination = destination;
+        _flyingController.SetDestination(destination);
     }
 
     public Vector3 GetDestination() => _destination;

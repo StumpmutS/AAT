@@ -1,143 +1,113 @@
-using System;
+ using System;
 using System.Collections;
-using Fusion;
+ using System.Collections.Generic;
+ using System.Linq;
+ using Fusion;
 using UnityEngine;
 using Utility.Scripts;
 
-public class FlyingController : SimulationBehaviour
-{
-    [SerializeField] private float haltDistance;
-    [SerializeField] private float haltSpeed;
-    [SerializeField] private float haltTime;
-    [SerializeField] private float haltLerpPercent;
-    [SerializeField] private GameObject visuals;
-    [SerializeField] private SpringController rotationSpring;
+ public class FlyingController : SimulationBehaviour, IMovement
+ {
+     [SerializeField] private float turnEfficiency = 5;
+     [SerializeField, Range(10, 200)] private int pathingQuality = 60;
+     [SerializeField] private float haltDistance;
+     [SerializeField] private float haltSpeed;
+     [SerializeField] private float haltTime;
+     [SerializeField] private float haltLerpPercent;
 
-    private UnitStatsModifierManager _stats;
-    private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
-    private float _hoverSpeedPerc => _stats.GetStat(EUnitFloatStats.HoverSpeedPercentMultiplier);
-    private float _turnSpeed => _stats.GetStat(EUnitFloatStats.TurnSpeed);
-    private float _upwardPitchCap => _stats.GetStat(EUnitFloatStats.UpwardPitchCap);
+     private UnitStatsModifierManager _stats;
+     private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
+     private float _hoverSpeedPerc => _stats.GetStat(EUnitFloatStats.HoverSpeedPercentMultiplier);
+     private float _turnSpeed => _stats.GetStat(EUnitFloatStats.TurnSpeed);
+     private float _upwardPitchCap => _stats.GetStat(EUnitFloatStats.UpwardPitchCap);
 
-    private bool _flipping;
+     private StumpBezier _flightPath;
+     private float _distanceTraveled;
+     private float _totalDistance;
 
-    private bool _haltDone;
-    private float _currentHaltSpeed;
-    private float _elapsedHaltTime;
+     public event Action<float> OnDirectionChanged = delegate { };
+     public event Action OnArrival = delegate { };
 
-    public event Action OnArrival = delegate { };
+     private void OnDrawGizmosSelected()
+     {
+         if (_flightPath == null || _flightPath.ControlPoints.Count < 5) return;
+         Gizmos.color = Color.red;
+         Gizmos.DrawWireSphere(_flightPath.ControlPoints[^1], 1);
+         
+         Gizmos.color = Color.blue;
+         for (int i = 0; i < _flightPath.BezierPoints.Count - 1; i++)
+         {
+             Gizmos.DrawLine(_flightPath.BezierPoints[i], _flightPath.BezierPoints[i + 1]);
+         }
+         
+         Debug.Log((_flightPath.ControlPoints[^1] - _flightPath.ControlPoints[0]).magnitude);
+     }
 
-    private Vector3 _destination;
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_destination, 1);
-    }
+     private void Awake()
+     {
+         _stats = GetComponent<UnitStatsModifierManager>();
+     }
 
-    private void Awake()
-    {
-        _stats = GetComponent<UnitStatsModifierManager>();
-    }
+     public void SetDestination(Vector3 destination)
+     {
+         if (_flightPath != null && _flightPath.ControlPoints.Count > 4 && Vector3.Distance(destination, _flightPath.ControlPoints[4]) < .01f) return;
 
-    public void Fly(Vector3 destination)
-    {
-        _destination = destination;
-        var destinationDirection = destination - transform.position;
-        
-        if (destinationDirection.magnitude < haltDistance)
-        {
-            Hover(destination);
-            return;
-        }
-        
-        Reset();
-        
-        Flip(destination);
-        if (_flipping) return;
-       
-        transform.RotateTowardsOnY(destination, _turnSpeed, Runner.DeltaTime, out _);
-        transform.RotateTowardsOnX(destination, _turnSpeed, Runner.DeltaTime, out _);
-        CheckXAngleLimits();
-        
-        transform.position += transform.forward * _speed * Runner.DeltaTime;
-    }
+         _flightPath = new StumpBezier(SetControlPoints(destination), pathingQuality);
+         _distanceTraveled = 0;
+         _totalDistance = _flightPath.ArcLength;
+     }
 
-    private bool CheckXAngleLimits()
-    {
-        var currentXAngle = (360 + transform.localRotation.eulerAngles.x) % 360;
-        var limitAngle = (360 + -_upwardPitchCap) % 360;
-        switch (currentXAngle)
-        {
-            case > 180:
-                transform.rotation = Quaternion.Euler(Mathf.Max(limitAngle, currentXAngle),
-                    transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z);
-                return true;
-            case >= 90:
-                transform.rotation = Quaternion.Euler(Mathf.Min(85, currentXAngle), //TODO not hardcode
-                    transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z);
-                return true;
-            default:
-                return false;
-        }
-    }
+     private List<Vector3> SetControlPoints(Vector3 destination)
+     {
+         var dir = destination - transform.position;
+         //TODO: if dir.mag > turnEfficiency * 2.2 HOVER INSTEAD
+         dir = dir.normalized;
+         
+         var p2 = transform.position + transform.forward * turnEfficiency;
+         
+         Vector3 p3;
+         if (Vector3.Dot(dir, transform.forward) < 0)
+         {
+             if (Vector3.Dot(dir, transform.right) < 0)
+             {
+                 p3 = transform.position + -transform.right * 2 * turnEfficiency;
+             }
+             else
+             {
+                 p3 = transform.position + transform.right * 2 * turnEfficiency;
+             }
+         }
+         else
+         {
+             p3 = transform.position + dir * 2 * turnEfficiency;
+         }
+         
+         var p4 = transform.position + dir * (turnEfficiency * 2);
+         p4 = new Vector3(p4.x, destination.y, p4.z);
+         
+         return new List<Vector3>
+         {
+             transform.position,
+             p2, p3, p4,
+             destination
+         };
+     }
 
-    private void Flip(Vector3 destination)
-    {
-        var destinationDirection = destination - transform.position;
-        if (!_flipping)
-        {
-            var radius = 360 / _turnSpeed * _speed / (2 * Mathf.PI);
-            if (Vector3.Dot(transform.right, destinationDirection) < 0) radius = -radius;
-            if ((new Vector3(destination.x, 0, destination.z) -
-                 (new Vector3(transform.position.x, 0, transform.position.z) + transform.right * radius)).sqrMagnitude > radius * radius)
-                return;
-        }
+     public void Move()
+     {
+         if (_distanceTraveled >= _totalDistance) return;
+         _distanceTraveled += _speed * Runner.DeltaTime;
+         if (!_flightPath.TryGetDataAtDistance(_distanceTraveled, out var position, out var tangent)) return;
+         
+         transform.position = position;
+         var dirChange = Vector3.Angle(transform.forward, tangent);
+         transform.forward = tangent;
 
-        _flipping = true;
-        var yDone = transform.RotateTowardsOnY(destination, _turnSpeed, Runner.DeltaTime, out _); //TODO: parameters
-        var xDone = transform.RotateTowardsOnX(destination, _turnSpeed, Runner.DeltaTime, out _); //TODO: parameters
-        if ((CheckXAngleLimits() || xDone) && yDone) _flipping = false;
-    }
+         if (_distanceTraveled >= _totalDistance)
+         {
+             OnArrival.Invoke();
+         }
 
-    private void Hover(Vector3 destination)
-    {
-        if (!_haltDone)
-        {
-            Halt();
-            return;
-        }
-        var destinationDirection = destination - transform.position;
-        var newPos = transform.position + destinationDirection.normalized * (_hoverSpeedPerc / 100 * Runner.DeltaTime);
-        var forward = transform.forward;
-        forward.y = 0;
-        var finishedRotation = transform.RotateTowardsOnX(destination, _turnSpeed, Runner.DeltaTime, out _);
-        CheckXAngleLimits();
-        
-        if ((newPos - transform.position).magnitude >= destinationDirection.magnitude)
-        {
-            transform.position = destination;
-            if (finishedRotation) OnArrival.Invoke();
-            return;
-        }
-
-        transform.position = newPos;
-    }
-
-    private void Halt()
-    {
-        if (_currentHaltSpeed <= 0) _currentHaltSpeed = _speed;
-        _currentHaltSpeed = Mathf.Lerp(_currentHaltSpeed, haltSpeed, haltLerpPercent / 100 * Time.deltaTime);
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward * _currentHaltSpeed, _currentHaltSpeed * Time.deltaTime);
-        
-        _elapsedHaltTime += Time.deltaTime;
-        if (_elapsedHaltTime < haltTime) return;
-        _currentHaltSpeed = 0;
-        _haltDone = true;
-    }
-
-    private void Reset()
-    {
-        _elapsedHaltTime = 0;
-        _haltDone = false;
-    }
-}
+         OnDirectionChanged.Invoke(dirChange);
+     }
+ }
