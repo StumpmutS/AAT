@@ -1,18 +1,19 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SelectableController : MonoBehaviour
 {
     [SerializeField] private ESelectionType selectionType;
     public ESelectionType SelectionType => selectionType;
     
-    public event Action OnSelect = delegate { };
-    public event Action OnDeselect = delegate { };
-    public event Action OnHover = delegate { };
-    public event Action OnHoverStop = delegate { };
+    public UnityEvent OnSelect;
+    public UnityEvent OnDeselect;
+    public UnityEvent OnHover;
+    public UnityEvent OnHoverStop;
 
     public bool Selected { get; private set; }
-    private bool _mouseOver;
+    public bool MouseOver { get; private set; }
     private bool _selectSubscribed;
     private bool _deselectSubscribed;
 
@@ -23,7 +24,7 @@ public class SelectableController : MonoBehaviour
 
     protected virtual void OnMouseEnter()
     {
-        _mouseOver = true;
+        MouseOver = true;
         OnHover.Invoke();
         SubscribeSelect();
         UnsubscribeDeselect();
@@ -31,7 +32,7 @@ public class SelectableController : MonoBehaviour
 
     protected virtual void OnMouseExit()
     {
-        _mouseOver = false;
+        MouseOver = false;
         OnHoverStop.Invoke();
         UnsubscribeSelect();
         if (Selected) SubscribeDeselect();
@@ -54,7 +55,7 @@ public class SelectableController : MonoBehaviour
         SelectionManager.Instance.AddSelected(this);
         Selected = true;
         OnSelect.Invoke();
-        if (_mouseOver) return;
+        if (MouseOver) return;
         UnsubscribeSelect();
         SubscribeDeselect();
     }

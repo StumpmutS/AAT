@@ -21,12 +21,12 @@ public class UIHoveredReference : MonoBehaviour
             position = Input.mousePosition
         };
 
-        var useless = new List<RaycastResult>();
+        var hits = new List<RaycastResult>();
         
         foreach (var raycaster in raycasters)
         {
-            raycaster.Raycast(pointerEventData, useless);
-            if (useless.Count > 0) return true;
+            raycaster.Raycast(pointerEventData, hits);
+            if (hits.Count > 0) return true;
         }
 
         return false;

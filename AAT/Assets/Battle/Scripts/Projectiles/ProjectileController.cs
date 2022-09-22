@@ -13,7 +13,7 @@ public class ProjectileController : NetworkBehaviour
     [SerializeField] protected bool randomRotation;
     [SerializeField, ShowIf(nameof(randomRotation), true)] private float randomRange;
     [SerializeField] private List<ProjectileComponentData> projectileComponents;
-    [SerializeField] private List<VisualComponent> visualComponents;
+    [SerializeField] private SerializableDictionary<VisualComponent, VisualInfo> visualComponents;
 
     public TeamController Team { get; private set; }
     
@@ -67,9 +67,12 @@ public class ProjectileController : NetworkBehaviour
     {
         if (_origin.Contains(hit)) return;
 
-        foreach (var component in visualComponents)
+        foreach (var (component, info) in visualComponents)
         {
-            component.ActivateComponent(null, transform.position);
+            var newInfo = info;
+            newInfo.Position = transform.position;
+            newInfo.Rotation = transform.rotation;
+            component.ActivateComponent(newInfo);
         }
         
         if (!Runner.IsServer) return;

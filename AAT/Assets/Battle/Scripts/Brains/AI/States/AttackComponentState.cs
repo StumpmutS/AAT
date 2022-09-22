@@ -1,25 +1,23 @@
+using System;
 using System.Collections;
 using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AttackComponentState : ComponentState
 {
-    [Networked(OnChanged = nameof(OnAttack))] private NetworkBool _attack { get; set; }
-    public static void OnAttack(Changed<AttackComponentState> changed)
+    [Networked(OnChanged = nameof(OnAttackChanged))] private NetworkBool _attack { get; set; }
+    public static void OnAttackChanged(Changed<AttackComponentState> changed)
     {
         changed.Behaviour._animation.SetAttack(true);
     }
     
-    [Networked(OnChanged = nameof(OnCrit))] private NetworkBool _crit { get; set; }
-    public static void OnCrit(Changed<AttackComponentState> changed)
+    [Networked(OnChanged = nameof(OnCritChanged))] private NetworkBool _crit { get; set; }
+    public static void OnCritChanged(Changed<AttackComponentState> changed)
     {
         changed.Behaviour._animation.SetCrit(true);
     }
-
-    [SerializeField] private DecalImage decalImage;
-    [SerializeField] private ColorsData decalColors;
-    [SerializeField] private float decalRandomRange = .5f;
 
     protected TargetFinder _targetFinder;
     protected UnitStatsModifierManager _unitStats;
@@ -35,6 +33,9 @@ public class AttackComponentState : ComponentState
     protected float _critChancePercent => _unitStats.GetStat(EUnitFloatStats.CritChancePercent);
     protected float _critMultiplierPercent => _unitStats.GetStat(EUnitFloatStats.CritMultiplierPercent);
     private float _attackSpeedPercent => _unitStats.GetStat(EUnitFloatStats.AttackSpeedPercent);
+    
+    public event Action<GameObject, float> OnAttack = delegate {  };
+    public event Action<GameObject, float> OnCrit = delegate {  };
 
     public override void Spawned()
     {
@@ -106,15 +107,17 @@ public class AttackComponentState : ComponentState
     public void AnimationTriggeredAttack()
     {
         if (_animTarget == null) return;
-        var info = new AttackDecalInfo(decalColors.Colors[0], decalImage.MaxSeverity, _animTarget.transform.position - Container.transform.position, _animTarget.transform.position, decalRandomRange);
-        _animTarget.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage), decalImage, info);
+        var damage = -Mathf.Abs(_damage);
+        _animTarget.GetComponent<IHealth>().ModifyHealth(damage);
+        OnAttack.Invoke(_animTarget.gameObject, damage);
     }
 
     public void AnimationTriggeredCrit()
     {
         if (_animTarget == null) return;
-        var info = new AttackDecalInfo(decalColors.Colors[1], decalImage.MaxSeverity, _animTarget.transform.position - Container.transform.position, _animTarget.transform.position, decalRandomRange);
-        _animTarget.GetComponent<IHealth>().ModifyHealth(-Mathf.Abs(_damage) * (_critMultiplierPercent / 100), decalImage, info);
+        var damage = -Mathf.Abs(_damage) * (_critMultiplierPercent / 100);
+        _animTarget.GetComponent<IHealth>().ModifyHealth(damage);
+        OnCrit.Invoke(_animTarget.gameObject, damage);
     }
 
     protected override void OnEnter()

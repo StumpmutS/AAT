@@ -15,7 +15,7 @@ public class ProjectileAOEDamageComponentData : ProjectileComponentData
         from.Runner.LagCompensation.OverlapSphere(from.transform.position, damageRadius, from.Object.InputAuthority, hits, enemyLayer);
         foreach (var hit in hits)
         {
-            if (hit.GameObject != null) hit.GameObject.GetComponent<IHealth>().ModifyHealth(damage, null, new AttackDecalInfo());
+            if (hit.GameObject != null) hit.GameObject.GetComponent<IHealth>().ModifyHealth(damage);
         }
     }
 }

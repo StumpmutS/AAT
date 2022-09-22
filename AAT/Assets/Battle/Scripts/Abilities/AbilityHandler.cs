@@ -16,13 +16,13 @@ public class AbilityHandler : NetworkBehaviour
         if (abilityHandler.AbilityIndex < 0) return;
         var ability = abilityHandler._unitAbilityDataInfo[abilityHandler.AbilityIndex];
 
-        abilityHandler._visualsHandler.ActivateVisuals(ability.VisualComponents);
+        abilityHandler._visualComponentHandler.ActivateVisuals(ability.UnitVisualComponents);
     }
     
     [SerializeField] private List<UnitAbilityData> unitAbilityData;
 
     private UnitController _unit;
-    private VisualsHandler _visualsHandler;
+    private VisualComponentHandler _visualComponentHandler;
     
     private List<UnitAbilityDataInfo> _unitAbilityDataInfo = new();
     private HashSet<UnitAbilityDataInfo> _abilitiesOnCooldown = new();
@@ -37,9 +37,9 @@ public class AbilityHandler : NetworkBehaviour
     private void Awake()
     {
         _unit = GetComponent<UnitController>();
-        _unit.OutlineSelectable.OnSelect += SendDisplayData;
-        _unit.OutlineSelectable.OnDeselect += HandleDeselect;
-        _visualsHandler = GetComponent<VisualsHandler>();
+        _unit.OutlineSelectable.OnSelect.AddListener(SendDisplayData);
+        _unit.OutlineSelectable.OnDeselect.AddListener(HandleDeselect);
+        _visualComponentHandler = GetComponent<VisualComponentHandler>();
         foreach (var abilityData in unitAbilityData)
         {
             _unitAbilityDataInfo.Add(abilityData.UnitAbilityDataInfo);
@@ -92,15 +92,16 @@ public class AbilityHandler : NetworkBehaviour
     {
         _checkInput = true;
         yield return new WaitForSeconds(waitTime);
-        if (_abilityIndexesAwaitingInput.Contains(index))
-        {
-            _checkInput = false;
-            _abilityIndexesAwaitingInput.Remove(index);
-        }
+        if (!_abilityIndexesAwaitingInput.Contains(index)) yield break;
+        
+        _abilityIndexesAwaitingInput.Remove(index);
+        if (_abilityIndexesAwaitingInput.Count < 1) _checkInput = false;
     }
 
     private void ActivateAbility(int abilityIndex, Vector3 point = default)
     {
+        if (!RestrictionHelper.CheckRestrictions(_unitAbilityDataInfo[abilityIndex].Restrictions, _unit)) return;
+        
         var info = _unitAbilityDataInfo[abilityIndex];
         if (_abilitiesOnCooldown.Contains(info) || CastingUninterruptable()) return;
         
@@ -137,15 +138,6 @@ public class AbilityHandler : NetworkBehaviour
     private void ActivateComponent(Tuple<AbilityComponent, Vector3> tuple)
     {
         tuple.Item1.ActivateComponent(_unit, tuple.Item2);
-    }
-
-    private IEnumerator RepeatComponentActivationCoroutine(AbilityComponent abilityComponent, Vector3 point = default)
-    {
-        while (gameObject != null && gameObject.activeSelf)
-        {
-            abilityComponent.ActivateComponent(_unit, point);
-            yield return new WaitForSeconds(abilityComponent.RepeatIntervals);
-        }
     }
 
     private void StartAbilityTimers(UnitAbilityDataInfo ability)
@@ -196,7 +188,7 @@ public class AbilityHandler : NetworkBehaviour
 
     private void OnDestroy()
     {
-        if (_unit != null) _unit.OutlineSelectable.OnSelect -= SendDisplayData;
-        if (_unit != null) _unit.OutlineSelectable.OnDeselect -= HandleDeselect;
+        if (_unit != null) _unit.OutlineSelectable.OnSelect.RemoveListener(SendDisplayData);
+        if (_unit != null) _unit.OutlineSelectable.OnDeselect.RemoveListener(HandleDeselect);
     }
 }

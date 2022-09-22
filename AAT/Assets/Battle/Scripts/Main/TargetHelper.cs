@@ -6,17 +6,15 @@ public class TargetHelper
 {
     public static bool TargetRelation(TeamController from, TeamController other, ETargetRelation relation)
     {
-        switch (relation)
+        if (from == null || other == null) return relation == ETargetRelation.None;
+        
+        return relation switch
         {
-            default:
-                return CheckNone(from, other);
-            case ETargetRelation.Owned :
-                return CheckOwned(from, other);
-            case ETargetRelation.Ally :
-                return CheckAlly(from, other);
-            case ETargetRelation.Enemy :
-                return CheckEnemy(from, other);
-        }
+            ETargetRelation.Owned => CheckOwned(from, other),
+            ETargetRelation.Ally => CheckAlly(from, other),
+            ETargetRelation.Enemy => CheckEnemy(from, other),
+            _ => CheckNone(from, other)
+        };
     }
 
     private static bool CheckEnemy(TeamController from, TeamController other)

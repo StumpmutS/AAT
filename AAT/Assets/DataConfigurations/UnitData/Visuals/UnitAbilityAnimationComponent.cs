@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Data/Visual Components/Animation Component")]
-public class UnitAbilityAnimationComponent : VisualComponent
+[CreateAssetMenu(menuName = "Units/Unit Visual Components/Unit Animation Component")]
+public class UnitAbilityAnimationComponent : UnitVisualComponent
 {
     [SerializeField] private string abilityName;
     

@@ -7,20 +7,28 @@ using UnityEngine.SceneManagement;
 
 public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [SerializeField] private bool debugEnabled;
     [SerializeField] private Player playerPrefab;
-    [SerializeField] private SerializableDictionary<SectorController, SpawnPlotController> startSpawnersBySector = new();
 
     public static StumpNetworkRunner Instance { get; private set; }
     public NetworkRunner Runner { get; private set; }
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
     {
         if (!runner.IsServer) return;
+        Debug.Log("Player joined");
         
         var playerSectors = DetermineSectors(runner, playerRef);
         var playerObject = runner.Spawn(playerPrefab, inputAuthority: playerRef, onBeforeSpawned: SetupPlayer);
@@ -30,8 +38,8 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         foreach (var sector in playerSectors)
         {
             sector.Init(playerRef);
-            startSpawnersBySector[sector].Object.AssignInputAuthority(playerRef);
-            startSpawnersBySector[sector].GetComponent<TeamController>().SetTeamNumber(playerTeamNum);
+            NetworkStartInfo.Instance.StartSpawnersBySector[sector].Object.AssignInputAuthority(playerRef);
+            NetworkStartInfo.Instance.StartSpawnersBySector[sector].GetComponent<TeamController>().SetTeamNumber(playerTeamNum);
         }
 
         void SetupPlayer(NetworkRunner _, NetworkObject o)
@@ -44,7 +52,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     private List<SectorController> DetermineSectors(NetworkRunner runner, PlayerRef newPlayer)
     {
-        foreach (var sector in startSpawnersBySector.Keys)
+        foreach (var sector in NetworkStartInfo.Instance.StartSpawnersBySector.Keys)
         {
             if (!SectorAvailable(runner, newPlayer, sector)) continue;
             return new List<SectorController>() { sector };
@@ -212,6 +220,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
+        Debug.Log("Scene load done");
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
@@ -220,28 +229,39 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnGUI()
     {
-        if (Runner is not null) return;
+        if (!debugEnabled || Runner is not null) return;
         if (GUI.Button(new Rect(0,0,200,40), "Host"))
         {
-            StartGame(GameMode.Host);
+            StartGame(new StartGameArgs
+            {
+                GameMode = GameMode.Host,
+                SessionName = "Test Session",
+                Scene = SceneManager.GetActiveScene().buildIndex,
+                SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            });
         }
         if (GUI.Button(new Rect(0,40,200,40), "Join"))
         {
-            StartGame(GameMode.Client);
+            StartGame(new StartGameArgs
+            {
+                GameMode = GameMode.Client,
+                SessionName = "Test Session",
+                Scene = SceneManager.GetActiveScene().buildIndex,
+                SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            });
         }
     }
 
-    private async void StartGame(GameMode gameMode)
+    private bool _starting;
+    public async void StartGame(StartGameArgs startGameArgs)
     {
+        if (_starting) return;
+        _starting = true;
+        
         Runner = gameObject.AddComponent<NetworkRunner>();
         Runner.ProvideInput = true;
+        startGameArgs.SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>();
 
-        await Runner.StartGame(new StartGameArgs
-        {
-            GameMode = gameMode,
-            SessionName = "Test Session",
-            Scene = SceneManager.GetActiveScene().buildIndex,
-            SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
-        });
+        await Runner.StartGame(startGameArgs);
     }
 }

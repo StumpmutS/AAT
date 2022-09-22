@@ -78,14 +78,15 @@ public class UnitAnimationController : MonoBehaviour
         if (Random.Range(0, 100) < idleSuperRandomChancePercent)
         {
             animator.SetInteger(idleSuperRandomIntName, Random.Range(0, idleSuperRandomNumber - 1));
-            ResetInt(idleSuperRandomIntName);
+            yield return StartCoroutine(CoResetInt(idleSuperRandomIntName));
         } 
         else
         {
             animator.SetInteger(idleRandomIntName, Random.Range(0, idleRandomNumber - 1));
-            ResetInt(idleRandomIntName);
+            yield return StartCoroutine(CoResetInt(idleRandomIntName));
         }
         _randomIdleCoroutineRunning = false;
+        StartRandomIdle();
     }
     #endregion
 
@@ -103,10 +104,10 @@ public class UnitAnimationController : MonoBehaviour
 
     private void ResetInt(string intName)
     {
-        StartCoroutine(ResetIntCoroutine(intName));
+        StartCoroutine(CoResetInt(intName));
     }
 
-    private IEnumerator ResetIntCoroutine(string intName)
+    private IEnumerator CoResetInt(string intName)
     {
         yield return 0;
         animator.SetInteger(intName, -1);

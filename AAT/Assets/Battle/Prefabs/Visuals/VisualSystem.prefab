@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1734956764751302432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1928596549788100224}
+  - component: {fileID: 3899085433035130163}
+  - component: {fileID: 8235802012118651573}
+  m_Layer: 0
+  m_Name: VisualSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1928596549788100224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734956764751302432}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3899085433035130163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734956764751302432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d4993126b04bae880300f4194c11c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visuals:
+    _items:
+    - Key: {fileID: 8235802012118651573}
+      Value:
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        Severity: 3
+        Direction: {x: 0, y: 0, z: 0}
+        DirectionMultiplier: 0
+        Position: {x: 0, y: 0, z: 0}
+        Randomize: 0
+  networkContainer: {fileID: 0}
+  attackColor: {r: 1, g: 1, b: 1, a: 1}
+  critColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &8235802012118651573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734956764751302432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea446fb1faac4f14ad18fbe248dfba0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decalImagePrefab: {fileID: 6712007579039099891, guid: 0d5e2154b88055e4aa05f5c361f76870, type: 3}
+  decalOffset: {x: 0, y: 0, z: 0}

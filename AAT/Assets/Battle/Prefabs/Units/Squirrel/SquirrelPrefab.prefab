@@ -1212,6 +1212,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionType: 1
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls: []
   outline: {fileID: 4524593936887259795}
 --- !u!114 &343670919627495436
 MonoBehaviour:
@@ -1406,7 +1418,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _AbilityIndex: -1
   unitAbilityData: []
 --- !u!114 &572899336159934267
 MonoBehaviour:
@@ -1807,6 +1818,14 @@ PrefabInstance:
       propertyPath: health
       value: 
       objectReference: {fileID: 5759228335420568727}
+    - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
+      propertyPath: selectable
+      value: 
+      objectReference: {fileID: 2451953952989807274}
+    - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
+      propertyPath: networkContainer
+      value: 
+      objectReference: {fileID: 6165724156703658041}
     - target: {fileID: 2623836181658933370, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas

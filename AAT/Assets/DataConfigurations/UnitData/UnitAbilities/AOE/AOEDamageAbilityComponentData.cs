@@ -26,7 +26,7 @@ public class AOEDamageAbilityComponentData : AbilityComponent
             }
             else _damagedEnemies[unit] = new HashSet<LagCompensatedHit>();
 
-            hit.GameObject.GetComponent<IHealth>().ModifyHealth(damage, null, new AttackDecalInfo());
+            hit.GameObject.GetComponent<IHealth>().ModifyHealth(damage);
             _damagedEnemies[unit].Add(hit);
         }
     }

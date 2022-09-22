@@ -32,7 +32,7 @@ public class WallJointController : MonoBehaviour
     private void Awake()
     {
         _selectable = GetComponent<SelectableController>();
-        _selectable.OnSelect += HandleSelect;
+        _selectable.OnSelect.AddListener(HandleSelect);
         if (wallPlacementManager == null) wallPlacementManager = WallPlacementManager.Instance;
         wallPlacementManager.AddWallJoint(this);
     }

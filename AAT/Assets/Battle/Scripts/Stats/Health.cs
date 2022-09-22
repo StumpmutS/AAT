@@ -16,14 +16,12 @@ public class Health : NetworkBehaviour, IHealth
     public float MaxHealth => unitDataManager.GetStat(EUnitFloatStats.MaxHealth);
     
     protected float _currentHealth;
-    protected VisualsHandler _visualsHandler;
     
     public event Action<float> OnHealthPercentChanged = delegate { };
     public event Action OnDie = delegate { };
 
     protected virtual void Awake()
     {
-        _visualsHandler = GetComponent<VisualsHandler>();
         unitDataManager.OnRefreshStats += RefreshHealth;
     }
 
@@ -33,17 +31,17 @@ public class Health : NetworkBehaviour, IHealth
         _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
-    public void ModifyHealth(float amount, DecalImage decal, AttackDecalInfo info)
+    public void ModifyHealth(float amount, int maxSeverity = 1)
     {
         if (amount > 0)
         {
-            HealDecal(Mathf.Abs(amount), decal, info);
+            CalculateHealingSeverity(ref amount, ref maxSeverity);
             if (!Runner.IsServer) return;
             Heal(amount);
         }
         else
         {
-            DamagedDecal(Mathf.Abs(amount), decal, info);
+            CalculateDamageSeverity(ref amount, ref maxSeverity);
             if (!Runner.IsServer) return;
             TakeDamage(Mathf.Abs(amount));
         }
@@ -51,7 +49,11 @@ public class Health : NetworkBehaviour, IHealth
         _currentHealthPercent = _currentHealth / MaxHealth;
     }
 
-    protected virtual void Heal(float amount)
+    public virtual void CalculateDamageSeverity(ref float amount, ref int severity) { }
+    
+    public virtual void CalculateHealingSeverity(ref float amount, ref int severity) { }
+
+    private void Heal(float amount)
     {
         if (_currentHealth + amount > MaxHealth)
             _currentHealth = MaxHealth;
@@ -59,21 +61,11 @@ public class Health : NetworkBehaviour, IHealth
             _currentHealth += amount;
     }
 
-    protected virtual void TakeDamage(float amount)
+    private void TakeDamage(float amount)
     {
         _currentHealth -= amount;
         if (_currentHealth <= 0)
             Die();
-    }
-
-    protected virtual void DamagedDecal(float amount, DecalImage decal, AttackDecalInfo info)
-    {
-        if (decal != null) _visualsHandler.CreateDecal(decal, info);
-    }
-
-    protected virtual void HealDecal(float amount, DecalImage decal, AttackDecalInfo info)
-    {
-        if (decal != null) _visualsHandler.CreateDecal(decal, info);
     }
     
     protected virtual void Die()

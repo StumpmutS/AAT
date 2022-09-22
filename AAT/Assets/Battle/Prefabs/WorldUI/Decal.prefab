@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1317634721303041266}
   - component: {fileID: 8402447677571192983}
   - component: {fileID: 7661940932893496785}
-  - component: {fileID: 7946918412791661583}
   - component: {fileID: 6051077365934906286}
   m_Layer: 5
   m_Name: Decal
@@ -85,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7661940932893496785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,26 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae760be8739b4e238558ca3955ab2985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolingObj: {fileID: 6051077365934906286}
+  poolObj: {fileID: 6051077365934906286}
   colorSpring: {fileID: 5812135163942009926}
-  decalComponents:
-  - {fileID: 7946918412791661583}
+  decalComponents: []
   images: []
---- !u!114 &7946918412791661583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5986171730994302217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37fc316cd9cd3f447857dd9d8c546f15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0
-  duration: 1
-  spring: {fileID: 4320966144430160649}
 --- !u!114 &6051077365934906286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,17 +204,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26d5b242048789344975a27e0231b9ad, type: 3}
---- !u!114 &4320966144430160649 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3229885156522611340, guid: 26d5b242048789344975a27e0231b9ad, type: 3}
-  m_PrefabInstance: {fileID: 1668017136274631045}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4320966144430160662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71fabbdcfc5d6c849bcd75dc38b27389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4320966144430160662 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3229885156522611347, guid: 26d5b242048789344975a27e0231b9ad, type: 3}

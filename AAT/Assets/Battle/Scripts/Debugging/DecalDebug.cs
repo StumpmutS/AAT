@@ -14,7 +14,7 @@ public class DecalDebug : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(decal).Activate(new AttackDecalInfo(color, severity, direction, BaseInputManager.LeftClickPosition));
+            Instantiate(decal).Activate(new VisualInfo(color, severity, direction, 0, BaseInputManager.LeftClickPosition, Quaternion.identity));
         }
     }
 }

@@ -17,7 +17,7 @@ public class UnitSpawnData : ScriptableObject
     public UnitController UnitPrefab;
     public UnitGroupController UnitGroupPrefab;
     public BaseUnitStatsData baseUnitStatsData;
-    public List<UnitStatsUpgradeData> UnitStatsUpgradeData;
+    public List<UnitUpgradeData> UnitStatsUpgradeData;
 }
 
 [Serializable]

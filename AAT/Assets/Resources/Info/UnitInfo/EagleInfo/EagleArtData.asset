@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e80db217a2a68047aa3a61739de3989, type: 3}
+  m_Name: EagleArtData
+  m_EditorClassIdentifier: 
+  unitIcon: {fileID: 21300000, guid: 9db0436e4ffac5e45a92ac90e8874edb, type: 3}
+  unitStatIcons: {fileID: 11400000, guid: 1e964271b4613e54abce8b9787de380c, type: 2}
+  unitPreview: {fileID: 6117037362021958790, guid: d3b2e7ae2f4bb60409c0318881aceb22, type: 3}
+  skins:
+  - {fileID: 3353858901254911481, guid: 6e1322dd712dd464f8cecdc53fe6c628, type: 3}

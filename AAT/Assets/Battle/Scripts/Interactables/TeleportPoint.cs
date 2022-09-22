@@ -16,8 +16,8 @@ public class TeleportPoint : InteractableController
     protected override void Awake()
     {
         base.Awake();
-        selectable.OnSelect += SelectTeleporter;
-        selectable.OnDeselect += DeselectTeleporter;
+        selectable.OnSelect.AddListener(SelectTeleporter);
+        selectable.OnDeselect.RemoveListener(DeselectTeleporter);
     }
 
     public void SetupPair(SectorController sector, TeleportPoint other, SectorController otherSector)

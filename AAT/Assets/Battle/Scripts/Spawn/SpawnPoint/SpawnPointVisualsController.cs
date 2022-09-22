@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpawnPointVisualsController : MonoBehaviour
 {
-    [SerializeField] private List<VisualComponent> visuals;
+    [SerializeField] private List<UnitVisualComponent> visuals;
 
     private SpawnPointController _spawnPoint;
 

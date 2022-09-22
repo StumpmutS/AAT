@@ -43,8 +43,8 @@ public class UnitController : NetworkBehaviour
     {
         Team = GetComponent<TeamController>();
         OutlineSelectable = GetComponent<OutlineSelectableController>();
-        OutlineSelectable.OnSelect += Select;
-        OutlineSelectable.OnDeselect += Deselect;
+        OutlineSelectable.OnSelect.AddListener(Select);
+        OutlineSelectable.OnDeselect.AddListener(Deselect);
         
         Stats = GetComponent<UnitStatsModifierManager>();
         _unitDeathController = GetComponent<UnitDeathController>();
@@ -134,4 +134,10 @@ public class UnitController : NetworkBehaviour
         chaseState = value;
     }
     #endregion
+
+    private void OnDestroy()
+    {
+        OutlineSelectable.OnSelect.RemoveListener(Select);
+        OutlineSelectable.OnDeselect.RemoveListener(Deselect);
+    }
 }

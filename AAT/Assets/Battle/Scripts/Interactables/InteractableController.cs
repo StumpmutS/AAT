@@ -23,8 +23,8 @@ public abstract class InteractableController : SimulationBehaviour, IDespawned /
     protected virtual void Awake()
     {
         unitController.OnDeath += DestroyInteractable;
-        selectable.OnHover += HandleHover;
-        selectable.OnHoverStop += HandleHoverStop;
+        selectable.OnHover.AddListener(HandleHover);
+        selectable.OnHoverStop.AddListener(HandleHoverStop);
     }
 
     private void DestroyInteractable(UnitController _)
@@ -108,5 +108,12 @@ public abstract class InteractableController : SimulationBehaviour, IDespawned /
     {
         UnitManager.Instance.OnUnitSelected -= HandleUnitSelected;
         UnitManager.Instance.OnUnitDeselected -= HandleUnitDeselected;
+    }
+
+    private void OnDestroy()
+    {
+        if (unitController != null) unitController.OnDeath -= DestroyInteractable;
+        if (selectable != null) selectable.OnHover.RemoveListener(HandleHover);
+        if (selectable != null) selectable.OnHoverStop.RemoveListener(HandleHoverStop);
     }
 }

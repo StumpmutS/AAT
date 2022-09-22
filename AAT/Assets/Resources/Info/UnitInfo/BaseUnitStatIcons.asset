@@ -1,0 +1,340 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4784f3051424840ad04df48fc2982c, type: 3}
+  m_Name: BaseUnitStatIcons
+  m_EditorClassIdentifier: 
+  StatIcons:
+    _items:
+    - Key: 0
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: b51aa1d186eca0640b0472f1150eb37b, type: 3}
+          fillColors:
+          - {r: 1, g: 0, b: 0, a: 1}
+          lighting: {fileID: 21300000, guid: 1f8c1d6f08176c6449c9c4eba0137882, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: e36e1bc06234fda428ceaa639bcfb496, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: cf9eb31bd7e81104586db21b1f2c0e69, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 1
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 8964129d23f1c634eabd8850c5322810, type: 3}
+          fillColors:
+          - {r: 0.23921569, g: 0.75686276, b: 0.9764706, a: 1}
+          lighting: {fileID: 21300000, guid: 1ddee65ca3f249a499d82e0c4aa05d86, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: dcda91554182bd34e847e7c2e323d794, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: ecb3f9f7a899d284da9dbbe108914613, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 2
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 8964129d23f1c634eabd8850c5322810, type: 3}
+          fillColors:
+          - {r: 0.23921569, g: 0.75686276, b: 0.9764706, a: 1}
+          lighting: {fileID: 21300000, guid: 1ddee65ca3f249a499d82e0c4aa05d86, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: dcda91554182bd34e847e7c2e323d794, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: ecb3f9f7a899d284da9dbbe108914613, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: +
+          textColor: {r: 0.3529412, g: 0.63529414, b: 0.7529412, a: 1}
+          fontSize: 100
+          textOffsets:
+            leftBottom: {x: 80, y: 100}
+            rightTop: {x: 0, y: 0}
+    - Key: 3
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 21f886ea82263bb43b7ee7d8994accd2, type: 3}
+          - {fileID: 21300000, guid: 61584e032cf62da459f249ecdc77e3de, type: 3}
+          fillColors:
+          - {r: 0.4056604, g: 0.25829998, b: 0.12055002, a: 1}
+          - {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+          lighting: {fileID: 21300000, guid: 8175ee26e7c73e041bf7e6f8e7272e25, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 59334f1312e7e6446bccb3b2f0d7a41d, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: ab7fcf7dd755b9a449bc85a24c5b4d86, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 4
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 195775a5eeb0ebc4289fab44491b68be, type: 3}
+          fillColors:
+          - {r: 1, g: 0.19670752, b: 0, a: 1}
+          lighting: {fileID: 21300000, guid: 39c08a59d1b1a3a47b829cede3e6ae9f, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 5690e1c0bc3e5ac45b36d5da363d26ce, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 2f3905c8bf24d274996afa28e5281a62, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 5
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 195775a5eeb0ebc4289fab44491b68be, type: 3}
+          fillColors:
+          - {r: 1, g: 0.19670752, b: 0, a: 1}
+          lighting: {fileID: 21300000, guid: 39c08a59d1b1a3a47b829cede3e6ae9f, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 5690e1c0bc3e5ac45b36d5da363d26ce, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 2f3905c8bf24d274996afa28e5281a62, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: '%'
+          textColor: {r: 1, g: 1, b: 1, a: 1}
+          fontSize: 50
+          textOffsets:
+            leftBottom: {x: 50, y: 50}
+            rightTop: {x: 0, y: 0}
+    - Key: 6
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 21f886ea82263bb43b7ee7d8994accd2, type: 3}
+          - {fileID: 21300000, guid: 61584e032cf62da459f249ecdc77e3de, type: 3}
+          fillColors:
+          - {r: 0, g: 1, b: 0.57254905, a: 1}
+          - {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+          lighting: {fileID: 21300000, guid: 8175ee26e7c73e041bf7e6f8e7272e25, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 59334f1312e7e6446bccb3b2f0d7a41d, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: ab7fcf7dd755b9a449bc85a24c5b4d86, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 6e11f909a159c2f4faa0cacb74d64960, type: 3}
+          fillColors:
+          - {r: 0, g: 1, b: 0.57254905, a: 1}
+          lighting: {fileID: 21300000, guid: 3cba87ab1e7ad8a4ba4bb457c5a19557, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 8f24945bcc75c2d4188c783760f8b99e, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 2baa69321f5230d4a937d92c3f8d0b8d, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 7
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 3c66f68fccc9dd349934f4f37418e306, type: 3}
+          fillColors:
+          - {r: 0, g: 1, b: 0.57254905, a: 1}
+          lighting: {fileID: 21300000, guid: 684c9f5958161af4db613c7bfa79f2fb, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: c90f64bffd9401f448c4b6a8091bfc43, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 39800d340f4c8544d9299c6170491e11, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 2a5ee23e245f04a4b9e1073e831812b3, type: 3}
+          fillColors:
+          - {r: 0, g: 1, b: 0.57254905, a: 1}
+          lighting: {fileID: 21300000, guid: 9fc09ba97761c804988e4062f960bf89, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 3e6acf50f2632214c88fc5797230a250, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 3c87cfeac777c13419a6b810c41a10e0, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 8
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 3791335caeff6bc468ba317f3e2ef6c2, type: 3}
+          - {fileID: 21300000, guid: 94e9b47a847bbce45b6fb5fc94771272, type: 3}
+          fillColors:
+          - {r: 0, g: 1, b: 0.57254905, a: 1}
+          - {r: 0, g: 1, b: 0.57254905, a: 1}
+          lighting: {fileID: 21300000, guid: da7824ffdc88de6408ad1a1f7abcd31d, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: d0a47489312506741a46bc5d11f67c42, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 911054b92515ad24482de0ab3f1ae8c5, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 9
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: e47345fe6cb394f4f9dbb249af1a67af, type: 3}
+          fillColors:
+          - {r: 0, g: 0.7607843, b: 0, a: 1}
+          lighting: {fileID: 21300000, guid: 377cdd9c1d2960f41ac6bf36146e0b51, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: cba6dcf6c7699b142847212820d575a3, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: e734feae3b5d29346a470537dd6902b1, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+      - image:
+          fills:
+          - {fileID: 21300000, guid: 802bc10f4206eba4ba55ce7d93b13c6a, type: 3}
+          fillColors:
+          - {r: 1, g: 0, b: 0, a: 1}
+          lighting: {fileID: 21300000, guid: f3633985a9e08064b8bd08a472079d96, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 4ba4de1f98186b042a2037293d786da7, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: fe57dfb94ac1e7b42aee45881b0877c2, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+    - Key: 10
+      Value:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: cfe6d297b1618a1458cdf613da517361, type: 3}
+          - {fileID: 21300000, guid: cd2a9681ac4616545997a7eb707960f5, type: 3}
+          fillColors:
+          - {r: 1, g: 0, b: 0, a: 1}
+          - {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
+          lighting: {fileID: 21300000, guid: 9a38c1be664f54e46baf6ab30b3d1f60, type: 3}
+          lightingColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+          shading: {fileID: 21300000, guid: 5fc9b213c8a72f64ebe1a241639ec48e, type: 3}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0.54901963}
+          border: {fileID: 21300000, guid: 5e68c48d5b5b01f40b5c5d885c34b040, type: 3}
+          borderColor: {r: 0, g: 0, b: 0, a: 1}
+          borderOffsets:
+            leftBottom: {x: -3, y: -3}
+            rightTop: {x: 3, y: 3}
+        text:
+          text: 
+          textColor: {r: 0, g: 0, b: 0, a: 0}
+          fontSize: 0
+          textOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}

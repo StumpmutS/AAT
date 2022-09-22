@@ -17,8 +17,8 @@ public class SpawnPlotController : NetworkBehaviour
     {
         _team = GetComponent<TeamController>();
         _selectable = GetComponent<SelectableController>();
-        _selectable.OnSelect += Select;
-        _selectable.OnDeselect += Deselect;
+        _selectable.OnSelect.AddListener(Select);
+        _selectable.OnDeselect.AddListener(Deselect);
     }
 
     public override void Spawned()
@@ -91,5 +91,7 @@ public class SpawnPlotController : NetworkBehaviour
         
         sector.OnSectorCaptureChanged -= HandleSectorCapture;
         spawnPlotUI.OnSpawnRequest -= CallSetupSpawner;
+        if (_selectable != null) _selectable.OnSelect.AddListener(Select);
+        if (_selectable != null) _selectable.OnDeselect.AddListener(Deselect);
     }
 }

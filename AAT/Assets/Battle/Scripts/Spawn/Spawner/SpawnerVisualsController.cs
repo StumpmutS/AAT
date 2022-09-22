@@ -16,8 +16,8 @@ public class SpawnerVisualsController : MonoBehaviour
     private void Awake()
     {
         _selectable = GetComponent<SelectableController>();
-        _selectable.OnSelect += SelectAll;
-        _selectable.OnDeselect += DeselectAll;
+        _selectable.OnSelect.AddListener(SelectAll);
+        _selectable.OnDeselect.AddListener(DeselectAll);
     }
 
     private void Start()
@@ -45,7 +45,7 @@ public class SpawnerVisualsController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _selectable.OnSelect -= SelectAll;
-        _selectable.OnDeselect -= DeselectAll;
+        _selectable.OnSelect.RemoveListener(SelectAll);
+        _selectable.OnDeselect.RemoveListener(DeselectAll);
     }
 }

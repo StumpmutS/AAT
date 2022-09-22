@@ -17,9 +17,6 @@ using Utility.Scripts;
 
      private UnitStatsModifierManager _stats;
      private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed);
-     private float _hoverSpeedPerc => _stats.GetStat(EUnitFloatStats.HoverSpeedPercentMultiplier);
-     private float _turnSpeed => _stats.GetStat(EUnitFloatStats.TurnSpeed);
-     private float _upwardPitchCap => _stats.GetStat(EUnitFloatStats.UpwardPitchCap);
 
      private StumpBezier _flightPath;
      private float _distanceTraveled;

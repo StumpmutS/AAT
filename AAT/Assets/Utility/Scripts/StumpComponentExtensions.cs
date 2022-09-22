@@ -13,5 +13,15 @@ namespace Utility.Scripts
 
             return found;
         }
+        
+        public static T AddOrGetComponent<T>(this GameObject component) where T : Component
+        {
+            if (!component.TryGetComponent<T>(out var found))
+            {
+                found = component.gameObject.AddComponent<T>();
+            }
+
+            return found;
+        }
     }
 }

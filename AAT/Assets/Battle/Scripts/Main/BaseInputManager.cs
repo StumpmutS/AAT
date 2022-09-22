@@ -1,5 +1,4 @@
 using System;
-using Fusion;
 using UnityEngine;
 using Utility.Scripts;
 
@@ -13,6 +12,8 @@ public class BaseInputManager : MonoBehaviour
 
     private void SetRightClick()
     {
+        if (LayerManager.Instance == null) return;
+
         RightClickPosition.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer);
         var ray = MainCameraRef.Cam.ScreenPointToRay(Input.mousePosition);
         RightClickDirection = ray.direction;
@@ -20,6 +21,8 @@ public class BaseInputManager : MonoBehaviour
 
     private void SetLeftClick()
     {
+        if (LayerManager.Instance == null || UIHoveredReference.Instance.OverUI()) return;
+        
         LeftClickPosition.SetToCursorToWorldPosition(LayerManager.Instance.GroundLayer);
         var ray = MainCameraRef.Cam.ScreenPointToRay(Input.mousePosition);
         LeftClickDirection = ray.direction;
@@ -91,21 +94,18 @@ public class BaseInputManager : MonoBehaviour
     #region Check Methods
     private void CheckMouseButtons()
     {
-        if (!UIHoveredReference.Instance.OverUI())
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SetLeftClick();
-                OnLeftClickDown.Invoke();
-            }
-            if (Input.GetMouseButton(0))
-            {
-                SetLeftClick();
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                OnLeftCLickUp.Invoke();
-            }
+            SetLeftClick();
+            OnLeftClickDown.Invoke();
+        }
+        if (Input.GetMouseButton(0))
+        {
+            SetLeftClick();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnLeftCLickUp.Invoke();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -121,6 +121,7 @@ public class BaseInputManager : MonoBehaviour
         {
             OnRightClickUp.Invoke();
         }
+        
         if (Input.GetMouseButtonDown(2))
         {
             OnMouseWheelDown.Invoke();

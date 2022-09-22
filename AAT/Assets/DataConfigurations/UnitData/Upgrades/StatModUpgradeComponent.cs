@@ -11,4 +11,9 @@ public class StatModUpgradeComponent : UnitUpgradeComponent
     {
         unit.Stats.ModifyStats(unitStatsData);
     }
+
+    public override void DeactivateComponent(UnitController unit)
+    {
+        unit.Stats.ModifyStats(unitStatsData, false);
+    }
 }

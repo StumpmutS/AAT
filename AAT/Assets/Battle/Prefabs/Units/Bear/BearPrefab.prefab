@@ -255,6 +255,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionType: 1
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls: []
   outline: {fileID: 2664238772079662634}
 --- !u!114 &3643916926788448563
 MonoBehaviour:
@@ -303,8 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decalDirectionMultiplier: 2
-  decalOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &3385312414236435768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +531,14 @@ PrefabInstance:
       propertyPath: health
       value: 
       objectReference: {fileID: 2227916921653355390}
+    - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
+      propertyPath: selectable
+      value: 
+      objectReference: {fileID: 6292293335476419695}
+    - target: {fileID: 430632271993501332, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
+      propertyPath: networkContainer
+      value: 
+      objectReference: {fileID: 7771566112979102090}
     - target: {fileID: 1580106520623145045, guid: ce998a8fafced1a44acb6c5dd8c41598, type: 3}
       propertyPath: m_Name
       value: MaskFill

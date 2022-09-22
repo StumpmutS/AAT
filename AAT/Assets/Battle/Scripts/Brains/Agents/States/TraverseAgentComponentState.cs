@@ -5,9 +5,11 @@ using Utility.Scripts;
 
 public class TraverseAgentComponentState : ComponentState, IAgent
 {
+    [SerializeField] private float traverseSpeedPercentMultiplier = 200;
+    
     private UnitController _unit;
     private UnitStatsModifierManager _stats;
-    private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed) * _stats.GetStat(EUnitFloatStats.TraverseSpeedPercentMultiplier) / 100;
+    private float _speed => _stats.GetStat(EUnitFloatStats.MovementSpeed) * traverseSpeedPercentMultiplier / 100;
     private float _speedMultiplier;
 
     private bool _entered;

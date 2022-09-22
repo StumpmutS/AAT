@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
 [CustomPropertyDrawer(typeof(ShowIfAttribute))]
 public class ShowIfDrawer : PropertyDrawer
@@ -20,7 +17,8 @@ public class ShowIfDrawer : PropertyDrawer
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         if (!MeetsConditions(property)) return 0;
-        return base.GetPropertyHeight(property, label);
+        var showIfAttribute = (ShowIfAttribute)attribute;
+        return base.GetPropertyHeight(property, label) * showIfAttribute.HeightMultiplier;
     }
 
     private bool MeetsConditions(SerializedProperty property)

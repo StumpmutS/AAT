@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da61ebe6b0a0bab4da4c13e6cc425ab0, type: 3}
   m_Name: EagleChaseSpeedPercentMultiplierB
   m_EditorClassIdentifier: 
-  Stat: 10
+  Stat: 8
   Value: 300

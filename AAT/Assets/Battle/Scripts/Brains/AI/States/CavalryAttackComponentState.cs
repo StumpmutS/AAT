@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class CavalryAttackComponentState : AttackComponentState
 {
+    [SerializeField] private float chargeEndDistance;
+    
     protected float _chaseSpeedPercent => _unitStats.GetStat(EUnitFloatStats.ChaseSpeedPercentMultiplier);
     protected float _moveSpeed => _unitStats.GetStat(EUnitFloatStats.MovementSpeed);
-    private float _chargeEndDistance => _unitStats.GetStat(EUnitFloatStats.ChargeEndDistance);
 
     private bool _charging;
     private float _chargeTime;
@@ -30,7 +31,7 @@ public class CavalryAttackComponentState : AttackComponentState
         _chargeTime += Runner.DeltaTime;
         AddSpeed();
         _agent.SetDestination(_target.transform.position);
-        if (Vector3.Distance(transform.position, _target.transform.position) < _chargeEndDistance || _target == null)
+        if (Vector3.Distance(transform.position, _target.transform.position) < chargeEndDistance || _target == null)
         {
             EndCharge();
         }

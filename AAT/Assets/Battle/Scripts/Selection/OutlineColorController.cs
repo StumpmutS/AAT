@@ -14,8 +14,8 @@ public class OutlineColorController : MonoBehaviour
     {
         _outline = GetComponent<OutlineController>();
         _outlineSelectable = GetComponent<OutlineSelectableController>();
-        _outlineSelectable.OnHover += SetOutlineColors;
-        _outlineSelectable.OnSelect += SetOutlineColors;
+        _outlineSelectable.OnHover.AddListener(SetOutlineColors);
+        _outlineSelectable.OnSelect.AddListener(SetOutlineColors);
         _team = GetComponent<TeamController>();
     }
 
@@ -41,7 +41,7 @@ public class OutlineColorController : MonoBehaviour
     private void OnDestroy()
     {
         if (_outlineSelectable == null) return;
-        _outlineSelectable.OnHover -= SetOutlineColors;
-        _outlineSelectable.OnSelect -= SetOutlineColors;
+        _outlineSelectable.OnHover.RemoveListener(SetOutlineColors);
+        _outlineSelectable.OnSelect.RemoveListener(SetOutlineColors);
     }
 }

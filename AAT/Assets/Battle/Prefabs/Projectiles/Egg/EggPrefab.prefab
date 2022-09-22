@@ -116,7 +116,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e0cf7d913becd6448ba0dcc19d6c0436, type: 2}
   - {fileID: 11400000, guid: cbedc6defdf790045bb570b1e3039103, type: 2}
   - {fileID: 11400000, guid: 888ddc6858d238f418cc308a2492497c, type: 2}
-  visualComponents: []
+  visualComponents:
+    _items:
+    - Key: {fileID: 11400000, guid: 70c9a061257343141b92ea1560c8f1fa, type: 2}
+      Value:
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        Severity: 0
+        Direction: {x: 0, y: 0, z: 0}
+        DirectionMultiplier: 0
+        Position: {x: 0, y: 0, z: 0}
+        Rotation: {x: 0, y: 0, z: 0, w: 0}
+        Randomize: 0
   acceleration: 9.8
 --- !u!114 &2847335898431579910
 MonoBehaviour:

@@ -644,6 +644,10 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: -7290068203434153301
       objectReference: {fileID: 0}
+    - target: {fileID: 5276766201376083313, guid: 9b05d179318cdb34cbc7d9ef4e676421, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8177904448213047333, guid: 9b05d179318cdb34cbc7d9ef4e676421, type: 3}
       propertyPath: m_Name
       value: MonsterHexPrefab

@@ -8,16 +8,12 @@ using Utility.Scripts;
 [RequireComponent(typeof(PoolingObject))]
 public class DecalImage : MonoBehaviour
 {
-    [SerializeField] private PoolingObject poolingObj;
-    public PoolingObject PoolingObj => poolingObj;
+    [SerializeField] private PoolingObject poolObj;
+    public PoolingObject PoolObj => poolObj;
     [SerializeField] private ColorSpringListener colorSpring;
-    [SerializeField] private List<DecalComponent> decalComponents;
     [SerializeField] private List<Image> images;
-    public int MaxSeverity => images.Count;
 
-    private int _unfinishedComponentCount;
-
-    public void Activate(AttackDecalInfo info)
+    public void Activate(VisualInfo info)
     {
         DeactivateImages();
 
@@ -32,11 +28,6 @@ public class DecalImage : MonoBehaviour
         {
             image.gameObject.SetActive(false);
         }
-        
-        foreach (var decal in decalComponents)
-        {
-            decal.Deactivate();
-        }
     }
 
     private void ActivateImages(int severity)
@@ -45,21 +36,6 @@ public class DecalImage : MonoBehaviour
         { 
             images[i].gameObject.SetActive(true);
         }
-        
-        foreach (var decalComponent in decalComponents)
-        {
-            StartCoroutine(CoAnimateDecalComponent(decalComponent));
-        }
-    }
-
-    private IEnumerator CoAnimateDecalComponent(DecalComponent component)
-    {
-        yield return new WaitForSeconds(component.Delay);
-        component.Activate();
-        yield return new WaitForSeconds(component.Duration);
-        component.Deactivate();
-        _unfinishedComponentCount--;
-        if (_unfinishedComponentCount <= 0) poolingObj.Deactivate();
     }
 
     private void LateUpdate()

@@ -116,7 +116,7 @@ public class UnitGroupController : NetworkBehaviour
     {
         if (!_localSetup.Add(unit)) return;
         
-        unit.OutlineSelectable.OnSelect += SelectGroup;
+        unit.OutlineSelectable.OnSelect.AddListener(SelectGroup);
         unit.OutlineSelectable.OnOutline += OutlineGroup;
         unit.OutlineSelectable.OnRemoveOutline += RemoveGroupOutline;
         unit.OnDeath += UnitDeathHandler;
@@ -126,7 +126,7 @@ public class UnitGroupController : NetworkBehaviour
     {
         if (!_localSetup.Remove(unit)) return;
         
-        unit.OutlineSelectable.OnSelect -= SelectGroup;
+        unit.OutlineSelectable.OnSelect.RemoveListener(SelectGroup);
         unit.OutlineSelectable.OnOutline -= OutlineGroup;
         unit.OutlineSelectable.OnRemoveOutline -= RemoveGroupOutline;
         unit.OnDeath -= UnitDeathHandler;

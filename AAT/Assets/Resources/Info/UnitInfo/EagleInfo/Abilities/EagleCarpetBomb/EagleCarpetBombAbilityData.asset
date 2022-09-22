@@ -17,11 +17,13 @@ MonoBehaviour:
     CooldownTime: 20
     ActiveTime: 10.2
     TargetTimeOutTime: 0
-    TransportUsage: 0
+    InteractUsage: 0
     CanBeCastOver: 0
     AllowCastOverTimer: 0
+    Restrictions: []
     AbilityComponents:
     - {fileID: 11400000, guid: dd10ee20cae68b043ad3cc38696d4e65, type: 2}
     - {fileID: 11400000, guid: 4ffe2ee8ac66481428f9e8ba77dfa5c1, type: 2}
-    VisualComponents:
+    UnitVisualComponents:
     - {fileID: 11400000, guid: 1bf6ef6cb7e1b8d4f8b70387e69f6052, type: 2}
+    VisualComponents: []

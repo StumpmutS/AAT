@@ -34,6 +34,8 @@ public class EnemyDebug : MonoBehaviour
 
     private void PlaceUnit()
     {
+        if (UIHoveredReference.Instance.OverUI()) return;
+        
         StumpNetworkRunner.Instance.Runner.Spawn(unit, BaseInputManager.LeftClickPosition, Quaternion.identity, onBeforeSpawned:
             (_, o) =>
             {

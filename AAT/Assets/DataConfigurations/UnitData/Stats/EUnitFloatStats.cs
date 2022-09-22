@@ -9,15 +9,7 @@ public enum EUnitFloatStats
     CritChancePercent,
     AttackSpeedPercent,
     MovementSpeed,
-    SightRange,
-    AttackRange,
     ChaseSpeedPercentMultiplier,
-    //Cavalry
-    ChargeEndDistance,
-    //Traverse
-    TraverseSpeedPercentMultiplier,
-    //Flying
-    HoverSpeedPercentMultiplier,
-    TurnSpeed,
-    UpwardPitchCap
+    SightRange,
+    AttackRange
 }

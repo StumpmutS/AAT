@@ -22,7 +22,7 @@ public class SpawnerUnitManager : NetworkBehaviour
     
     private SpawnerController _spawner;
     private List<UnitGroupController> _groups => _spawner.Groups;
-    private List<UnitStatsUpgradeData> _upgradeData => _spawner.SpawnData.UnitStatsUpgradeData;
+    private List<UnitUpgradeData> _upgradeData => _spawner.SpawnData.UnitStatsUpgradeData;
     
     private void Awake()
     {
