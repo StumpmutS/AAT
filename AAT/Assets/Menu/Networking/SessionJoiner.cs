@@ -27,7 +27,7 @@ public class SessionJoiner : MonoBehaviour
             GameMode = GameMode.Host,
             SessionName = input.text,
             Scene = SceneManager.GetActiveScene().buildIndex + 1,
-            SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
     }
 
@@ -38,7 +38,7 @@ public class SessionJoiner : MonoBehaviour
             GameMode = GameMode.Client,
             SessionName = input.text,
             Scene = SceneManager.GetActiveScene().buildIndex + 1,
-            SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
     }
 }

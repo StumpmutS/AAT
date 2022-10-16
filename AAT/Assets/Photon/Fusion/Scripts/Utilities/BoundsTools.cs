@@ -1,4 +1,4 @@
-﻿// ---------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
 // <copyright>PhotonNetwork Framework for Unity - Copyright (C) 2020 Exit Games GmbH</copyright>
 // <author>developer@exitgames.com</author>
 // ---------------------------------------------------------------------------------------------
@@ -11,16 +11,16 @@ namespace Fusion.Editor {
     public enum BoundsType { Both, MeshRenderer, Collider, Manual }
 
     // 3d
-    private static readonly List<MeshFilter> meshFilters = new();
-    private static readonly List<Renderer> meshRenderers = new();
-    private static readonly List<Collider> colliders = new();
-    private static readonly List<Collider> validColliders = new();
+    private static readonly List<MeshFilter> meshFilters = new List<MeshFilter>();
+    private static readonly List<Renderer> meshRenderers = new List<Renderer>();
+    private static readonly List<Collider> colliders = new List<Collider>();
+    private static readonly List<Collider> validColliders = new List<Collider>();
 
     // 2d
-    private static readonly List<SpriteRenderer> spriteRenderers = new();
+    private static readonly List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 #if !DISABLE_PHYSICS_2D
-    private static readonly List<Collider2D> colliders2D = new();
-    private static readonly List<Collider2D> validColliders2D = new();
+    private static readonly List<Collider2D> colliders2D = new List<Collider2D>();
+    private static readonly List<Collider2D> validColliders2D = new List<Collider2D>();
 #endif
     /// <summary>
     /// Collect the bounds of the indicated types (MeshRenderer and/or Collider) on the object and all of its children, and returns bounds that are a sum of all of those.

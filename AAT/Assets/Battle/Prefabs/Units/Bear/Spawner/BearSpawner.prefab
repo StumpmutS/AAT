@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 387605695682975194}
   - component: {fileID: 2118000337320159451}
   - component: {fileID: 4730661530488460978}
+  - component: {fileID: 4179069524575738743}
   m_Layer: 0
   m_Name: BearCave
   m_TagString: Untagged
@@ -76,19 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionType: 3
-  OnSelect:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHover:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHoverStop:
-    m_PersistentCalls:
-      m_Calls: []
+  selectable: {fileID: 0}
+  hoverable: {fileID: 0}
   outline: {fileID: 6735102798292062799}
 --- !u!114 &387605695682975194
 MonoBehaviour:
@@ -128,8 +118,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae52a10ab3f6784fab20731ea2b45dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectable: {fileID: 4595860830915315834}
+  selectable: {fileID: 0}
   spawner: {fileID: 6525427047432204102}
+--- !u!114 &4179069524575738743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8574196480484785680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  layersToChange: []
 --- !u!1001 &2089216464685023231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147,24 +151,24 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0363c69a2acb54542b91e84601a07503, type: 2}
     - target: {fileID: 3364718749716590333, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3364718749716590333, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[5]
       value: 
-      objectReference: {fileID: 5831154158152571140}
+      objectReference: {fileID: 4179069524575738743}
     - target: {fileID: 3364718749716590333, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[6]
       value: 
-      objectReference: {fileID: 5785264254558577878}
+      objectReference: {fileID: 5831154158152571140}
     - target: {fileID: 3364718749716590333, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[7]
       value: 
-      objectReference: {fileID: 3569488396395000650}
+      objectReference: {fileID: 5785264254558577878}
     - target: {fileID: 3364718749716590333, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[8]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3569488396395000650}
     - target: {fileID: 3364718749716590333, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[9]
       value: 

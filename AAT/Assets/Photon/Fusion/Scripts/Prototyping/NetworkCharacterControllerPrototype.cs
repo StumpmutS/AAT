@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
   /// Sets the default teleport interpolation angular velocity to be the CC's rotation speed on the Z axis.
   /// For more details on how this field is used, see <see cref="NetworkTransform.TeleportToRotation"/>.
   /// </summary>
-  protected override Vector3 DefaultTeleportInterpolationAngularVelocity => new(0f, 0f, rotationSpeed);
+  protected override Vector3 DefaultTeleportInterpolationAngularVelocity => new Vector3(0f, 0f, rotationSpeed);
 
   public CharacterController Controller { get; private set; }
 
@@ -44,9 +45,6 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
   public override void Spawned() {
     base.Spawned();
     CacheController();
-
-    // Caveat: this is needed to initialize the Controller's state and avoid unwanted spikes in its perceived velocity
-    Controller.Move(transform.position);
   }
 
   private void CacheController() {

@@ -19,14 +19,25 @@
             The specific stat being monitored.
             </summary>
         </member>
-        <member name="F:SpawnerPrototype`1.StateAuthority">
+        <member name="F:SpawnerPrototype`1.PlayerPrefab">
             <summary>
-            Available if AllowClientObjects is enabled in the NetworkProjectConfig, this allows players to be spawned with client StateAuthority.
+            Reference to the Prefab which will be used for spawning.
             </summary>
         </member>
-        <member name="F:TelemetryElement.AspectRatio">
+        <member name="F:SpawnerPrototype`1.SpawnMethod">
             <summary>
-            The aspect ratio this element should maintain. 2 = twice as wide as tall.
+            Selects if spawning will be automatic, or explicitly with user script.
+            </summary>
+        </member>
+        <member name="F:SpawnerPrototype`1.StateAuthority">
+            <summary>
+            This allows players to be spawned with Player StateAuthority. Only applicable to Shared Mode.
+            </summary>
+        </member>
+        <member name="F:Fusion.NetworkSceneManagerBase.ShowHierarchyWindowOverlay">
+            <summary>
+            When enabled, a small info button overlays will be added to the Hierarchy Window 
+            for each active <see cref="T:Fusion.NetworkRunner"/> and for its associated scene.
             </summary>
         </member>
         <member name="F:Fusion.FusionUnityLogger.UseGlobalPrefix">
@@ -46,12 +57,17 @@
         </member>
         <member name="F:Fusion.FusionUnityLogger.MinRandomColor">
             <summary>
-            
+            Min Random Color
             </summary>
         </member>
         <member name="F:Fusion.FusionUnityLogger.MaxRandomColor">
             <summary>
-            
+            Max Random Color
+            </summary>
+        </member>
+        <member name="F:Fusion.FusionUnityLogger.ServerColor">
+            <summary>
+            Server Color
             </summary>
         </member>
         <member name="P:Fusion.FusionUnityLogger.GetColor">
@@ -201,6 +217,11 @@
         <member name="T:PlayerAOIPrototype">
             <summary>
             Prototyping component for Fusion. Updates the Player's AOI every tick to be a radius around this object.
+            </summary>
+        </member>
+        <member name="F:PlayerAOIPrototype.DrawAreaOfInterestRadius">
+            <summary>
+            Enables the widget which shows the current AOI radius for this object in the scene window.
             </summary>
         </member>
         <member name="F:PlayerAOIPrototype.Radius">
@@ -406,6 +427,11 @@
             regardless of the total number of peers running.
             </summary>
         </member>
+        <member name="F:FusionStats._modifyColors">
+            <summary>
+            Shows/hides controls in the inspector for defining element colors.
+            </summary>
+        </member>
         <member name="F:FusionStats._graphColorGood">
             <summary>
             The color used for the telemetry graph data.
@@ -505,6 +531,11 @@
             <summary>
             The Scene that will be loaded after network shutdown completes (all peers have disconnected). 
             If this field is null or invalid, will be set to the current scene when <see cref="T:NetworkDebugStart"/> runs Awake().
+            </summary>
+        </member>
+        <member name="F:NetworkDebugStart._currentStage">
+            <summary>
+            Indicates which step of the startup process <see cref="T:NetworkDebugStart"/> is currently in.
             </summary>
         </member>
         <member name="P:NetworkDebugStart.CurrentStage">

@@ -6,18 +6,30 @@ using UnityEngine;
 [ScriptHelp(BackColor = EditorHeaderBackColor.Steel)]
 public class SpawnerPrototype<T> : SimulationBehaviour, IPlayerJoined, IPlayerLeft, ISpawned, ISceneLoadDone where T : Component, ISpawnPointPrototype {
 
-  protected Dictionary<PlayerRef, List<NetworkObject>> _spawnedLookup = new();
+  protected Dictionary<PlayerRef, List<NetworkObject>> _spawnedLookup = new Dictionary<PlayerRef, List<NetworkObject>>();
 
   public enum SpawnMethods { AutoOnNetworkStart, ByScriptOnly }
   public enum AuthorityOptions { Auto, Server, Player }
 
+  /// <summary>
+  /// Reference to the Prefab which will be used for spawning.
+  /// </summary>
+  [InlineHelp]
+  //[UnityEngine.Serialization.FormerlySerializedAs("PlayerPrefab")]
   public NetworkObject PlayerPrefab;
+
+  /// <summary>
+  /// Selects if spawning will be automatic, or explicitly with user script.
+  /// </summary>
+  [InlineHelp]
   public SpawnMethods SpawnMethod;
 
   /// <summary>
-  /// Available if AllowClientObjects is enabled in the NetworkProjectConfig, this allows players to be spawned with client StateAuthority.
+  /// This allows players to be spawned with Player StateAuthority. Only applicable to Shared Mode.
   /// </summary>
-  [DrawIf(nameof(_AllowClientObjects), true, DrawIfHideType.Hide)]
+  [InlineHelp]
+  [DrawIf(nameof(_AllowClientObjects), Hide = true)]
+  [MultiPropertyDrawersFix]
   public AuthorityOptions StateAuthority;
   protected bool _AllowClientObjects {
     get {

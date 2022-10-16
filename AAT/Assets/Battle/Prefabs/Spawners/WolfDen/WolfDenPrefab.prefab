@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6486533889689376574}
   - component: {fileID: 5656689137500745755}
   - component: {fileID: -2928271294233601305}
+  - component: {fileID: 5803735130075377604}
   m_Layer: 0
   m_Name: WolfDenPrefab
   m_TagString: Untagged
@@ -68,6 +69,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -9152046344183727135}
+  - {fileID: 5803735130075377604}
   SimulationBehaviours: []
 --- !u!114 &-9152046344183727135
 MonoBehaviour:
@@ -177,7 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionType: 2
+  selectable: {fileID: 0}
+  hoverable: {fileID: 0}
   outline: {fileID: 1622665070002132908}
 --- !u!114 &5656689137500745755
 MonoBehaviour:
@@ -204,6 +207,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae52a10ab3f6784fab20731ea2b45dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectable: {fileID: 0}
+  spawner: {fileID: 0}
+--- !u!114 &5803735130075377604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854289365838472102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  layersToChange: []
 --- !u!1001 &1250922911907745447
 PrefabInstance:
   m_ObjectHideFlags: 0

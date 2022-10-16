@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -5862317012690568444}
   - component: {fileID: 2758963567368085416}
   - component: {fileID: 8942793615988098990}
+  - component: {fileID: 1267652427964805059}
   m_Layer: 0
   m_Name: SpawnerVisualsTemp
   m_TagString: Untagged
@@ -62,6 +63,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 251085175753324682}
+  - {fileID: 1267652427964805059}
   SimulationBehaviours: []
 --- !u!114 &251085175753324682
 MonoBehaviour:
@@ -135,7 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionType: 2
+  selectable: {fileID: 0}
+  hoverable: {fileID: 0}
   outline: {fileID: 4026267629354887296}
 --- !u!114 &2758963567368085416
 MonoBehaviour:
@@ -162,6 +165,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae52a10ab3f6784fab20731ea2b45dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectable: {fileID: 0}
+  spawner: {fileID: 0}
+--- !u!114 &1267652427964805059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5786109076718938141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  layersToChange: []
 --- !u!1 &6493628670015386054
 GameObject:
   m_ObjectHideFlags: 0

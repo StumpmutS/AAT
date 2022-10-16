@@ -237,7 +237,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
                 GameMode = GameMode.Host,
                 SessionName = "Test Session",
                 Scene = SceneManager.GetActiveScene().buildIndex,
-                SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }
         if (GUI.Button(new Rect(0,40,200,40), "Join"))
@@ -247,7 +247,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
                 GameMode = GameMode.Client,
                 SessionName = "Test Session",
                 Scene = SceneManager.GetActiveScene().buildIndex,
-                SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }
     }
@@ -260,7 +260,7 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         
         Runner = gameObject.AddComponent<NetworkRunner>();
         Runner.ProvideInput = true;
-        startGameArgs.SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>();
+        startGameArgs.SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
 
         await Runner.StartGame(startGameArgs);
     }

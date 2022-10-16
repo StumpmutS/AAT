@@ -39,11 +39,6 @@
             Thread ID
             </summary>
         </member>
-        <member name="P:Fusion.Photon.Realtime.FusionRelayClient.FallbackThreadRunning">
-            <summary>
-            Check if Thread is running by checking the Thread ID
-            </summary>
-        </member>
         <member name="M:Fusion.Photon.Realtime.FusionRelayClient.StartFallbackSendAck">
             <summary>
             Starts a new rhread to send ACK to Cloud
@@ -105,7 +100,7 @@
             Flag to signal if the Client is Ready to perform cloud action and it is in a Room
             </summary>
         </member>
-        <member name="E:Fusion.Photon.Realtime.FusionRelayClient.OnRoomPropertiesChanged">
+        <member name="E:Fusion.Photon.Realtime.FusionRelayClient.OnRoomChanged">
             <summary>
             Signal if some room property has changed
             </summary>
@@ -142,7 +137,7 @@
             Used to keep the client communication
             </summary>
         </member>
-        <member name="M:Fusion.Photon.Realtime.FusionRelayClient.BuildEnterRoomParams(Fusion.Photon.Realtime.TypedLobby,System.String,System.Int32,System.Collections.Generic.Dictionary{System.String,Fusion.SessionProperty})">
+        <member name="M:Fusion.Photon.Realtime.FusionRelayClient.BuildEnterRoomParams(Fusion.Photon.Realtime.TypedLobby,System.String,System.Byte,System.Collections.Generic.Dictionary{System.String,Fusion.SessionProperty})">
             <summary>
             Build a new EnterRoomParams ref using the default configs and optional Room Name
             </summary>
@@ -277,7 +272,17 @@
             <exception cref="T:Fusion.Photon.Realtime.Async.OperationException">Is thrown when the operation completed unsuccessfully</exception>
             <exception cref="T:Fusion.Photon.Realtime.Async.OperationTimeoutException">Is thrown when the operation timed out</exception>
         </member>
-        <member name="M:Fusion.Photon.Realtime.Async.LoadBalancingClientAsyncExtensions.CreateConnectionHandler(Fusion.Photon.Realtime.LoadBalancingClient,System.Boolean,System.Boolean)">
+        <member name="M:Fusion.Photon.Realtime.Async.LoadBalancingClientAsyncExtensions.JoinLobbyAsync(Fusion.Photon.Realtime.LoadBalancingClient,Fusion.Photon.Realtime.TypedLobby,System.Boolean,System.Boolean)">
+            <summary>
+            Join a Lobby
+            </summary>
+            <param name="client">Client object</param>
+            <param name="lobby">Lobby to join</param>
+            <param name="throwOnError">Set ErrorCode as result when operation fails with ErrorCode</param>
+            <param name="createServiceTask">Runs client.Service() during the operation</param>
+            <returns>When inside a Lobby</returns>
+        </member>
+        <member name="M:Fusion.Photon.Realtime.Async.LoadBalancingClientAsyncExtensions.CreateOpHandler(Fusion.Photon.Realtime.LoadBalancingClient,System.Boolean,System.Boolean)">
             <summary>
             Create a <see cref="T:Fusion.Photon.Realtime.Async.OperationHandler"/> instance, sets up the Photon callbacks, schedules removing them, create a connection service task.
             The handler will monitor the Photon callbacks and complete, fault accordingly. 
@@ -289,7 +294,7 @@
             <param name="createServiceTask">Runs client.Service() during the operation</param>
             <returns>Photon Connection Handler object</returns>
         </member>
-        <member name="M:Fusion.Photon.Realtime.Async.LoadBalancingClientAsyncExtensions.CreateServiceTask(Fusion.Photon.Realtime.LoadBalancingClient,System.Threading.CancellationToken,System.Threading.Tasks.TaskCompletionSource{System.Int16})">
+        <member name="M:Fusion.Photon.Realtime.Async.LoadBalancingClientAsyncExtensions.Service_ClientUpdate(Fusion.Photon.Realtime.LoadBalancingClient,System.Threading.CancellationToken,System.Threading.Tasks.TaskCompletionSource{System.Int16})">
             <summary>
             Starts a task that calls <see cref="M:Fusion.Photon.Realtime.LoadBalancingClient.Service"/> every updateIntervalMs milliseconds.
             The task is stopped by the cancellation token from <see cref="P:Fusion.Photon.Realtime.Async.OperationHandler.Token"/>.
@@ -437,6 +442,11 @@
         </member>
         <member name="F:Fusion.Photon.Realtime.ConnectionHandler.AppQuits">
             <summary>Indicates that the app is closing. Set in OnApplicationQuit().</summary>
+        </member>
+        <member name="M:Fusion.Photon.Realtime.ConnectionHandler.StaticReset">
+            <summary>
+            Resets statics for Domain Reload
+            </summary>
         </member>
         <member name="M:Fusion.Photon.Realtime.ConnectionHandler.OnApplicationQuit">
             <summary>Called by Unity when the application gets closed. The UnityEngine will also call OnDisable, which disconnects.</summary>
@@ -2101,20 +2111,20 @@
              Called when room properties changed. The propertiesThatChanged contain only the keys that changed.
              </summary>
              <remarks>
-             In most cases, this method gets called due to some player settings Room Properties.
-             However, there are also "Well Known Properties", which use byte keys and this callback may include them.
-             Especially when entering a room, the server will also send the required Well Known Properties and those
-             are not filtered out before Realtime calls OnRoomPropertiesUpdate.
+             In most cases, this method gets called when some player changes the Room Properties.
+             However, there are also "Well Known Properties" (which use byte keys) and this callback may include them.
+             Especially when entering a room, the server will also send the required Well Known Properties and they
+             are not filtered out for the OnRoomPropertiesUpdate callback.
             
              You can safely ignore the byte typed keys in propertiesThatChanged.
-             
+            
              Changing properties is usually done by Room.SetCustomProperties.
              </remarks>
              <param name="propertiesThatChanged"></param>
         </member>
         <member name="M:Fusion.Photon.Realtime.IInRoomCallbacks.OnPlayerPropertiesUpdate(Fusion.Photon.Realtime.Player,ExitGames.Client.Photon.Hashtable)">
             <summary>
-            Called when custom player-properties are changed. Player and the changed properties are passed as object[].
+            Called when custom player-properties are changed.
             </summary>
             <remarks>
             Changing properties must be done by Player.SetCustomProperties, which causes this callback locally, too.
@@ -4498,10 +4508,12 @@
         <member name="M:Fusion.SessionProperty.Convert(System.Object)">
             <summary>
             Convert a particular object into a <see cref="T:Fusion.SessionProperty"/>.
-            If the object type is not supported, null will be returned.
+            Check the object type support using <see cref="M:Fusion.SessionProperty.Support(System.Object)"/>.
+            If the object type is not supported, <see cref="T:System.ArgumentException"/> will be thrown.
             </summary>
             <param name="obj">Object reference to be converted</param>
             <returns>Instance of a <see cref="T:Fusion.SessionProperty"/> if type is supported, null otherwise</returns>
+            <exception cref="T:System.ArgumentException">If the object type passed as argument is not supported</exception>
         </member>
     </members>
 </doc>

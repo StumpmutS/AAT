@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 7625194758283331549}
   - component: {fileID: 5254621670058603975}
   - component: {fileID: 2931114733128532946}
+  - component: {fileID: 9091822178558896440}
   m_Layer: 0
   m_Name: MoleMoundPrefab
   m_TagString: Untagged
@@ -94,6 +95,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 436776547056741488}
+  - {fileID: 9091822178558896440}
   SimulationBehaviours: []
 --- !u!114 &436776547056741488
 MonoBehaviour:
@@ -173,7 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionType: 2
+  selectable: {fileID: 0}
+  hoverable: {fileID: 0}
   outline: {fileID: 8769228762136388623}
 --- !u!65 &5254621670058603975
 BoxCollider:
@@ -200,6 +203,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae52a10ab3f6784fab20731ea2b45dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectable: {fileID: 0}
+  spawner: {fileID: 0}
+--- !u!114 &9091822178558896440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755479409601915350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  layersToChange: []
 --- !u!1001 &3788736255846288347
 PrefabInstance:
   m_ObjectHideFlags: 0
