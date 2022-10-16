@@ -5,7 +5,7 @@ public class UnitStatsDisplayContainer : DataDisplayContainer
     [SerializeField] private LayoutDisplay layoutDisplay;
     [SerializeField] private FullImageTextDisplay unitStatDisplayPrefab;
 
-    public override void DisplayData(StumpData data)
+    public override void DisplayData(object data)
     {
         layoutDisplay.Clear();
         if (data == null) return;

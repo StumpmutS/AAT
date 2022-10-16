@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Build Resource Ref")]
+[CreateAssetMenu(menuName = "Ref/Build Resource Ref")]
 public class BuildResourceReference : ScriptableObject, ISerializationCallbackReceiver
 {
     public static Dictionary<ScriptableObject, string> StaticSOResourcePaths = new();

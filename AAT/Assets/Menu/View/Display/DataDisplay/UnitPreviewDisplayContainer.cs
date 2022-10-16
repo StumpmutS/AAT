@@ -6,7 +6,7 @@ public class UnitPreviewDisplayContainer : DataDisplayContainer
 {
     private GameObject _currentPreview;
     
-    public override void DisplayData(StumpData data)
+    public override void DisplayData(object data)
     {
         if (_currentPreview != null) Destroy(_currentPreview);
         if (data == null) return;

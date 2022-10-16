@@ -10,7 +10,7 @@ public class DataContainerController : MonoBehaviour
     [SerializeField] private InteractableDataContainer mainDataDisplay;
     [SerializeField] private List<DataFilter> dataFilters;
 
-    public UnityEvent<StumpData> OnDataSelected;
+    public UnityEvent<object> OnDataSelected;
 
     public virtual async void ResetView()
     {
@@ -25,7 +25,7 @@ public class DataContainerController : MonoBehaviour
         OnDataSelected.Invoke(null);
     }
 
-    private void HandleDataCallback(int value, StumpData data)
+    private void HandleDataCallback(object data)
     {
         OnDataSelected.Invoke(data);
     }

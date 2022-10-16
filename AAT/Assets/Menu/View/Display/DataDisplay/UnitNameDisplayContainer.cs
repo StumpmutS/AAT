@@ -6,7 +6,7 @@ public class UnitNameDisplayContainer : DataDisplayContainer
 {
     [SerializeField] private TMP_Text text;
 
-    public override void DisplayData(StumpData data)
+    public override void DisplayData(object data)
     {
         if (data == null)
         {

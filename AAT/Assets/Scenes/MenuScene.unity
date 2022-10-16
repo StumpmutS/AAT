@@ -1547,7 +1547,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layoutDisplay: {fileID: 176691885}
-  unitIconPrefab: {fileID: 1069923702841992126, guid: 93b91224b0bd8c34bb4ef7f0bf8354e6, type: 3}
+  toggleGroup: {fileID: 176691886}
+  unitIconPrefab: {fileID: 5750381509653929332, guid: 46bd0045c388e7e48a41a10a7268f7db, type: 3}
 --- !u!114 &811672327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6222,7 +6223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7507246152094130124, guid: 8304033bb5642c74aaa40e0ebb30a0f2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507246152094130124, guid: 8304033bb5642c74aaa40e0ebb30a0f2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6230,7 +6231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7507246152094130124, guid: 8304033bb5642c74aaa40e0ebb30a0f2, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507246152094130124, guid: 8304033bb5642c74aaa40e0ebb30a0f2, type: 3}
       propertyPath: m_AnchorMin.y
@@ -6274,7 +6275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7507246152094130124, guid: 8304033bb5642c74aaa40e0ebb30a0f2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1910
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7507246152094130124, guid: 8304033bb5642c74aaa40e0ebb30a0f2, type: 3}
       propertyPath: m_AnchoredPosition.y

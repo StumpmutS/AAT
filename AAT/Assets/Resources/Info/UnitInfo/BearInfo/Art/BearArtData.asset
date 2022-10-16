@@ -12,7 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e80db217a2a68047aa3a61739de3989, type: 3}
   m_Name: BearArtData
   m_EditorClassIdentifier: 
-  unitIcon: {fileID: 21300000, guid: f6b0c923fd8af7946a9dcf9e0b841669, type: 3}
+  unitIcon:
+  - image:
+      fills:
+      - {fileID: 21300000, guid: f6b0c923fd8af7946a9dcf9e0b841669, type: 3}
+      fillColors:
+      - {r: 1, g: 1, b: 1, a: 1}
+      lighting: {fileID: 0}
+      lightingColor: {r: 0, g: 0, b: 0, a: 0}
+      shading: {fileID: 0}
+      shadingColor: {r: 0, g: 0, b: 0, a: 0}
+      border: {fileID: 0}
+      borderColor: {r: 0, g: 0, b: 0, a: 0}
+      borderOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
+    text:
+      Text: 
+      TextColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0
+      TextOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
   unitStatIcons: {fileID: 11400000, guid: 1e964271b4613e54abce8b9787de380c, type: 2}
   unitPreview: {fileID: 613031884922237328, guid: 68bd321d8e5f6ed41b5331352bcabd19, type: 3}
   skins:

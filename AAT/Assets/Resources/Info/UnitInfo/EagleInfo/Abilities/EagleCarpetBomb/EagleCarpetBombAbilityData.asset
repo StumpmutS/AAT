@@ -21,6 +21,7 @@ MonoBehaviour:
     CanBeCastOver: 0
     AllowCastOverTimer: 0
     Restrictions: []
+    States: []
     AbilityComponents:
     - {fileID: 11400000, guid: dd10ee20cae68b043ad3cc38696d4e65, type: 2}
     - {fileID: 11400000, guid: 4ffe2ee8ac66481428f9e8ba77dfa5c1, type: 2}

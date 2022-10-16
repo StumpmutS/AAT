@@ -23,6 +23,8 @@ public class LayoutDisplay : MonoBehaviour
     {
         foreach (var child in _children)
         {
+            if (child == null) continue;
+
             Destroy(child.gameObject);
         }
         

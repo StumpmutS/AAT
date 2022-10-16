@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -20,8 +21,9 @@ public class ToggleDisplay : MonoBehaviour
         toggle.onValueChanged.AddListener(UpdateDisplay);
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForEndOfFrame();
         UpdateDisplay(toggle.isOn);
     }
 

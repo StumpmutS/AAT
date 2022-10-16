@@ -1,6 +1,7 @@
 using System.Collections;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utility.Scripts;
 
 [CreateAssetMenu(menuName = "Unit Data/Abilities/Spawn/Unit Teleporter Spawn Ability Component")]
@@ -9,7 +10,7 @@ public class UnitTeleporterSpawnAbilityComponent : AbilityComponent
     [SerializeField] private UnitController teleportPointUnit;
     [SerializeField] private float timeForOtherPoint;
     [SerializeField] private Vector3 originOffset, destinationOffset;
-    [SerializeField] private UnitGroupController unitGroupController;
+    [FormerlySerializedAs("unitGroupController")] [SerializeField] private UnitGroup unitGroup;
 
     public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {

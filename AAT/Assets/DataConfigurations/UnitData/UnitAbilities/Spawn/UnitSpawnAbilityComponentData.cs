@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class UnitSpawnAbilityComponentData : AbilityComponent
 {
     [SerializeField] private bool useCurrentGroup;
-    [SerializeField] private UnitGroupController unitGroupPrefab;
+    [SerializeField] private UnitGroup unitGroupPrefab;
     [SerializeField] private UnitController unitPrefab;
     [SerializeField] private int unitsPerOffset;
     [SerializeField] protected List<Vector3> spawnOffsets;
@@ -18,16 +19,16 @@ public class UnitSpawnAbilityComponentData : AbilityComponent
         if (!useCurrentGroup)
         {
             var unitGroup = unit.Runner.Spawn(unitGroupPrefab, inputAuthority:unit.Object.InputAuthority);
-            SpawnUnits(unit, unitGroup, 0);
+            SpawnUnits(unit, 0);
         }
         
         for (int i = useCurrentGroup? 0 : 1; i < spawnOffsets.Count; i++)
         {
-            SpawnUnits(unit, unit.UnitGroup, i);
+            SpawnUnits(unit, i);
         }
     }
     
-    private void SpawnUnits(UnitController unit, UnitGroupController unitGroup, int index)
+    private void SpawnUnits(UnitController unit, int index)
     {
         for (int i = 0; i < unitsPerOffset; i++)
         {
@@ -39,7 +40,8 @@ public class UnitSpawnAbilityComponentData : AbilityComponent
 
         void InitUnit(NetworkRunner _, NetworkObject o)
         {
-            o.GetComponent<UnitController>().Init(unit.Team.GetTeamNumber(), unit.Sector, unitGroup);
+            throw new NotImplementedException();
+            //o.GetComponent<UnitController>().Init(unit.Team.GetTeamNumber(), unit.Sector, unitGroup);
         }
     }
 }

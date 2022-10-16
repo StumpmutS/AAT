@@ -6,7 +6,7 @@ namespace Utility.Scripts
 {
     public static class DistanceCompare
     {
-        public static T FindClosestThing<T>(IEnumerable<T> things, Vector3 fromPoint, T returnIfPresent = default, T ignore = default) where T: Component
+        public static T FindClosestComponent<T>(IEnumerable<T> things, Vector3 fromPoint, T returnIfPresent = default, T ignore = default) where T: Component
         {
             var components = things as T[] ?? things.ToArray();
             if (returnIfPresent != default)

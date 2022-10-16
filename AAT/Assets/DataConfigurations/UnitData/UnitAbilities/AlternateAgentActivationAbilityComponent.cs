@@ -5,9 +5,9 @@ using UnityEngine;
 public class AlternateAgentActivationAbilityComponent : AbilityComponent
 {
     [Tooltip("Must be inheritor of IAgent")]
-    [SerializeField] private ComponentState agent1;
+    [SerializeField] private ComponentState<AgentTransitionBlackboard> agent1;
     [Tooltip("Must be inheritor of IAgent")]
-    [SerializeField] private ComponentState agent2;
+    [SerializeField] private ComponentState<AgentTransitionBlackboard> agent2;
 
     public override void ActivateComponent(UnitController unit, Vector3 point = default)
     {
@@ -15,9 +15,9 @@ public class AlternateAgentActivationAbilityComponent : AbilityComponent
         TryActivate(unit, agent2);
     }
 
-    private bool TryActivate(UnitController unit, ComponentState agent)
+    private bool TryActivate(UnitController unit, ComponentState<AgentTransitionBlackboard> agent)
     {
-        if (!unit.TryGetComponent<NetworkStateComponentContainer>(out var container))
+        if (!unit.TryGetComponent<NetworkComponentStateContainer<AgentTransitionBlackboard>>(out var container))
         {
             Debug.LogError("unit does not have a network component state container");
             return false;

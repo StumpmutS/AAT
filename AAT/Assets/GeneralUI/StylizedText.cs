@@ -4,12 +4,16 @@ using UnityEngine;
 [Serializable]
 public class StylizedText
 {
-    [SerializeField] private string text;
-    public string Text => text;
-    [SerializeField] private Color textColor;
-    public Color TextColor => textColor;
-    [SerializeField] private float fontSize;
-    public float FontSize => fontSize;
-    [SerializeField] private RectStretchValues textOffsets;
-    public RectStretchValues TextOffsets => textOffsets;
+    public string Text;
+    public Color TextColor;
+    public float FontSize;
+    public RectStretchValues TextOffsets;
+
+    public StylizedText(string text, Color textColor, float fontSize, RectStretchValues textOffsets)
+    {
+        Text = text;
+        TextColor = textColor;
+        FontSize = fontSize;
+        TextOffsets = textOffsets;
+    }
 }

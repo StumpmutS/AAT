@@ -60,7 +60,6 @@ GameObject:
   - component: {fileID: 6450276685902235152}
   - component: {fileID: 4692925445078932745}
   - component: {fileID: 9081296286098889832}
-  - component: {fileID: 5064085788945692667}
   - component: {fileID: 7215174274654378358}
   - component: {fileID: 7029504970933243405}
   - component: {fileID: 549172487382581782}
@@ -124,7 +123,6 @@ MonoBehaviour:
   SimulationBehaviours:
   - {fileID: 6450276685902235152}
   - {fileID: 9081296286098889832}
-  - {fileID: 5064085788945692667}
   - {fileID: 7029504970933243405}
 --- !u!114 &6637224423672478836
 MonoBehaviour:
@@ -314,8 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decalDirectionMultiplier: 2
-  decalOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1009455223053489981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  unitDataManager: {fileID: 140843128394030074}
+  stats: {fileID: 0}
 --- !u!114 &6450276685902235152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,18 +428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 4692925445078932745}
---- !u!114 &5064085788945692667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9134256236068135605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da483d87a0a66ef498be39127194c908, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7215174274654378358
 MonoBehaviour:
   m_ObjectHideFlags: 0

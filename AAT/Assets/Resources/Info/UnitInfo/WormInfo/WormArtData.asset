@@ -12,7 +12,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e80db217a2a68047aa3a61739de3989, type: 3}
   m_Name: WormArtData
   m_EditorClassIdentifier: 
-  unitIcon: {fileID: 21300000, guid: c648cf88339f89b49843fc22d6d91ab8, type: 3}
+  unitIcon:
+  - image:
+      fills:
+      - {fileID: 21300000, guid: 9ab8b39d3e059fa408bf6adf4c0ee948, type: 3}
+      fillColors:
+      - {r: 1, g: 1, b: 1, a: 1}
+      lighting: {fileID: 0}
+      lightingColor: {r: 0, g: 0, b: 0, a: 0}
+      shading: {fileID: 0}
+      shadingColor: {r: 0, g: 0, b: 0, a: 0}
+      border: {fileID: 0}
+      borderColor: {r: 0, g: 0, b: 0, a: 0}
+      borderOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
+    text:
+      Text: 
+      TextColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0
+      TextOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
+  - image:
+      fills: []
+      fillColors: []
+      lighting: {fileID: 0}
+      lightingColor: {r: 0, g: 0, b: 0, a: 0}
+      shading: {fileID: 0}
+      shadingColor: {r: 0, g: 0, b: 0, a: 0}
+      border: {fileID: 0}
+      borderColor: {r: 0, g: 0, b: 0, a: 0}
+      borderOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
+    text:
+      Text: 
+      TextColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0
+      TextOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
+  - image:
+      fills: []
+      fillColors: []
+      lighting: {fileID: 0}
+      lightingColor: {r: 0, g: 0, b: 0, a: 0}
+      shading: {fileID: 0}
+      shadingColor: {r: 0, g: 0, b: 0, a: 0}
+      border: {fileID: 0}
+      borderColor: {r: 0, g: 0, b: 0, a: 0}
+      borderOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
+    text:
+      Text: 
+      TextColor: {r: 0, g: 0, b: 0, a: 0}
+      FontSize: 0
+      TextOffsets:
+        leftBottom: {x: 0, y: 0}
+        rightTop: {x: 0, y: 0}
   unitStatIcons: {fileID: 11400000, guid: 1e964271b4613e54abce8b9787de380c, type: 2}
   unitPreview: {fileID: 2982735817341240728, guid: 6f694099a567ba24289bbb7ed7e3c890, type: 3}
   skins:

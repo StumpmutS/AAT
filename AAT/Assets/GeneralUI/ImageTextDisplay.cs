@@ -1,17 +1,26 @@
-using TMPro;
 using UnityEngine;
 
-public class ImageTextDisplay : ImageDisplay
+public class ImageTextDisplay : MonoBehaviour
 {
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private PoolingObject poolObj;
+    public PoolingObject PoolObj => poolObj;
+    
+    [SerializeField] private StylizedImageDisplay imageDisplay;
+    [SerializeField] private StylizedTextDisplay textDisplay;
+
+    public void SetImage(StylizedImage image)
+    {
+        imageDisplay.SetImage(image);
+    }
     
     public void SetText(StylizedText stylizedText)
     {
-        text.text = stylizedText.Text;
-        text.color = stylizedText.TextColor;
-        if (stylizedText.FontSize > .01f) text.enableAutoSizing = false; 
-        text.fontSize = stylizedText.FontSize;
-        text.rectTransform.offsetMin = stylizedText.TextOffsets.LeftBottom;
-        text.rectTransform.offsetMax = stylizedText.TextOffsets.RightTop;
+        textDisplay.SetStylizedText(stylizedText);
+    }
+
+    public void SetTextImage(StylizedTextImage stylizedTextImage)
+    {
+        SetImage(stylizedTextImage.Image);
+        SetText(stylizedTextImage.Text);
     }
 }

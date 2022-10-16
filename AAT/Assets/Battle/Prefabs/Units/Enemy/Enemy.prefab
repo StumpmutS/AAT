@@ -337,13 +337,11 @@ GameObject:
   - component: {fileID: 4331704148283514332}
   - component: {fileID: 4331704148283514323}
   - component: {fileID: 4331704148283514322}
-  - component: {fileID: 4331704148283514334}
   - component: {fileID: 4331704148283514321}
   - component: {fileID: 4331704148283514320}
   - component: {fileID: 4331704148283514335}
   - component: {fileID: 4331704148283514328}
   - component: {fileID: 9030462966438899541}
-  - component: {fileID: -6995454650477655699}
   - component: {fileID: 8718211337999981390}
   m_Layer: 7
   m_Name: Enemy
@@ -398,7 +396,6 @@ MonoBehaviour:
   - {fileID: 4331704148283514328}
   SimulationBehaviours:
   - {fileID: 4331704148283514335}
-  - {fileID: -6995454650477655699}
   - {fileID: 8718211337999981390}
 --- !u!114 &8253979460464806656
 MonoBehaviour:
@@ -474,7 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  unitDataManager: {fileID: 4331704148283514328}
+  stats: {fileID: 0}
 --- !u!114 &4331704148283514322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  selectable: {fileID: 0}
+  networkContainer: {fileID: 0}
   healthBar: {fileID: 0}
   healthBarFill: {fileID: 0}
   healthBarLazyFill: {fileID: 0}
@@ -495,24 +494,8 @@ MonoBehaviour:
   alphaResetTime: 0
   lazySpeed: 0
   healthScaleMultiplier: 0
---- !u!114 &4331704148283514334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4331704148283514345}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 0.019000754, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
+  healthScaleMin: 300
+  healthScaleMax: 700
 --- !u!114 &4331704148283514321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,18 +575,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba2ef1ab59f949741bb85fd8946b77f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-6995454650477655699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4331704148283514345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da483d87a0a66ef498be39127194c908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8718211337999981390

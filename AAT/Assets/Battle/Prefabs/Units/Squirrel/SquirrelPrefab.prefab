@@ -1025,7 +1025,6 @@ GameObject:
   - component: {fileID: 6165724156703658041}
   - component: {fileID: 5916904727556164928}
   - component: {fileID: 4743278742500954077}
-  - component: {fileID: 572899336159934267}
   - component: {fileID: 6994572649603287252}
   - component: {fileID: 5433636808581576493}
   - component: {fileID: 5759228335420568731}
@@ -1088,7 +1087,6 @@ MonoBehaviour:
   - {fileID: 6519343231381679187}
   - {fileID: 577412520234061269}
   - {fileID: 5916904727556164928}
-  - {fileID: 572899336159934267}
   - {fileID: 5433636808581576493}
 --- !u!114 &2938147814150407566
 MonoBehaviour:
@@ -1272,8 +1270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886c289a21fad8845a284a16921be9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decalDirectionMultiplier: 2
-  decalOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &3161474669248493944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,7 +1336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  unitDataManager: {fileID: 430060796365761778}
+  stats: {fileID: 0}
 --- !u!114 &6519343231381679187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,18 +1415,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   unitAbilityData: []
---- !u!114 &572899336159934267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4840677430842725870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da483d87a0a66ef498be39127194c908, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6994572649603287252
 MonoBehaviour:
   m_ObjectHideFlags: 0

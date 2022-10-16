@@ -13,7 +13,7 @@ namespace Utility.Scripts
             {
                 var hits = new Collider[maxHits];
                 Physics.OverlapSphereNonAlloc(pos, range, hits, layerMask);
-                target = DistanceCompare.FindClosestThing(hits, pos, returnIfPresent, ignore);
+                target = DistanceCompare.FindClosestComponent(hits, pos, returnIfPresent, ignore);
                 return true;
             }
 
@@ -27,12 +27,32 @@ namespace Utility.Scripts
             var hits = new List<LagCompensatedHit>();
             if (runner.LagCompensation.OverlapSphere(pos, range, inputAuthority, hits, layerMask) > 0)
             {
-                target = DistanceCompare.FindClosestThing(hits.Select(h => h.Hitbox), pos, returnIfPresent, ignore);
+                target = DistanceCompare.FindClosestComponent(hits.Select(h => h.Hitbox), pos, returnIfPresent, ignore);
                 return true;
             }
 
             target = null;
             return false;
+        }
+
+        public static StumpTarget CheckHitPosition(NetworkRunner runner, PlayerRef inputAuthority, Vector3 position, Vector3 direction)
+        {
+            if (runner.LagCompensation.Raycast(position - direction.normalized * 50,
+                    direction, 50.1f, inputAuthority, out var hit))
+            {
+                return TargetHelper.ConvertToStumpTarget(hit);
+            }
+        
+            //Check for ground hit if no network hitboxes hit
+            if (!Physics.Raycast(position - direction.normalized * 50,
+                    direction, out var localHit, 50.1f, LayerManager.Instance.GroundLayer))
+            {
+                //check down from point if nothing found on direction
+                Physics.Raycast(position, Vector3.down,
+                    out localHit, position.y + 1, LayerManager.Instance.GroundLayer);
+            }
+        
+            return TargetHelper.ConvertToStumpTarget(localHit);
         }
     }
 }
