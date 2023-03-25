@@ -8,6 +8,6 @@ public class AbilityUserActionSender : UserActionSender<AbilityDataContainer>
 
     protected override void UpdateDisplay(UserActionDisplay display, AbilityDataContainer abilityDataContainer)
     {
-        display.Overlay.SetStylizedImages(imageOverlay);
+        //display.Overlay.SetStylizedImages(imageOverlay);
     }
 }

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198c942595edbc1479a366ac34d64d12, type: 3}
+  m_Name: DragonFlamingBreath
+  m_EditorClassIdentifier: 
+  UnitAbilityDataInfo:
+    userActionInfo:
+      label: Flaming Breath
+      icon:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: cd2a9681ac4616545997a7eb707960f5, type: 3}
+          fillColors:
+          - {r: 0.63994116, g: 0.071110725, b: 0.8867924, a: 1}
+          lighting: {fileID: 0}
+          lightingColor: {r: 0, g: 0, b: 0, a: 0}
+          shading: {fileID: 0}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0}
+          border: {fileID: 0}
+          borderColor: {r: 0, g: 0, b: 0, a: 0}
+          borderOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+        text:
+          Text: 
+          TextColor: {r: 0, g: 0, b: 0, a: 0}
+          FontSize: 0
+          TextOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+      keyCode: 113
+    ActiveTime: 6
+    TargetTimeOutTime: 5
+    CanBeCastOver: 0
+    AllowCastOverTimer: 0
+    individualRestrictions: []
+    groupRestrictions:
+    - {fileID: 11400000, guid: 325126d888c9438489a75107d88aadf5, type: 2}
+    StateType:
+      searchKeyWord: state
+      targetTypeAssemblyQName: AbilityComponentState, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    StatePrefab: {fileID: -2838492211936549494, guid: a0f174bb21c48b9449e385b0f251252e, type: 3}

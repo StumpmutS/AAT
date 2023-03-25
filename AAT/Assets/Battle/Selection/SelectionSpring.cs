@@ -1,20 +1,21 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(SelectableController), typeof(Hoverable))]
+[RequireComponent(typeof(Selectable), typeof(Hoverable))]
 public class SelectionSpring : MonoBehaviour
 {
     [SerializeField] private SpringController springs;
     [SerializeField] private float nudgeSpeed;
     
-    private SelectableController _selectable;
+    private Selectable _selectable;
     private Hoverable _hoverable;
 
     private void Awake()
     {
-        _selectable = GetComponent<SelectableController>();
+        _selectable = GetComponent<Selectable>();
         BaseInputManager.OnLeftCLickUp += HandleClick;
         _selectable.OnDeselect.AddListener(HandleDeselect);
+        _hoverable = GetComponent<Hoverable>();
         _hoverable.OnHover.AddListener(HandleHover);
         _hoverable.OnHoverStop.AddListener(HandleHoverStop);
     }

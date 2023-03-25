@@ -4,23 +4,42 @@ using UnityEngine;
 
 public class UserAction
 {
+    private readonly IActionCreator _actionCreator;
     public string Category { get; }
     public ESubCategory SubCategory { get; }
     public string Label { get; }
-    public Action<object> Action { get; }
+    public Action<object> SelectedAction { get; }
+    public Action<object> DeselectedAction { get; }
     public object ActionObj { get; }
-    public List<StylizedTextImage> IconSet { get; }
+    public List<StylizedTextImage> Icon { get; }
     public KeyCode KeyCode { get; }
 
-    public UserAction(string category, ESubCategory subCategory, string label, List<StylizedTextImage> icon, Action<object> action, object actionObj, KeyCode keyCode)
+    public UserAction(IActionCreator actionCreator, string category, ESubCategory subCategory, string label, List<StylizedTextImage> icon, Action<object> selectedAction, Action<object> deselectedAction, object actionObj, KeyCode keyCode)
     {
-        Category = category; // ex: Wolf Unit
+        _actionCreator = actionCreator;
+        Category = category; // ex: Wolf Group
         SubCategory = subCategory; // ex: ESubCategory.Ability
         Label = label; // ex: Howl
-        IconSet = icon;
-        Action = action;
+        Icon = icon;
+        SelectedAction = selectedAction;
+        DeselectedAction = deselectedAction;
         ActionObj = actionObj;
         KeyCode = keyCode;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        var otherAction = (UserAction) obj;
+        return (otherAction._actionCreator == this._actionCreator && otherAction.Category == this.Category &&
+                (int) otherAction.SubCategory == (int) this.SubCategory && otherAction.Label == this.Label);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_actionCreator, Category, (int) SubCategory, Label);
     }
 }
 
@@ -36,7 +55,7 @@ public enum ESubCategory
 {
     None,
     Ability,
-    Movement, // all but ability are tentative
+    Movement,
     Spawning,
     Upgrades
 }

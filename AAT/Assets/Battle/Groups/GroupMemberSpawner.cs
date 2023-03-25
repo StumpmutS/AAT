@@ -1,13 +1,12 @@
-using System.Collections;
+using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(GroupFormatter), typeof(Group))]
 public class GroupMemberSpawner : SimulationBehaviour
 {
-    [SerializeField] private GroupMember memberPrefab;
-    [SerializeField] private UnitSpawnData unitSpawnData;
-    [SerializeField] private UnitSpawnPointController spawnPoint;
+    [SerializeField] private MemberSpawnData memberSpawnData;
+    [SerializeField] private GroupMemberSpawnPointController spawnPoint;
 
     private Group _group;
     private GroupFormatter _groupFormatter;
@@ -20,26 +19,20 @@ public class GroupMemberSpawner : SimulationBehaviour
 
     private void Start()
     {
-        SpawnMembers();
+        if (memberSpawnData != null) SpawnMembers(memberSpawnData.Info.MemberPrefab, memberSpawnData.Info.UnitsPerGroupAmount,
+            memberSpawnData.Info.SpawnTime, new StumpTarget(null, transform.position));
     }
 
-    private void SpawnMembers()
+    public void SpawnMembers(GroupMember memberPrefab, int memberCount, float spawnTime, StumpTarget target)
     {
-        for (int i = 0; i < unitSpawnData.UnitsPerGroupAmount; i++)
+        spawnPoint.Spawn(memberPrefab, _group, _groupFormatter, spawnTime, memberCount, target, HandleSpawned);
+    }
+
+    private void HandleSpawned(IEnumerable<GroupMember> members)
+    {
+        foreach (var member in members)
         {
-            SpawnMember(_groupFormatter.GetPosition(unitSpawnData.UnitsPerGroupAmount, i, spawnPoint.transform.position), unitSpawnData.SpawnTime);
+            _group.AddMember(member);
         }
-    }
-
-    private void SpawnMember(Vector3 pos, float spawnTime)
-    {
-        StartCoroutine(CoSpawnMember(pos, spawnTime));
-    }
-
-    private IEnumerator CoSpawnMember(Vector3 pos, float spawnTime)
-    {
-        yield return new WaitForSeconds(spawnTime);
-        var member = Runner.Spawn(memberPrefab, pos, Quaternion.identity);
-        _group.AddMember(member);
     }
 }

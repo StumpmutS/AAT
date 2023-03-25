@@ -69,8 +69,8 @@ public class SectorManager : MonoBehaviour
         var visitedSectors = new HashSet<SectorController>();
         while (visitedSectors.Count < table.Count)
         {
-            var currentSector = StumpDictionaryExtensions.MinKeyByValue(table.Where(kvp => 
-                !visitedSectors.Contains(kvp.Key)).ToDictionary(x => x.Key, x => x.Value.Item1));
+            var currentSector = table.Where(kvp => !visitedSectors.Contains(kvp.Key))
+                .ToDictionary(x => x.Key, x => x.Value.Item1).MinKeyByValue();
             
             foreach (var sector in _sectorConnections[currentSector])
             {
@@ -109,7 +109,7 @@ public class SectorManager : MonoBehaviour
         {
             _connectedSectorGroups.Add(new List<SectorController>() {fromSector, toSector});
         }
-        else
+        else if (fromGroup != toGroup)
         {
             _connectedSectorGroups[_connectedSectorGroups.IndexOf(fromGroup)].AddRange(toGroup);
             _connectedSectorGroups.Remove(toGroup);

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GroupSelectableSpringListener : SpringListener, ISerializationCallbackReceiver
 {
     [SerializeField] private bool allowAtNeg1, allowAt0, allowAt1;
-    [SerializeField] private List<Selectable> selectables;
+    [SerializeField] private List<UnityEngine.UI.Selectable> selectables;
     
     public override void HandleSpringValue(float amount, float target)
     {

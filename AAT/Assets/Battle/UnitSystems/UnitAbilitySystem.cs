@@ -1,24 +1,54 @@
+using System;
+using System.Collections;
+using Fusion;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class UnitAbilitySystem : MonoBehaviour, IAbilitySystem
+public class UnitAbilitySystem : NetworkBehaviour, IAbilitySystem
 {
-    [SerializeField] private NetworkComponentStateContainer<AiTransitionBlackboard> container;
+    [FormerlySerializedAs("container")] [SerializeField] private AiNetworkComponentStateContainer aiContainer;
+    [SerializeField] private TransformContainer transformContainer;
     
-    public bool AbilityReady() => false;
+    private SectorReference _sectorReference;
+    private AbilityBrainComponentState _brainComponentState;
 
-    public void PrepareAbility(UnitAbilityDataInfo ability)
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        _sectorReference = GetComponent<SectorReference>();
     }
 
-    public void CastAbility(UnitAbilityDataInfo ability)
+    public override void Spawned()
     {
-        if (container.TryGetComponentState(typeof(AbilityBrainComponentState), out var state))
+        base.Spawned();
+        if (aiContainer.TryGetComponentState(typeof(AbilityBrainComponentState), out var state))
         {
-            Debug.LogError("Ability Brain not found on the state container");
-            return;
+            _brainComponentState = (AbilityBrainComponentState) state;
         }
+    }
 
-        ((AbilityBrainComponentState) state).SetAbility(ability.StatePrefab);
+    public void PrepareAbility(UnitAbilityData ability)
+    {
+    }
+
+    public void UnPrepareAbility(UnitAbilityData ability)
+    {
+    }
+
+    public void CastAbility(UnitAbilityData ability, StumpTarget target)
+    {
+        if (!RestrictionHelper.CheckRestrictions(ability.UnitAbilityDataInfo.Restrictions,
+                new [] {new GameActionInfo(Object, _sectorReference.Sector, transformContainer.ToChain(), target)})) return;
+        RpcCastAbility(BuildReferenceContainer.Instance.BuildResourceReference.SOResourcePaths[ability], TargetHelper.ConvertToNetworkedStumpTarget(target));
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RpcCastAbility(string abilityPath, NetworkedStumpTarget networkedTarget)
+    {
+        var ability = Resources.Load<UnitAbilityData>(abilityPath);
+        var target = TargetHelper.ConvertToStumpTarget(networkedTarget);
+
+        if (!RestrictionHelper.CheckRestrictions(ability.UnitAbilityDataInfo.Restrictions,
+                new [] {new GameActionInfo(Object, _sectorReference.Sector, transformContainer.ToChain(), target)})) return;
+        _brainComponentState.SetAbility(ability.UnitAbilityDataInfo.StatePrefab, target);
     }
 }

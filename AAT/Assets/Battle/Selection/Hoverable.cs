@@ -7,12 +7,12 @@ public class Hoverable : MonoBehaviour
     public UnityEvent OnHover;
     public UnityEvent OnHoverStop;
 
-    public void Hover()
+    public virtual void Hover()
     {
         OnHover.Invoke();
     }
 
-    public void StopHover()
+    public virtual void StopHover()
     {
         OnHoverStop.Invoke();
     }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WormMaxHealthB
   m_EditorClassIdentifier: 
   Stat: 0
-  Value: 1000
+  Value: 400

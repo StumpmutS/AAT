@@ -6,25 +6,52 @@ public abstract class UserActionSender<TActionCreator> : Singleton<UserActionSen
 {
     [SerializeField] protected List<StylizedTextImage> imageOverlay;
 
-    private Dictionary<string, Dictionary<string, List<TActionCreator>>> _actionCreators = new();
+    private Dictionary<string, Dictionary<string, Dictionary<TActionCreator, UserAction>>> _actionCreators = new();
 
     protected abstract ESelectionType SelectionType();
     protected abstract ESubCategory SubCategory();
 
-    private void Awake()
+    private void Start()
     {
         SelectionManager.Instance.OnSelected += HandleSelection;
+        SelectionManager.Instance.OnDeselected += HandleDeselection;
     }
 
-    private void HandleSelection(IEnumerable<SelectableController> selectables)
+    private void HandleSelection(IEnumerable<Selectable> selectables)
+    {
+        var categorizedActions = GetCategorizedActions(selectables);
+
+        foreach (var category in categorizedActions)  
+        {
+            foreach (var labelGroup in category.Value)
+            {
+                UserActionManager.Instance.AddActionGroup(category.Key, SubCategory(), labelGroup.Key, labelGroup.Value);
+            }
+        }
+    }
+
+    private void HandleDeselection(IEnumerable<Selectable> selectables)
+    {
+        var categorizedActions = GetCategorizedActions(selectables);
+
+        foreach (var category in categorizedActions)  
+        {
+            foreach (var labelGroup in category.Value)
+            {
+                UserActionManager.Instance.ClearActionGroup(category.Key, SubCategory(), labelGroup.Key, labelGroup.Value);
+            }
+        }
+    }
+
+    private Dictionary<string, Dictionary<string, List<UserAction>>> GetCategorizedActions(IEnumerable<Selectable> selectables)
     {
         Dictionary<string, Dictionary<string, List<UserAction>>> categorizedActions = new();
         
         foreach (var selectable in selectables.Where(s => s.SelectionType == SelectionType()))
         {
-            if (!selectable.TryGetComponent<TActionCreator>(out var container)) continue;
+            if (!selectable.TryGetComponent<TActionCreator>(out var creator)) continue;
             
-            var actions = container.GetActions();
+            var actions = creator.GetActions();
 
             foreach (var action in actions)
             {
@@ -42,13 +69,7 @@ public abstract class UserActionSender<TActionCreator> : Singleton<UserActionSen
             }
         }
 
-        foreach (var category in categorizedActions)  
-        {
-            foreach (var labelGroup in category.Value)
-            {
-                UserActionManager.Instance.AddActionGroup(category.Key, SubCategory(), labelGroup.Key, labelGroup.Value);
-            }
-        }
+        return categorizedActions;
     }
 
     private void Update()
@@ -56,7 +77,8 @@ public abstract class UserActionSender<TActionCreator> : Singleton<UserActionSen
         UpdateDisplayData();
     }
 
-    private void UpdateDisplayData()
+    private void UpdateDisplayData() //TODO: reference to actionCreator in user action, just call useraction.creator.updatedisplay(display)
+                                     //from the useractiondisplay, then this can do whatever it wants to the display
     {
         foreach (var categoryKvp in _actionCreators)
         {
@@ -64,13 +86,13 @@ public abstract class UserActionSender<TActionCreator> : Singleton<UserActionSen
             {
                 var display = UserActionManager.Instance.GetActionDisplay(categoryKvp.Key, SubCategory(), labelGroupKvp.Key);
 
-                foreach (var container in labelGroupKvp.Value)
+                foreach (var actionCreatorKvp in labelGroupKvp.Value)
                 {
-                    UpdateDisplay(display, container);
+                    UpdateDisplay(display, actionCreatorKvp.Key);
                 }
             }
         }
     }
 
-    protected abstract void UpdateDisplay(UserActionDisplay display, TActionCreator abilityDataContainer);
+    protected abstract void UpdateDisplay(UserActionDisplay display, TActionCreator actionCreator);
 }

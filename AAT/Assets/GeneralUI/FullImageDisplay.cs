@@ -19,25 +19,7 @@ public class FullImageDisplay : MonoBehaviour
         }
     }
 
-    public void AddImage(StylizedTextImage stylizedTextImage, EOverlay overlay)
-    {
-        var display = CreateImage(stylizedTextImage);
-
-        switch (overlay)
-        {
-            case EOverlay.InFront:
-                display.transform.SetAsLastSibling();
-                break;
-            case EOverlay.InBack:
-                display.transform.SetAsFirstSibling();
-                break;
-            default: break;
-        }
-        
-        display.transform.SetAsFirstSibling();
-    }
-
-    private ImageTextDisplay CreateImage(StylizedTextImage stylizedTextImage)
+    private void CreateImage(StylizedTextImage stylizedTextImage)
     {
         var created = PoolingManager.Instance.CreatePoolingObject(imageTextDisplayPrefab.PoolObj);
         _currentDisplays.Add(created);
@@ -45,7 +27,6 @@ public class FullImageDisplay : MonoBehaviour
         display.transform.SetParent(imageContainer, false);
         display.SetImage(stylizedTextImage.Image);
         display.SetText(stylizedTextImage.Text);
-        return display;
     }
 
     private void ClearDisplay()

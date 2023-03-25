@@ -8,6 +8,7 @@ using Utility.Scripts;
 public class Player : NetworkBehaviour
 {
     [Networked, Capacity(128)] public NetworkLinkedList<NetworkId> OwnedSectorIds => default;
+    [Networked, Capacity(8)] public NetworkDictionary<EResourceType, int> Resources => default;
 
     public static StumpTarget RightClickTarget { get; private set; }
     public static StumpTarget LeftClickTarget { get; private set; }
@@ -32,14 +33,15 @@ public class Player : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!GetInput<NetworkedInputData>(out var input) || input.RightClickPosition == default)
+        if (!GetInput<NetworkedInputData>(out var input))
         {
+            LeftClickTarget = default;
             RightClickTarget = default;
             return;
         }
 
-        LeftClickTarget = CollisionDetector.CheckHitPosition(Runner, Object.InputAuthority, input.LeftClickPosition, input.LeftClickDirection);
-        RightClickTarget = CollisionDetector.CheckHitPosition(Runner, Object.InputAuthority, input.RightClickPosition, input.RightClickDirection);
+        LeftClickTarget = input.LeftClickPosition == default ? default : CollisionDetector.CheckHitPosition(Runner, Object.InputAuthority, input.LeftClickPosition, input.LeftClickDirection);
+        RightClickTarget = input.RightClickPosition == default ? default : CollisionDetector.CheckHitPosition(Runner, Object.InputAuthority, input.RightClickPosition, input.RightClickDirection);
     }
 }
 

@@ -9,7 +9,6 @@ using Utility.Scripts;
 public class EnemyDebug : MonoBehaviour
 {
     [SerializeField] private Image tint;
-    [SerializeField] private UnitController unit;
     
     private void Awake()
     {
@@ -36,13 +35,13 @@ public class EnemyDebug : MonoBehaviour
     {
         throw new NotImplementedException();
         
-        if (UIHoveredReference.Instance.OverUI()) return;
+        /*if (UIHoveredReference.Instance.OverUI()) return;
         
         StumpNetworkRunner.Instance.Runner.Spawn(unit, BaseInputManager.LeftClickPosition, Quaternion.identity, onBeforeSpawned:
             (_, o) =>
             {
                 var unit = o.GetComponent<UnitController>();
                 //unit.Init(2, SectorFinder.FindSector(BaseInputManager.LeftClickPosition, 5, LayerManager.Instance.GroundLayer), null);
-            });
+            });*/
     }
 }

@@ -14,9 +14,9 @@ public class StatsManager : NetworkBehaviour
     }
     
     [SerializeField] private BaseUnitStatsData unitStatsData;
+    [SerializeField] private EffectContainer effectContainer;
 
     private Dictionary<EUnitFloatStats, float> _startingStats = new();
-    private List<StatModifier> _modifiers;
 
     public event Action<StatsManager> OnRefreshStats = delegate { };
 
@@ -43,8 +43,8 @@ public class StatsManager : NetworkBehaviour
             _currentStats.Set(stat.Stat, stat.Value);
         }
     }
-    
-    public float GetStat(EUnitFloatStats stat)
+
+    private float GetBaseStat(EUnitFloatStats stat)
     {
         if (_currentStats.TryGet(stat, out var value))
         {
@@ -57,6 +57,18 @@ public class StatsManager : NetworkBehaviour
         else
         {
             Debug.LogError($"Stat type: {stat} could not be found in either networked or starting stat dictionaries");
+        }
+        
+        return value;
+    }
+    
+    public float GetModifiedStat(EUnitFloatStats stat)
+    {
+        var value = GetBaseStat(stat);
+
+        foreach (var modifier in effectContainer.GetEffects<StatModifier>())
+        {
+            value = modifier.ApplyModifierTo(stat, value);
         }
         
         return value;
@@ -74,7 +86,7 @@ public class StatsManager : NetworkBehaviour
     {
         foreach (var stat in stats.Stats.Where(stat => _currentStats.ContainsKey(stat.Stat)))
         {
-            SetStat(stat.Stat, GetStat(stat.Stat) + stat.Value);
+            SetStat(stat.Stat, GetBaseStat(stat.Stat) + stat.Value);
         }
     }
 
@@ -82,50 +94,18 @@ public class StatsManager : NetworkBehaviour
     {
         foreach (var stat in stats.Stats.Where(stat => _currentStats.ContainsKey(stat.Stat)))
         {
-            SetStat(stat.Stat, GetStat(stat.Stat) - stat.Value);
+            SetStat(stat.Stat, GetBaseStat(stat.Stat) - stat.Value);
         }
     }
 
     public void ModifyFloatStat(EUnitFloatStats statType, float amount)
     {
         if (!_currentStats.ContainsKey(statType)) return;
-        _currentStats.Set(statType, GetStat(statType) + amount);
+        _currentStats.Set(statType, GetModifiedStat(statType) + amount);
     }
 
     public int CalculatePower()
     {
         return 1;
-    }
-
-    public void AddModifier(StatModifier modifier)
-    {
-        Dictionary<EUnitFloatStats, float> fakeStats = new();
-        foreach (var kvp in _currentStats)
-        {
-            fakeStats[kvp.Key] = kvp.Value;
-        }
-        fakeStats = modifier.ApplyModifierTo(fakeStats);
-        foreach (var kvp in fakeStats)
-        {
-            SetStat(kvp.Key, kvp.Value);
-        }
-        
-        _modifiers.Add(modifier);
-    }
-
-    public void RemoveModifier(StatModifier modifier)
-    {
-        Dictionary<EUnitFloatStats, float> fakeStats = new();
-        foreach (var kvp in _currentStats)
-        {
-            fakeStats[kvp.Key] = kvp.Value;
-        }
-        fakeStats = modifier.RemoveModifierFrom(fakeStats);
-        foreach (var kvp in fakeStats)
-        {
-            SetStat(kvp.Key, kvp.Value);
-        }
-
-        _modifiers.Remove(modifier);
     }
 }

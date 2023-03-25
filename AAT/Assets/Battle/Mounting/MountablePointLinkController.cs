@@ -149,7 +149,7 @@ public class MountablePointLinkController : MonoBehaviour
     }
     #endregion
 
-    public void BeginPreviewDisplayLink(BaseMountableController mountable, UnitController unit, bool up)
+    /*public void BeginPreviewDisplayLink(BaseMountableController mountable, UnitController unit, bool up)
     {
         if (!_active || mountablePoints.Count <= 1) return;
 
@@ -157,17 +157,17 @@ public class MountablePointLinkController : MonoBehaviour
         {
             mountableController.TryDisplayPreview(unit);
         }
-    }
+    }*/
 
     public void RemovePreviewDisplay()
     {
         foreach (var mountable in mountablePoints)
         {
-            mountable.TryRemovePreview();
+            //mountable.TryRemovePreview();
         }
     }
 
-    public List<BaseMountableController> DetermineMountables(BaseMountableController mountable, UnitController unit, bool up)
+    /*public List<BaseMountableController> DetermineMountables(BaseMountableController mountable, UnitController unit, bool up)
     {
         if (!_active || mountablePoints.Count <= 1) return new List<BaseMountableController>();
         int index = mountablePoints.IndexOf(mountable);
@@ -175,7 +175,7 @@ public class MountablePointLinkController : MonoBehaviour
         //var returnList = _loop ? DetermineLoop(index, unitCount, up) : DetermineAltering(index, unitCount, up);
         //return returnList;
         throw new NotImplementedException();
-    }
+    }*/
 
     private List<BaseMountableController> DetermineLoop(int index, int unitAmount, bool up)
     {

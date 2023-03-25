@@ -30,50 +30,8 @@ public class StumpNetworkRunner : MonoBehaviour, INetworkRunnerCallbacks
         if (!runner.IsServer) return;
         Debug.Log("Player joined");
         
-        var playerSectors = DetermineSectors(runner, playerRef);
-        var playerObject = runner.Spawn(playerPrefab, inputAuthority: playerRef, onBeforeSpawned: SetupPlayer);
+        var playerObject = runner.Spawn(playerPrefab, inputAuthority: playerRef, onBeforeSpawned: NetworkStartInfo.Instance.SetupPlayer);
         runner.SetPlayerObject(playerRef, playerObject.Object);
-        int playerTeamNum = playerObject.GetComponent<TeamController>().GetTeamNumber();
-        
-        foreach (var sector in playerSectors)
-        {
-            sector.Init(playerRef);
-            NetworkStartInfo.Instance.StartSpawnersBySector[sector].Object.AssignInputAuthority(playerRef);
-            NetworkStartInfo.Instance.StartSpawnersBySector[sector].GetComponent<TeamController>().SetTeamNumber(playerTeamNum);
-        }
-
-        void SetupPlayer(NetworkRunner _, NetworkObject o)
-        {
-            var player = o.GetComponent<Player>();
-            player.AddSectors(playerSectors);
-            TeamManager.Instance.SetupWithTeam(player.GetComponent<TeamController>());
-        }
-    }
-
-    private List<SectorController> DetermineSectors(NetworkRunner runner, PlayerRef newPlayer)
-    {
-        foreach (var sector in NetworkStartInfo.Instance.StartSpawnersBySector.Keys)
-        {
-            if (!SectorAvailable(runner, newPlayer, sector)) continue;
-            return new List<SectorController>() { sector };
-        }
-        
-        Debug.LogError("No sectors available");
-        return null;
-    }
-
-    private bool SectorAvailable(NetworkRunner runner, PlayerRef newPlayer, SectorController sector)
-    {
-        foreach (var player in runner.ActivePlayers)
-        {
-            if (player == newPlayer) continue;
-            if (runner.GetPlayerObject(player).GetComponent<Player>().OwnedSectorIds.Contains(sector.Object.Id))
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 public class LinkPointController : MonoBehaviour
 {
-    [SerializeField] private UnitDeathController deathController;
+    [SerializeField] private DeathController deathController;
     [FormerlySerializedAs("startEnd")] [SerializeField] private bool start;
     public bool Start => start;
     
@@ -11,7 +11,7 @@ public class LinkPointController : MonoBehaviour
     
     private void Awake()
     {
-        if (deathController != null) deathController.OnUnitDeath += DestroyPoint;
+        if (deathController != null) deathController.OnDeath += DestroyPoint;
     }
 
     public void Setup(MountablePointLinkController link, bool start)

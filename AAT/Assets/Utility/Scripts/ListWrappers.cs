@@ -16,4 +16,10 @@ namespace Utility.Scripts
     {
         public List<GameObject> List;
     }
+
+    [Serializable]
+    public class UpgradeDataListWrapper
+    {
+        public List<UpgradeData> UpgradeData;
+    }
 }

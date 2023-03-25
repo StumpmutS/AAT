@@ -16,7 +16,7 @@ public class ComponentStatesRef
         foreach (var asset in assets)
         {
             //asset.GetType().GetMethod("GenerateStatePrefabs").Invoke(asset, null);
-            Debug.LogError($"Asset Name: {asset.name}, Asset Type: {asset.GetType().Name}, Asset Method: {asset.GetType().GetMethod("GenerateStatePrefabs").Name}");
+            Debug.Log($"Asset Name: {asset.name}, Asset Type: {asset.GetType().Name}, Asset Method: {asset.GetType().GetMethod("GenerateStatePrefabs").Name}");
         }
     }
 }

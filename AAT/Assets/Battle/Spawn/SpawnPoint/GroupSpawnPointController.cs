@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class GroupSpawnPointController : SpawnPointController
+public class GroupSpawnPointController : SpawnPointController<Group>
 {
     public void SpawnGroup(Group groupPrefab, float spawnTime, SectorController sector)
     {
@@ -14,8 +14,7 @@ public class GroupSpawnPointController : SpawnPointController
         yield return new WaitForSeconds(spawnTime);
 
         var group = Runner.Spawn(groupPrefab, transform.position, Quaternion.identity);
-        group.Init(sector);
         
-        InvokeOnFinishedSpawn();
+        InvokeOnFinishedSpawn(group);
     }
 }

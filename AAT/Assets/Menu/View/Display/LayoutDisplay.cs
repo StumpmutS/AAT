@@ -1,22 +1,23 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(LayoutGroup))]
 public class LayoutDisplay : MonoBehaviour
 {
+    [SerializeField] private LayoutGroup layoutGroup;
+    
     private HashSet<Transform> _children = new();
-    private LayoutGroup _layoutGroup;
 
     private void Awake()
     {
-        _layoutGroup = GetComponent<LayoutGroup>();
+        if (layoutGroup == null) layoutGroup = GetComponent<LayoutGroup>();
     }
 
     public void Add(Transform rectTransform)
     {
         _children.Add(rectTransform);
-        rectTransform.SetParent(_layoutGroup.transform, false);
+        rectTransform.SetParent(layoutGroup.transform, false);
     }
 
     public void Clear()

@@ -2,15 +2,15 @@ using System;
 using Fusion;
 using UnityEngine;
 
-public class SpawnPointController : NetworkBehaviour
+public class SpawnPointController<T> : NetworkBehaviour
 {
     [SerializeField] protected TeamController team;
     
-    public event Action<SpawnPointController> OnBeginSpawn = delegate { };
+    public event Action<SpawnPointController<T>> OnBeginSpawn = delegate { };
     protected void InvokeOnBeginSpawn() => OnBeginSpawn.Invoke(this);
-    public event Action<SpawnPointController> OnCancelledSpawn = delegate { };
-    public event Action<SpawnPointController> OnFinishedSpawn = delegate { };
-    protected void InvokeOnFinishedSpawn() => OnFinishedSpawn.Invoke(this);
+    public event Action<SpawnPointController<T>> OnCancelledSpawn = delegate { };
+    public event Action<SpawnPointController<T>, T> OnFinishedSpawn = delegate { };
+    protected void InvokeOnFinishedSpawn(T spawned) => OnFinishedSpawn.Invoke(this, spawned);
 
     public virtual void CancelSpawn()
     {

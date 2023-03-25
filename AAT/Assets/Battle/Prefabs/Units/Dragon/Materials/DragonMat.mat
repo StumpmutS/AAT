@@ -111,8 +111,8 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LightDotCutoff: 0.9
-    - _LightValue: 0.7
+    - _LightDotCutoff: 0.97
+    - _LightValue: 1
     - _Metallic: 0
     - _MidValue: 1
     - _OcclusionStrength: 1

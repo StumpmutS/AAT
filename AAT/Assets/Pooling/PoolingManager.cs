@@ -2,15 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolingManager : MonoBehaviour
+public class PoolingManager : Singleton<PoolingManager>
 {
-    public static PoolingManager Instance { get; private set; }
-
     private Dictionary<string, Stack<PoolingObject>> _inactivePoolingObjects = new();
     private Dictionary<string, HashSet<PoolingObject>> _activePoolingObjects = new();
     private Dictionary<PoolingObject, Coroutine> _destroyCoroutines = new();
-
-    private void Awake() => Instance = this;
 
     public PoolingObject CreatePoolingObject(PoolingObject poolingObject)
     {

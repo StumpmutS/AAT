@@ -2,23 +2,22 @@ using System;
 using Fusion;
 using UnityEngine;
 
+[RequireComponent(typeof(TeamController))]
 public class GroupMember : SimulationBehaviour
 {
     [SerializeField] private float radius;
     
     public TeamController Team { get; private set; }
-    public SectorController Sector { get; private set; }
     public Group Group { get; private set; }
 
     private void Awake()
     {
-        throw new NotImplementedException();
+        Team = GetComponent<TeamController>();
     }
 
-    public void Init(int teamNumber, SectorController sector, Group group)
+    public void Init(int teamNumber, Group group)
     {
         Team.SetTeamNumber(teamNumber);
-        Sector = sector;
         Group = group;
     }
 }

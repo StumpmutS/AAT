@@ -15,8 +15,8 @@ public class StylizedTextDisplay : MonoBehaviour
         text.rectTransform.offsetMax = stylizedText.TextOffsets.RightTop;
     }
 
-    public void SetText(string text)
+    public void SetText(string value)
     {
-        
+        text.text = value;
     }
 }

@@ -10,14 +10,19 @@ GameObject:
   m_Component:
   - component: {fileID: 90829029774520666}
   - component: {fileID: 7877931178752675800}
+  - component: {fileID: 2961489553521289926}
+  - component: {fileID: 2692978027617971225}
+  - component: {fileID: 5689579700316816006}
+  - component: {fileID: 6052681946842018105}
+  - component: {fileID: 6209507733144170319}
+  - component: {fileID: 5146191612118681897}
   - component: {fileID: 4386963957113846464}
   - component: {fileID: 5808406725285616059}
   - component: {fileID: 7475270637012255309}
   - component: {fileID: 7312453922352187570}
   - component: {fileID: 5006268279259825715}
   - component: {fileID: 90829029774520661}
-  - component: {fileID: 2961489553521289926}
-  - component: {fileID: 2692978027617971225}
+  - component: {fileID: 7608952522056813476}
   m_Layer: 0
   m_Name: SpawnPlot
   m_TagString: Untagged
@@ -66,9 +71,101 @@ MonoBehaviour:
     RawGuidValue: 36f5cae20e0953c4dbeb76ed0b324647
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 90829029774520661}
   - {fileID: 2692978027617971225}
+  - {fileID: 90829029774520661}
   SimulationBehaviours: []
+--- !u!65 &2961489553521289926
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90829029774520669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 2, z: 6}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2692978027617971225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90829029774520669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  layersToChange:
+  - {fileID: 90829029774520669}
+--- !u!114 &5689579700316816006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90829029774520669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406cc0be2560465d9423e3136ad686b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectable: {fileID: 6052681946842018105}
+  hoverable: {fileID: 5146191612118681897}
+--- !u!114 &6052681946842018105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90829029774520669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76ba87b8eed7e94f96cc79d14d6fd3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectionType: 4
+  inputAwaiter: {fileID: 6209507733144170319}
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6209507733144170319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90829029774520669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e61e6452ad8f487893a7174a7528f0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5146191612118681897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90829029774520669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec9fe8b1b7a453d9bb26d418c7f48a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4386963957113846464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,19 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51df6c2055df84640a2ecca207210edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionType: 4
-  OnSelect:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHover:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHoverStop:
-    m_PersistentCalls:
-      m_Calls: []
+  selectable: {fileID: 6052681946842018105}
+  hoverable: {fileID: 5146191612118681897}
   outline: {fileID: 4386963957113846464}
 --- !u!114 &7312453922352187570
 MonoBehaviour:
@@ -177,23 +263,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  spawnPlotUI: {fileID: 0}
   sector: {fileID: 0}
   faction: 0
---- !u!65 &2961489553521289926
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 90829029774520669}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6, y: 2, z: 6}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &2692978027617971225
+--- !u!114 &7608952522056813476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,12 +274,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 90829029774520669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf253acba755ccd49af8edc907f841b7, type: 3}
+  m_Script: {fileID: 11500000, guid: aa7491c4d1b44e3b80e0c875f51c253e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  layersToChange:
-  - {fileID: 90829029774520669}
+  spawnPlot: {fileID: 90829029774520661}
+  category: Spawn Plot
+  spawnerSpawnData:
+  - {fileID: 11400000, guid: cbed0a91cfbd666439de3385869d619d, type: 2}
+  - {fileID: 11400000, guid: 1ed0bf6d5e8920843bc1e40656b110db, type: 2}
+  - {fileID: 11400000, guid: 199ba8e52692e914996efca862f0ce10, type: 2}
+  - {fileID: 11400000, guid: 7b44d46da0987ad438a422fd4d4c0a3c, type: 2}
+  - {fileID: 11400000, guid: 8d539ec922724c84084cfbb0e9fd6236, type: 2}
+  - {fileID: 11400000, guid: 71e9778bcc1468b419ffaf2ee0788a81, type: 2}
+  - {fileID: 11400000, guid: 62a51465142ff5d4a8edea13f0c416a7, type: 2}
 --- !u!1001 &3197654130473889460
 PrefabInstance:
   m_ObjectHideFlags: 0

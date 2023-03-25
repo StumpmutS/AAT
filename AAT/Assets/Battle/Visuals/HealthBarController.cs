@@ -7,8 +7,8 @@ using Utility.Scripts;
 public class HealthBarController : MonoBehaviour
 {
     [SerializeField] private Health health;
-    [SerializeField] private SelectableOutlineController selectable;
-    [SerializeField] private NetworkComponentStateContainer<AiTransitionBlackboard> networkContainer;
+    [SerializeField] private Selectable selectable;
+    [SerializeField] private GameObject iAttackSystem;
     [SerializeField] private RectTransform healthBar;
     [SerializeField] private Image healthBarFill;
     [SerializeField] private Image healthBarLazyFill;
@@ -20,17 +20,16 @@ public class HealthBarController : MonoBehaviour
     [SerializeField] private float healthScaleMin = 300;
     [SerializeField] private float healthScaleMax = 700;
 
-    private AttackComponentState _attackComponentState;
+    private IAttackSystem _attackSystem;
     private Coroutine _coResetSpring;
 
     private void Start()
     {
         health.OnHealthPercentChanged += UpdateHealthBar;
         healthBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Clamp(health.MaxHealth * healthScaleMultiplier, healthScaleMin, healthScaleMax));
-        if (networkContainer == null || !networkContainer.TryGetComponentState(typeof(AttackComponentState), out var state)) return;
-        _attackComponentState = (AttackComponentState) state;
-        _attackComponentState.OnAttack += SetSpring;
-        _attackComponentState.OnCrit += SetSpring;
+        _attackSystem = iAttackSystem.GetComponent<IAttackSystem>();
+        /*_attackSystem.OnAttack += SetSpring; todo
+        _attackSystem.OnCrit += SetSpring;*/
     }
 
     private void UpdateHealthBar(float percent)
@@ -54,8 +53,8 @@ public class HealthBarController : MonoBehaviour
     private void OnDestroy()
     {
         if (health != null) health.OnHealthPercentChanged -= UpdateHealthBar;
-        if (_attackComponentState != null) _attackComponentState.OnAttack -= SetSpring;
-        if (_attackComponentState != null) _attackComponentState.OnCrit -= SetSpring;
+        /*if (_attackSystem != null) _attackSystem.OnAttack -= SetSpring;
+        if (_attackSystem != null) _attackSystem.OnCrit -= SetSpring;*/
     }
 
     private void LateUpdate()

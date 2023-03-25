@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VisualsListener : MonoBehaviour
 {
-    [Tooltip("Use if keeping decals outside of mesh/other visuals is needed")]
+    [Tooltip("Use if keeping decals outside of (mesh/other visuals) is needed")]
     [SerializeField] private float directionMultiplier;
     [SerializeField] private Vector3 offset;
     

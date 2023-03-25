@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     private ESelectionType _currentSelectionType;
-    private SelectableController _currentSelected;
+    private Selectable _currentSelected;
     private bool _selectionSet;
     
     private void Awake()
@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
         uiContainers[ESelectionType.None].Activate(null);
     }
 
-    public void ActivatePanel(SelectableController selectable)
+    public void ActivatePanel(Selectable selectable)
     {
         var selectionType = selectable.SelectionType;
         if (_currentSelectionType == selectionType || _selectionSet) return;
@@ -36,9 +36,9 @@ public class UIManager : MonoBehaviour
         uiContainers[selectionType].Activate(selectable.gameObject);
     }
 
-    public void DeactivatePanel(SelectableController selectableController)
+    public void DeactivatePanel(Selectable selectable)
     {
-        if (_currentSelected != selectableController) return;
+        if (_currentSelected != selectable) return;
         var selectionType = SelectionManager.Instance.SelectedType;
         var newSelectable = SelectionManager.Instance.Selected[selectionType].FirstOrDefault();
         if (newSelectable != null)

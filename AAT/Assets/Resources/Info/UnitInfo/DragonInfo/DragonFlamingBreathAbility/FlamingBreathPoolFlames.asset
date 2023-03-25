@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ced840e4bf4a38bed0eafaac64c309, type: 3}
+  m_Name: FlamingBreathPoolFlames
+  m_EditorClassIdentifier: 
+  restrictions: []
+  delay: 0
+  duration: 5
+  transformIndex: 1
+  poolingObject: {fileID: -8201334025114902585, guid: 03e431cf84906c74189fa4405893e455, type: 3}
+  useTransformAsParent: 1

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WolfSightRangeB
   m_EditorClassIdentifier: 
   Stat: 9
-  Value: 30
+  Value: 20

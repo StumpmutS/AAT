@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SelectableOutlineController : MonoBehaviour
 {
-    [SerializeField] private SelectableController selectable;
+    [SerializeField] private Selectable selectable;
     [SerializeField] private Hoverable hoverable;
     [SerializeField] private OutlineController outline;
 

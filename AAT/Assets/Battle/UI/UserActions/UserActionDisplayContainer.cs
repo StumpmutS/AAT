@@ -27,12 +27,25 @@ public class UserActionDisplayContainer : MonoBehaviour
             {
                 var subCategoryDisplay = CreateSubCategoryDisplay();
                 categoryDisplay.Add(subCategoryDisplay.transform);
+                if (!_userActionSubCategories.ContainsKey(categoryKvp.Key))
+                {
+                    _userActionSubCategories[categoryKvp.Key] = new Dictionary<ESubCategory, LayoutDisplay>();
+                }
                 _userActionSubCategories[categoryKvp.Key][subCategoryKvp.Key] = subCategoryDisplay;
                 
                 foreach (var labelGroupKvp in subCategoryKvp.Value)
                 {
                     var userActionDisplay = CreateActionDisplay(labelGroupKvp.Value);
                     subCategoryDisplay.Add(userActionDisplay.transform);
+                    if (!_userActionLabelGroups.ContainsKey(categoryKvp.Key))
+                    {
+                        _userActionLabelGroups[categoryKvp.Key] = new Dictionary<ESubCategory, Dictionary<string, UserActionDisplay>>();
+                    }
+                    if (!_userActionLabelGroups[categoryKvp.Key].ContainsKey(subCategoryKvp.Key))
+                    {
+                        _userActionLabelGroups[categoryKvp.Key][subCategoryKvp.Key] = new Dictionary<string, UserActionDisplay>();
+                    }
+                    
                     _userActionLabelGroups[categoryKvp.Key][subCategoryKvp.Key][labelGroupKvp.Key] = userActionDisplay;
                 }
             }
@@ -71,10 +84,5 @@ public class UserActionDisplayContainer : MonoBehaviour
     public UserActionDisplay GetActionDisplay(string category, ESubCategory subCategory, string label)
     {
         return _userActionLabelGroups[category][subCategory][label];
-    }
-
-    public void ClearCategory(string category)
-    {
-        Destroy(_userActionCategories[category].gameObject);
     }
 }

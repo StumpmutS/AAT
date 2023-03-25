@@ -1,4 +1,6 @@
-using UnityEngine;public class UnitAttackSystem : MonoBehaviour, IAttackSystem
+using UnityEngine;
+
+public class UnitAttackSystem : MonoBehaviour, IAttackSystem
 {
     /*protected virtual void CheckCrit()
     {
@@ -42,6 +44,16 @@ using UnityEngine;public class UnitAttackSystem : MonoBehaviour, IAttackSystem
     }*/
 
     public void CallAttack(StumpTarget target)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void CallAnimationAttack()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void CallAnimationCrit()
     {
         throw new System.NotImplementedException();
     }

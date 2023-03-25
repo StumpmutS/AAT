@@ -32,6 +32,8 @@ public class TeamManager : NetworkBehaviour
         return LayerMask.GetMask(layerNames.ToArray());
     }
 
+    public static LayerMask GetLayer(int teamNumber) => LayerMask.GetMask($"Team{teamNumber}");
+
     public void SetPlayerForTeam(int teamNumber, PlayerRef player)
     {
         if (!Runner.IsServer) return;
@@ -39,7 +41,14 @@ public class TeamManager : NetworkBehaviour
         _playersByTeamNumber.Set(teamNumber, player);
     }
     
-    public PlayerRef GetPlayerForTeam(int teamNumber) => _playersByTeamNumber.Get(teamNumber);
+    public PlayerRef GetPlayerForTeam(int teamNumber)
+    {
+        if (_playersByTeamNumber.TryGet(teamNumber, out var player))
+        {
+            return player;
+        }
+        return default;
+    }
 
     public void SetupWithTeam(TeamController teamController, int desiredTeamNumber = 0)
     {

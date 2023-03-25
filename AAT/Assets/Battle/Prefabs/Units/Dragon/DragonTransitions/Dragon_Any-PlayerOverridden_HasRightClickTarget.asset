@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119a5452986c1ef4cb70ea656c59774e, type: 3}
+  m_Name: Dragon_Any-PlayerOverridden_HasRightClickTarget
+  m_EditorClassIdentifier: 
+  any: 1
+  fromState:
+    searchKeyWord: state
+    targetTypeAssemblyQName: AbilityBrainComponentState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  toState:
+    searchKeyWord: state
+    targetTypeAssemblyQName: PlayerOverriddenComponentState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  fromPrefab: {fileID: 0}
+  toPrefab: {fileID: -3153441814254332145, guid: 2c6739332b69d2642b70a2e73f6d01be, type: 3}

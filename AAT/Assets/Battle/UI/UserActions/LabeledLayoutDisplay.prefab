@@ -62,7 +62,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6036571851640696398}
-  - component: {fileID: 5495315650721382822}
+  - component: {fileID: 8241424448475055685}
   - component: {fileID: 8224622193370115984}
   m_Layer: 5
   m_Name: Layout
@@ -91,7 +91,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -65}
   m_SizeDelta: {x: 0, y: -65}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &5495315650721382822
+--- !u!114 &8241424448475055685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 652991024123372322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -109,12 +109,14 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 40, y: 40}
-  m_Spacing: {x: 15, y: 15}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &8224622193370115984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0aa85d31464b08bf661f707b329e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layoutGroup: {fileID: 8241424448475055685}
 --- !u!1001 &8760191026543603133
 PrefabInstance:
   m_ObjectHideFlags: 0

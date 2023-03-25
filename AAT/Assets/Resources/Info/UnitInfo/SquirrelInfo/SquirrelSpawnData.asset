@@ -12,17 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf701125b0bb7b4cac56b2c01584623, type: 3}
   m_Name: SquirrelSpawnData
   m_EditorClassIdentifier: 
+  userActionInfo:
+    label: Squirrel Spawner
+    icon:
+    - image:
+        fills:
+        - {fileID: 21300000, guid: f6b0c923fd8af7946a9dcf9e0b841669, type: 3}
+        fillColors:
+        - {r: 1, g: 1, b: 1, a: 1}
+        lighting: {fileID: 0}
+        lightingColor: {r: 0, g: 0, b: 0, a: 0}
+        shading: {fileID: 0}
+        shadingColor: {r: 0, g: 0, b: 0, a: 0}
+        border: {fileID: 0}
+        borderColor: {r: 0, g: 0, b: 0, a: 0}
+        borderOffsets:
+          leftBottom: {x: 0, y: 0}
+          rightTop: {x: 0, y: 0}
+      text:
+        Text: 
+        TextColor: {r: 0, g: 0, b: 0, a: 0}
+        FontSize: 0
+        TextOffsets:
+          leftBottom: {x: 0, y: 0}
+          rightTop: {x: 0, y: 0}
+    keyCode: 122
+  faction: 2
   SpawnerPrefab: {fileID: 5075726232169910457, guid: 61062c37331a604499efb655cd98a5f2, type: 3}
   SpawnGroupsAmount: 4
-  UnitsPerGroupAmount: 4
   SpawnTime: 1
-  RespawnTime: 5
-  MaxSpawnLocationUse: 3
-  SpawnerOffset: {x: 0, y: 0, z: 0}
-  SpawnerVisuals:
-    RawGuidValue: 769657a82d2d22e49912a5ec6f094955
-  UnitPrefab: {fileID: -8213272441465151675, guid: db35d4426829de84295bcc20188331c6, type: 3}
-  UnitGroupPrefab: {fileID: 2407381874908500433, guid: 044f179ce0d10f34fb02bfe991729f80, type: 3}
   baseUnitStatsData: {fileID: 11400000, guid: b04ddbae02d8e51468f9f710a9cbfa7f, type: 2}
-  UnitStatsUpgradeData:
-  - {fileID: 11400000, guid: 20715c124d506ec46baaaa7bed4de486, type: 2}
+  UpgradeData: []

@@ -1,6 +1,6 @@
 public interface IAbilitySystem
 {
-    public bool AbilityReady();
-    public void PrepareAbility(UnitAbilityDataInfo ability);
-    public void CastAbility(UnitAbilityDataInfo ability);
+    public void PrepareAbility(UnitAbilityData ability);
+    public void UnPrepareAbility(UnitAbilityData ability);
+    public void CastAbility(UnitAbilityData ability, StumpTarget target);
 }

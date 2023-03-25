@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43502a7ce1ec831489ed3b4dc1c0031f, type: 3}
+  m_Name: DragonStatsData
+  m_EditorClassIdentifier: 
+  Stats:
+  - {fileID: 11400000, guid: c9c00bb3cb16b8340b2de6019f928440, type: 2}
+  - {fileID: 11400000, guid: 620db545be31af94f9ab45a5d1edb9d5, type: 2}
+  - {fileID: 11400000, guid: 843795f93131a284e869d46d6a9f75a9, type: 2}
+  - {fileID: 11400000, guid: ffa36852bf116544390d7c4df1aa463a, type: 2}
+  - {fileID: 11400000, guid: f2d7e77e7269c814b9989a3fc15a0c06, type: 2}
+  - {fileID: 11400000, guid: 602ea59356190e645bc6e0bcb5e16a86, type: 2}
+  - {fileID: 11400000, guid: af167e9dd7a2b0441af3c01e8479d787, type: 2}
+  - {fileID: 11400000, guid: 2c45d5b60847d1a4a82e55dd08459998, type: 2}
+  - {fileID: 11400000, guid: f2404330d0bbdb541a81673669d193b3, type: 2}
+  - {fileID: 11400000, guid: 8ffd2a753996e3e4fb5a5ca426bc40be, type: 2}
+  - {fileID: 11400000, guid: bbb3bf05bd147c946ac70052ab24d231, type: 2}

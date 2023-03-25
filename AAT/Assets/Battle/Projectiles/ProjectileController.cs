@@ -19,7 +19,7 @@ public class ProjectileController : NetworkBehaviour
     
     protected Rigidbody _rigidBody;
     private float _damage;
-    private Collider[] _origin;
+    private HashSet<Collider> _origin;
     private bool _projectileFired;
     private Vector3 _firerDirection;
     private float _firerSpeed;
@@ -48,10 +48,10 @@ public class ProjectileController : NetworkBehaviour
 
     protected virtual void MoveProjectile() { }
 
-    public void FireProjectile(float damage, Collider[] fromColliders, Vector3 firerDirection, float firerSpeed = 0)
+    public void FireProjectile(float damage, IEnumerable<Collider> fromColliders, Vector3 firerDirection, float firerSpeed = 0)
     {
         _damage = damage;
-        _origin = fromColliders;
+        _origin = fromColliders.ToHashSet();
         _firerDirection = firerDirection.normalized;
         _firerSpeed = firerSpeed;
         _projectileFired = true;

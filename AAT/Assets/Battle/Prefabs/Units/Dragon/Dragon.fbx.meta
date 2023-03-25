@@ -1,8 +1,14 @@
 fileFormatVersion: 2
-guid: 994753d1ce254734da92da5d1e73c1e8
+guid: 71c2b02fe666cc74bb480f42626d6169
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
+  - first:
+      74: -4725047577353049039
+    second: DragonGroundIdleControl
+  - first:
+      74: -1290718738555737778
+    second: DragonGroundIdleGame
   - first:
       74: 8298915683546479545
     second: DragonDeathLandGame
@@ -39,9 +45,6 @@ ModelImporter:
   - first:
       74: 154631402384265997
     second: DragonGroundFireBreathGame
-  - first:
-      74: -1103840920262803195
-    second: DragonGroundIdlegame
   - first:
       74: -2489088242010429045
     second: DragonGroundIdleRandom1Game

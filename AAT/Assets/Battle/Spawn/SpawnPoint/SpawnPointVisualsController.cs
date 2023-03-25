@@ -1,43 +1,54 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpawnPointController))]
-public class SpawnPointVisualsController : MonoBehaviour
+public abstract class SpawnPointVisualsController<T> : MonoBehaviour, IGameActionInfoGetter
 {
-    [SerializeField] private List<UnitVisualComponent> visuals;
+    [SerializeField] private List<VisualGameAction> visuals;
 
-    private SpawnPointController _spawnPoint;
+    private SpawnPointController<T> _spawnPoint;
 
     private void Awake()
     {
-        _spawnPoint = GetComponent<SpawnPointController>();
+        _spawnPoint = GetComponent<SpawnPointController<T>>();
         _spawnPoint.OnBeginSpawn += DisplayVisuals;
-        _spawnPoint.OnCancelledSpawn += RemoveVisuals;
-        _spawnPoint.OnFinishedSpawn += RemoveVisuals;
+        _spawnPoint.OnCancelledSpawn += HandleSpawnCancelled;
+        _spawnPoint.OnFinishedSpawn += HandleSpawnFinished;
     }
 
-    private void DisplayVisuals(SpawnPointController _)
+    private void DisplayVisuals(SpawnPointController<T> _)
     {
-        foreach (var visual in visuals)
-        {
-            visual.ActivateComponent(null, transform.position);
-        }
+        GameActionRunner.Instance.PerformActions(visuals, this);
     }
 
-    private void RemoveVisuals(SpawnPointController _)
+    private void HandleSpawnCancelled(SpawnPointController<T> _)
     {
-        foreach (var visual in visuals)
+        RemoveVisuals();
+    }
+
+    private void HandleSpawnFinished(SpawnPointController<T> _, T u)
+    {
+        RemoveVisuals();
+    }
+
+    private void RemoveVisuals()
+    {
+        GameActionRunner.Instance.StopActions(visuals, this);
+    }
+
+    public IEnumerable<GameActionInfo> GetInfo()
+    {
+        return new []
         {
-            visual.DeactivateComponent(null);
-        }
+            new GameActionInfo(_spawnPoint.Object, SectorFinder.FindSector(_spawnPoint.transform.position, .5f,
+                LayerManager.Instance.GroundLayer), new TransformChain(new[] {_spawnPoint.transform}),
+            new StumpTarget(gameObject, _spawnPoint.transform.position))
+        };
     }
 
     private void OnDestroy()
     {
         if (_spawnPoint != null) _spawnPoint.OnBeginSpawn -= DisplayVisuals;
-        if (_spawnPoint != null) _spawnPoint.OnCancelledSpawn -= RemoveVisuals;
-        if (_spawnPoint != null) _spawnPoint.OnFinishedSpawn -= RemoveVisuals;
+        if (_spawnPoint != null) _spawnPoint.OnCancelledSpawn -= HandleSpawnCancelled;
+        if (_spawnPoint != null) _spawnPoint.OnFinishedSpawn -= HandleSpawnFinished;
     }
 }

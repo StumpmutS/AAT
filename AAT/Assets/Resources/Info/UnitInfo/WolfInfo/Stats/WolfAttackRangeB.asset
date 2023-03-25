@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WolfAttackRangeB
   m_EditorClassIdentifier: 
   Stat: 10
-  Value: 2.5
+  Value: 5

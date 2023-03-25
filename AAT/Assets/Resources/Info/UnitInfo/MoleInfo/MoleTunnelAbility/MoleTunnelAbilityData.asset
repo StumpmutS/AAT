@@ -13,14 +13,39 @@ MonoBehaviour:
   m_Name: MoleTunnelAbilityData
   m_EditorClassIdentifier: 
   UnitAbilityDataInfo:
-    AbilityName: Tunnel
-    CooldownTime: 30
+    userActionInfo:
+      label: Tunnel
+      icon:
+      - image:
+          fills:
+          - {fileID: 21300000, guid: cd2a9681ac4616545997a7eb707960f5, type: 3}
+          fillColors:
+          - {r: 0.3490566, g: 0.19351237, b: 0.11690104, a: 1}
+          lighting: {fileID: 0}
+          lightingColor: {r: 0, g: 0, b: 0, a: 0}
+          shading: {fileID: 0}
+          shadingColor: {r: 0, g: 0, b: 0, a: 0}
+          border: {fileID: 0}
+          borderColor: {r: 0, g: 0, b: 0, a: 0}
+          borderOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+        text:
+          Text: 
+          TextColor: {r: 0, g: 0, b: 0, a: 0}
+          FontSize: 0
+          TextOffsets:
+            leftBottom: {x: 0, y: 0}
+            rightTop: {x: 0, y: 0}
+      keyCode: 113
     ActiveTime: 4
     TargetTimeOutTime: 10
-    TransportUsage: 0
     CanBeCastOver: 0
     AllowCastOverTimer: 0
-    AbilityComponents:
-    - {fileID: 11400000, guid: 1467fd439466612489399d41d94cab3f, type: 2}
-    VisualComponents:
-    - {fileID: 11400000, guid: 51fe9a6a6dbfbc84a9d858b88f39a8e3, type: 2}
+    individualRestrictions: []
+    groupRestrictions: []
+    StateType:
+      searchKeyWord: state
+      targetTypeAssemblyQName: AbilityComponentState, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    StatePrefab: {fileID: -8418336285645099993, guid: a5a5eb972e91bf1439ae5f7034f5ca40, type: 3}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WormDamageB
   m_EditorClassIdentifier: 
   Stat: 3
-  Value: 40
+  Value: 20

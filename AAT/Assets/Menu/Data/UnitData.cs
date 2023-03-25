@@ -9,8 +9,8 @@ public class UnitData : StumpData
     public GeneralUnitData GeneralUnitData => generalUnitData;
     [SerializeField] private BaseUnitStatsData unitStatsData;
     public BaseUnitStatsData UnitStatsData => unitStatsData;
-    [SerializeField] private List<UnitUpgradeData> unitUpgradeData;
-    public List<UnitUpgradeData> UnitUpgradeData => unitUpgradeData;
+    [SerializeField] private List<UpgradeData> unitUpgradeData;
+    public List<UpgradeData> UnitUpgradeData => unitUpgradeData;
     [SerializeField] private UnitArtData unitArtData;
     public UnitArtData UnitArtData => unitArtData;
 }

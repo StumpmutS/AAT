@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(SelectableController))]
+[RequireComponent(typeof(Selectable))]
 public class WallJointController : MonoBehaviour
 {
     [Tooltip("Must be < 30")] [SerializeField] private float maxMainWallValidAngle;
@@ -21,7 +21,7 @@ public class WallJointController : MonoBehaviour
 
     public int WallNumber { get; private set; }
     
-    private SelectableController _selectable;
+    private Selectable _selectable;
     private Vector3 _wallDirection;
     private Vector3 _wallForwardDirection;
 
@@ -31,7 +31,7 @@ public class WallJointController : MonoBehaviour
 
     private void Awake()
     {
-        _selectable = GetComponent<SelectableController>();
+        _selectable = GetComponent<Selectable>();
         _selectable.OnSelect.AddListener(HandleSelect);
         if (wallPlacementManager == null) wallPlacementManager = WallPlacementManager.Instance;
         wallPlacementManager.AddWallJoint(this);

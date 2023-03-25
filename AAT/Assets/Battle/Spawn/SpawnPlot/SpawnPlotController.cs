@@ -1,61 +1,42 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon;
 using Fusion;
 using UnityEngine;
+using Utility.Scripts;
 
-[RequireComponent(typeof(SelectableController))]
 public class SpawnPlotController : NetworkBehaviour
 {
-    [SerializeField] private SpawnPlotButtonsController spawnPlotUI;
     [SerializeField] private SectorController sector;
     [SerializeField] private EFaction faction;
+    public EFaction Faction => faction;
 
     private TeamController _team;
-    private SelectableController _selectable;
 
     private void Awake()
     {
         _team = GetComponent<TeamController>();
-        _selectable = GetComponent<SelectableController>();
-        _selectable.OnSelect.AddListener(Select);
-        _selectable.OnDeselect.AddListener(Deselect);
     }
 
     public override void Spawned()
     {
         if (!Runner.IsServer) return;
         
-        sector.OnSectorCaptureChanged += HandleSectorCapture;
+        sector.OnCaptured += HandleSectorCaptured;
     }
 
-    private void HandleSectorCapture(PlayerRef player, int amount)
+    private void HandleSectorCaptured(int team)
     {
-        if (amount < 99.999f || player == Object.InputAuthority || player == default) return;
+        var player = TeamManager.Instance.GetPlayerForTeam(team);
+        if (player == Object.InputAuthority) return;
         Object.AssignInputAuthority(player);
-        var playerTeam = Runner.GetPlayerObject(player).GetComponent<TeamController>();
-        _team.SetTeamNumber(playerTeam.GetTeamNumber());
-    }
-
-    private void Select()
-    {
-        if (Object == null || !Object.HasInputAuthority) return;
-
-        spawnPlotUI.DisplayByFaction(faction);
-        spawnPlotUI.OnSpawnRequest += CallSetupSpawner;
-    }
-
-    private void Deselect()
-    {
-        if (Object == null || !Object.HasInputAuthority) return;
-
-        spawnPlotUI.OnSpawnRequest -= CallSetupSpawner;
+        _team.SetTeamNumber(team);
     }
     
-    private void CallSetupSpawner(UnitSpawnData unitSpawnData)
+    public void CallSetupSpawner(SpawnerSpawnData spawnerSpawnData)
     {
-        if (!_selectable.Selected) return;
-        _selectable.CallDeselectOverrideUICheck();
-        RpcSetupSpawner(BuildReferenceContainer.Instance.BuildResourceReference.SOResourcePaths[unitSpawnData]);
+        RpcSetupSpawner(BuildReferenceContainer.Instance.BuildResourceReference.SOResourcePaths[spawnerSpawnData]);
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
@@ -63,10 +44,9 @@ public class SpawnPlotController : NetworkBehaviour
     {
         if (!Runner.IsServer) return;
         
-        var spawnData = Resources.Load<UnitSpawnData>(spawnDataPath);
-        var instantiatedSpawner = Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation, Object.InputAuthority, SetupSpawner).GetComponent<GroupSpawnerController>();
+        var spawnData = Resources.Load<SpawnerSpawnData>(spawnDataPath);
+        Runner.Spawn(spawnData.SpawnerPrefab, transform.position, transform.rotation, Object.InputAuthority, SetupSpawner);
 
-        instantiatedSpawner.Init(spawnData, sector);
         Runner.Despawn(Object);
 
         void SetupSpawner(NetworkRunner _, NetworkObject o)
@@ -86,9 +66,6 @@ public class SpawnPlotController : NetworkBehaviour
     {
         if (!runner.IsServer) return;
         
-        sector.OnSectorCaptureChanged -= HandleSectorCapture;
-        spawnPlotUI.OnSpawnRequest -= CallSetupSpawner;
-        if (_selectable != null) _selectable.OnSelect.AddListener(Select);
-        if (_selectable != null) _selectable.OnDeselect.AddListener(Deselect);
+        sector.OnCaptured -= HandleSectorCaptured;
     }
 }

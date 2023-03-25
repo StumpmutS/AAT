@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb62d6e052ec43c0bc3416bc35f0db8b, type: 3}
+  m_Name: Dragon_Flying-Ground_GroundReady
+  m_EditorClassIdentifier: 
+  any: 0
+  fromState:
+    searchKeyWord: state
+    targetTypeAssemblyQName: FlyingCavalryAttackComponentState, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  toState:
+    searchKeyWord: state
+    targetTypeAssemblyQName: GroundAgentComponentState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  fromPrefab: {fileID: 6119120544703526028, guid: fe5b5e8a93f0c51408f83fbd4b0fa565, type: 3}
+  toPrefab: {fileID: 2325995974168226369, guid: e5e6847a0eb561f42bbf2c3937232b6a, type: 3}

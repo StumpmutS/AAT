@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Utility.Scripts
 {
@@ -30,6 +31,11 @@ namespace Utility.Scripts
             {
                 list.Add(default);
             }
+        }
+
+        public static bool Overlapping<T>(List<T> list1, List<T> list2)
+        {
+            return list1.Any(list2.Contains);
         }
     }
 }

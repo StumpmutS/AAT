@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WormAttackRangeB
   m_EditorClassIdentifier: 
   Stat: 10
-  Value: 8
+  Value: 5
