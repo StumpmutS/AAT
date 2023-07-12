@@ -1,3 +1,2 @@
 # AAT
-
-This project does not have a license, it is currently intended for viewing purposes only and protected by default copyright.
+Copyright © 2023 Drew Moulton. All rights reserved.
