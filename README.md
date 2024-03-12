@@ -1,5 +1,5 @@
 # AAT
-Copyright © 2024 Drew Moulton. All rights reserved.
+Copyright © 2021-2024 Drew Moulton. All rights reserved.
 
 A learning experience. For a better overview see [wwww.drewmoulton.com](https://www.drewmoulton.com)
 
